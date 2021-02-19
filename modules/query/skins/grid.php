@@ -261,46 +261,8 @@ class Grid extends Base {
             ],
                 ]
         );
-        /* $this->add_responsive_control(
-          'h_pos_postitems', [
-          'label' => __('Horizontal position', 'e-addons'),
-          'type' => Controls_Manager::CHOOSE,
-          'options' => [
-          'flex-start' => [
-          'title' => __('Left', 'e-addons'),
-          'icon' => 'eicon-h-align-left',
-          ],
-          'center' => [
-          'title' => __('Center', 'e-addons'),
-          'icon' => 'eicon-h-align-center',
-          ],
-          'flex-end' => [
-          'title' => __('Right', 'e-addons'),
-          'icon' => 'eicon-h-align-right',
-          ],
-          // 'stretch' => [
-          //  'title' => __('Stretch', 'e-addons'),
-          //  'icon' => 'eicon-h-align-stretch',
-          //  ],
-          'space-between' => [
-          'title' => __('Space Between', 'e-addons'),
-          'icon' => 'eicon-h-align-stretch',
-          ],
-          'space-around' => [
-          'title' => __('Space Around', 'e-addons'),
-          'icon' => 'eicon-h-align-stretch',
-          ],
-          ],
-          'default' => '',
-          'selectors' => [
-          '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'justify-content: {{VALUE}};',
-          ],
-          'condition' => [
-          $this->get_control_id('flex_grow') => '0',
-          $this->get_control_id('grid_type!') => ['masonry']
-          ],
-          ]
-          ); */
+        
+        /*
         $this->add_responsive_control(
                 'h_pos_postitems', [
             'label' => '<i class="fas fa-arrows-alt-h"></i>&nbsp;' . __('Horizontal position', 'e-addons'),
@@ -322,41 +284,58 @@ class Grid extends Base {
                 $this->get_control_id('grid_type!') => ['masonry']
             ],
                 ]
+        );*/
+        $this->add_control(
+            'h_pos_postitems', [
+                'label' => '<i class="fas fa-arrows-alt-h"></i>&nbsp;' . __('Horizontal position', 'e-addons'),
+                'type' => 'ui_selector',
+                'toggle' => false,
+                'type_selector' => 'image',
+                'label_block' => true,
+                'columns_grid' => 5,
+                'options' => [
+                    /*'' => [
+                        'title' => __('Default','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_default.svg',
+                    ],*/
+                    '' => [
+                        'title' => __('Left','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_left.svg',
+                    ],
+                    'center' => [
+                        'title' => __('Middle','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_middle.svg',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_right.svg',
+                    ],
+                    'space-between' => [
+                        'title' => __('Space Between','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-between.svg',
+                    ],
+                    'space-around' => [
+                        'title' => __('Space Around','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-around.svg',
+                    ],
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'justify-content: {{VALUE}};',
+                ],
+                'condition' => [
+                    $this->get_control_id('flex_grow') => '0',
+                    $this->get_control_id('grid_type!') => ['masonry']
+                ],
+            ]
         );
-        /* $this->add_responsive_control(
-          'v_pos_postitems', [
-          'label' => __('Vertical position', 'e-addons'),
-          'type' => Controls_Manager::CHOOSE,
-          'options' => [
-          'flex-start' => [
-          'title' => __('Top', 'e-addons'),
-          'icon' => 'eicon-v-align-top',
-          ],
-          'center' => [
-          'title' => __('Middle', 'e-addons'),
-          'icon' => 'eicon-v-align-middle',
-          ],
-          'flex-end' => [
-          'title' => __('Down', 'e-addons'),
-          'icon' => 'eicon-v-align-bottom',
-          ],
-          'stretch' => [
-          'title' => __('Stretch', 'e-addons'),
-          'icon' => 'eicon-v-align-stretch',
-          ],
-          ],
-          'default' => '',
-          'selectors' => [
-          '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'align-items: {{VALUE}};',
-          '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};'
-          ],
-          'condition' => [
-          //$this->get_control_id('flex_grow') => '0',
-          $this->get_control_id('grid_type!') => ['masonry'],
-          //$this->get_control_id('style_items!') => ['float'],
-          ],
-          ]
-          ); */
+       /*
         $this->add_responsive_control(
                 'v_pos_postitems', [
             'label' => '<i class="fas fa-arrows-alt-v"></i>&nbsp;' . __('Vertical position', 'e-addons'),
@@ -382,6 +361,54 @@ class Grid extends Base {
         );
         // *****+ Justified: Height, end coplete
         // *****+ Blog: ..... "da valutere"
+        */
+        $this->add_control(
+            'v_pos_postitems', [
+                'label' => '<i class="fas fa-arrows-alt-v"></i>&nbsp;' . __('Vertical position', 'e-addons'),
+                'type' => 'ui_selector',
+                'toggle' => false,
+                'label_block' => true,
+                'type_selector' => 'image',
+                'columns_grid' => 5,
+                'options' => [
+                    '' => [
+                        'title' => __('Default','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_default.svg',
+                    ],
+                    'flex-start' => [
+                        'title' => __('Top','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_top.svg',
+                    ],
+                    'center' => [
+                        'title' => __('Center','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_center.svg',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Bottom','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_bottom.svg',
+                    ],
+                    'stretch' => [
+                        'title' => __('stretch','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_stretch.svg',
+                    ]
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'align-items: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};'
+                ],
+                'condition' => [
+                    //$this->get_control_id('flex_grow') => '0',
+                    $this->get_control_id('grid_type!') => ['masonry'],
+                //$this->get_control_id('style_items!') => ['float'],
+                ]
+            ]
+        );
         $this->end_controls_section();
     }
 

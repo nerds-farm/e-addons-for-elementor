@@ -123,51 +123,142 @@ class Base extends Base_Skin {
                   ], */
                 ]
         );
+        /*
         $this->add_responsive_control(
-                'blocks_align_flex', [
-            'label' => __('Flex Items Align', 'e-addons'),
-            'type' => Controls_Manager::SELECT,
-            'default' => '',
-            'options' => [
-                '' => 'Default',
-                'flex-start' => 'Start',
-                'center' => 'Center',
-                'flex-end' => 'End',
-                'space-between' => 'Space Between',
-                'space-around' => 'Space Around',
-                'stretch' => 'Stretch',
-            ],
-            'selectors' => [
-                '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
-            ],
-                /* 'condition' => [
-                  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-                  ], */
-                ]
+            'blocks_align_flex', [
+                    'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => '',
+                    'options' => [
+                        '' => 'Default',
+                        'flex-start' => 'Left',
+                        'center' => 'Center',
+                        'flex-end' => 'Right',
+                        'space-between' => 'Space Between',
+                        'space-around' => 'Space Around',
+                        //'stretch' => 'Stretch',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
+                    ],
+                //'condition' => [
+                //  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
+                //],
+            ]
+        );*/
+        /*
+        $this->add_control(
+            'blocks_align_flex', [
+                'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+                'type' => 'ui_selector',
+                'toggle' => false,
+                'type_selector' => 'image',
+                'label_block' => true,
+                'columns_grid' => 5,
+                'options' => [
+                    '' => [
+                        'title' => __('Left','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_left.svg',
+                    ],
+                    'center' => [
+                        'title' => __('Middle','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_middle.svg',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_right.svg',
+                    ],
+                    'space-between' => [
+                        'title' => __('Space Between','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-between.svg',
+                    ],
+                    'space-around' => [
+                        'title' => __('Space Around','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-around.svg',
+                    ],
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
+                ],
+                
+            ]
         );
+        */
+
+        /*
         $this->add_responsive_control(
                 'blocks_align_justify', [
-            'label' => __('Flex Justify Content', 'e-addons'),
+            'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
             'type' => Controls_Manager::SELECT,
             'default' => '',
             'options' => [
                 '' => 'Default',
-                'flex-start' => 'Start',
-                'center' => 'Center',
-                'flex-end' => 'End',
+                'flex-start' => 'Top',
+                'center' => 'Middle',
+                'flex-end' => 'Bottom',
                 'space-between' => 'Space Between',
                 'space-around' => 'Space Around',
-                'stretch' => 'Stretch',
+                //'stretch' => 'Stretch',
             ],
             'selectors' => [
                 '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
             ],
-            'separator' => 'after',
-                /* 'condition' => [
-                  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-                  ], */
-                ]
+            //'separator' => 'after',
+            //     'condition' => [
+            //      $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
+            //  ], 
+            //]
+        );*/
+        $this->add_control(
+            'blocks_align_justify', [
+                'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
+                'type' => 'ui_selector',
+                'toggle' => false,
+                'label_block' => true,
+                'type_selector' => 'image',
+                'columns_grid' => 5,
+                'options' => [
+                    '' => [
+                        'title' => __('Top','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_top.svg',
+                    ],
+                    'center' => [
+                        'title' => __('Center','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_middle.svg',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Bottom','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_bottom.svg',
+                    ],
+                    'space-between' => [
+                        'title' => __('Space Betweens','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_space-between.svg',
+                    ],
+                    'space-around' => [
+                        'title' => __('Space Around','e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_space-around.svg',
+                    ]
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
+                ],
+            ]
         );
+
+
+
         $this->add_control(
                 'blocks_bgcolor', [
             'label' => __('Background Color', 'e-addons'),

@@ -72,11 +72,12 @@ class WidgetQueryCarouselHandlerClass extends elementorModules.frontend.handlers
         
     if (    EADD_skinPrefix+'ratio_image' === propertyName || 
             EADD_skinPrefix+'dualslider_distribution_vertical' === propertyName || 
-            EADD_skinPrefix+'dualslider_height_container' === propertyName
+            EADD_skinPrefix+'dualslider_height_container' === propertyName ||
+            EADD_skinPrefix+'height_container' === propertyName
         ) {
         this.elements.$eaddPostsSwiper.update();
 
-        console.log(propertyName);
+        //console.log(propertyName);
     }
 }
 
@@ -103,8 +104,8 @@ class WidgetQueryCarouselHandlerClass extends elementorModules.frontend.handlers
             cubeEffect: {
                 shadow: Boolean( elementSettings[EADD_skinPrefix+'cube_shadow'] ),
                 slideShadows: Boolean( elementSettings[EADD_skinPrefix+'slideShadows'] ),
-                shadowOffset: 20,
-                shadowScale: 0.94,
+                //shadowOffset: 20,
+                //shadowScale: 0.94,
             },
             coverflowEffect: {
                 rotate: 50,

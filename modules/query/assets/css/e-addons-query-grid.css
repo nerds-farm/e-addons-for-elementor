@@ -200,11 +200,11 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 	width: 100%;
 	display: flex;
 }
-/* solo x default */
+/* solo x default
 .e-add-posts-layout-default .e-add-posts-container .e-add-post-item .e-add-post-block{
 	display: block;
 }
-
+ */
 
 
 /*---------- Flex --------*/

@@ -48,6 +48,8 @@
 
 .elementor-uiselector-type-image img{
     display: block;
+    width: 300px;
+    height: auto;
 }
 .elementor-uiselector-type-image .elementor-uiselector-label,
 .elementor-uiselector-type-bgimage .elementor-uiselector-label {

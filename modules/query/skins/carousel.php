@@ -64,7 +64,7 @@ class Carousel extends Base {
             'frontend_available' => true
                 ]
         );
-        $this->add_control(
+        /*$this->add_control(
                 'effects', [
             'label' => __('Transition Effect', 'e-addons'),
             'description' => __('Transition effect from the slides.', 'e-addons'),
@@ -81,34 +81,67 @@ class Carousel extends Base {
             'frontend_available' => true,
             'prefix_class' => 'e-add-carousel-effect-'
                 ]
-        );
+        );*/
+
+        // ------------------------------------
         $this->add_control(
-                'effects_options_popover', [
-            'label' => __('Effects options', 'e-addons'),
-            'type' => \Elementor\Controls_Manager::POPOVER_TOGGLE,
-            'label_off' => __('Default', 'e-addons'),
-            'label_on' => __('Custom', 'e-addons'),
-            'return_value' => 'yes',
-            'condition' => [
-                $this->get_control_id('effects!') => 'slide'
-            ]
+            'effects', [
+            'label' => __('Transition Effects', 'e-addons'),
+            'type' => 'ui_selector',
+            'label_block' => true,
+            'toggle' => false,
+            'type_selector' => 'image',
+            'columns_grid' => 5,
+            'separator' => 'before',
+            'options' => [
+                'slide' => [
+                    'title' => __('Slide','e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL.'modules/query/assets/img/slider_effects/slide.svg',
+                ],
+                'fade' => [
+                    'title' => __('Fade','e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL.'modules/query/assets/img/slider_effects/alpha.svg',
+                ],
+                'cube' => [
+                    'title' => __('Cube','e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL.'modules/query/assets/img/slider_effects/cube.svg',
+                ],
+                'coverflow' => [
+                    'title' => __('Coverflow','e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL.'modules/query/assets/img/slider_effects/coverflow.svg',
+                ],
+                'flip' => [
+                    'title' => __('Flip','e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL.'modules/query/assets/img/slider_effects/flip.svg',
                 ]
+            ],
+            'default' => 'slide',
+            'render_type' => 'template',
+            'frontend_available' => true,
+            'prefix_class' => 'e-add-carousel-effect-'
+              //'tablet_default' => '',
+              //'mobile_default' => '',
+              
+            ]
         );
-        $this->parent->start_popover();
+        
 
         // ------- slideShadows (true) ------
         $this->add_control(
-                'slideShadows', [
-            'label' => __('Slide Shadows', 'e-addons'),
-            'type' => Controls_Manager::SWITCHER,
-            'default' => 'yes',
-            'frontend_available' => true,
-            'condition' => [
-                $this->get_control_id('effects_options_popover') => 'yes',
-                $this->get_control_id('effects') => ['cube', 'flip', 'coverflow']
-            ]
+            'effect_cube_heading', [
+                'label' => __('Cube options', 'e-addons'),
+                'type' => Controls_Manager::HEADING,
+                'condition' => [
+                    $this->get_control_id('effects') => ['cube']
                 ]
+            ]
         );
+        
         // ------- cube shadow (true) ------
         $this->add_control(
                 'cube_shadow', [
@@ -117,25 +150,41 @@ class Carousel extends Base {
             'default' => 'yes',
             'frontend_available' => true,
             'condition' => [
-                $this->get_control_id('effects_options_popover') => 'yes',
                 $this->get_control_id('effects') => ['cube']
             ]
                 ]
         );
         // ------- fade crossFade (false) ------
         $this->add_control(
+            'effect_fade_heading', [
+                'label' => __('Fade option', 'e-addons'),
+                'type' => Controls_Manager::HEADING,
+                'condition' => [
+                    $this->get_control_id('effects') => ['fade']
+                ]
+            ]
+        );
+        $this->add_control(
                 'crossFade', [
-            'label' => __('Shadow', 'e-addons'),
+            'label' => __('Crossfade', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
-            'default' => '',
+            'default' => 'yes',
             'frontend_available' => true,
             'condition' => [
-                $this->get_control_id('effects_options_popover') => 'yes',
                 $this->get_control_id('effects') => ['fade']
             ]
                 ]
         );
         // ------- coverflow stretch (0) ------
+        $this->add_control(
+            'effect_coverflow_heading', [
+                'label' => __('Coverflow options', 'e-addons'),
+                'type' => Controls_Manager::HEADING,
+                'condition' => [
+                    $this->get_control_id('effects') => ['coverflow']
+                ]
+            ]
+        );
         $this->add_control(
                 'coverflow_stretch', [
             'label' => __('Coverflow Stretch', 'e-addons'),
@@ -149,7 +198,6 @@ class Carousel extends Base {
             'step' => 1,
             'frontend_available' => true,
             'condition' => [
-                $this->get_control_id('effects_options_popover') => 'yes',
                 $this->get_control_id('effects') => ['coverflow']
             ]
                 ]
@@ -168,28 +216,62 @@ class Carousel extends Base {
             'step' => 0.1,
             'frontend_available' => true,
             'condition' => [
-                $this->get_control_id('effects_options_popover') => 'yes',
                 $this->get_control_id('effects') => ['coverflow']
             ]
                 ]
         );
-
-        $this->parent->end_popover();
         $this->add_control(
-                'direction_slider', [
-            'label' => __('Direction', 'e-addons'),
-            'type' => Controls_Manager::SELECT,
-            'options' => [
-                'horizontal' => __('Horizontal', 'e-addons'),
-                'vertical' => __('Vertical', 'e-addons'),
-            ],
-            'default' => 'horizontal',
-            'prefix_class' => 'e-add-carousel-direction-',
-            'frontend_available' => true,
-            'render_type' => 'template',
-            'separator' => 'before'
-                ]
+            'slideShadows', [
+        'label' => __('Slide Shadows', 'e-addons'),
+        'type' => Controls_Manager::SWITCHER,
+        'default' => 'yes',
+        'frontend_available' => true,
+        'condition' => [
+            $this->get_control_id('effects') => ['cube', 'flip', 'coverflow']
+        ]
+            ]
         );
+        
+
+        // Directions of slider
+        $this->add_control(
+            'direction_slider', [
+                'label' => __('Direction', 'e-addons'),
+                'type' => Controls_Manager::CHOOSE,
+                'toggle' => false,
+                'options' => [
+                    'horizontal' => [
+                        'title' => __('Horizontal', 'e-addons'),
+                        'icon' => 'fas fa-arrows-alt-h',
+                    ],
+                    'vertical' => [
+                        'title' => __('Vertical', 'e-addons'),
+                        'icon' => 'fas fa-arrows-alt-v',
+                    ]
+                ],
+                'default' => 'horizontal',
+                'prefix_class' => 'e-add-carousel-direction-',
+                'frontend_available' => true,
+                'render_type' => 'template',
+                'separator' => 'before'
+            ]
+        );
+        /*$this->add_control(
+            'direction_slider', [
+                'label' => __('Direction', 'e-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'horizontal' => __('Horizontal', 'e-addons'),
+                    'vertical' => __('Vertical', 'e-addons'),
+                ],
+                'toggle' => false,
+                'default' => 'horizontal',
+                'prefix_class' => 'e-add-carousel-direction-',
+                'frontend_available' => true,
+                'render_type' => 'template',
+                'separator' => 'before'
+            ]
+        );*/
         $this->add_responsive_control(
                 'height_container', [
             'label' => __('Height of viewport', 'e-addons'),
@@ -231,7 +313,7 @@ class Carousel extends Base {
             'step' => 1,
             'frontend_available' => true,
             'condition' => [
-                $this->get_control_id('effects') => 'slide',
+                $this->get_control_id('effects') => ['slide','coverflow'],
             ]
                 ]
         );
@@ -312,6 +394,17 @@ class Carousel extends Base {
         );
         // --------- Navigations Arrow Options
         $this->add_control(
+            'heading_navigation_arrow_color', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="fas fa-tint"></i>' . __('Color', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+            ]
+        );
+        $this->add_control(
                 'navigation_arrow_color', [
             'label' => __('Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
@@ -342,6 +435,17 @@ class Carousel extends Base {
                 ]
         );
         // -------------------- STYLE
+        $this->add_control(
+            'heading_navigation_transform', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="fas fa-vector-square"></i> <b>' . __('Transform', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+            ]
+        );
         $this->add_control(
                 'navigation_transform_popover', [
             'label' => __('Transform', 'e-addons'),
@@ -917,6 +1021,22 @@ class Carousel extends Base {
             ]
                 ]
         );
+
+
+
+        
+        $this->add_control(
+            'heading_bullet_color', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="far fa-circle"></i> <b>' . __('Normal', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'condition' => [
+                    $this->get_control_id('usePagination') => 'yes',
+                    $this->get_control_id('pagination_type') => 'bullets',
+                ]
+            ]
+        );
         $this->add_control(
                 'bullets_color', [
             'label' => __('Bullets Color', 'e-addons'),
@@ -942,6 +1062,19 @@ class Carousel extends Base {
             ]
                 ]
         );
+        
+        $this->add_control(
+            'heading_current_bullet_color', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="fas fa-circle"></i> <b>' . __('Active', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'condition' => [
+                    $this->get_control_id('usePagination') => 'yes',
+                    $this->get_control_id('pagination_type') => 'bullets',
+                ]
+            ]
+        );
         $this->add_control(
                 'current_bullet_color', [
             'label' => __('Active bullet color', 'e-addons'),
@@ -957,16 +1090,35 @@ class Carousel extends Base {
             ]
                 ]
         );
-        $this->add_group_control(
-                Group_Control_Border::get_type(), [
-            'name' => 'border_current_bullet',
-            'label' => __('Active bullet border', 'e-addons'),
-            'selector' => '{{WRAPPER}} .swiper-pagination-bullets .swiper-pagination-bullet-active:not(.nav--ubax):not(.nav--magool), {{WRAPPER}} .swiper-pagination-bullets.nav--ubax .swiper-pagination-bullet-active::after',
-            'condition' => [
-                $this->get_control_id('usePagination') => 'yes',
-                $this->get_control_id('pagination_type') => 'bullets',
-            ]
+        $this->add_control(
+            'border_color_current_bullet',
+            [
+                'type' => Controls_Manager::COLOR,
+                'label' => __('Active bullet border', 'e-addons'),
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullets .swiper-pagination-bullet-active:not(.nav--ubax):not(.nav--magool), {{WRAPPER}} .swiper-pagination-bullets.nav--ubax .swiper-pagination-bullet-active::after' => 'border-color: {{VALUE}}',
+                ],
+                'condition' => [
+                    $this->get_control_id('usePagination') => 'yes',
+                    $this->get_control_id('pagination_type') => 'bullets',
                 ]
+            ]
+        );
+     
+
+
+        
+        $this->add_control(
+            'heading_pagination_transform', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="fas fa-vector-square"></i> <b>' . __('Transform', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'condition' => [
+                    $this->get_control_id('usePagination') => 'yes',
+                    $this->get_control_id('pagination_type') => 'bullets',
+                ]
+            ]
         );
         // -------------- Transform
         $this->add_control(
@@ -976,6 +1128,7 @@ class Carousel extends Base {
             'label_off' => __('Default', 'e-addons'),
             'label_on' => __('Custom', 'e-addons'),
             'return_value' => 'yes',
+            'separrator' => 'before',
             'condition' => [
                 $this->get_control_id('usePagination') => 'yes',
                 $this->get_control_id('pagination_type') => 'bullets',
