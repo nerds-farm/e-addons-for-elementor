@@ -71,26 +71,11 @@ class Query extends Base_Widget {
     public function get_style_depends() {
         
         return [ 
-            'font-awesome','elementor-icons-fa-solid','animatecss',
+        /*'font-awesome-5-all',*/'font-awesome','elementor-icons-fa-solid','animatecss',
             
         ];
     }
-    /*protected function _register_skins() {                
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Grid( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Carousel( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Dualslider( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Gridfilters( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Timeline( $this ) );
-        
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Gridtofullscreen3d( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Crossroadsslideshow( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Nextpost( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Threed( $this ) );
-        $this->add_skin( new \EAddonsForElementor\Modules\Query\Skins\Triggerscroll( $this ) );
-        
-        // $this->add_skin( new Skins\Skin_Smoothscroll( $this ) );        
-        
-    }*/
+    
     
     //@ questo metodo restituisce la query in corso
     public function get_query() {
