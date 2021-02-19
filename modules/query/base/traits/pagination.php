@@ -25,7 +25,7 @@ trait Pagination {
             'type' => Controls_Manager::SWITCHER,
             'condition' => [
                 //@p il massimo è che la paginazione funzioni con tutti gli skins...
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'gridtofullscreen3d'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'gridtofullscreen3d', 'table'],
                 'infiniteScroll_enable' => '',
                 'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
             ],
@@ -38,7 +38,7 @@ trait Pagination {
             'separator' => 'before',
             'frontend_available' => true,
             'condition' => [
-                '_skin' => ['', 'grid', 'filters', 'gridtofullscreen3d'],
+                '_skin' => ['', 'grid', 'filters', 'gridtofullscreen3d', 'table'],
                 'pagination_enable!' => ''
             ],
                 ]
