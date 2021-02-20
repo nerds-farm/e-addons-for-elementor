@@ -10,6 +10,11 @@ trait Plugin {
     public static $plugins_active = [];
 
     public static function is_plugin_active($plugin) {
+        
+        if ($plugin == 'elementor-pro') {
+            return defined('ELEMENTOR_PRO__FILE__');
+        }
+        
         if (!empty(self::$plugins_active[$plugin]) && self::$plugins_active[$plugin]) {
             return true;
         }

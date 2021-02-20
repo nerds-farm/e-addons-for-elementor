@@ -581,7 +581,7 @@ class Table extends Base {
             'raw' => '<i class="fas fa-mouse-pointer"></i> <b>' . __('Buttons', 'e-addons') . '</b>',
             'content_classes' => 'e-add-inner-heading',
             'separator' => 'before',
-            'condition' => $conditions_datatables_filter,
+            'condition' => $conditions_datatables_buttons,
                 ]
         );
         $selector_id = 'datatables_buttons';
@@ -594,7 +594,7 @@ class Table extends Base {
             'condition' => $conditions_datatables_buttons,
                 ]
         );
-        $this->add_special_controls($selector, $selector_id . '_normal');
+        $this->add_special_controls($selector, $selector_id . '_normal', $conditions_datatables_buttons);
         $this->end_controls_tab();
         $this->start_controls_tab(
                 $selector_id . '_hover', [
@@ -602,7 +602,7 @@ class Table extends Base {
             'condition' => $conditions_datatables_buttons,
                 ]
         );
-        $this->add_special_controls($selector . ':hover', $selector_id . '_hover');
+        $this->add_special_controls($selector . ':hover', $selector_id . '_hover', $conditions_datatables_buttons);
         $this->end_controls_tab();
         $this->end_controls_tabs();
         $this->add_common_controls($selector, $selector_id, $conditions_datatables_buttons);
