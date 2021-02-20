@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  * Elementor Control Query
  */
 class E_Query extends Control_Select2 {
-    
+
     const CONTROL_TYPE = 'e-query';
 
     /**
@@ -51,16 +51,17 @@ class E_Query extends Control_Select2 {
      * @return array Control default settings.
      */
     public function get_default_settings() {
-        return [
-            'dynamic' => [
-                'active' => true,
-                'categories' => [
-                    TagsModule::BASE_GROUP,
-                    TagsModule::TEXT_CATEGORY,
-                    TagsModule::NUMBER_CATEGORY,
-                ],
+        $settings = parent::get_default_settings();
+        $settings['sortable'] = true;
+        $settings['dynamic'] = [
+            'active' => true,
+            'categories' => [
+                TagsModule::BASE_GROUP,
+                TagsModule::TEXT_CATEGORY,
+                TagsModule::NUMBER_CATEGORY,
             ],
         ];
+        return $settings;
     }
 
     /**
@@ -104,6 +105,15 @@ class E_Query extends Control_Select2 {
     public function elementor_editor_after_enqueue_scripts() {
         wp_enqueue_style('e-addons-editor-control-e-query');
         wp_enqueue_script('e-addons-editor-control-e-query');
+    }
+
+    /**
+     * Enqueue control scripts and styles.
+     */
+    public function enqueue() {
+        if ($this->get_settings('sortable')) {
+            wp_enqueue_script('jquery-ui-sortable');
+        }
     }
 
 }

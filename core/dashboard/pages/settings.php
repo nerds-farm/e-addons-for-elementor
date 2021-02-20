@@ -10,7 +10,7 @@ if (!current_user_can('manage_options')) {
 \EAddonsForElementor\Plugin::instance()->assets_manager->enqueue_icons();
 
 $modules_manager = \EAddonsForElementor\Plugin::instance()->modules_manager;
-$folders = array('widgets', 'extensions', 'tags', 'skins', 'globals', 'actions', 'shortcodes', 'tweaks', 'fields', 'controls');
+$folders = array('widgets', 'extensions', 'tags', 'skins', 'globals', 'actions', 'shortcodes', 'tweaks', 'fields', 'controls', 'controls/groups');
 $e_addons_plugins = \EAddonsForElementor\Plugin::instance()->get_addons(true);
 ?>
 <div class="wrap nav-menus-php">
@@ -157,6 +157,11 @@ $e_addons_plugins = \EAddonsForElementor\Plugin::instance()->get_addons(true);
                                                             <?php
                                                             $has_features = false;
                                                             foreach ($folders as $folder) {
+                                                                
+                                                                $title = str_replace(DIRECTORY_SEPARATOR, ' ', $folder);
+                                                                $title = ucwords($title);
+                                                                $title = ($folder == 'tags') ? 'Dynamic Tags' : $title;
+                                                                
                                                                 $has_features_folder = false;
                                                                 $expr = $e_plugin['path'] . '/modules/' . $amod . '/' . $folder . '/*.php';
                                                                 $files = glob($expr);
@@ -164,7 +169,7 @@ $e_addons_plugins = \EAddonsForElementor\Plugin::instance()->get_addons(true);
                                                                 if (!empty($files)) {
                                                                     ?>
                                                                     <li id="e_addon_plugin_module_<?php echo $e_plugin['TextDomain'] . '_' . $amod . '_' . $folder; ?>">
-                                                                        <h4 class="e-settings-title"><?php echo ($folder == 'tags') ? 'Dynamic Tags' : ucfirst($folder); ?></h4>
+                                                                        <h4 class="e-settings-title"><?php echo $title; ?></h4>
                                                                         <ul>
                                                                             <?php
                                                                             foreach ($files as $afile) {
