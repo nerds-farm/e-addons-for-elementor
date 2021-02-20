@@ -185,7 +185,7 @@ class Timeline extends Base {
         $this->start_controls_section(
                 'section_style_timeline',
                 [
-                    'label' => __('Timeline', 'e-addons'),
+                    'label' => '<i class="eaddicon eadd-queryviews-timeline"></i> '.__('Timeline', 'e-addons'),
                     'tab' => Controls_Manager::TAB_STYLE,
                 ]
         );
@@ -194,7 +194,7 @@ class Timeline extends Base {
         // ------------------- LINE - progress
         $this->add_control(
                 'timeline_heading_line', [
-            'label' => __('Line', 'e-addons'),
+            'label' => __('Style', 'e-addons'),
             'type' => Controls_Manager::HEADING,
             'separator' => 'before',
                 ]
@@ -248,7 +248,7 @@ class Timeline extends Base {
             ]
                 ]
         );
-        $this->add_responsive_control(
+        $this->add_control(
                 'timeline_borderimage_size', [
             'label' => __('Border image size', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
@@ -288,7 +288,7 @@ class Timeline extends Base {
         );
         $this->add_control(
                 'timeline_activeline_size', [
-            'label' => __('Active Line size', 'e-addons'),
+            'label' => __('Active: Line size', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
             'default' => [
                 'size' => '',
@@ -308,7 +308,7 @@ class Timeline extends Base {
         );
         $this->add_control(
                 'timeline_activebg_color_content', [
-            'label' => __('Panel Background Color', 'e-addons'),
+            'label' => __('Active: Panel Background Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 '{{WRAPPER}} .e-add-timeline__block.e-add-timeline__focus .e-add-timeline__content' => 'background-color: {{VALUE}};',
@@ -319,7 +319,7 @@ class Timeline extends Base {
         );
         $this->add_control(
                 'timeline_activeborderimage_size', [
-            'label' => __('Border image size', 'e-addons'),
+            'label' => __('Active: Border image size', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
             'default' => [
                 'size' => '',
@@ -343,16 +343,17 @@ class Timeline extends Base {
 
         // ------------------- CONTENT PANEL
         $this->add_control(
-                'timeline_heading_panelcontent', [
-            'label' => __('Panel Content', 'e-addons'),
-            'type' => Controls_Manager::HEADING,
-            'separator' => 'before',
-                ]
+            'timeline_heading_panelcontent', [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="far fa-square"></i> <b>' . __('Panel Content', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'separator' => 'before',
+            ]
         );
-
         $this->add_responsive_control(
                 'timeline_content_padding', [
-            'label' => '<i class="fas fa-arrows-alt"></i>&nbsp;&nbsp;' . __('Content Padding', 'e-addons'),
+            'label' => __('Content Padding', 'e-addons'),
             'type' => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em', '%'],
             'selectors' => [
@@ -360,30 +361,27 @@ class Timeline extends Base {
             ]
                 ]
         );
-        $this->add_control(
-                'timeline_radius_content', [
-            'label' => __('Content Border Radius', 'e-addons'),
-            'type' => Controls_Manager::SLIDER,
-            'default' => [
-                'size' => '',
-                'unit' => 'px',
-            ],
-            'size_units' => ['px', '%'],
-            'range' => [
-                '%' => [
-                    'min' => 0,
-                    'max' => 50,
+        $this->add_responsive_control(
+            'timeline_radius_content', [
+                'label' => __('Content Border Radius', 'e-addons'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    '%' => [
+                        'min' => 0,
+                        'max' => 50,
+                    ],
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ]
                 ],
-                'px' => [
-                    'min' => 0,
-                    'max' => 100,
-                ]
-            ],
-            'selectors' => [
-                '{{WRAPPER}} .e-add-timeline__content' => 'border-radius: {{SIZE}}{{UNIT}};',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-timeline__content' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    ]
             ]
-                ]
         );
+        
         $this->add_control(
                 'timeline_arrows_size', [
             'label' => __('Content arrows size', 'e-addons'),

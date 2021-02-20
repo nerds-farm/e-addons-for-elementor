@@ -397,7 +397,7 @@ class Carousel extends Base {
             'heading_navigation_arrow_color', [
                 'type' => Controls_Manager::RAW_HTML,
                 'show_label' => false,
-                'raw' => '<i class="fas fa-tint"></i>' . __('Color', 'e-addons') . '</b>',
+                'raw' => '<i class="fas fa-tint"></i> ' . __('Color', 'e-addons') . '</b>',
                 'content_classes' => 'e-add-inner-heading',
                 'condition' => [
                     $this->get_control_id('useNavigation') => 'yes'
@@ -1624,16 +1624,31 @@ class Carousel extends Base {
         // ----------- Free Mode ------
         $this->add_control(
                 'freeMode', [
-            'label' => __('Free Mode', 'e-addons'),
+            'label' => __('Use Free Mode', 'e-addons'),
             'description' => __('If true then slides will not have fixed positions', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true
                 ]
         );
         $this->add_control(
-                'freeModeMomentum', [
-            'label' => __('Free Mode Momentum', 'e-addons'),
-            'description' => __('If true, then slide will keep moving for a while after you release it', 'e-addons'),
+            'freeModeMinimumVelocity', [
+                'label' => __('Velocity', 'e-addons'),
+                'description' => __('Minimum touchmove-velocity required to trigger free mode momentum', 'e-addons'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 0.02,
+                'min' => 0,
+                'max' => 1,
+                'step' => 0.01,
+                'frontend_available' => true,
+                'condition' => [
+                    $this->get_control_id('freeMode') => 'yes',
+                ]
+            ]
+        );
+        $this->add_control(
+            'freeModeSticky', [
+            'label' => __('Sticky', 'e-addons'),
+            'description' => __('Set \'yes\' to enable snap to slides positions in free mode', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
             'condition' => [
@@ -1642,8 +1657,31 @@ class Carousel extends Base {
                 ]
         );
         $this->add_control(
+            'freeModeMomentum_heading', [
+                'label' => __('FreeMode Momentum', 'e-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+                'condition' => [
+                    $this->get_control_id('freeMode') => 'yes',
+                ]
+            ]
+        );
+        $this->add_control(
+                'freeModeMomentum', [
+            'label' => __('Enable Momentum', 'e-addons'),
+            'description' => __('If true, then slide will keep moving for a while after you release it', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'frontend_available' => true,
+            
+            'condition' => [
+                $this->get_control_id('freeMode') => 'yes',
+            ]
+                ]
+        );
+        
+        $this->add_control(
                 'freeModeMomentumRatio', [
-            'label' => __('Free Mode Momentum Ratio', 'e-addons'),
+            'label' => __('Ratio', 'e-addons'),
             'description' => __('Higher value produces larger momentum distance after you release slider', 'e-addons'),
             'type' => Controls_Manager::NUMBER,
             'default' => 1,
@@ -1659,7 +1697,7 @@ class Carousel extends Base {
         );
         $this->add_control(
                 'freeModeMomentumVelocityRatio', [
-            'label' => __('Free Mode Momentum Velocity Ratio', 'e-addons'),
+            'label' => __('Velocity Ratio', 'e-addons'),
             'description' => __('Higher value produces larger momentum velocity after you release slider', 'e-addons'),
             'type' => Controls_Manager::NUMBER,
             'default' => 1,
@@ -1675,19 +1713,20 @@ class Carousel extends Base {
         );
         $this->add_control(
                 'freeModeMomentumBounce', [
-            'label' => __('Free Mode Momentum Bounce', 'e-addons'),
+            'label' => __('Bounce', 'e-addons'),
             'description' => __('Set to false if you want to disable momentum bounce in free mode', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'default' => 'yes',
             'frontend_available' => true,
             'condition' => [
                 $this->get_control_id('freeMode') => 'yes',
+                $this->get_control_id('freeModeMomentum') => 'yes'
             ]
                 ]
         );
         $this->add_control(
                 'freeModeMomentumBounceRatio', [
-            'label' => __('Free Mode Momentum Bounce Ratio', 'e-addons'),
+            'label' => __('Bounce Ratio', 'e-addons'),
             'description' => __('Higher value produces larger momentum bounce effect', 'e-addons'),
             'type' => Controls_Manager::NUMBER,
             'default' => 1,
@@ -1697,36 +1736,13 @@ class Carousel extends Base {
             'frontend_available' => true,
             'condition' => [
                 $this->get_control_id('freeMode') => 'yes',
+                $this->get_control_id('freeModeMomentum') => 'yes',
                 $this->get_control_id('freeModeMomentumBounce') => 'yes'
             ]
                 ]
         );
-        $this->add_control(
-                'freeModeMinimumVelocity', [
-            'label' => __('Free Mode Momentum Velocity Ratio', 'e-addons'),
-            'description' => __('Minimum touchmove-velocity required to trigger free mode momentum', 'e-addons'),
-            'type' => Controls_Manager::NUMBER,
-            'default' => 0.02,
-            'min' => 0,
-            'max' => 1,
-            'step' => 0.01,
-            'frontend_available' => true,
-            'condition' => [
-                $this->get_control_id('freeMode') => 'yes',
-            ]
-                ]
-        );
-        $this->add_control(
-                'freeModeSticky', [
-            'label' => __('Free Mode Sticky', 'e-addons'),
-            'description' => __('Set \'yes\' to enable snap to slides positions in free mode', 'e-addons'),
-            'type' => Controls_Manager::SWITCHER,
-            'frontend_available' => true,
-            'condition' => [
-                $this->get_control_id('freeMode') => 'yes',
-            ]
-                ]
-        );
+        
+        
 
         $this->end_controls_tab();
 
@@ -1773,9 +1789,10 @@ class Carousel extends Base {
         );
         $this->add_control(
                 'slidesPerColumnFill', [
-            'label' => __('Slides per Column Fill', 'e-addons'),
+            'label' => '<i class="fas fa-th-large"></i> '.__('Slides per Column Fill', 'e-addons'),
             'description' => __('Tranisition effect from the slides.', 'e-addons'),
             'type' => Controls_Manager::SELECT,
+            'separator' => 'before',
             'options' => [
                 'row' => __('Row', 'e-addons'),
                 'column' => __('Column', 'e-addons'),
@@ -1787,7 +1804,7 @@ class Carousel extends Base {
         // --------------- loop ------
         $this->add_control(
                 'loop', [
-            'label' => __('Loop', 'e-addons'),
+            'label' => '<i class="fas fa-infinity"></i> '.__('Loop', 'e-addons'),
             'description' => __('Set to true to enable continuous loop mode', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1797,7 +1814,7 @@ class Carousel extends Base {
         // --------------- centerSlides ------
         $this->add_control(
                 'centeredSlides', [
-            'label' => __('Centered Slides', 'e-addons'),
+            'label' => '<i class="fas fa-plus"></i> '.__('Centered Slides', 'e-addons'),
             'description' => __('When enabled active slide will be centered, not on the left as default.', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1822,7 +1839,7 @@ class Carousel extends Base {
         // --------------- autoHeight ------
         $this->add_control(
                 'autoHeight', [
-            'label' => __('Auto Height', 'e-addons'),
+            'label' => '<i class="fas fa-ruler-vertical"></i> '.__('Auto Height', 'e-addons'),
             'description' => __('Set to true and slider wrapper will adopt its height to the height of the currently active slide.', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1832,7 +1849,7 @@ class Carousel extends Base {
         // --------------- grabCursor ------	
         $this->add_control(
                 'grabCursor', [
-            'label' => __('Grab Cursor', 'e-addons'),
+            'label' => '<i class="fas fa-hand-rock"></i> '.__('Grab Cursor', 'e-addons'),
             'description' => __('This option may a little improve desktop usability. If enabled user will see the "grab" cursor when hover on Swiper.', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1842,7 +1859,7 @@ class Carousel extends Base {
         // --------------- Keyboard ------
         $this->add_control(
                 'keyboardControl', [
-            'label' => __('Keyboard Control', 'e-addons'),
+            'label' => '<i class="fas fa-keyboard"></i> '.__('Keyboard Control', 'e-addons'),
             'description' => __('Enable keyboard control', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1851,7 +1868,7 @@ class Carousel extends Base {
         // --------------- Wheel ------
         $this->add_control(
                 'mousewheelControl', [
-            'label' => __('Mousewheel Control', 'e-addons'),
+            'label' => '<i class="fas fa-mouse"></i> '.__('Mousewheel Control', 'e-addons'),
             'description' => __('Enables navigation through slides using mouse wheel', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,
@@ -1881,7 +1898,7 @@ class Carousel extends Base {
           ); */
         $this->add_control(
                 'reverseDirection', [
-            'label' => __('Reverse Direction RTL', 'e-addons'),
+            'label' => '<i class="fas fa-map-signs"></i> '.__('Reverse Direction RTL', 'e-addons'),
             'description' => __('Enables autoplay in reverse direction.', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'frontend_available' => true,

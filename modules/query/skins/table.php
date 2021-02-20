@@ -56,7 +56,7 @@ class Table extends Base {
 
         $this->start_controls_section(
                 'section_table', [
-            'label' => '<i class="eaddicon eadd-skin-table"></i> ' . __('Table', 'e-addons'),
+            'label' => '<i class="eaddicon eadd-skin-table"></i> '. __('Table', 'e-addons'),
             'tab' => Controls_Manager::TAB_CONTENT,
                 ]
         );
@@ -288,7 +288,7 @@ class Table extends Base {
         $this->start_controls_section(
                 'section_style_table',
                 [
-                    'label' => __('Table', 'e-addons'),
+                    'label' => '<i class="eaddicon eadd-skin-table"></i> ' .__('Table', 'e-addons'),
                     'tab' => Controls_Manager::TAB_STYLE,
                 ]
         );

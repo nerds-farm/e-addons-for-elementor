@@ -180,7 +180,7 @@ class Dualslider extends Carousel {
             ],
             'selectors' => [
                 '{{WRAPPER}}.e-add-style-dualslider-position-column-reverse .e-add-dualslider-thumbnails' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                '{{WRAPPER}}.e-add-style-dualslider-position-columns .e-add-dualslider-thumbnails' => 'margin-top: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}}.e-add-style-dualslider-position-column .e-add-dualslider-thumbnails' => 'margin-top: {{SIZE}}{{UNIT}};',
                 '{{WRAPPER}}.e-add-style-dualslider-position-row-reverse .e-add-dualslider-thumbnails' => 'margin-right: {{SIZE}}{{UNIT}};',
                 '{{WRAPPER}}.e-add-style-dualslider-position-row .e-add-dualslider-thumbnails' => 'margin-left: {{SIZE}}{{UNIT}};'
             ]
