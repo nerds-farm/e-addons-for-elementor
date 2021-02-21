@@ -637,7 +637,7 @@ class Table extends Base {
         ]);
         ?>
         <?php
-        echo '<table ' . $this->parent->get_render_attribute_string('eaddposts_container') . '">';
+        echo '<table ' . $this->parent->get_render_attribute_string('eaddposts_container') . '>';
 
         $hide_header = $this->parent->get_settings($this->get_id() . '_hide_header');
         if (!$hide_header) {

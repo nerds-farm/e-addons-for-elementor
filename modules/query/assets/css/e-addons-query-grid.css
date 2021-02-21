@@ -13,11 +13,6 @@
     line-height:1
 }*/
 
-
-
-
-
-
 /* questo nasconde il valore "ratio" che ho scritto nellla regola content: di :after per gestirla da js*/
 /* forse sarebbe meglio usare un --var ma per ora va bene così .... */
 .elementor-widget-e-query-posts:after,
@@ -27,17 +22,6 @@
 .elementor-widget-e-query-itemslist:after{
 	display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* ALIGNMENTS */
 /*--------------------------------------*/
@@ -145,7 +129,72 @@
 }*/
 
 
-
+/*--------------------------------------*/
+.e-add-skin-table .e-add-item_image,
+.e-add-skin-table .e-add-item_avatar{
+	display: table-cell;
+}
+/*--------------------------------------*/
+.e-add-skin-table .e-add-align-left .e-add-item_image,
+.e-add-skin-table .e-add-align-left .e-add-item_avatar,
+.e-add-skin-table .e-add-align-left .e-add-post-author{
+	text-align: left;
+}
+.e-add-skin-table .e-add-align-right .e-add-item_image,
+.e-add-skin-table .e-add-align-right .e-add-item_avatar,
+.e-add-skin-table .e-add-align-right .e-add-post-author{
+	text-align: right;
+}
+.e-add-skin-table .e-add-align-center .e-add-item_image,
+.e-add-skin-table .e-add-align-center .e-add-item_avatar,
+.e-add-skin-table .e-add-align-center .e-add-post-author{
+	text-align: center;
+}
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-left .e-add-item_image,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-left .e-add-item_avatar,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-left .e-add-post-author{
+	text-align: left;
+}
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-right .e-add-item_image,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-right .e-add-item_avatar,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-right .e-add-post-author{
+	text-align: right;
+}
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-center .e-add-item_image,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-center .e-add-item_avatar,
+[data-elementor-device-mode="desktop"] .e-add-skin-table .e-add-align-desktop-center .e-add-post-author{
+	text-align: center;
+}
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-left .e-add-item_image,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-left .e-add-item_avatar,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-left .e-add-post-author{
+	text-align: left;
+}
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-right .e-add-item_image,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-right .e-add-item_avatar,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-right .e-add-post-author{
+	text-align: right;
+}
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-center .e-add-item_image,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-center .e-add-item_avatar,
+[data-elementor-device-mode="tablet"] .e-add-skin-table .e-add-align-tablet-center .e-add-post-author{
+	text-align: center;
+}
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-left .e-add-item_image,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-left .e-add-item_avatar,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-left .e-add-post-author{
+	text-align: left;
+}
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-right .e-add-item_image,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-right .e-add-item_avatar,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-right .e-add-post-author{
+	text-align: right;
+}
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-center .e-add-item_image,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-center .e-add-item_avatar,
+[data-elementor-device-mode="mobile"] .e-add-skin-table .e-add-align-mobile-center .e-add-post-author{
+	text-align: center;
+}
 
 
 
