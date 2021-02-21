@@ -659,7 +659,7 @@ class Table extends Base {
 
     protected function render_loop_end() {
         echo '</tbody></table>';
-        echo '</div>';
+        //echo '</div>';
     }
 
     public function render_item_start($key = 'post') {

@@ -1,6 +1,6 @@
 
 /* in caso di item vuoti li nascondo */
-.e-add-posts-container .e-add-post-item .e-add-item:empty{
+.e-add-posts-container:not(.e-add-skin-table) .e-add-post-item .e-add-item:empty{
 	display: none !important;
 }
 /*--------------------------------------*/
@@ -21,14 +21,6 @@
 .e-add-item > *{
 	margin: 0;
 }
-
-
-
-
-
-
-
-
 
 /*-------------------------------------------*/
 /* --------- OVERLAY image & hover* -------- */
