@@ -35,7 +35,7 @@ class Table extends Base {
     }
 
     public function get_style_depends() {
-        return ['datatables-jquery', 'datatables-buttons', 'datatables-responsive', 'datatables-fixedHeader'];
+        return ['e-addons-common-query','datatables-jquery', 'datatables-buttons', 'datatables-responsive', 'datatables-fixedHeader'];
     }
 
     public function get_id() {
@@ -624,9 +624,20 @@ class Table extends Base {
     public function get_container_class() {
         return 'e-add-skin-' . $this->get_id();
     }
-
+    
     protected function render_loop_start() {
-        echo '<table class="e-table ' . $this->get_container_class() . '">';
+        $this->parent->add_render_attribute('eaddposts_container', [
+            'class' => [
+                'e-table',
+                'e-add-posts-container',
+                'e-add-posts',
+                $this->get_scrollreveal_class(), //@p prevedo le classi per generare il reveal,
+                $this->get_container_class(), //@p una classe personalizzata per lo skin
+            ],
+        ]);
+        ?>
+        <?php
+        echo '<table ' . $this->parent->get_render_attribute_string('eaddposts_container') . '">';
 
         $hide_header = $this->parent->get_settings($this->get_id() . '_hide_header');
         if (!$hide_header) {
@@ -648,6 +659,7 @@ class Table extends Base {
 
     protected function render_loop_end() {
         echo '</tbody></table>';
+        echo '</div>';
     }
 
     public function render_item_start($key = 'post') {
@@ -683,5 +695,5 @@ class Table extends Base {
     protected function render_repeateritem_end() {
         echo '</td>';
     }
-
+    
 }

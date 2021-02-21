@@ -39,7 +39,7 @@ trait Hover {
                             [
                                 'name' => '_skin',
                                 'operator' => 'in',
-                                'value' => ['grid', 'filters', 'carousel', 'dualslider'],
+                                'value' => ['grid', 'filters', 'carousel', 'dualslider','justifiedgrid'],
                             ]
                         ]
                     ]
