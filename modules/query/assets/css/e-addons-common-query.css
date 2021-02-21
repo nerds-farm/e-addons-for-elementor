@@ -589,6 +589,7 @@ li.e-add-term-item{
 	line-height: 1;
   }
   
+  /* table skin */
   .dataTables_wrapper table.dataTable thead .sorting:after{
 	content: '\f0dc';
   }
