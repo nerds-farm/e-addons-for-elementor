@@ -582,6 +582,12 @@ li.e-add-term-item{
   }
   
   /* table skin */
+  .e-add-posts-container.e-add-skin-table .e-add-post-image{
+	display: inline-block;
+  }/*
+     .e-add-posts-container.e-add-skin-table .e-add-item_image{
+	display: flex;
+  } */
   .dataTables_wrapper table.dataTable thead .sorting:after{
 	content: '\f0dc';
   }

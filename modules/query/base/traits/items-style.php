@@ -82,7 +82,7 @@ trait Items_Style {
                     'default' => '',
                     'toggle' => true,
                     'selectors' => [
-                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'justify-content: {{VALUE}};',
+                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'display: flex; justify-content: {{VALUE}};',
                     ],
                     'conditions' => [
                         'terms' => [
