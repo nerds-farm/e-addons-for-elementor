@@ -114,14 +114,10 @@
 .eadd-qr-bars-code:before { content: '\e83b'; } /* '' */
 .eadd-pure-php:before { content: '\e83c'; } /* '' */
 .eadd-queryviews-carousel:before { content: '\e83d'; } /* '' */
-.eadd-queryviews-3d:before { content: '\e83e'; } /* '' */
 .eadd-queryviews-dualslider:before { content: '\e83f'; } /* '' */
-.eadd-queryviews-crossslider:before { content: '\e840'; } /* '' */
 .eadd-queryviews-grid:before { content: '\e841'; } /* '' */
 .eadd-queryviews-filters:before { content: '\e842'; } /* '' */
 .eadd-queryviews-next-post:before { content: '\e843'; } /* '' */
-.eadd-queryviews-gridtofullscreen:before { content: '\e844'; } /* '' */
-.eadd-queryviews-triggerscroll:before { content: '\e845'; } /* '' */
 .eadd-queryviews-timeline:before { content: '\e846'; } /* '' */
 .eadd-remote-rest-api:before { content: '\e847'; } /* '' */
 .eadd-remote-iframe:before { content: '\e848'; } /* '' */

@@ -37,6 +37,8 @@ trait Custommeta {
                     ],
                 ]
         );
+
+        //@p qui seleiono il tipo di sorgente
         $target->add_control(
             'custommeta_source_querytype', [
                 'label' => __('Custom Field key type from:', 'e-addons'),
@@ -55,21 +57,6 @@ trait Custommeta {
             ]
         );
         // @p custommeta_source from meta field ..non più tramite acf
-        /*$target->add_control(
-            'custommeta_source_key', [
-                'label' => __('Custom Field', 'e-addons'),
-                'type' => 'e-query',
-                'placeholder' => __('Search Post Custom Field', 'e-addons'),
-                'label_block' => true,
-                'query_type' => 'metas',
-                'object_type' => $type_q, //'post', //'term',//'user',//'post', //$type_q,,
-                'default' => '',
-                'condition' => [
-                    'query_type' => 'custommeta_source',
-                    'custommeta_source_querytype' => ''
-                ],
-            ]
-        );*/
         // ---------------- post
         $target->add_control(
             'custommeta_source_key_post', [
@@ -134,37 +121,7 @@ trait Custommeta {
                 ],
             ]
         );
-        // ---------------- attachment
-        /*$target->add_control(
-            'custommeta_source_key', [
-                'label' => __('Custom Field', 'e-addons'),
-                'type' => 'e-query',
-                'placeholder' => __('Search Media Attachment Custom Field', 'e-addons'),
-                'label_block' => true,
-                'query_type' => 'metas',
-                'object_type' => 'attachment',
-                'default' => '',
-                'condition' => [
-                    'query_type' => 'custommeta_source',
-                    'custommeta_source_querytype' => 'attachment'
-                ],
-            ]
-        );*/
-        /*
-          $target->add_control(
-          'custommeta_source_key', [
-          'label' => __('Custommeta Field Key', 'e-addons'),
-          'type'      => 'e-query',
-          'placeholder'   => __( 'Meta key custommeta_source', 'e-addons' ),
-          'label_block'   => true,
-          'query_type' => 'options',
-          'default' => '',
-          'condition' => [
-          'query_type' => 'custommeta_source',
-          ],
-          ]
-          );
-         */
+        
     }
 
     // -------------- Custom Fields for Posts/Users/Terms ---------

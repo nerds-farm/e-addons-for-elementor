@@ -217,45 +217,6 @@ class Query extends Base_Widget {
                 ],
             ]
         );
-        // skin: gridtofullscreen3d
-        $this->add_control(
-            'skin_dis_smoothscroll',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'show_label' => false,
-                'raw' => '<i class="eaddicon-skin eadd-queryviews-triggerscroll"></i>',
-                'content_classes' => 'e-add-skin-dis',
-                'condition' => [
-                    '_skin' => 'smoothscroll'
-                ],
-            ]
-        );
-        // skin: gridtofullscreen3d
-        $this->add_control(
-            'skin_dis_gridtofullscreen3d',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'show_label' => false,
-                'raw' => '<i class="eaddicon-skin eadd-queryviews-gridtofullscreen"></i>',
-                'content_classes' => 'e-add-skin-dis',
-                'condition' => [
-                    '_skin' => 'gridtofullscreen3d'
-                ],
-            ]
-        );
-        // skin: crossroadsslideshow
-        $this->add_control(
-            'skin_dis_crossroadsslideshow',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'show_label' => false,
-                'raw' => '<i class="eaddicon-skin eadd-queryviews-crossslider"></i>',
-                'content_classes' => 'e-add-skin-dis',
-                'condition' => [
-                    '_skin' => 'crossroadsslideshow'
-                ],
-            ]
-        );
         // skin: nextpost
         $this->add_control(
             'skin_dis_nextpost',
@@ -266,19 +227,6 @@ class Query extends Base_Widget {
                 'content_classes' => 'e-add-skin-dis',
                 'condition' => [
                     '_skin' => 'nextpost'
-                ],
-            ]
-        );
-        // skin: 3D
-        $this->add_control(
-            'skin_dis_3d',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'show_label' => false,
-                'raw' => '<i class="eaddicon-skin eadd-queryviews-3d"></i>',
-                'content_classes' => 'e-add-skin-dis',
-                'condition' => [
-                    '_skin' => 'threed'
                 ],
             ]
         );
