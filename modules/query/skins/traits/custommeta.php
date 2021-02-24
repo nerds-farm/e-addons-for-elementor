@@ -150,9 +150,10 @@ trait Custommeta {
                     break;
                 case 'map':
                     //var_dump($meta_value);
-
+                    
                     $address = '';
                     if (is_array($meta_value)) {
+                        if( !empty($meta_value['address']) )
                         $address = $meta_value['address'];
                     } else if (is_string($meta_value)) {
                         $address = $meta_value;
