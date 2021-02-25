@@ -107,3 +107,20 @@
 .elementor-panel .elementor-panel-navigation .elementor-panel-navigation-tab.elementor-tab-control-e_query a:before {
     content: "\e91a";
 }
+
+/* Disegno scheme */
+.e-add-scheme svg {
+	width: 100%;
+	max-width: 160px;
+	margin: -5px auto;
+	display: block;
+	height: auto;
+}
+/* Group conntrol metafieldtype */
+.elementor-group-control-metafieldtype.elementor-group-control-type {
+	padding: 0 0 0 7px;
+	float: right;
+	z-index: 2;
+	bottom: -22px;
+	margin-right: 23px;
+}
