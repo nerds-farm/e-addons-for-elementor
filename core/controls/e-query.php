@@ -52,7 +52,7 @@ class E_Query extends Control_Select2 {
      */
     public function get_default_settings() {
         $settings = parent::get_default_settings();
-        $settings['sortable'] = true;
+        $settings['sortable'] = false;
         $settings['dynamic'] = [
             'active' => true,
             'categories' => [
