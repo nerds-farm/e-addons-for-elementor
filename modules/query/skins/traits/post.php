@@ -147,10 +147,10 @@ trait Post {
         if ( !empty($posttype) ){
             //@p label before
             echo $this->render_label_before_item($settings,'Type: ');
-
             echo '<div class="e-add-post-ptype">';
                 echo $posttype;
-            echo '</div>';
+            echo '</div>';           
+            echo $this->render_label_after_item($settings);
         }
     }
 
@@ -185,6 +185,22 @@ trait Post {
 
                 $term_list = Utils::get_post_terms($this->current_id, $tax);
                 if ($term_list && is_array($term_list) && count($term_list) > 0) {
+                    
+                    //if($cont == 1){
+                        // @p La label
+                        echo $this->render_label_before_item($settings, get_taxonomy($tax)->labels->name.': ');
+
+                        if ($icon_enable) {
+                            // @p l'icona
+                            $icon = '';
+                            if (is_taxonomy_hierarchical($tax)) {
+                                $icon = '<i class="e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
+                            } else {
+                                $icon = '<i class="e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
+                            }
+                            echo $icon;
+                        }
+                    //}
 
                     echo '<ul class="e-add-terms-list e-add-taxonomy-' . $tax . '">';
 
@@ -204,21 +220,6 @@ trait Post {
                             }
                         }
                         
-                        if($cont == 1){
-                            // @p La label
-                            echo $this->render_label_before_item($settings, get_taxonomy($tax)->labels->name.': ');
-                                
-                            if ($icon_enable) {
-                                // @p l'icona
-                                $icon = '';
-                                if (is_taxonomy_hierarchical($tax)) {
-                                    $icon = '<i class="e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
-                                } else {
-                                    $icon = '<i class="e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
-                                }
-                                echo $icon;
-                            }
-                        }
                         //@p il link del termine
                         $term_url = trailingslashit(get_term_link($term));
 
@@ -241,6 +242,8 @@ trait Post {
                         $cont++;
                     } //end foreach terms
                     echo '</ul>';
+                    echo $this->render_label_after_item($settings);
+                    
                 } //end if termslist
             } //end exclusion
         } //end foreach taxonomy	

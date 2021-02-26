@@ -24,19 +24,24 @@ trait Label {
     }
 
     protected function render_label_before_item($settings, $default_label = '') {
+        $the_label = '';
         if (!empty($settings['use_label_before'])) {
             $label_text = $this->get_item_label($settings); //!empty($settings['item_text_label']) ? $settings['item_text_label'] : '';
 
-            $start_label = '<span class="e-add-label-before">';
-            $end_label = '</span>';
-            
-            $the_label = '';
             if($default_label) $the_label = $default_label;
-            if($label_text) $the_label = $label_text.': ';
+            if($label_text) $the_label = $label_text;
 
-            if( $the_label != '' )
-            return $start_label . $the_label . $end_label;
+            if( $the_label )
+                $the_label = '<span class="e-add-label-before">' . $the_label . '</span>';
         }
+        return $the_label;
+    }
+    protected function render_label_after_item($settings, $default_label = '') {
+        $the_label = '';
+        if ($default_label) $the_label = $default_label;
+        $the_label = !empty($settings['use_label_after']) ? $settings['use_label_after'] : $the_label;
+        if ($the_label) $the_label = '<span class="e-add-label-after">' . $the_label . '</span>';        
+        return $the_label;
     }
     protected function render_item_labelhtml($settings) {
         // Settings ------------------------------

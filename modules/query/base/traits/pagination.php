@@ -368,16 +368,21 @@ trait Pagination {
 
     ///
     public function numeric_query_pagination($pages, $settings) {
-
-        if ($settings['pagination_icon_prevnext']['value']) {
-            $icon_prevnext = str_replace('right', '', $settings['pagination_icon_prevnext']['value']);
-            $icon_prev = '<i class="' . $icon_prevnext . 'left"></i> ';
-            $icon_next = '<i class="' . $icon_prevnext . 'right"></i> ';
+        $icon_first = '';
+        $icon_last = '';
+        if (!empty($settings['pagination_icon_prevnext']['value'])) {
+            if ($settings['pagination_icon_prevnext']['value']) {
+                $icon_prevnext = str_replace('right', '', $settings['pagination_icon_prevnext']['value']);
+                $icon_prev = '<i class="' . $icon_prevnext . 'left"></i> ';
+                $icon_next = '<i class="' . $icon_prevnext . 'right"></i> ';
+            }
         }
-        if ($settings['pagination_icon_firstlast']['value']) {
-            $icon_firstlast = str_replace('right', '', $settings['pagination_icon_firstlast']['value']);
-            $icon_first = '<i class="' . $icon_firstlast . 'left"></i> ';
-            $icon_last = '<i class="' . $icon_firstlast . 'right"></i> ';
+        if (!empty($settings['pagination_icon_firstlast']['value'])) {
+            if ($settings['pagination_icon_firstlast']['value']) {
+                $icon_firstlast = str_replace('right', '', $settings['pagination_icon_firstlast']['value']);
+                $icon_first = '<i class="' . $icon_firstlast . 'left"></i> ';
+                $icon_last = '<i class="' . $icon_firstlast . 'right"></i> ';
+            }
         }
         $range = (int) $settings['pagination_range'] - 1; //la quantità di numeri visualizzati alla volta
         //@p in questo passaggio ho dei dubbi ..vedo il risultato..

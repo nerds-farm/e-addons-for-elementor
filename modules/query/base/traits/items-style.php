@@ -735,7 +735,7 @@ trait Items_Style {
                 'label_before_style_heading', [
             'type' => Controls_Manager::RAW_HTML,
             'show_label' => false,
-            'raw' => '<i class="fas fa-minus"></i> <b>' . __('Label', 'e-addons') . '</b>',
+            'raw' => '<i class="fas fa-minus"></i> <b>' . __('Before', 'e-addons') . '</b>',
             'content_classes' => 'e-add-inner-heading',
             'separator' => 'before',
             'condition' => [
@@ -762,6 +762,41 @@ trait Items_Style {
             'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-label-before',
             'condition' => [
                 'use_label_before' => 'yes'
+            ]
+                ]
+        );
+        
+        $target->add_control(
+                'label_after_style_heading', [
+            'type' => Controls_Manager::RAW_HTML,
+            'show_label' => false,
+            'raw' => '<b>' . __('After', 'e-addons') . '</b> <i class="fas fa-minus"></i>',
+            'content_classes' => 'e-add-inner-heading',
+            'separator' => 'before',
+            'condition' => [
+                'use_label_after!' => ''
+            ]
+                ]
+        );
+        $target->add_control(
+                'color_label_after', [
+            'label' => __('Icon Color', 'e-addons'),
+            'type' => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-label-after' => 'color: {{VALUE}};',
+            ],
+            'condition' => [
+                'use_label_after!' => ''
+            ]
+                ]
+        );
+        $target->add_group_control(
+                Group_Control_Typography::get_type(), [
+            'name' => 'label-after_typography',
+            'label' => __('Typography', 'e-addons'),
+            'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-label-after',
+            'condition' => [
+                'use_label_after!' => ''
             ]
                 ]
         );

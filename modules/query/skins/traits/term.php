@@ -29,6 +29,7 @@ trait Term {
             echo $this->render_label_before_item($settings,'Posts: ');
             echo $term_info->count;
             echo sprintf('</%s>', $html_tag);
+            echo $this->render_label_after_item($settings);
         }
     }
 

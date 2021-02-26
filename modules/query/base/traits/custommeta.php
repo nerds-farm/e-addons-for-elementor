@@ -170,14 +170,14 @@ trait Custommeta {
                 'metafield_type', [
             'label' => __('Return Format', 'e-addons'),
             'type' => Controls_Manager::SELECT,
-            'default' => '',
+            'default' => 'text',
             'separator' => 'after',
             'options' => [
-                '' => __('Select Return Format', 'e-addons'), //
+                //'' => __('Select Return Format', 'e-addons'), //
+                'text' => __('Text', 'e-addons'),
                 'image' => __('Image', 'e-addons'),
                 'oembed' => __('oEmbed', 'e-addons'), //
-                'date' => __('Date', 'e-addons'), //
-                'text' => __('Text', 'e-addons'),
+                'date' => __('Date', 'e-addons'), //                
                 'textarea' => __('Textarea', 'e-addons'), //
                 'button' => __('Button (url)', 'e-addons'), //
                 'map' => __('Map (address)', 'e-addons'), //

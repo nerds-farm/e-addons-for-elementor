@@ -51,11 +51,17 @@ trait Custommeta {
             //@p il meta
             $meta_value = $this->get_value_custommeta($metafield_key);
 
-            $meta_html = '';
+            if (empty($meta_value)) {
+                if (!empty($settings['use_fallback'])) {
+                    $meta_value = $settings['use_fallback'];
+                }
+            }
 
             if (empty($meta_value))
                 return;
 
+            $meta_html = '';
+            
             switch ($metafield_type) {
                 case 'date':
                     $metafield_date_format_source = $metaitem['metafield_date_format_source'];
@@ -353,24 +359,6 @@ trait Custommeta {
                 case 'wysiwyg':
                     $meta_html = wpautop($meta_value);
                     break;
-                case 'text':
-                    //$link_to = $metaitem['use_link'];
-                    $link_to = $metaitem['link_to'];
-
-                    $html_tag_item = $metaitem['html_tag_item'];
-
-                    //l'icona
-                    //@p qui renderizzo l'icona.. 
-                    $show_icon = $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon');
-                    $class_icon = ' class="e-add-is_icon"';
-                    $label_before = $this->render_label_before_item($metaitem);
-                    if ($html_tag_item) {
-                        $meta_html = '<' . $html_tag_item . $class_icon . '>' . $show_icon . $label_before . $meta_value . '</' . $html_tag_item . '>';
-                    } else {
-                        $meta_html = '<span' . $class_icon . '>' . $show_icon . $label_before . $meta_value . '</span>';
-                    }
-
-                    break;
                 case 'array':
                     $array_dump = $metaitem['array_dump'];
                     $array_indexes = $metaitem['array_index'];
@@ -380,14 +368,32 @@ trait Custommeta {
                         echo '</pre>';
                     }
                     $label_before = $this->render_label_before_item($metaitem);
-
+                    $label_after = $this->render_label_after_item($metaitem);
+                    
                     $tmp = explode('.', $array_indexes);
                     $sub_data = Utils::get_array_value($meta_value, $tmp);
                     
-                    $meta_html = $label_before.$sub_data;
+                    $meta_html = $label_before.$sub_data.$label_after;
                     break;
-                default:
-                    $meta_html = Utils::to_string($meta_value);
+                    
+                case 'text':
+                default:                
+                    //$link_to = $metaitem['use_link'];
+                    $link_to = $metaitem['link_to'];
+
+                    $html_tag_item = $metaitem['html_tag_item'];
+                    if (!$html_tag_item) {
+                        $html_tag_item = 'span';
+                    }
+                    $meta_html = '<' . $html_tag_item . ' class="e-add-is_icon">' 
+                            . $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon') //@p qui renderizzo l'icona..
+                            . $this->render_label_before_item($metaitem) 
+                            . Utils::to_string($meta_value)
+                            . $this->render_label_after_item($metaitem) 
+                            . '</' . $html_tag_item . '>';
+
+                    break;
+                    //$meta_html = Utils::to_string($meta_value);
             }
 
             switch ($link_to) {

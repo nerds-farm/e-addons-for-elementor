@@ -238,17 +238,113 @@ trait Items_Advanced {
             ]
                 ]
         );
-        /*$target->add_control(
-                'text_label_before', [
-            'label' => __('Before Text', 'elementor'),
+        $target->add_control(
+                'use_label_after', [
+            'label' => __('After', 'e-addons') . ' <i class="fas fa-minus"></i>',
             'type' => Controls_Manager::TEXT,
-            'label_block' => true,
-            'default' => '',
-            'condition' => [
-                'use_label_before' => 'yes'
+            'description' => __('Print text after the Field', 'e-addons'),
+            'conditions' => [
+                'relation' => 'or',
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'operator' => 'in',
+                        'value' => [
+                            'item_date', 
+                            'item_registered',
+                            'item_termstaxonomy', 
+                            'item_posttype', 
+                            'item_counts',
+                            'item_displayname',
+                            'item_user',
+                            'item_role',
+                            'item_firstname',
+                            'item_lastname',
+                            'item_nickname',
+                            'item_email',
+                            'item_website',
+                            'item_bio',
+                            'item_counts',
+                            'item_caption',
+                            'item_alternativetext',
+                            'item_imagemeta',
+                            'item_mimetype',
+                            'item_uploadedto'
+                        ]
+                    ],
+                    [
+                        'relation' => 'and',
+                        'terms' => [
+                            [
+                                'name' => 'item_type',
+                                'value' => 'item_custommeta',
+                            ],
+                            [
+                                'name' => 'metafield_type',
+                                'operator' => 'in',
+                                'value' => ['text', 'array']
+                            ]
+                        ]
+                    ]
+                ],
             ]
                 ]
-        );*/
+        );
+        $target->add_control(
+                'use_fallback', [
+            'label' => __('Fallback', 'e-addons') ,
+            'type' => Controls_Manager::TEXT,
+            'description' => __('Alternative Text for empty values', 'e-addons'),
+            'conditions' => [
+                'relation' => 'and',
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'value' => 'item_custommeta',
+                    ],
+                    [
+                        'name' => 'metafield_type',
+                        'operator' => 'in',
+                        'value' => ['text', 'array']
+                    ]
+                ],
+            ]
+                ]
+        );
+        $target->add_control(
+                'use_fallback_img', [
+            'label' => __('Fallback', 'e-addons') ,
+            'type' => Controls_Manager::MEDIA,
+            'description' => __('Alternative Image for empty values', 'e-addons'),
+            'conditions' => [
+                'relation' => 'or',
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'operator' => 'in',
+                        'value' => [
+                            'item_image', 
+                            'item_avatar',
+                        ]
+                    ],
+                    [
+                        'relation' => 'and',
+                        'terms' => [
+                            [
+                                'name' => 'item_type',
+                                'value' => 'item_custommeta',
+                            ],
+                            [
+                                'name' => 'metafield_type',
+                                'operator' => 'in',
+                                'value' => ['image']
+                            ]
+                        ]
+                    ]
+                ],
+            ]
+                ]
+        );
     }
 
 }

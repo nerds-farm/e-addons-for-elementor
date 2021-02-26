@@ -102,7 +102,7 @@ trait User {
             case 'displayname' :
                 //echo 'sono Display Name';
                 echo $this->render_label_before_item($settings,'Name: ');
-                echo $user_info->display_name;
+                echo $user_info->display_name;                
                 break;
             case 'user' :
                 //echo 'sono l\'user';
@@ -150,6 +150,7 @@ trait User {
                 echo $user_info->user_registered;
                 break;
         }
+        echo $this->render_label_after_item($settings);
         echo $end_a . sprintf('</%s>', $html_tag);
     }
 

@@ -80,6 +80,12 @@ trait Common {
             'class' => $this->get_image_class()
         ];
 
+        if (!$image_id) {
+            //var_dump($settings['use_fallback_img']);
+            if (!empty($settings['use_fallback_img']['id'])) {
+                $image_id = $settings['use_fallback_img']['id'];
+            }
+        }
 
         if ($image_id) {
             // @p questa è l'mmagine via HTML
@@ -224,8 +230,8 @@ trait Common {
         if( !empty($date) ){
             //@p label before
             echo $this->render_label_before_item($settings,'Date: ');
-
-            echo '<div class="e-add-post-date">' . $icon . $date . '</div>';
+            echo '<div class="e-add-post-date">' . $icon . $date . '</div>';            
+            echo $this->render_label_after_item($settings);
         }
         ?>
         <?php
