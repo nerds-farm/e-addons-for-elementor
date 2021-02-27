@@ -1,85 +1,85 @@
 jQuery(window).on('elementor/frontend/init', () => {
-class WidgetQueryCarouselHandlerClass extends elementorModules.frontend.handlers.Base {
-    isCarouselEnabled = false;
-    getDefaultSettings() {
-        // e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-masonry
-        return {
-            selectors: {
-                container: '.e-add-posts-container',
-                containerCarousel: '.e-add-posts-container.e-add-skin-carousel',
+    class WidgetQueryCarouselHandlerClass extends elementorModules.frontend.handlers.Base {
+        isCarouselEnabled = false;
+        getDefaultSettings() {
+            // e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-masonry
+            return {
+                selectors: {
+                    container: '.e-add-posts-container',
+                    containerCarousel: '.e-add-posts-container.e-add-skin-carousel',
+                    
+                    containerWrapper: '.e-add-posts-wrapper',
+                    items: '.e-add-post-item',
+                },
+            };
+        }
+            
+        getDefaultElements() {
+            const selectors = this.getSettings('selectors');
+
+            return {
+                $scope: this.$element,
+                $id_scope: this.getID(),
+
+                $container: this.$element.find(selectors.container),
+                $containerCarousel: this.$element.find(selectors.containerCarousel),
+
+                $containerWrapper: this.$element.find(selectors.containerWrapper),
                 
-                containerWrapper: '.e-add-posts-wrapper',
-                items: '.e-add-post-item',
-            },
-        };
-    }
-        
-    getDefaultElements() {
-        const selectors = this.getSettings('selectors');
+                $items: this.$element.find(selectors.items),
+                
+                $animationReveal: null,
+                $eaddPostsSwiper: null
+            };
+        }
 
-        return {
-            $scope: this.$element,
-            $id_scope: this.getID(),
+        bindEvents() {
+            let scope = this.elements.$scope,
+                id_scope = this.elements.$id_scope,
+                elementSettings = this.getElementSettings(),
+                widgetType = this.getWidgetType(),
+                eaddPostsSwiper = null;
 
-            $container: this.$element.find(selectors.container),
-            $containerCarousel: this.$element.find(selectors.containerCarousel),
-
-            $containerWrapper: this.$element.find(selectors.containerWrapper),
+            if(eaddPostsSwiper) eaddPostsSwiper.destroy();
+            eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, elementSettings ) );
+            this.elements.$eaddPostsSwiper = eaddPostsSwiper;
             
-            $items: this.$element.find(selectors.items),
-            
-            $animationReveal: null,
-            $eaddPostsSwiper: null
-        };
-    }
-
-    bindEvents() {
-        let scope = this.elements.$scope,
-            id_scope = this.elements.$id_scope,
-            elementSettings = this.getElementSettings(),
-            widgetType = this.getWidgetType(),
-            eaddPostsSwiper = null;
-
-        if(eaddPostsSwiper) eaddPostsSwiper.destroy();
-        eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, elementSettings ) );
-        this.elements.$eaddPostsSwiper = eaddPostsSwiper;
-        
-        // ---------------------------------------------
-        // Funzione di callback eseguita quando avvengono le mutazioni
-        /*var eAddns_MutationObserverCallback = function(mutationsList, observer) {
-            for(var mutation of mutationsList) {
-                if (mutation.type == 'attributes') {
-                if (mutation.attributeName === 'class') {
-                        if (this.isCarouselEnabled) {
-                        eaddPostsSwiper.update();
-                        
+            // ---------------------------------------------
+            // Funzione di callback eseguita quando avvengono le mutazioni
+            /*var eAddns_MutationObserverCallback = function(mutationsList, observer) {
+                for(var mutation of mutationsList) {
+                    if (mutation.type == 'attributes') {
+                    if (mutation.attributeName === 'class') {
+                            if (this.isCarouselEnabled) {
+                            eaddPostsSwiper.update();
+                            
+                            }
                         }
                     }
                 }
-            }
-        };
-        observe_eAddns_element(scope[0], eAddns_MutationObserverCallback);*/
-        
+            };
+            observe_eAddns_element(scope[0], eAddns_MutationObserverCallback);*/
+            
 
-    }
-    /*
-    onInit(){
-        //alert('init');
-    }
-    */
-    
-   onElementChange(propertyName){
+        }
+        /*
+        onInit(){
+            //alert('init');
+        }
+        */
         
-    if (    EADD_skinPrefix+'ratio_image' === propertyName || 
-            EADD_skinPrefix+'dualslider_distribution_vertical' === propertyName || 
-            EADD_skinPrefix+'dualslider_height_container' === propertyName ||
-            EADD_skinPrefix+'height_container' === propertyName
-        ) {
-        this.elements.$eaddPostsSwiper.update();
+    onElementChange(propertyName){
+            
+        if (    EADD_skinPrefix+'ratio_image' === propertyName || 
+                EADD_skinPrefix+'dualslider_distribution_vertical' === propertyName || 
+                EADD_skinPrefix+'dualslider_height_container' === propertyName ||
+                EADD_skinPrefix+'height_container' === propertyName
+            ) {
+            this.elements.$eaddPostsSwiper.update();
 
-        //console.log(propertyName);
+            //console.log(propertyName);
+        }
     }
-}
 
     carouselOptions( id_scope, elementSettings ){ 
         //@p qui vado a restituire l'oggettoo per configurare loo swiper ;-)

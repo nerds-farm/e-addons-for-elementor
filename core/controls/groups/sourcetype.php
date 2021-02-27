@@ -1,12 +1,12 @@
 <?php
-
 namespace EAddonsForElementor\Core\Controls\Groups;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
 use Elementor\Controls_Stack;
 
-if (!defined('ABSPATH')) {
+
+if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
@@ -17,36 +17,36 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.0.0
  */
-class Metafieldtype extends Group_Control_Base {
-
+class Sourcetype extends Group_Control_Base {
+    
     protected static $fields;
 
     public static function get_type() {
-        return 'metafieldtype';
+        return 'sourcetype';
     }
 
     protected function init_fields() {
         $controls = [];
-
+        
         $controls['type'] = [
-            'label' => __('Custom Field', 'e-addons') . '<b> ' . __('from', 'e-addons') . ':</b>',
+            'label' => __('Source', 'e-addons').'<b> '.__('from','e-addons').':</b>',
             'type' => Controls_Manager::CHOOSE,
             'show_label' => false,
             'options' => [
                 'post' => [
-                    'title' => __('Post'),
+                    'title' => 'Post',
                     'icon' => 'fas fa-thumbtack',
                 ],
                 'term' => [
-                    'title' => __('Term'),
+                    'title' => 'Term',
                     'icon' => 'fas fa-folder-open',
                 ],
                 'user' => [
-                    'title' => __('User'),
+                    'title' => 'User',
                     'icon' => 'fas fa-user',
                 ],
                 'attachment' => [
-                    'title' => __('Attachment'),
+                    'title' => 'Attachment',
                     'icon' => 'fas fa-images',
                 ]
             ],
@@ -57,33 +57,36 @@ class Metafieldtype extends Group_Control_Base {
             'type' => 'e-query',
             'placeholder' => __('Search Post Custom Field', 'e-addons'),
             'label_block' => true,
-            'query_type' => 'metas',
-            'object_type' => 'post',
+            'query_type' => 'posts',
+            'default' => '',
             'condition' => [
                 'type' => 'post'
             ],
+            
 			'required' => 'true',
         ];
         $controls['term'] = [
             'type' => 'e-query',
             'placeholder' => __('Search Term Custom Field', 'e-addons'),
             'label_block' => true,
-            'query_type' => 'metas',
-            'object_type' => 'term',
+            'query_type' => 'terms',
+            'default' => '',
             'condition' => [
                 'type' => 'term'
             ],
+            
 			'required' => 'true',
         ];
         $controls['user'] = [
             'type' => 'e-query',
             'placeholder' => __('Search User Custom Field', 'e-addons'),
             'label_block' => true,
-            'query_type' => 'metas',
-            'object_type' => 'user',
+            'query_type' => 'users',
+            'default' => '',
             'condition' => [
                 'type' => 'user'
             ],
+            
 			'required' => 'true',
         ];
         
@@ -91,14 +94,34 @@ class Metafieldtype extends Group_Control_Base {
             'type' => 'e-query',
             'placeholder' => __('Search Media Custom Field', 'e-addons'),
             'label_block' => true,
-            'query_type' => 'metas',
+            'query_type' => 'posts',
             'object_type' => 'attachment',
+
+            'default' => '',
             'condition' => [
                 'type' => 'attachment'
             ],
+            
 			'required' => 'true',
         ];
-
+        /*
+        $controls['attachment'] = [
+            'specific_attachments',
+            [
+                'label' => '<b>Media </b>'.__('Custom Field', 'e-addons'),
+                'type' => Controls_Manager::GALLERY,
+                'default' => [],
+                'show_label' => false,
+                'dynamic' => [
+                    'active' => true,
+                ],
+                'condition' => [
+                    'type' => 'attachment'
+                ],
+                'required' => 'true',
+            ]
+        ];
+        */
         return $controls;
     }
     /**
@@ -121,12 +144,11 @@ class Metafieldtype extends Group_Control_Base {
             $fields['attachment']['frontend_available'] = $args['frontend_available'];
 		}
         if ( ! empty( $args['label'] ) ) {
-			$fields['post']['label'] = 'From <b>Post </b>'.$args['label'];
-            $fields['term']['label'] = 'From <b>Term </b>'.$args['label'];
-            $fields['user']['label'] = 'From <b>User </b>'.$args['label'];
-            $fields['attachment']['label'] = 'From <b>Media </b>'.$args['label'];
+			$fields['post']['label'] = $args['label'].'From <b> Post</b>';
+            $fields['term']['label'] = $args['label'].'From <b> Term</b>';
+            $fields['user']['label'] = $args['label'].'From <b> User</b>';
+            $fields['attachment']['label'] = $args['label'].'From <b> Media</b>';
 		}
-
 		return parent::prepare_fields( $fields );
 	}
     protected function get_default_options() {
@@ -135,5 +157,5 @@ class Metafieldtype extends Group_Control_Base {
             'show_label' => true,
         ];
     }
-
+    
 }
