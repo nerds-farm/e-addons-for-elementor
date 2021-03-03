@@ -256,3 +256,7 @@
 .eadd-skin-simple-list:before { content: '\e8c9'; } /* '' */
 .eadd-skin-table:before { content: '\e8ca'; } /* '' */
 .eadd-border-styles:before { content: '\e8cb'; } /* '' */
+
+.eadd-element-copy-download:before { content: '\e8cc'; } /* '' */
+.eadd-dynamic-tag-icon:before { content: '\e8cd'; } /* '' */
+.eadd-extension-sound:before { content: '\e8ce'; } /* '' */
