@@ -54,8 +54,10 @@ trait Elementor {
             if (!empty($results)) {
                 $result = reset($results);
                 $p_id = reset($result);
-                self::$documents[$e_id] = $t_id = $p_id;
+            } else {
+                $p_id = -1;
             }
+            self::$documents[$e_id] = $t_id = $p_id;
         } else {
             $t_id = self::$documents[$e_id];
         }
@@ -79,7 +81,7 @@ trait Elementor {
         if (!$p_id) {                                
             $p_id = get_the_ID();
         }
-        if ($p_id) {
+        if (intval($p_id) > 0) {
             $document = \Elementor\Plugin::$instance->documents->get($p_id);
             if ($document) {
                 $e_raw = self::get_element_from_data($document->get_elements_data(), $e_id);
@@ -88,7 +90,7 @@ trait Elementor {
                     return $element;
                 } else {
                     $t_id = self::get_template_by_element_id($e_id);
-                    if ($t_id != $p_id) {
+                    if ($t_id && $t_id > 0 && $t_id != $p_id) {
                         return self::get_element_instance_by_id($e_id, $t_id);
                     }
                 }

@@ -62,7 +62,7 @@ class Metafieldtype extends Group_Control_Base {
             'condition' => [
                 'type' => 'post'
             ],
-			'required' => 'true',
+            'required' => 'true',
         ];
         $controls['term'] = [
             'type' => 'e-query',
@@ -73,7 +73,7 @@ class Metafieldtype extends Group_Control_Base {
             'condition' => [
                 'type' => 'term'
             ],
-			'required' => 'true',
+            'required' => 'true',
         ];
         $controls['user'] = [
             'type' => 'e-query',
@@ -84,9 +84,9 @@ class Metafieldtype extends Group_Control_Base {
             'condition' => [
                 'type' => 'user'
             ],
-			'required' => 'true',
+            'required' => 'true',
         ];
-        
+
         $controls['attachment'] = [
             'type' => 'e-query',
             'placeholder' => __('Search Media Custom Field', 'e-addons'),
@@ -96,39 +96,41 @@ class Metafieldtype extends Group_Control_Base {
             'condition' => [
                 'type' => 'attachment'
             ],
-			'required' => 'true',
+            'required' => 'true',
         ];
 
         return $controls;
     }
+
     /**
-	 * Prepare fields.
-	 *
-	 * @return array Processed fields.
-	 */
-	protected function prepare_fields( $fields ) {
+     * Prepare fields.
+     *
+     * @return array Processed fields.
+     */
+    protected function prepare_fields($fields) {
         $args = $this->get_args();
-        if ( ! empty( $args['multiple'] ) ) {
-			$fields['post']['multiple'] = $args['multiple'];
+        if (!empty($args['multiple'])) {
+            $fields['post']['multiple'] = $args['multiple'];
             $fields['term']['multiple'] = $args['multiple'];
             $fields['user']['multiple'] = $args['multiple'];
             $fields['attachment']['multiple'] = $args['multiple'];
-		}
-        if ( ! empty( $args['frontend_available'] ) ) {
-			$fields['post']['frontend_available'] = $args['frontend_available'];
+        }
+        if (!empty($args['frontend_available'])) {
+            $fields['post']['frontend_available'] = $args['frontend_available'];
             $fields['term']['frontend_available'] = $args['frontend_available'];
             $fields['user']['frontend_available'] = $args['frontend_available'];
             $fields['attachment']['frontend_available'] = $args['frontend_available'];
-		}
-        if ( ! empty( $args['label'] ) ) {
-			$fields['post']['label'] = 'From <b>Post </b>'.$args['label'];
-            $fields['term']['label'] = 'From <b>Term </b>'.$args['label'];
-            $fields['user']['label'] = 'From <b>User </b>'.$args['label'];
-            $fields['attachment']['label'] = 'From <b>Media </b>'.$args['label'];
-		}
+        }
+        if (!empty($args['label'])) {
+            $fields['post']['label'] = 'From <b>Post </b>' . $args['label'];
+            $fields['term']['label'] = 'From <b>Term </b>' . $args['label'];
+            $fields['user']['label'] = 'From <b>User </b>' . $args['label'];
+            $fields['attachment']['label'] = 'From <b>Media </b>' . $args['label'];
+        }
 
-		return parent::prepare_fields( $fields );
-	}
+        return parent::prepare_fields($fields);
+    }
+
     protected function get_default_options() {
         return [
             'popover' => false,

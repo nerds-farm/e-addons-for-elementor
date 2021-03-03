@@ -1,12 +1,12 @@
 <?php
+
 namespace EAddonsForElementor\Core\Controls\Groups;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
 use Elementor\Controls_Stack;
 
-
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Sourcetype extends Group_Control_Base {
-    
+
     protected static $fields;
 
     public static function get_type() {
@@ -27,9 +27,9 @@ class Sourcetype extends Group_Control_Base {
 
     protected function init_fields() {
         $controls = [];
-        
+
         $controls['type'] = [
-            'label' => __('Source', 'e-addons').'<b> '.__('from','e-addons').':</b>',
+            'label' => __('Source', 'e-addons') . '<b> ' . __('from', 'e-addons') . ':</b>',
             'type' => Controls_Manager::CHOOSE,
             'show_label' => false,
             'options' => [
@@ -62,8 +62,7 @@ class Sourcetype extends Group_Control_Base {
             'condition' => [
                 'type' => 'post'
             ],
-            
-			'required' => 'true',
+            'required' => 'true',
         ];
         $controls['term'] = [
             'type' => 'e-query',
@@ -74,8 +73,7 @@ class Sourcetype extends Group_Control_Base {
             'condition' => [
                 'type' => 'term'
             ],
-            
-			'required' => 'true',
+            'required' => 'true',
         ];
         $controls['user'] = [
             'type' => 'e-query',
@@ -86,76 +84,75 @@ class Sourcetype extends Group_Control_Base {
             'condition' => [
                 'type' => 'user'
             ],
-            
-			'required' => 'true',
+            'required' => 'true',
         ];
-        
+
         $controls['attachment'] = [
             'type' => 'e-query',
             'placeholder' => __('Search Media Custom Field', 'e-addons'),
             'label_block' => true,
             'query_type' => 'posts',
             'object_type' => 'attachment',
-
             'default' => '',
             'condition' => [
                 'type' => 'attachment'
             ],
-            
-			'required' => 'true',
+            'required' => 'true',
         ];
         /*
-        $controls['attachment'] = [
-            'specific_attachments',
-            [
-                'label' => '<b>Media </b>'.__('Custom Field', 'e-addons'),
-                'type' => Controls_Manager::GALLERY,
-                'default' => [],
-                'show_label' => false,
-                'dynamic' => [
-                    'active' => true,
-                ],
-                'condition' => [
-                    'type' => 'attachment'
-                ],
-                'required' => 'true',
-            ]
-        ];
-        */
+          $controls['attachment'] = [
+          'specific_attachments',
+          [
+          'label' => '<b>Media </b>'.__('Custom Field', 'e-addons'),
+          'type' => Controls_Manager::GALLERY,
+          'default' => [],
+          'show_label' => false,
+          'dynamic' => [
+          'active' => true,
+          ],
+          'condition' => [
+          'type' => 'attachment'
+          ],
+          'required' => 'true',
+          ]
+          ];
+         */
         return $controls;
     }
+
     /**
-	 * Prepare fields.
-	 *
-	 * @return array Processed fields.
-	 */
-	protected function prepare_fields( $fields ) {
+     * Prepare fields.
+     *
+     * @return array Processed fields.
+     */
+    protected function prepare_fields($fields) {
         $args = $this->get_args();
-        if ( ! empty( $args['multiple'] ) ) {
-			$fields['post']['multiple'] = $args['multiple'];
+        if (!empty($args['multiple'])) {
+            $fields['post']['multiple'] = $args['multiple'];
             $fields['term']['multiple'] = $args['multiple'];
             $fields['user']['multiple'] = $args['multiple'];
             $fields['attachment']['multiple'] = $args['multiple'];
-		}
-        if ( ! empty( $args['frontend_available'] ) ) {
-			$fields['post']['frontend_available'] = $args['frontend_available'];
+        }
+        if (!empty($args['frontend_available'])) {
+            $fields['post']['frontend_available'] = $args['frontend_available'];
             $fields['term']['frontend_available'] = $args['frontend_available'];
             $fields['user']['frontend_available'] = $args['frontend_available'];
             $fields['attachment']['frontend_available'] = $args['frontend_available'];
-		}
-        if ( ! empty( $args['label'] ) ) {
-			$fields['post']['label'] = $args['label'].'From <b> Post</b>';
-            $fields['term']['label'] = $args['label'].'From <b> Term</b>';
-            $fields['user']['label'] = $args['label'].'From <b> User</b>';
-            $fields['attachment']['label'] = $args['label'].'From <b> Media</b>';
-		}
-		return parent::prepare_fields( $fields );
-	}
+        }
+        if (!empty($args['label'])) {
+            $fields['post']['label'] = $args['label'] . 'From <b> Post</b>';
+            $fields['term']['label'] = $args['label'] . 'From <b> Term</b>';
+            $fields['user']['label'] = $args['label'] . 'From <b> User</b>';
+            $fields['attachment']['label'] = $args['label'] . 'From <b> Media</b>';
+        }
+        return parent::prepare_fields($fields);
+    }
+
     protected function get_default_options() {
         return [
             'popover' => false,
             'show_label' => true,
         ];
     }
-    
+
 }

@@ -85,7 +85,7 @@ trait Items_Content {
                     'label' => __('Image type', 'e-addons'),
                     'type' => Controls_Manager::SELECT,
                     'options' => [
-                        'featuredimage' => __($defIm . ' image', 'e-addons'),
+                        'featuredimage' => __(ucfirst($defIm . ' image'), 'e-addons'),
                         'customimage' => __('Custom meta image', 'e-addons'),
                     ],
                     'default' => $defIm . 'image',

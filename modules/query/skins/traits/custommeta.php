@@ -136,7 +136,7 @@ trait Custommeta {
                     
                     //l'icona
                     $show_icon = '';
-                    if (!empty($metaitem['show_icon'])) {
+                    if (!empty($metaitem['show_icon']["value"])) {
                         $show_icon = $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon');
                         $this->parent->add_render_attribute($attribute_a_link, 'class', 'e-add-is_icon');
                     }
@@ -212,7 +212,7 @@ trait Custommeta {
 
                         //l'icona
                         $show_icon = '';
-                        if (!empty($metaitem['show_icon'])) {
+                        if (!empty($metaitem['show_icon']["value"])) {
                             $show_icon = $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon');
                             $this->parent->add_render_attribute($attribute_a_link, 'class', 'e-add-is_icon');
                         }
@@ -385,8 +385,16 @@ trait Custommeta {
                     if (!$html_tag_item) {
                         $html_tag_item = 'span';
                     }
-                    $meta_html = '<' . $html_tag_item . ' class="e-add-is_icon">' 
-                            . $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon') //@p qui renderizzo l'icona..
+                    
+                    //l'icona
+                    $show_icon = $show_icon_class = '';
+                    if (!empty($metaitem['show_icon']["value"])) {
+                        $show_icon = $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon');
+                        $show_icon_class = ' class="e-add-is_icon"';
+                    }
+                    
+                    $meta_html = '<' . $html_tag_item . $show_icon_class . '>' 
+                            . $show_icon
                             . $this->render_label_before_item($metaitem) 
                             . Utils::to_string($meta_value)
                             . $this->render_label_after_item($metaitem) 

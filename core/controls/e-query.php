@@ -52,7 +52,7 @@ class E_Query extends Control_Select2 {
      */
     public function get_default_settings() {
         $settings = parent::get_default_settings();
-        $settings['sortable'] = false;
+        //$settings['sortable'] = false;
         $settings['dynamic'] = [
             'active' => true,
             'categories' => [
@@ -114,6 +114,16 @@ class E_Query extends Control_Select2 {
         if ($this->get_settings('sortable')) {
             wp_enqueue_script('jquery-ui-sortable');
         }
+    }
+
+    /**
+     * @param string|array $value
+     * @param array $config
+     *
+     * @return string|array
+     */
+    public function before_save($value, array $config) {
+        return $value;
     }
 
 }

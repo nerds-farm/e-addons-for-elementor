@@ -1,12 +1,12 @@
 <?php
+
 namespace EAddonsForElementor\Core\Controls\Groups;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
 use Elementor\Controls_Stack;
 
-
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Masking extends Group_Control_Base {
-    
+
     protected static $fields;
 
     public static function get_type() {
@@ -27,12 +27,11 @@ class Masking extends Group_Control_Base {
 
     protected function init_fields() {
         $controls = [];
-        $logo = 
-        $controls['masking_type'] = [
+        $logo = $controls['masking_type'] = [
             'type' => Controls_Manager::HIDDEN,
             'default' => 'custom',
         ];
-        
+
         $controls['mask_type'] = [
             'label' => __('Enable Mask', 'e-addons-for-elementor'),
             'type' => Controls_Manager::CHOOSE,
@@ -50,14 +49,13 @@ class Masking extends Group_Control_Base {
                     'title' => 'Clip-Path',
                     'icon' => 'fa fa-circle',
                 ],
-
             ],
             'label_block' => false,
             'default' => 'none',
         ];
-        
+
         $controls['images_mask'] = [
-            'label' => __('Select IMAGE mask', 'e-addons-for-elementor','smoothscroll'),
+            'label' => __('Select IMAGE mask', 'e-addons-for-elementor', 'smoothscroll'),
             'type' => 'ui_selector',
             'label_block' => true,
             'toggle' => false,
@@ -100,7 +98,6 @@ class Masking extends Group_Control_Base {
                     'image' => E_ADDONS_URL . 'assets/img/mask/sketch.png',
                     'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/sketch.jpg'
                 ],
-                
                 'custom_mask' => [
                     'title' => 'Custom mask',
                     //'icon' => 'fa fa-list-ul',
@@ -113,11 +110,11 @@ class Masking extends Group_Control_Base {
                 'mask_type' => 'image'
             ],
             'selectors' => [
-            '{{SELECTOR}}' => '-webkit-mask-image: url({{VALUE}}); mask-image: url({{VALUE}}); -webkit-mask-position: 50% 50%; mask-position: 50% 50%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: contain; mask-size: contain;',
+                '{{SELECTOR}}' => '-webkit-mask-image: url({{VALUE}}); mask-image: url({{VALUE}}); -webkit-mask-position: 50% 50%; mask-position: 50% 50%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: contain; mask-size: contain;',
             ]
         ];
         $controls['custom_image_mask'] = [
-			'label' => __( 'Select PNG:', 'e-addons-for-elementor' ),
+            'label' => __('Select PNG:', 'e-addons-for-elementor'),
             'type' => Controls_Manager::MEDIA,
             'dynamic' => [
                 'active' => true,
@@ -127,40 +124,40 @@ class Masking extends Group_Control_Base {
             ],
             'condition' => [
                 'images_mask' => 'custom_mask',
-                'mask_type' => 'image'            
+                'mask_type' => 'image'
             ],
             'selectors' => [
                 '{{SELECTOR}}' => '-webkit-mask-image: url({{URL}}); mask-image: url({{URL}}); -webkit-mask-position: 50% 50%; mask-position: 50% 50%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: contain; mask-size: contain;',
             ]
-		];
+        ];
         $controls['position_image_mask'] = [
-			'label' => __( 'Position', 'e-addons-for-elementor'),
+            'label' => __('Position', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SELECT,
             'default' => '',
             'options' => [
-                '' => __( 'Default', 'e-addons-for-elementor'),
-                'center center' => __( 'Center Center', 'e-addons-for-elementor'),
-                'center left' => __( 'Center Left', 'e-addons-for-elementor'),
-                'center right' => __( 'Center Right', 'e-addons-for-elementor'),
-                'top center' => __( 'Top Center', 'e-addons-for-elementor'),
-                'top left' => __( 'Top Left', 'e-addons-for-elementor'),
-                'top right' => __( 'Top Right', 'e-addons-for-elementor'),
-                'bottom center' => __( 'Bottom Center', 'e-addons-for-elementor'),
-                'bottom left' => __( 'Bottom Left', 'e-addons-for-elementor'),
-                'bottom right' => __( 'Bottom Right', 'e-addons-for-elementor'),
-                'initial' => __( 'Custom', 'e-addons-for-elementor'),
+                '' => __('Default', 'e-addons-for-elementor'),
+                'center center' => __('Center Center', 'e-addons-for-elementor'),
+                'center left' => __('Center Left', 'e-addons-for-elementor'),
+                'center right' => __('Center Right', 'e-addons-for-elementor'),
+                'top center' => __('Top Center', 'e-addons-for-elementor'),
+                'top left' => __('Top Left', 'e-addons-for-elementor'),
+                'top right' => __('Top Right', 'e-addons-for-elementor'),
+                'bottom center' => __('Bottom Center', 'e-addons-for-elementor'),
+                'bottom left' => __('Bottom Left', 'e-addons-for-elementor'),
+                'bottom right' => __('Bottom Right', 'e-addons-for-elementor'),
+                'initial' => __('Custom', 'e-addons-for-elementor'),
             ],
             'condition' => [
-                'mask_type' => 'image', 
+                'mask_type' => 'image',
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => '-webkit-mask-position: {{VALUE}}; mask-position: {{VALUE}};',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => '-webkit-mask-position: {{VALUE}}; mask-position: {{VALUE}};',
+            ]
         ];
         $controls['xpos_image_mask'] = [
-			'label' => __( 'X Position', 'e-addons-for-elementor'),
+            'label' => __('X Position', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SLIDER,
-            'size_units' => [ 'px', 'em', '%', 'vw' ],
+            'size_units' => ['px', 'em', '%', 'vw'],
             'default' => [
                 'unit' => 'px',
                 'size' => 0,
@@ -192,18 +189,17 @@ class Masking extends Group_Control_Base {
                 ],
             ],
             'condition' => [
-                'mask_type' => 'image', 
-                'position_image_mask' => [ 'initial' ],
-                
+                'mask_type' => 'image',
+                'position_image_mask' => ['initial'],
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => 'mask-position: {{SIZE}}{{UNIT}} {{ypos_image_mask.SIZE}}{{ypos_image_mask.UNIT}}',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => 'mask-position: {{SIZE}}{{UNIT}} {{ypos_image_mask.SIZE}}{{ypos_image_mask.UNIT}}',
+            ]
         ];
         $controls['ypos_image_mask'] = [
-			'label' => __( 'Y Position', 'e-addons-for-elementor'),
+            'label' => __('Y Position', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SLIDER,
-            'size_units' => [ 'px', 'em', '%', 'vh' ],
+            'size_units' => ['px', 'em', '%', 'vh'],
             'default' => [
                 'unit' => 'px',
                 'size' => 0,
@@ -235,53 +231,53 @@ class Masking extends Group_Control_Base {
                 ],
             ],
             'condition' => [
-                'mask_type' => 'image', 
-                'position_image_mask' => [ 'initial' ],
+                'mask_type' => 'image',
+                'position_image_mask' => ['initial'],
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => 'mask-position: {{xpos_image_mask.SIZE}}{{xpos_image_mask.UNIT}} {{SIZE}}{{UNIT}}',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => 'mask-position: {{xpos_image_mask.SIZE}}{{xpos_image_mask.UNIT}} {{SIZE}}{{UNIT}}',
+            ]
         ];
         $controls['repeat_image_mask'] = [
-			'label' => __( 'Repeat', 'e-addons-for-elementor'),
+            'label' => __('Repeat', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SELECT,
             'default' => '',
             'options' => [
-                '' => __( 'Default', 'e-addons-for-elementor'),
-                'no-repeat' => __( 'No-repeat', 'e-addons-for-elementor'),
-                'repeat' => __( 'Repeat', 'e-addons-for-elementor'),
-                'repeat-x' => __( 'Repeat-x', 'e-addons-for-elementor'),
-                'repeat-y' => __( 'Repeat-y', 'e-addons-for-elementor'),
+                '' => __('Default', 'e-addons-for-elementor'),
+                'no-repeat' => __('No-repeat', 'e-addons-for-elementor'),
+                'repeat' => __('Repeat', 'e-addons-for-elementor'),
+                'repeat-x' => __('Repeat-x', 'e-addons-for-elementor'),
+                'repeat-y' => __('Repeat-y', 'e-addons-for-elementor'),
             ],
             'condition' => [
-                'mask_type' => 'image', 
+                'mask_type' => 'image',
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => '-webkit-mask-repeat: {{VALUE}}; mask-repeat: {{VALUE}};',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => '-webkit-mask-repeat: {{VALUE}}; mask-repeat: {{VALUE}};',
+            ]
         ];
         $controls['size_image_mask'] = [
-			'label' => __( 'Size', 'e-addons-for-elementor'),
+            'label' => __('Size', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SELECT,
             'default' => '',
             'options' => [
-                '' => __( 'Default', 'e-addons-for-elementor'),
-                'auto' => __( 'Auto', 'e-addons-for-elementor'),
-                'cover' => __( 'Cover', 'e-addons-for-elementor'),
-                'contain' => __( 'Contain', 'e-addons-for-elementor'),
-                'initial' => __( 'Custom', 'e-addons-for-elementor'),
+                '' => __('Default', 'e-addons-for-elementor'),
+                'auto' => __('Auto', 'e-addons-for-elementor'),
+                'cover' => __('Cover', 'e-addons-for-elementor'),
+                'contain' => __('Contain', 'e-addons-for-elementor'),
+                'initial' => __('Custom', 'e-addons-for-elementor'),
             ],
             'condition' => [
-                'mask_type' => 'image', 
+                'mask_type' => 'image',
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => '-webkit-mask-size: {{VALUE}}; mask-size: {{VALUE}};',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => '-webkit-mask-size: {{VALUE}}; mask-size: {{VALUE}};',
+            ]
         ];
         $controls['width_image_mask'] = [
-			'label' => __( 'Width', 'e-addons-for-elementor'),
+            'label' => __('Width', 'e-addons-for-elementor'),
             'type' => Controls_Manager::SLIDER,
-            'size_units' => [ 'px', 'em', '%', 'vw' ],
+            'size_units' => ['px', 'em', '%', 'vw'],
             'range' => [
                 'px' => [
                     'min' => 0,
@@ -303,46 +299,46 @@ class Masking extends Group_Control_Base {
             'required' => true,
             'condition' => [
                 'mask_type' => 'image',
-                'size_image_mask' => [ 'initial' ],
+                'size_image_mask' => ['initial'],
             ],
-			'selectors' => [
-				'{{SELECTOR}}' => '-webkit-mask-size: {{SIZE}}{{UNIT}} auto; mask-size: {{SIZE}}{{UNIT}} auto;',
-			]
+            'selectors' => [
+                '{{SELECTOR}}' => '-webkit-mask-size: {{SIZE}}{{UNIT}} auto; mask-size: {{SIZE}}{{UNIT}} auto;',
+            ]
         ];
         /*
-        $controls['svg_masking'] = [
-			'label' => __( 'Icon', 'elementor-pro' ),
-            'type' => Controls_Manager::ICONS,
-            'default' => [
-                'value' => 'fas fa-circle',
-                'library' => 'fa-solid',
-            ],
-            'recommended' => [
-                'fa-solid' => [
-                    'circle',
-                    'dot-circle',
-                    'square-full',
-                ],
-                'fa-regular' => [
-                    'circle',
-                    'dot-circle',
-                    'square-full',
-                ],
-            ],
-            'condition' => [
-                'mask_type' => 'svg'
-            ],
-            //'skin' => 'inline',
-            //'label_block' => false,
-            //'exclude_inline_options' => [ 'icon' ],
-            // da valutare ed implementare
-			'selectors' => [
-				'{{SELECTOR}}' => '.......',
-			]
-        ];
-        */
+          $controls['svg_masking'] = [
+          'label' => __( 'Icon', 'elementor-pro' ),
+          'type' => Controls_Manager::ICONS,
+          'default' => [
+          'value' => 'fas fa-circle',
+          'library' => 'fa-solid',
+          ],
+          'recommended' => [
+          'fa-solid' => [
+          'circle',
+          'dot-circle',
+          'square-full',
+          ],
+          'fa-regular' => [
+          'circle',
+          'dot-circle',
+          'square-full',
+          ],
+          ],
+          'condition' => [
+          'mask_type' => 'svg'
+          ],
+          //'skin' => 'inline',
+          //'label_block' => false,
+          //'exclude_inline_options' => [ 'icon' ],
+          // da valutare ed implementare
+          'selectors' => [
+          '{{SELECTOR}}' => '.......',
+          ]
+          ];
+         */
         $controls['clippath_mask'] = [
-			'label' => __('Predefined Clip-Path', 'e-addons-for-elementor'),
+            'label' => __('Predefined Clip-Path', 'e-addons-for-elementor'),
             'type' => 'ui_selector',
             'toggle' => false,
             'label_block' => true,
@@ -481,16 +477,16 @@ class Masking extends Group_Control_Base {
             ],
             'selectors' => [
                 '{{SELECTOR}}' => '-webkit-clip-path: {{VALUE}}; clip-path: {{VALUE}};',
-			]
-		];
+            ]
+        ];
         return $controls;
     }
-    
+
     protected function get_default_options() {
         return [
             'popover' => false,
             'show_label' => true
         ];
     }
-    
+
 }
