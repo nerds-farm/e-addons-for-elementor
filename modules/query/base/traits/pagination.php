@@ -406,7 +406,7 @@ trait Pagination {
         }
 
         if (1 != $pages) {
-            echo '<div class="e-add-pagination">';
+            echo '<nav class="elementor-pagination e-add-pagination" role="navigation" aria-label="Pagination">';
 
             //Progression
             if ($settings['pagination_show_progression'])
@@ -445,7 +445,7 @@ trait Pagination {
                 if ($paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages)
                     echo '<a href="' . self::get_linkpage($pages) . '" class="pagelast">' . __($settings['pagination_last_label'], 'e-addons' . '_texts') . $icon_last . '</a>';
 
-            echo '</div>';
+            echo '</nav>';
         }
     }
 

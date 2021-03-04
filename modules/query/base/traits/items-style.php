@@ -745,7 +745,7 @@ trait Items_Style {
         );
         $target->add_control(
                 'color_label_before', [
-            'label' => __('Icon Color', 'e-addons'),
+            'label' => __('Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-label-before' => 'color: {{VALUE}};',
@@ -780,7 +780,7 @@ trait Items_Style {
         );
         $target->add_control(
                 'color_label_after', [
-            'label' => __('Icon Color', 'e-addons'),
+            'label' => __('Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-label-after' => 'color: {{VALUE}};',
@@ -951,7 +951,7 @@ trait Items_Style {
             'label' => __('Icon Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'color: {{VALUE}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'color: {{VALUE}};',
             ],
             'conditions' => [
                 'terms' => [
@@ -979,7 +979,7 @@ trait Items_Style {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'font-size: {{SIZE}}{{UNIT}};',
             ],
             'conditions' => [
                 'terms' => [
@@ -1007,7 +1007,7 @@ trait Items_Style {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
             ],
             'conditions' => [
                 'terms' => [

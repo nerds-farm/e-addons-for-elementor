@@ -19,11 +19,22 @@ class Dualslider extends Carousel {
 
     public function _register_controls_actions() {
         parent::_register_controls_actions();
-        add_action('elementor/element/' . $this->parent->get_name() . '/section_e_query/after_section_end', [$this, 'register_additional_dualslider_controls'], 20);
+        add_action('elementor/element/' . $this->parent->get_name() . '/section_e_query/after_section_end', [$this, 'register_additional_dualslider_controls'], 20);                
     }
 
     public function get_script_depends() {
-        return ['imagesloaded', 'jquery-swiper', 'e-addons-query-carousel', 'e-addons-query-dualslider'];
+        if (!wp_script_is('swiper', 'registered')) {
+            // fix improved_assets_loading
+            wp_register_script(
+                    'swiper',
+                    //$frontend->get_js_assets_url( 'swiper', 'assets/lib/swiper/' ),
+                    ELEMENTOR_ASSETS_URL .'lib/swiper/swiper.min.js',
+                    [],
+                    '5.3.6',
+                    true
+            );
+        }
+        return ['imagesloaded', 'swiper', 'jquery-swiper', 'e-addons-query-carousel', 'e-addons-query-dualslider'];
     }
 
     public function get_style_depends() {

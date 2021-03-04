@@ -411,7 +411,7 @@ trait Items_Content {
             'label' => __('Icon Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'color: {{VALUE}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'color: {{VALUE}};',
             ],
             'condition' => [
                 'item_type' => 'item_imageoricon'
@@ -435,7 +435,7 @@ trait Items_Content {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'font-size: {{SIZE}}{{UNIT}};',
             ],
             'condition' => [
                 'item_type' => 'item_imageoricon'
@@ -474,7 +474,9 @@ trait Items_Content {
                     [
                         'name' => 'item_type',
                         'operator' => 'in',
-                        'value' => ['item_title',
+                        'value' => [
+                            'item_title',
+                            'item_date',
                             'item_subtitle',
                             'item_user',
                             'item_role',

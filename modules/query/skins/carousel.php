@@ -20,7 +20,18 @@ class Carousel extends Base {
     }
 
     public function get_script_depends() {
-        return ['imagesloaded', 'jquery-swiper', 'e-addons-query-carousel'];
+        if (!wp_script_is('swiper', 'registered')) {
+            // fix improved_assets_loading
+            wp_register_script(
+                    'swiper',
+                    //$frontend->get_js_assets_url( 'swiper', 'assets/lib/swiper/' ),
+                    ELEMENTOR_ASSETS_URL .'lib/swiper/swiper.min.js',
+                    [],
+                    '5.3.6',
+                    true
+            );
+        }
+        return ['imagesloaded', 'swiper', 'jquery-swiper', 'e-addons-query-carousel'];
     }
 
     public function get_style_depends() {

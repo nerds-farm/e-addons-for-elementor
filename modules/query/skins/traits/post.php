@@ -194,9 +194,9 @@ trait Post {
                             // @p l'icona
                             $icon = '';
                             if (is_taxonomy_hierarchical($tax)) {
-                                $icon = '<i class="e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
+                                $icon = '<i class="e-add-icon e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
                             } else {
-                                $icon = '<i class="e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
+                                $icon = '<i class="e-add-icon e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
                             }
                             echo $icon;
                         }
