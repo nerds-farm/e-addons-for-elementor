@@ -359,6 +359,7 @@ trait Custommeta {
                 case 'wysiwyg':
                     $meta_html = wpautop($meta_value);
                     break;
+                
                 case 'array':
                     $array_dump = $metaitem['array_dump'];
                     $array_indexes = $metaitem['array_index'];
@@ -376,10 +377,20 @@ trait Custommeta {
                     $meta_html = $label_before.$sub_data.$label_after;
                     break;
                     
+                case 'number':                    
+                    if ($metaitem['number_round']) {
+                        $mode = $metaitem['number_round_mode'] ? PHP_ROUND_HALF_DOWN : PHP_ROUND_HALF_UP;
+                        $meta_value = round($meta_value, intval($metaitem['number_round_precision']), $mode);
+                    }
+                    if ($metaitem['number_format']) {
+                        $meta_value = number_format($meta_value, intval($metaitem['number_format_decimals']), $metaitem['number_format_decimal_separator'], $metaitem['number_format_thousands_separator']);
+                    }                    
                 case 'text':
                 default:                
                     //$link_to = $metaitem['use_link'];
-                    $link_to = $metaitem['link_to'];
+                    if (!empty($metaitem['link_to'])) {
+                        $link_to = $metaitem['link_to'];
+                    }
 
                     $html_tag_item = $metaitem['html_tag_item'];
                     if (!$html_tag_item) {
@@ -412,7 +423,6 @@ trait Custommeta {
                     break;
                 case 'custom':
                     $href_link = $metaitem['link']['url'];
-
                     break;
                 default:
             }

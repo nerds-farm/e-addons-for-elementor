@@ -89,7 +89,7 @@ trait Term {
         return self::get_fields($term, $filter, $info);
     }
 
-    public static function get_term($term_id, $taxonomy = 'category') {
+    public static function get_term($term_id = false, $taxonomy = 'category') {
         $term = false;
         if (is_object($term_id)) {
             if (get_class($term_id) == 'WP_Term') {
@@ -108,7 +108,30 @@ trait Term {
                 $term = get_term_by('name', $term_id, $taxonomy);
             }
         }
+        if (!$term_id && get_the_ID()) {
+            $post_type = get_post_type();                
+            if ($post_type && $post_type != 'post') {
+                $taxonomies = get_post_taxonomies();
+                if (!empty($taxonomies)) {
+                    if (!in_array($taxonomy, $taxonomies)) {
+                        $taxonomy = reset($taxonomies);
+                    }
+                }
+            }
+            $terms = get_the_terms(get_the_ID(), $taxonomy);
+            if (!empty($terms)) {
+                $term = reset($terms);
+                return $term;
+            }
+        }
         return $term;
+    }
+    
+    public static function get_term_id($taxonomy = 'category') {
+        $term = self::get_term(false, $taxonomy);
+        if ($term) {
+            return $term->term_id;
+        }
     }
 
     public static function get_term_taxonomy($term_id) {
