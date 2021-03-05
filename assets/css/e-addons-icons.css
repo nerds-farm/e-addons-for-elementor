@@ -260,3 +260,9 @@
 .eadd-element-copy-download:before { content: '\e8cc'; } /* '' */
 .eadd-dynamic-tag-icon:before { content: '\e8cd'; } /* '' */
 .eadd-extension-sound:before { content: '\e8ce'; } /* '' */
+
+.eadd-download:before { content: '\e8cf'; } /* '' */
+.eadd-paste-style:before { content: '\e8d1'; } /* '' */
+.eadd-paste-clipboard:before { content: '\e8d2'; } /* '' */
+.eadd-copy-clipboard:before { content: '\e8d3'; } /* '' */
+.eadd-copy-id:before { content: '\e8d4'; } /* '' */
