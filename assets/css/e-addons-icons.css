@@ -263,6 +263,6 @@
 
 .eadd-download:before { content: '\e8cf'; } /* '' */
 .eadd-paste-style:before { content: '\e8d1'; } /* '' */
-.eadd-paste-clipboard:before { content: '\e8d2'; } /* '' */
-.eadd-copy-clipboard:before { content: '\e8d3'; } /* '' */
+.eadd-paste-clipboard:before { content: '\e8d3'; } /* '' */
+.eadd-copy-clipboard:before { content: '\e8d2'; } /* '' */
 .eadd-copy-id:before { content: '\e8d4'; } /* '' */

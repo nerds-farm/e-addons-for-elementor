@@ -57,78 +57,7 @@ trait Custommeta {
                 ]
         );
 
-        // ---------------- post
-        $target->add_control(
-                'custommeta_source_post', [
-            'label' => __('Post', 'e-addons'),
-            'type' => 'e-query',
-            'placeholder' => __('Search Post', 'e-addons'),
-            'description' => __('Leave empty for Current Post', 'e-addons'),
-            'query_type' => 'posts',
-            'label_block' => true,
-            'condition' => [
-                'query_type' => 'custommeta_source',
-                'custommeta_source_querytype' => 'post'
-            ],
-                ]
-        );
-        // ---------------- term
-        $target->add_control(
-                'custommeta_source_term', [
-            'label' => __('Term', 'e-addons'),
-            'type' => 'e-query',
-            'placeholder' => __('Search Term', 'e-addons'),
-            'description' => __('Leave empty for Current Term or Post Term', 'e-addons'),
-            'query_type' => 'terms',
-            'label_block' => true,
-            'condition' => [
-                'query_type' => 'custommeta_source',
-                'custommeta_source_querytype' => 'term'
-            ],
-                ]
-        );
-        $target->add_control(
-                'custommeta_source_author', [
-            'label' => __('From Author', 'e-addons'),
-            'type' => Controls_Manager::SWITCHER,
-            'condition' => [
-                'query_type' => 'custommeta_source',
-                'custommeta_source_querytype' => 'user'
-            ],
-                ]
-        );
-        // ---------------- user
-        $target->add_control(
-                'custommeta_source_user', [
-            'label' => __('User', 'e-addons'),
-            'type' => 'e-query',
-            'placeholder' => __('Search User', 'e-addons'),
-            'description' => __('Leave empty for Current Logged In User', 'e-addons'),
-            'query_type' => 'users',
-            'label_block' => true,
-            'condition' => [
-                'custommeta_source_author' => '',
-                'query_type' => 'custommeta_source',
-                'custommeta_source_querytype' => 'user'
-            ],
-                ]
-        );
-        // ---------------- attachment
-        $target->add_control(
-                'custommeta_source_attachment', [
-            'label' => __('Media', 'e-addons'),
-            'type' => 'e-query',
-            'placeholder' => __('Search Media', 'e-addons'),
-            'description' => __('Leave empty for Current Media or Post', 'e-addons'),
-            'query_type' => 'posts',
-            'object_type' => 'attachment',
-            'label_block' => true,
-            'condition' => [
-                'query_type' => 'custommeta_source',
-                'custommeta_source_querytype' => 'attachment'
-            ],
-                ]
-        );
+        
 
 
         // @p custommeta_source from meta field ..non più tramite acf
@@ -191,6 +120,83 @@ trait Custommeta {
                 'custommeta_source_querytype' => 'attachment'
             ],
                 ]
+        );
+
+        // ---------------- post
+        $target->add_control(
+            'custommeta_source_post', [
+            'label' => '<i class="fas fa-external-link-alt"></i> '.__('Source Post', 'e-addons'),
+            'separator' => 'before',
+            'type' => 'e-query',
+            'placeholder' => __('Current or Search Post', 'e-addons'),
+            'description' => __('Leave empty for Current Post', 'e-addons'),
+            'query_type' => 'posts',
+            'label_block' => true,
+            'condition' => [
+                'query_type' => 'custommeta_source',
+                'custommeta_source_querytype' => 'post'
+            ],
+                ]
+        );
+        // ---------------- term
+        $target->add_control(
+            'custommeta_source_term', [
+                'label' => '<i class="fas fa-external-link-alt"></i> '.__('Source Term', 'e-addons'),
+                'separator' => 'before',
+                'type' => 'e-query',
+                'placeholder' => __('Current or Search Term', 'e-addons'),
+                'description' => __('Leave empty for Current Term or Post Term', 'e-addons'),
+                'query_type' => 'terms',
+                'label_block' => true,
+                'condition' => [
+                    'query_type' => 'custommeta_source',
+                    'custommeta_source_querytype' => 'term'
+                ],
+            ]
+        );
+        $target->add_control(
+            'custommeta_source_author', [
+                'label' => __('From Author', 'e-addons'),
+                'separator' => 'before',
+                'type' => Controls_Manager::SWITCHER,
+                'condition' => [
+                    'query_type' => 'custommeta_source',
+                    'custommeta_source_querytype' => 'user'
+                ],
+            ]
+        );
+        // ---------------- user
+        $target->add_control(
+            'custommeta_source_user', [
+                'label' => '<i class="fas fa-external-link-alt"></i> '.__('Source User', 'e-addons'),
+                'type' => 'e-query',
+                'placeholder' => __('Current or Search User', 'e-addons'),
+                'description' => __('Leave empty for Current Logged In User', 'e-addons'),
+                'query_type' => 'users',
+                'label_block' => true,
+                'condition' => [
+                    'custommeta_source_author' => '',
+                    'query_type' => 'custommeta_source',
+                    'custommeta_source_querytype' => 'user'
+                ],
+            ]
+        );
+        // ---------------- attachment
+        $target->add_control(
+            'custommeta_source_attachment', [
+                'label' => '<i class="fas fa-external-link-alt"></i> '.__('Sourcee Media', 'e-addons'),
+                'separator' => 'before',
+                'type' => 'e-query',
+                'placeholder' => __('Current or Search Media', 'e-addons'),
+                'description' => __('Leave empty for Current Media or Post', 'e-addons'),
+                'query_type' => 'posts',
+                'object_type' => 'attachment',
+                'label_block' => true,
+                'condition' => [
+                    'query_type' => 'custommeta_source',
+                    'custommeta_source_querytype' => 'attachment'
+                ],
+            ]
         );
     }
 
