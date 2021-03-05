@@ -48,7 +48,7 @@ trait Custommeta {
                 'post' => __('Post', 'e-addons'), //
                 'term' => __('Term', 'e-addons'),
                 'user' => __('User', 'e-addons'), //
-                'attachment' => __('Media attachment', 'e-addons'), //
+                //'attachment' => __('Media attachment', 'e-addons'), //
             //'comment' => __(Comment,'e-addons'),
             ],
             'condition' => [
@@ -179,7 +179,7 @@ trait Custommeta {
         );
         // ---------------- attachment
         $target->add_control(
-                'custommeta_source_key_media', [
+                'custommeta_source_key_attachment', [
             'label' => __('Media Custom Field', 'e-addons'),
             'type' => 'e-query',
             'placeholder' => __('Search Media Custom Field', 'e-addons'),
