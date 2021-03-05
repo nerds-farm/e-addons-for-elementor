@@ -184,7 +184,7 @@ trait Custommeta {
         // ---------------- attachment
         $target->add_control(
             'custommeta_source_attachment', [
-                'label' => '<i class="fas fa-external-link-alt"></i> '.__('Sourcee Media', 'e-addons'),
+                'label' => '<i class="fas fa-external-link-alt"></i> '.__('Source Media', 'e-addons'),
                 'separator' => 'before',
                 'type' => 'e-query',
                 'placeholder' => __('Current or Search Media', 'e-addons'),
