@@ -742,8 +742,11 @@ trait Custommeta {
                     $id_of_location = get_the_ID();
                 }
         }
+        
         $custommeta_source_key = $settings['custommeta_source_key_' . $type_of_location];
-
+        if ($type_of_location == 'attachment') {
+            $type_of_location = 'post';
+        }
         return get_metadata($type_of_location, $id_of_location, $custommeta_source_key, true);
     }
 
