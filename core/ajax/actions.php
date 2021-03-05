@@ -530,8 +530,7 @@ class Actions {
                 }
                 if (!empty($params['post_status'])) {
                     $query_params['post_status'] = $params['post_status'];
-                }
-                //var_dump($query_params);
+                }                
                 if (class_exists('EAddonsForElementor\Overrides\E_Query')) {
                     $query = new \EAddonsForElementor\Overrides\E_Query($query_params);
                 } else {
@@ -593,15 +592,16 @@ class Actions {
             }
             $args = [
                 'post_type' => self::ANY,
+                'post_status' => self::ANY,
                 'posts_per_page' => -1,
                 'ignore_sticky_posts' => true,
                 'post__in' => $uid,
-            ];
+            ];            
             if (class_exists('EAddonsForElementor\Overrides\E_Query')) {
                 $the_query = new \EAddonsForElementor\Overrides\E_Query($args);
             } else {
                 $the_query = new \WP_Query($args);
-            }
+            }            
             //$the_query = new \WP_Query($args);
             foreach ($the_query->posts as $post) {
                 $control_options[$post->ID] = $post->post_title;
