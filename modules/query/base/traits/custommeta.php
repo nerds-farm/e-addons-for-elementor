@@ -48,7 +48,7 @@ trait Custommeta {
                 'post' => __('Post', 'e-addons'), //
                 'term' => __('Term', 'e-addons'),
                 'user' => __('User', 'e-addons'), //
-                //'attachment' => __('Media attachment', 'e-addons'), //
+                'attachment' => __('Media attachment', 'e-addons'), //
             //'comment' => __(Comment,'e-addons'),
             ],
             'condition' => [

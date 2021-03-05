@@ -5,7 +5,7 @@ Tags: elementor, addons, extension, dynamic, template, token, widget, module, de
 Requires at least: 5.0
 Tested up to: 5.6.2
 Elementor tested up to: 3.2.0
-Stable tag: 2.3
+Stable tag: 2.4
 Requires PHP: 7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -96,6 +96,13 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 3. **More e-addons** enable only wanted and really needed features
 
 == Changelog ==
+
+= 2.4 - 05-03-2021 =
+* Add: new Icons set
+* Add: Query Custom Field render as Number
+* Add: Query Posts future and Data Filter
+* Fix: e-query compatibility with Elementor 3.2.*
+* Fix: Query from Custom Field
 
 = 2.3 - 22-02-2021 =
 * Add: support new e-addons Query

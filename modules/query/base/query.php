@@ -307,7 +307,7 @@ class Query extends Base_Widget {
             'section_layout_blocks', [
                 'label' => '<i class="eaddicon eicon-info-box" aria-hidden="true"></i> '.__('Block Layout', 'e-addons'),
                 'condition' => [
-                    '_skin!' => ['justifiedgrid', 'timeline', 'nextpost', 'table'],
+                    '_skin!' => ['justifiedgrid', 'timeline', 'nextpost', 'table', 'list'],
                 ],
             ]
         );
