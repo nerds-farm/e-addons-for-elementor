@@ -113,8 +113,8 @@ class Query extends Base_Widget {
                 ],
             ]
         );
-        // skin: Carousel
-        $this->add_control(
+        // skin: Row
+        /*$this->add_control(
             'skin_dis_default',
             [
                 'type' => Controls_Manager::RAW_HTML,
@@ -125,7 +125,7 @@ class Query extends Base_Widget {
                     '_skin' => 'row'
                 ],
             ]
-        );
+        );*/
         // skin: Grid
         $this->add_control(
             'skin_dis_grid',

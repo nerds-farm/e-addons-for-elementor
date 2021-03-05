@@ -246,6 +246,7 @@ trait Custommeta {
                 //'' => __('Select Return Format', 'e-addons'), //
                 'text' => __('Text', 'e-addons'),
                 'image' => __('Image', 'e-addons'),
+                'number' => __('Number', 'e-addons'),
                 'oembed' => __('oEmbed', 'e-addons'), //
                 'date' => __('Date', 'e-addons'), //                
                 'textarea' => __('Textarea', 'e-addons'), //
@@ -265,6 +266,94 @@ trait Custommeta {
         );
         //...'metafield_type!' => ['','textarea','date','button','file','oembed','map','term','post','user','gallery','array'],
         //
+        //
+        //
+        
+        //Number
+        $target->add_control(
+                'number_round', [
+            'label' => __('Number Round', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'condition' => [
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        $target->add_control(
+                'number_round_precision', [
+            'label' => __('Number Round Precision', 'e-addons'),
+            'type' => Controls_Manager::NUMBER,
+            'min' => 0,
+            'condition' => [
+                'number_round!' => '',
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        $target->add_control(
+                'number_round_mode', [
+            'label' => __('Number Round Mode', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'label_on' => __('Ceil'),
+            'label_off' => __('Upper'),
+            'condition' => [
+                'number_round!' => '',
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        
+        $target->add_control(
+                'number_format', [
+            'label' => __('Number Format', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'condition' => [
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        $target->add_control(
+                'number_format_decimals', [
+            'label' => __('Number Format Decimals', 'e-addons'),
+            'type' => Controls_Manager::NUMBER,
+            'min' => 0,
+            'condition' => [
+                'number_format!' => '',
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        $target->add_control(
+                'number_format_decimal_separator', [
+            'label' => __('Number Format Decimal Separator', 'e-addons'),
+            'type' => Controls_Manager::TEXT,
+            'default' => '.',
+            'condition' => [
+                'number_format!' => '',
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        $target->add_control(
+                'number_format_thousands_separator', [
+            'label' => __('Number Format Thousands Separator', 'e-addons'),
+            'type' => Controls_Manager::TEXT,
+            'default' => ',',
+            'condition' => [
+                'number_format!' => '',
+                'metafield_type' => 'number',
+                'item_type' => 'item_custommeta'
+            ]
+                ]
+        );
+        
+        
         //Array
         $target->add_control(
                 'array_dump', [
@@ -443,7 +532,7 @@ trait Custommeta {
                 'span' => __('span', 'e-addons'),
             ],
             'condition' => [
-                'metafield_type' => 'text',
+                'metafield_type' => ['text', 'number'],
                 'item_type' => 'item_custommeta'
             ],
             'default' => 'span',
@@ -547,7 +636,7 @@ trait Custommeta {
                     'label_block' => false,
                     'fa4compatibility' => 'icon',
                     'condition' => [
-                        'metafield_type' => ['button', 'file', 'text'],
+                        'metafield_type' => ['button', 'file', 'text', 'number'],
                         'item_type' => 'item_custommeta'
                     ]
                 ]

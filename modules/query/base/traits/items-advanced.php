@@ -30,7 +30,8 @@ trait Items_Advanced {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_posttype',
+                        'value' => [
+                            'item_posttype',
                             'item_date',
                             'item_registered',
                             'item_readmore',
@@ -108,7 +109,7 @@ trait Items_Advanced {
                             [
                                 'name' => 'metafield_type',
                                 'operator' => 'in',
-                                'value' => ['file', 'text', 'image', 'array']
+                                'value' => ['file', 'text', 'number', 'image', 'array']
                             ]
                         ]
                     ]
@@ -230,7 +231,7 @@ trait Items_Advanced {
                             [
                                 'name' => 'metafield_type',
                                 'operator' => 'in',
-                                'value' => ['text', 'array']
+                                'value' => ['text', 'number', 'array']
                             ]
                         ]
                     ]
@@ -282,7 +283,7 @@ trait Items_Advanced {
                             [
                                 'name' => 'metafield_type',
                                 'operator' => 'in',
-                                'value' => ['text', 'array']
+                                'value' => ['text', 'number', 'array']
                             ]
                         ]
                     ]
@@ -305,7 +306,7 @@ trait Items_Advanced {
                     [
                         'name' => 'metafield_type',
                         'operator' => 'in',
-                        'value' => ['text', 'array']
+                        'value' => ['text', 'number', 'array']
                     ]
                 ],
             ]
