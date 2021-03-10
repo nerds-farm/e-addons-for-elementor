@@ -1,6 +1,6 @@
 jQuery(window).on('elementor/frontend/init', () => {
     class WidgetQueryCarouselHandlerClass extends elementorModules.frontend.handlers.Base {
-        isCarouselEnabled = false;
+        
         getDefaultSettings() {
             // e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-masonry
             return {
@@ -39,6 +39,8 @@ jQuery(window).on('elementor/frontend/init', () => {
                 elementSettings = this.getElementSettings(),
                 widgetType = this.getWidgetType(),
                 eaddPostsSwiper = null;
+
+            this.isCarouselEnabled = false;
 
             if(eaddPostsSwiper) eaddPostsSwiper.destroy();
             eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, elementSettings ) );

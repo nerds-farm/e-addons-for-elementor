@@ -1,7 +1,7 @@
 jQuery(window).on('elementor/frontend/init', () => {
 
 class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handlers.Base {
-    isThumbsCarouselEnabled = false;
+    
     getDefaultSettings() {
         // e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-masonry
         return {
@@ -45,6 +45,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             widgetType = this.getWidgetType(),
             galleryThumbs = null;
 
+        this.isThumbsCarouselEnabled = false;
         this.adapteHeight();
 
         if(galleryThumbs) galleryThumbs.destroy();

@@ -1,26 +1,25 @@
 class eadd_timeline{
-	timelineEl = null;
-    timelineSectionHeight = 0;
-    
-	primoBlocco = null;
-	primoBloccoPos = 0;
-	ultimoBlocco = null;
-	ultimoBloccoPos = 0;
-	
-	isTimelineEnabled = false;
-	scrolling = false;
-	scrtop = 0;
-	offset = 0.5;
-	rowspace = 10; //Number(elementSettings[EADD_skinPrefix+'timeline_rowspace']['size']);
-
-	//oggetti
-	blocks = null;
-	images = null;
-	contents = null;
-
-	constructor($target){
+    constructor($target){
 		this.timelineEl = $target;
 
+		this.timelineSectionHeight = 0;
+    
+		this.primoBlocco = null;
+		this.primoBloccoPos = 0;
+		this.ultimoBlocco = null;
+		this.ultimoBloccoPos = 0;
+		
+		this.isTimelineEnabled = false;
+		this.scrolling = false;
+		this.scrtop = 0;
+		this.offset = 0.5;
+		this.rowspace = 10; //Number(elementSettings[EADD_skinPrefix+'timeline_rowspace']['size']);
+
+		//oggetti
+		this.blocks = null;
+		this.images = null;
+		this.contents = null;
+		
 		//preparo: oggetti ed eventi
 		this.verticalTimeline($target[0]);
 		this.initEvents();

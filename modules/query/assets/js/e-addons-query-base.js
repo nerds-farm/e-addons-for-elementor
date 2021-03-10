@@ -6,8 +6,7 @@ var gtf3d = null;
 var crs = null;
 
 class eadd_animationReveal{
-	target = null;
-	items = null;
+	
 	constructor($target, $live) {
 		this.target = $target;
 		let waypointRevOptions = {
@@ -36,10 +35,6 @@ class eadd_animationReveal{
 	}
 }
 class eadd_masonry{
-
-	target = null;
-	masonryGrid = null;
-	isMasonryEnabled = false;
 	
 	constructor($target,$id_scope) {
 		this.target = $target;

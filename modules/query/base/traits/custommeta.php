@@ -38,7 +38,7 @@ trait Custommeta {
                 ]
         );
 
-        //@p qui seleiono il tipo di sorgente
+        //@p qui seleziono il tipo di sorgente
         $target->add_control(
                 'custommeta_source_querytype', [
             'label' => __('Custom Field from:', 'e-addons'),
