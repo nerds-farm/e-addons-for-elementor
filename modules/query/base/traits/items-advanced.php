@@ -23,7 +23,12 @@ trait Items_Advanced {
         $target->add_control(
                 'use_link', [
             'label' => '<i class="fas fa-link"></i> ' . __('Use link', 'e-addons'),
-            'type' => Controls_Manager::SWITCHER,
+            'type' => Controls_Manager::SELECT,
+            'options' => [
+                '' => __('None'),
+                'yes' => __('Current'),
+                'custom' => __('Custom'),
+            ],
             'default' => 'yes',
             'conditions' => [
                 'terms' => [
@@ -49,6 +54,15 @@ trait Items_Advanced {
                         ],
                     ]
                 ]
+            ]
+                ]
+        );
+        $target->add_control(
+                'custom_link', [
+            'label' => __('Custom link', 'e-addons'),
+            'type' => Controls_Manager::URL,
+            'condition' => [
+                'use_link' => 'custom',
             ]
                 ]
         );

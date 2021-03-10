@@ -664,9 +664,9 @@ class Table extends Base {
 
     public function render_item_start($key = 'post') {
         //@p data post ID
-        $data_post_id = ' data-e-add-post-id="' . $this->current_id . '"';
+        $data_post_id = ' data-post-id="' . $this->current_id . '"';
         //@p data post INDEX
-        $data_post_index = ' data-e-add-post-index="' . $this->counter . '"';
+        $data_post_index = ' data-post-index="' . $this->counter . '"';
         //@p una classe personalizzata per lo skin
         $item_class = ' ' . $this->get_item_class();
         ?>

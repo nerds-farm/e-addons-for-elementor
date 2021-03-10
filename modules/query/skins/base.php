@@ -480,6 +480,13 @@ class Base extends Base_Skin {
             }
         }
     }
+    
+    public function render_full_block_link() {
+        $linkable = $this->parent->get_settings_for_display('templatemode_linkable');
+        if ($linkable) {
+            echo '<a class="e-full-block-link" href="'.$this->current_permalink.'"></a>';
+        }
+    }
 
     protected function render_element_item() {
         $style_items = $this->parent->get_settings_for_display('style_items');
@@ -518,6 +525,7 @@ class Base extends Base_Skin {
         if ($post_template_id)
             $this->render_e_template($post_template_id);
         //
+        $this->render_full_block_link();
     }
 
     protected function render_e_template($id_temp) {
@@ -798,9 +806,9 @@ class Base extends Base_Skin {
         $hoverEffects_class = !empty($hover_effects) && $style_items == 'float' ? ' e-add-hover-effects' : '';
 
         //@p data post ID
-        $data_post_id = ' data-e-add-post-id="' . $this->current_id . '"';
+        $data_post_id = ' data-post-id="' . $this->current_id . '"';
         //@p data post INDEX
-        $data_post_index = ' data-e-add-post-index="' . $this->counter . '"';
+        $data_post_index = ' data-post-index="' . $this->counter . '"';
         //@p una classe personalizzata per lo skin
         $item_class = ' ' . $this->get_item_class();
         ?>
@@ -934,6 +942,26 @@ class Base extends Base_Skin {
             // TODO preserve words
         }
         return $content;
+    }
+    
+    public function get_item_link($settings) {
+        if (!empty($settings['use_link'])) {
+            switch ($settings['use_link']) {
+                case 'custom':
+                    if (!empty($settings['custom_link']['url'])) {
+                        // TODO: generate dynamic url per each item
+                        return $settings['custom_link']['url'];
+                    }
+                    break;
+                case 'yes':
+                default:
+                    if (!is_wp_error($this->current_permalink)) { 
+                        return $this->current_permalink;
+                    }
+            }
+            
+        } 
+        return false;
     }
 
 }

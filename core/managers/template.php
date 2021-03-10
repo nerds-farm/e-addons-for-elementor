@@ -128,6 +128,7 @@ class Template {
                 if ($post) {
                     $wp_query->queried_object = $post;
                     $wp_query->queried_object_id = $args['post_id'];
+                    $wp_query->is_singular = true; // Form Fix
                 }
             }
             if (!empty($args['author_id']) && intval($args['author_id'])) {

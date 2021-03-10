@@ -75,8 +75,8 @@ trait Label {
 
                     break;
             }
-            $use_link = !empty($settings['use_link']) && !is_wp_error($this->current_permalink) ? true : false;
-            if ($use_link) echo '<a href="'.$this->current_permalink.'">';
+            $use_link = $this->get_item_link($settings);
+            if ($use_link) echo '<a href="'.$use_link.'">';
             echo $html_label;
             if ($use_link) echo '</a>';
         }

@@ -335,13 +335,15 @@ trait Items_Style {
                             ],
                             [
                                 'name' => 'use_link',
-                                'value' => 'yes'
+                                'operator' => '!=',
+                                'value' => ''
                             ]
                         ]
                     ],
                     [
                         'name' => 'use_link',
-                        'value' => 'yes'
+                        'operator' => '!=',
+                        'value' => ''
                     ]
                 ]
             ]
@@ -391,13 +393,15 @@ trait Items_Style {
                             ],
                             [
                                 'name' => 'use_link',
-                                'value' => 'yes'
+                                'operator' => '!=',
+                                'value' => ''
                             ]
                         ]
                     ],
                     [
                         'name' => 'use_link',
-                        'value' => 'yes'
+                        'operator' => '!=',
+                        'value' => ''
                     ]
                 ]
             ]

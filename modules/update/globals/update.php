@@ -17,6 +17,18 @@ class Update extends Base_Global {
 
     public $updaters = [];
     public static $remote = false;
+    
+    /**
+     * Get Label
+     *
+     * Returns the action label
+     *
+     * @access public
+     * @return string
+     */
+    public function get_label() {
+        return __('WP Managed e-addons Updates', 'e-addons');
+    }
 
     public function __construct() {
         parent::__construct();
