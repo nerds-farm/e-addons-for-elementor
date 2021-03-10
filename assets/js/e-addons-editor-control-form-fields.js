@@ -16,18 +16,20 @@ var formFieldsItemView = elementor.modules.controls.BaseData.extend({
             var fields = settings['form_fields'];
             //console.log(settings);
             
-            var options = '<option value="">No field</option>';                        
-            jQuery(fields.models).each(function(index,element){
-                var field_label = '[' + element.attributes.custom_id + '] (' + element.attributes.field_type + ')';
-                if (element.attributes.field_label) {
-                    if (element.attributes.field_label.length > 20) {
-                        field_label = element.attributes.field_label.substr(0, 20)  + '… ' + field_label;
-                    } else {
-                        field_label = element.attributes.field_label + ' ' + field_label;
+            var options = '<option value="">No field</option>';  
+            if (fields) {
+                jQuery(fields.models).each(function(index,element){
+                    var field_label = '[' + element.attributes.custom_id + '] (' + element.attributes.field_type + ')';
+                    if (element.attributes.field_label) {
+                        if (element.attributes.field_label.length > 20) {
+                            field_label = element.attributes.field_label.substr(0, 20)  + '… ' + field_label;
+                        } else {
+                            field_label = element.attributes.field_label + ' ' + field_label;
+                        }
                     }
-                }
-                options += '<option value="'+element.attributes.custom_id+'">'+field_label+'</option>';
-            });
+                    options += '<option value="'+element.attributes.custom_id+'">'+field_label+'</option>';
+                });
+            }
   
             // single field
             var select = this.$el.find('select');

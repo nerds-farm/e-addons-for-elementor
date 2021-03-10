@@ -25,7 +25,7 @@ trait User {
         $use_bgimage = $settings['use_bgimage'];
         $use_overlay = $settings['use_overlay'];
         $use_overlayimg_hover = $this->get_instance_value('use_overlayimg_hover');
-        $use_link = !empty($settings['use_link']) ? $settings['use_link'] : '';
+        $use_link = $this->get_item_link($settings);
 
         //
         // ---------------------------------------
@@ -58,7 +58,7 @@ trait User {
         $attribute_link = '';
         if ($use_link) {
             $html_tag = 'a';
-            $attribute_link = ' href="' . $this->current_permalink . '"';
+            $attribute_link = ' href="' . $use_link . '"';
         }
         echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . '>';
 
@@ -76,13 +76,13 @@ trait User {
         $user_info = $this->current_data;
         $c = $this->counter;
 
-        $use_link = !empty($settings['use_link']) ? $settings['use_link'] : '';
+        $use_link = $this->get_item_link($settings);
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'div';
         
         $start_a = '';
         $end_a = '';
         if ($use_link) {
-            $attribute_link = 'href="' . $this->current_permalink . '"';
+            $attribute_link = 'href="' . $use_link . '"';
 
             // in caso di email
             if ($usertype == 'email')

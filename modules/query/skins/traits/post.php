@@ -22,7 +22,7 @@ trait Post {
     protected function render_item_author($settings) {
         // Settings ------------------------------
         $avatar_image_size = $settings['author_image_size'];
-        $use_link = $settings['use_link'];
+        $use_link = $this->get_item_link($settings);
 
         $author_user_key = array();
         if (count($settings['author_user_key']))
@@ -227,6 +227,9 @@ trait Post {
                         $linkClose = '';
 
                         if ($use_link) {
+                            if ($use_link == 'custom') {
+                                $term_url = $settings['custom_link'];
+                            }
                             $linkOpen = '<a class="e-add-link" href="' . $term_url . '">';
                             $linkClose = '</a>';
                         }

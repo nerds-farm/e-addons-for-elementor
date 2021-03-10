@@ -66,9 +66,36 @@ trait Elementor {
         }
         return $t_id;
     }
-
-    public static function get_element_instance_by_id($e_id, $p_id = null) {
-        
+    
+    public static function get_widget_type_by_id($e_id, $p_id = null) {
+        $p_id = self::get_element_post_id($e_id, $p_id);
+        if (intval($p_id) > 0) {
+            $document = \Elementor\Plugin::$instance->documents->get($p_id);
+            if ($document) {
+                $e_raw = self::get_element_from_data($document->get_elements_data(), $e_id);
+                if (!empty($e_raw['widgetType'])) {
+                    return $e_raw['widgetType'];
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static function get_element_type_by_id($e_id, $p_id = null) {
+        $p_id = self::get_element_post_id($e_id, $p_id);
+        if (intval($p_id) > 0) {
+            $document = \Elementor\Plugin::$instance->documents->get($p_id);
+            if ($document) {
+                $e_raw = self::get_element_from_data($document->get_elements_data(), $e_id);
+                if (!empty($e_raw['elType'])) {
+                    return $e_raw['elType'];
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static function get_element_post_id($e_id, $p_id = 0) {        
         if (!$p_id && $e_id) {
             $p_id = self::get_template_by_element_id($e_id);
         }
@@ -81,10 +108,16 @@ trait Elementor {
         if (!$p_id) {                                
             $p_id = get_the_ID();
         }
+        return $p_id;
+    }
+
+    public static function get_element_instance_by_id($e_id, $p_id = null) {        
+        $p_id = self::get_element_post_id($e_id, $p_id);
         if (intval($p_id) > 0) {
             $document = \Elementor\Plugin::$instance->documents->get($p_id);
             if ($document) {
                 $e_raw = self::get_element_from_data($document->get_elements_data(), $e_id);
+                //var_dump($e_raw); die();
                 if ($e_raw) {
                     $element = \Elementor\Plugin::$instance->elements_manager->create_element_instance($e_raw);
                     return $element;
@@ -250,5 +283,78 @@ trait Elementor {
         }
         return false;
     }
+    
+    /**
+	 * Add render attributes.
+	 *
+	 * Used to add attributes to the current element wrapper HTML tag.
+	 *
+	 * @since 3.1.0
+	 * @access protected
+	 */
+	public static function add_render_attributes($element) {
+		$id = $element->get_id();
+
+		$settings = $element->get_settings_for_display();
+		$frontend_settings = $element->get_frontend_settings();
+		$controls = $element->get_controls();
+
+		$element->add_render_attribute( '_wrapper', [
+			'class' => [
+				'elementor-element',
+				'elementor-element-' . $id,
+			],
+			'data-id' => $id,
+			'data-element_type' => $element->get_type(),
+		] );
+
+		$class_settings = [];
+
+		foreach ( $settings as $setting_key => $setting ) {
+			if ( isset( $controls[ $setting_key ]['prefix_class'] ) ) {
+				$class_settings[ $setting_key ] = $setting;
+			}
+		}
+
+		foreach ( $class_settings as $setting_key => $setting ) {
+			if ( empty( $setting ) && '0' !== $setting ) {
+				continue;
+			}
+
+			$element->add_render_attribute( '_wrapper', 'class', $controls[ $setting_key ]['prefix_class'] . $setting );
+		}
+
+		$_animation = ! empty( $settings['_animation'] );
+		$animation = ! empty( $settings['animation'] );
+		$has_animation = $_animation && 'none' !== $settings['_animation'] || $animation && 'none' !== $settings['animation'];
+
+		if ( $has_animation ) {
+			$is_static_render_mode = Plugin::$instance->frontend->is_static_render_mode();
+
+			if ( ! $is_static_render_mode ) {
+				// Hide the element until the animation begins
+				$element->add_render_attribute( '_wrapper', 'class', 'elementor-invisible' );
+			}
+		}
+
+		if ( ! empty( $settings['_element_id'] ) ) {
+			$element->add_render_attribute( '_wrapper', 'id', trim( $settings['_element_id'] ) );
+		}
+
+		if ( $frontend_settings ) {
+			$element->add_render_attribute( '_wrapper', 'data-settings', wp_json_encode( $frontend_settings ) );
+		}
+
+		/**
+		 * After element attribute rendered.
+		 *
+		 * Fires after the attributes of the element HTML tag are rendered.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param Element_Base $this The element.
+		 */
+		do_action( 'elementor/element/after_add_attributes', $element );
+	}
 
 }

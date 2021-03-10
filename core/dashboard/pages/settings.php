@@ -161,6 +161,7 @@ $e_addons_plugins = \EAddonsForElementor\Plugin::instance()->get_addons(true);
                                                                 $title = str_replace(DIRECTORY_SEPARATOR, ' ', $folder);
                                                                 $title = ucwords($title);
                                                                 $title = ($folder == 'tags') ? 'Dynamic Tags' : $title;
+                                                                $title = ($folder == 'globals') ? 'Global' : $title;
                                                                 
                                                                 $has_features_folder = false;
                                                                 $expr = $e_plugin['path'] . '/modules/' . $amod . '/' . $folder . '/*.php';

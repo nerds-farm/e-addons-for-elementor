@@ -69,7 +69,7 @@ trait Common {
         }
         //
         // @p definisco se l'immagine è linkata
-        $use_link = !empty($settings['use_link']) && !is_wp_error($this->current_permalink) ? $settings['use_link'] : '';
+        $use_link = $this->get_item_link($settings);
 
 
         // ---------------------------------------
@@ -126,7 +126,7 @@ trait Common {
         $attribute_link = '';
         if ($use_link && $querytype != 'attachment') {
             $html_tag = 'a';
-            $attribute_link = ' href="' . $this->current_permalink . '"';
+            $attribute_link = ' href="' . $use_link . '"';
         }
         echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . '>';
 
@@ -146,11 +146,11 @@ trait Common {
         // Settings ------------------------------
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'h3';
         //
-        $use_link = !empty($settings['use_link']) && !is_wp_error($this->current_permalink) ? $settings['use_link'] : '';
+        $use_link = $this->get_item_link($settings);
         // ---------------------------------------
         echo sprintf('<%1$s class="e-add-post-title">', $html_tag);
         ?>
-        <?php if ($use_link) { ?><a href="<?php echo $this->current_permalink; ?>"><?php } ?>
+        <?php if ($use_link) { ?><a href="<?php echo $use_link; ?>"><?php } ?>
             <?php
             $querytype = $this->parent->get_querytype();
 
@@ -183,7 +183,6 @@ trait Common {
         // Settings ------------------------------
         $date_format = $settings['date_format'];
         $icon_enable = $settings['icon_enable'];
-        $use_link = $settings['use_link'];
         // ---------------------------------------
         if (empty($date_format)) {
             $date_format = get_option('date_format');
