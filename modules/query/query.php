@@ -26,23 +26,51 @@ class Query extends Module_Base {
         }
 
         // Check it's not already handled and it's a single paged query.
-        if ($handled || empty($wp_query->query_vars['page']) || !is_singular() || empty($wp_query->post)) {
+        if (empty($wp_query->query_vars['page']) || !is_singular() || empty($wp_query->post)) {
             return $handled;
         }
 
+        // No Widgets which require pagination
         $query_widgets = $this->get_query_widgets();
         if (empty($query_widgets)) {
             return $handled;
         }
 
+        // Single Post built_with_elementor
         if (\Elementor\Plugin::instance()->db->is_built_with_elementor($wp_query->post->ID) || Utils::is_plugin_active('elementor-pro')) {
             $document = \Elementor\Plugin::instance()->documents->get($wp_query->post->ID);
-            if ($this->is_valid_pagination($document->get_elements_data(), $wp_query->query_vars['page'])) {
+            if ($this->is_valid_pagination($document, $wp_query->query_vars['page'])) {
                 return true;
             }
         }
 
-        return false;
+        // Elementor Pro
+        if (Utils::is_plugin_active('elementor-pro')) {
+            $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules('theme-builder');
+            if (!$theme_builder) {
+                $class_name = '\ElementorPro\Modules\ThemeBuilder\Module';
+                /** @var Module_Base $class_name */
+                if ($class_name::is_active()) {
+                    $theme_builder = $class_name::instance();
+                }
+            }
+            $locations = $theme_builder->get_locations_manager()->get_locations();
+            
+            if (!empty($locations['single'])) {
+                $singles = $theme_builder->get_conditions_manager()->get_documents_for_location('single');                
+                if (!empty($singles)) {
+                    foreach ($singles as $document_id => $document) {
+                        //if ( $document_id != $wp_query->post->ID ) {
+                            if ($this->is_valid_pagination($document, $wp_query->query_vars['page'])) {
+                                return true;
+                            }
+                        //}
+                    }
+                }
+            }
+        }
+
+        return $handled;
     }
 
     public function get_query_widgets() {
@@ -60,13 +88,14 @@ class Query extends Module_Base {
     /**
      * Checks a set of elements if there is a posts/archive widget that may be paginated to a specific page number.
      *
-     * @param array $elements
+     * @param array $document
      * @param       $current_page
      *
      * @return bool
      */
-    public function is_valid_pagination(array $elements, $current_page) {
+    public function is_valid_pagination($document, $current_page) {
         $is_valid = false;
+        $elements = $document->get_elements_data();
         $query_widgets = $this->get_query_widgets();
         \Elementor\Plugin::instance()->db->iterate_data($elements, function($element) use (&$is_valid, $query_widgets, $current_page) {
             if (isset($element['widgetType']) && in_array($element['widgetType'], $query_widgets, true)) {
@@ -95,14 +124,13 @@ class Query extends Module_Base {
         $this->register_style('animatecss', 'assets/lib/animate/animate.min.css');
         $this->register_style('custom-swiper', 'assets/lib/swiper/css/swiper.min.css');
         // font-awesome     
-        
         // dataTables
         $this->register_style('datatables-jquery', 'assets/lib/datatables/DataTables-1.10.23/css/jquery.dataTables.min.css');
         $this->register_style('datatables-buttons', 'assets/lib/datatables/Buttons-1.6.5/css/buttons.dataTables.min.css');
         $this->register_style('datatables-fixedHeader', 'assets/lib/datatables/FixedHeader-3.1.8/css/fixedHeader.dataTables.min.css');
         $this->register_style('datatables-responsive', 'assets/lib/datatables/Responsive-2.2.7/css/responsive.dataTables.min.css');
         $this->register_script('datatables-jquery', 'assets/lib/datatables/DataTables-1.10.23/js/jquery.dataTables.min.js');
-        $this->register_script('datatables-jszip', 'assets/lib/datatables/JSZip-2.5.0/jszip.min.js');        
+        $this->register_script('datatables-jszip', 'assets/lib/datatables/JSZip-2.5.0/jszip.min.js');
         $this->register_script('datatables-buttons', 'assets/lib/datatables/Buttons-1.6.5/js/dataTables.buttons.min.js');
         $this->register_script('datatables-html5', 'assets/lib/datatables/Buttons-1.6.5/js/buttons.html5.min.js');
         $this->register_script('datatables-fixedHeader', 'assets/lib/datatables/FixedHeader-3.1.8/js/dataTables.fixedHeader.min.js');

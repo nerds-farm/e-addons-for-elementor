@@ -3,9 +3,9 @@ Contributors: nerdsfarm, poglie, frapesce
 Donate link: https://e-addons.com/donate/
 Tags: elementor, addons, extension, dynamic, template, token, widget, module, design
 Requires at least: 5.0
-Tested up to: 5.6.2
+Tested up to: 5.7.1
 Elementor tested up to: 3.2.0
-Stable tag: 2.4
+Stable tag: 2.4.1
 Requires PHP: 7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -96,6 +96,12 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 3. **More e-addons** enable only wanted and really needed features
 
 == Changelog ==
+
+= 2.4.1 - 11-03-2021 =
+* Add: Query custom Link on Items 
+* Add: Pagination fix on Single Template
+* Info: compatible with WP 5.7.x
+* Fix: Js fix on Safari
 
 = 2.4 - 05-03-2021 =
 * Add: new Icons set

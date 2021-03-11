@@ -335,11 +335,14 @@ trait Base {
         return \Elementor\Plugin::$instance->elements_manager->get_element_types('section');
     }
     
-    public function start_controls_e_section($widget, $tab = 'advanced') {
+    public function start_controls_e_section($widget, $tab = 'advanced', $label = '') {
+        if (!$label) {
+            $label = $this->get_label();
+        }
         $widget->start_controls_section(
                 'section_' . $this->get_name(),
                 [
-                    'label' => '<i class="eadd-logo-e-addons eadd-ic-right"></i>' . $this->get_label(),
+                    'label' => '<i class="eadd-logo-e-addons eadd-ic-right"></i>' . $label,
                     'tab' => $tab,
                 ]
         );

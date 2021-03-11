@@ -44,6 +44,7 @@ class Template {
         $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);
         $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);        
         if ($is_elementor) {
+            //var_dump($post_id);
             $content = \Elementor\Plugin::instance()->frontend->get_builder_content($post_id, $with_css);
             $content = self::fix_template_class($content, $post_id);
         } else {

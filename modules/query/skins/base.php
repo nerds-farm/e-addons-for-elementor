@@ -947,6 +947,42 @@ class Base extends Base_Skin {
     public function get_item_link($settings) {
         if (!empty($settings['use_link'])) {
             switch ($settings['use_link']) {
+                case 'shortcode':
+                    if (!empty($settings['shortcode_link'])) {
+                        ob_start();
+                        do_shortcode($settings['shortcode_link']);
+                        $link = ob_get_clean();
+                        return $link;
+                    }
+                    break;
+                case 'popup':
+                    if (!empty($settings['popup_link'])) {                        
+                        $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+                        if (Utils::is_plugin_active('elementor-pro')) {
+                            if (!$theme_builder) {
+                                $class_name = '\ElementorPro\Modules\ThemeBuilder\Module';
+                                /** @var Module_Base $class_name */
+                                if ( $class_name::is_active() ) {
+                                    $theme_builder = $class_name::instance();
+                                }
+                            }
+                        }
+                        if ($theme_builder) {
+                            $popup_id = $settings['popup_link'];
+                            $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash( 'popup:open', [
+                                'id' => $popup_id,
+                                'toggle' => true,
+                            ] );
+                            $link_action_url = str_replace(':', '%3A', $link_action_url);
+                            $link_action_url = str_replace('=', '%3D', $link_action_url);
+                            $link_action_url = str_replace('%3D%3D', '%3D', $link_action_url);
+                            $link_action_url = str_replace('&', '%26', $link_action_url);  
+                            //
+                            $theme_builder->get_locations_manager()->add_doc_to_location( 'popup', $popup_id );                              
+                            return $link_action_url;
+                        }
+                    }
+                    break;
                 case 'custom':
                     if (!empty($settings['custom_link']['url'])) {
                         // TODO: generate dynamic url per each item

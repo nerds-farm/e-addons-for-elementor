@@ -2,6 +2,8 @@
 
 namespace EAddonsForElementor\Modules\Query\Base\Traits;
 
+use EAddonsForElementor\Core\Utils;
+
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
 
@@ -17,18 +19,22 @@ trait Items_Advanced {
     // query-term: 'item_readmore','item_custommeta'
     // query-user: 'item_readmore','item_custommeta'
     // query-items: 'item_readmore'
-    // ----------------------------------------------------------
+    // ----------------------------------------------------------    
     public function controls_items_advanced($target) {
         //use_Link, Display(block,inline)
+        $options = [
+                '' => __('None'),
+                'yes' => __('Current'),                
+                'shortcode' => __('Shortcode'),
+            ];
+        if (Utils::is_plugin_active('elementor-pro') && Utils::is_plugin_active('e-addons-extended')) {
+            $options['popup'] = __('Open PopUp');
+        }
         $target->add_control(
                 'use_link', [
             'label' => '<i class="fas fa-link"></i> ' . __('Use link', 'e-addons'),
             'type' => Controls_Manager::SELECT,
-            'options' => [
-                '' => __('None'),
-                'yes' => __('Current'),
-                'custom' => __('Custom'),
-            ],
+            'options' => $options,
             'default' => 'yes',
             'conditions' => [
                 'terms' => [
@@ -58,14 +64,30 @@ trait Items_Advanced {
                 ]
         );
         $target->add_control(
-                'custom_link', [
-            'label' => __('Custom link', 'e-addons'),
-            'type' => Controls_Manager::URL,
+                'shortcode_link', [
+            'label' => __('Shortcode link', 'e-addons'),
+            'type' => Controls_Manager::TEXT,
             'condition' => [
-                'use_link' => 'custom',
+                'use_link' => 'shortcode',
             ]
                 ]
         );
+        if (Utils::is_plugin_active('elementor-pro') || Utils::is_plugin_active('e-addons-extended')) {
+            $target->add_control(
+                    'popup_link', [
+                'label' => __('Open PopUp', 'e-addons'),
+                'type' => 'e-query',
+                'placeholder' => __('Select PopUp', 'e-addons'),
+                'label_block' => true,
+                'query_type' => 'posts',
+                'object_type' => 'elementor_library',
+                'condition' => [
+                    'use_link' => 'popup',
+                ]
+                    ]
+            );
+        }
+        
         $target->add_control(
                 'display_inline', [
             'label' => '<i class="fas fa-clipboard-list"></i> ' . __('Display', 'e-addons'),
