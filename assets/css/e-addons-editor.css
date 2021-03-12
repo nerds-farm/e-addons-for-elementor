@@ -94,13 +94,19 @@
     border: none;
     border-top: 1px dotted #999;
 }
-.e-add-info-panel{
-    background-color: rgba(200,200,200,0.2);
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 11px;
-    line-height: 1.3;
-    margin: 0 0 10px;
+.e-add-info-panel i.fas{
+    font-size: 30px;
+    float: left;
+    margin-right: 6px;
+}
+.e-add-info-panel {
+	background-color: rgb(253, 191, 6);
+	padding: 15px;
+	border-radius: 10px;
+	font-size: 11px;
+	line-height: 1.3;
+	margin: 0 0 10px;
+	color: #000;
 }
 
 .elementor-panel .elementor-tab-control-e_query a:before,
