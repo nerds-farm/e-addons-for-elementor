@@ -136,7 +136,7 @@
 
   	max-width: inherit;
   	width: 100%;
-  	height: auto;
+  	height: 100%;
 }
 /* In caso di tablet e mobile i valori dell'immagine sono fissi*/
 body[data-elementor-device-mode=tablet] .e-add-timeline__img,

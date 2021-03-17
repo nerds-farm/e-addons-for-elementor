@@ -1,5 +1,5 @@
 class eadd_timeline{
-    constructor($target){
+    constructor($target, $ob){
 		this.timelineEl = $target;
 
 		this.timelineSectionHeight = 0;
@@ -12,9 +12,10 @@ class eadd_timeline{
 		this.isTimelineEnabled = false;
 		this.scrolling = false;
 		this.scrtop = 0;
-		this.offset = 0.5;
-		this.rowspace = 10; //Number(elementSettings[EADD_skinPrefix+'timeline_rowspace']['size']);
+		this.offset = 0.6;
+		this.rowspace = 10;
 
+		this.verticalPositionContent = $ob.timelineVerticalposition;
 		//oggetti
 		this.blocks = null;
 		this.images = null;
@@ -55,6 +56,17 @@ class eadd_timeline{
 	checkTimelineScroll(){
 		this.primoBlocco = jQuery(this.blocks).first().find( '.e-add-timeline__img' );
 		this.ultimoBlocco = jQuery(this.blocks).last().find( '.e-add-timeline__img' );
+
+		/*
+		for( var i = 0; i < this.blocks.length; i++) {
+			//console.log( (i+1)+' / '+this.blocks.length );
+			if( (i+1) == this.blocks.length ){
+				if(this.contents[i].classList.contains("e-add-timeline__content--hidden")){
+				
+					console.log( 'last' );
+				}
+			}
+		}*/
 		
 		this.primoBloccoPos = (this.primoBlocco.offset().top - this.timelineEl.offset().top);
 		if(this.primoBloccoPos <= 0 ) this.primoBloccoPos = 0;
@@ -71,7 +83,18 @@ class eadd_timeline{
 			this.scrtop = this.ultimoBloccoPos;
 		}
 		this.timelineEl.find('.e-add-timeline-wrapper').get(0).style.setProperty('--lineProgress', this.scrtop+'px');
+		
+		//soluzione -A- metto un margin sotto
 		//this.timelineEl.css('margin-bottom',this.ultimoBlocco.position().top);
+		
+		this.timelineEl.css( 'margin-bottom','calc('+((1-this.offset)*100)+'vh - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100))+'px)');
+		//this.timelineEl.css( 'margin-bottom','calc('+(this.offset*100)+'vh - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100))+'px - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height()+'px) + '+this.ultimoBlocco.height()+'px' );
+		//alert(jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100)));
+		
+		//soluzione -B- 
+		// da provare.. l'ultimo elemento usa on'offset di 0.9 invece che 0.6
+
+
 		this.showBlocks();
 		// ---------
 		this.scrolling = false;
@@ -145,8 +168,12 @@ jQuery(window).on('elementor/frontend/init', () => {
 				id_scope = this.elements.$id_scope,
 				elementSettings = this.getElementSettings();
 
+				let elementsObject = {
+					timelineVerticalposition: elementSettings[EADD_skinPrefix+'timeline_verticalposition'] ? Number(elementSettings[EADD_skinPrefix+'timeline_verticalposition']['size']) : 50,
+				};
+
 				this.elements.$containerTimeline.imagesLoaded( () => {
-					this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline);
+					this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline,elementsObject);
 				  });
 				
 			

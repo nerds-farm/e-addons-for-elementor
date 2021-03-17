@@ -77,6 +77,7 @@ class Timeline extends Base {
                 'timeline_verticalposition', [
             'label' => '<i class="fas fa-arrows-alt-v"></i>&nbsp;&nbsp;' . __('Vertical Position (%)', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
+            'frontend_available' => true,
             'size_units' => ['%'],
             'separator' => 'before',
             'default' => [
