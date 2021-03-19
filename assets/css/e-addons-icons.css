@@ -235,6 +235,11 @@
 .eadd-query-terms:before { content: '\e8b8'; } /* '' */
 
 .eadd-el-form-pro-filters-action:before { content: '\e8b9'; } /* '' */
+.eadd-el-form-pro-filters-archiveinfo:before { content: '\e8d5'; } /* '' */
+.eadd-el-form-pro-filters-perpage:before { content: '\e8d6'; } /* '' */
+.eadd-el-form-pro-filters-orderby:before { content: '\e8d7'; } /* '' */
+.eadd-el-form-pro-filters-activefilter:before { content: '\e8d0'; } /* '' */
+
 .eadd-dynamic-tag-datetime:before { content: '\e8ba'; } /* '' */
 .eadd-el-form-pro-ext-query-field:before { content: '\e8bb'; } /* '' */
 .eadd-lazy-widgets:before { content: '\e8bc'; } /* '' */
