@@ -816,6 +816,9 @@ trait Items_Content {
                         'value' => 'yes',
                     ]
                 ]
+            ],
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-author-image .e-add-img' => 'width: {{VALUE}}px; height: {{VALUE}}px;',
             ]
                 ]
         );

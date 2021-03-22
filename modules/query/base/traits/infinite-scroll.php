@@ -181,7 +181,7 @@ trait Infinite_Scroll {
                 //  @p show status
                 if ($settings['infiniteScroll_enable_status']) {
                     ?>
-                    <nav class="e-add-infiniteScroll">
+                    <nav class="e-add-infiniteScroll" role="navigation">
                         <div class="e-add-page-load-status e-add-page-load-status-<?php echo $this->get_id() . $preview_mode; ?>">
                             <?php
                             if ($settings['infiniteScroll_loading_type'] == 'text') {
