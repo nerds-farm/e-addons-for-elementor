@@ -51,7 +51,7 @@
 }
 .e-add-posts-container .e-add-post-block.e-add-post-overlayhover:before,
 .e-add-posts-container .e-add-post-image.e-add-post-overlayhover:before{
-	z-index: 100;
+	z-index: 3;
 
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;

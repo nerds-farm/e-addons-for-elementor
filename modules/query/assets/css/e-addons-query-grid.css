@@ -247,6 +247,8 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 /*i blocchi dentro all'item*/
 .e-add-posts-container .e-add-post-item .e-add-post-block{
 	width: 100%;
+}
+.e-add-posts-container.e-add-skin-grid .e-add-post-item .e-add-post-block{
 	display: flex;
 }
 /* solo x default
