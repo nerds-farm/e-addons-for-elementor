@@ -12,7 +12,7 @@ class eadd_timeline{
 		this.isTimelineEnabled = false;
 		this.scrolling = false;
 		this.scrtop = 0;
-		this.offset = 0.6;
+		this.offset = 0.8;
 		this.rowspace = 10;
 
 		this.verticalPositionContent = $ob.timelineVerticalposition;
@@ -20,6 +20,8 @@ class eadd_timeline{
 		this.blocks = null;
 		this.images = null;
 		this.contents = null;
+
+		this.current = 0;
 		
 		//preparo: oggetti ed eventi
 		this.verticalTimeline($target[0]);
@@ -57,6 +59,11 @@ class eadd_timeline{
 		this.primoBlocco = jQuery(this.blocks).first().find( '.e-add-timeline__img' );
 		this.ultimoBlocco = jQuery(this.blocks).last().find( '.e-add-timeline__img' );
 
+		let vedemo = jQuery(window).scrollTop() - (this.timelineEl.offset().top+(jQuery(window).height()/2));
+		//this.blocks[this.current].getBoundingClientRect().top
+
+		//this.offset = 1-(vedemo/this.timelineEl.height());
+		console.log(this.offset);
 		/*
 		for( var i = 0; i < this.blocks.length; i++) {
 			//console.log( (i+1)+' / '+this.blocks.length );
@@ -87,7 +94,15 @@ class eadd_timeline{
 		//soluzione -A- metto un margin sotto
 		//this.timelineEl.css('margin-bottom',this.ultimoBlocco.position().top);
 		
+		
+		
 		this.timelineEl.css( 'margin-bottom','calc('+((1-this.offset)*100)+'vh - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100))+'px)');
+		
+		
+		
+		
+		
+		
 		//this.timelineEl.css( 'margin-bottom','calc('+(this.offset*100)+'vh - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100))+'px - '+jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height()+'px) + '+this.ultimoBlocco.height()+'px' );
 		//alert(jQuery(this.blocks).last().find( '.e-add-timeline__content' ).height() * (1-(this.verticalPositionContent/100)));
 		
@@ -114,10 +129,15 @@ class eadd_timeline{
 	showBlocks(){
 
 		for( var i = 0; i < this.blocks.length; i++) {
-			
+				
+				
 				if(  this.images[i].getBoundingClientRect().top <= window.innerHeight*this.offset ) {
+					//
+					
 					// add bounce-in animation
 					if(this.contents[i].classList.contains("e-add-timeline__content--hidden")){
+						this.current = i;
+
 						this.images[i].classList.add("e-add-timeline__img--bounce-in");
 						this.contents[i].classList.add("e-add-timeline__content--bounce-in");
 						this.images[i].classList.remove("e-add-timeline__img--hidden");
