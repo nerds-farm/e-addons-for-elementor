@@ -158,7 +158,7 @@ class Template {
             }
 
             $with_css = (!empty($args['css']) && ($args['css'] == 'true' || $args['css'] === true));
-            if (\Elementor\Plugin::$instance->editor->is_edit_mode() || wp_doing_ajax()) {
+            if ((\Elementor\Plugin::$instance->editor->is_edit_mode() || wp_doing_ajax()) && $args['css'] !== false) {
                 $with_css = true;
             }
 
@@ -254,7 +254,7 @@ class Template {
             }
             if ($tpl_id) {
                 $template_type = get_post_meta($tpl_id, '_elementor_template_type', true);
-                if (in_array($template_type, array('page', 'section', 'single', 'single-post', 'single-page', 'product'))) {
+                if (in_array($template_type, array('page', 'section', 'single', 'single-post', 'single-page', 'product', 'popup'))) {
                     $q_o = self::get_queried_object();
                     $element_class = 'e-' . $q_o['type'] . '-' . $q_o['id'];
                     //if (Utils::is_preview(true) || strpos($content, $element_class) === false || wp_doing_ajax()) {
@@ -323,7 +323,7 @@ class Template {
                     $devices = array($device => $dynamic);
                 }
                 foreach ($devices as $device => $device_value) {
-                    $selector = '.elementor .e-' . $q_o['type'] . '-' . $q_o['id'];
+                    $selector = '.elementor.e-' . $q_o['type'] . '-' . $q_o['id'];
                     if ($device != 'desktop') {
                         $selector = '[data-elementor-device-mode="' . $device . '"] ' . $selector;
                     }
