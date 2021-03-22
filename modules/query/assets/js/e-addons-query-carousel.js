@@ -46,6 +46,7 @@ jQuery(window).on('elementor/frontend/init', () => {
             eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, elementSettings ) );
             this.elements.$eaddPostsSwiper = eaddPostsSwiper;
             
+            this.elements.$scope.data('eaddPostsSwiper',eaddPostsSwiper);
             // ---------------------------------------------
             // Funzione di callback eseguita quando avvengono le mutazioni
             /*var eAddns_MutationObserverCallback = function(mutationsList, observer) {
