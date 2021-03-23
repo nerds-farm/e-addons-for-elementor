@@ -97,7 +97,7 @@ class Base_Skin extends \Elementor\Skin_Base {
     }
 
     public function render() {
-        
+
     }
 
     /* ELEMENTOR PRO © - PORTFOLIO - Protected function */
@@ -178,7 +178,7 @@ class Base_Skin extends \Elementor\Skin_Base {
                 return;
             }
 
-            usort($terms, function($a, $b) {
+            usort($terms, function ($a, $b) {
                 return strcmp($a->name, $b->name);
             });
             ?>
@@ -186,51 +186,53 @@ class Base_Skin extends \Elementor\Skin_Base {
                 <li class="elementor-portfolio__filter elementor-active" data-filter="__all"><?php echo __('All', 'elementor-pro'); ?></li>
                 <?php foreach ($terms as $term) { ?>
                     <li class="elementor-portfolio__filter" data-filter="<?php echo esc_attr($term->term_id); ?>"><?php echo $term->name; ?></li>
-            <?php } ?>
+                <?php } ?>
             </ul>
             <?php
         }
 
         protected function render_post_header($post_id = 0) {
             global $post;
-            
+
             if (!$post) {
                 $post = get_post($post_id);
             }
 
             $tags_classes = array();
             if ($post->tags) {
-                $tags_classes = array_map(function($tag) {
+                $tags_classes = array_map(function ($tag) {
                     return 'elementor-filter-' . $tag->term_id;
                 }, $post->tags);
             }
 
             $widget_name = $this->parent->get_name();
-            
+
             $classes = [
-                'elementor-'.$widget_name.'-item',
+                'elementor-' . $widget_name . '-item',
                 'elementor-post',
                 implode(' ', $tags_classes),
             ];
             ?>
             <article <?php post_class($classes); ?>>
-            <?php
-        }
+                <?php
+            }
 
-        protected function render_post_footer() { ?>
+            protected function render_post_footer() {
+                ?>
             </article>
             <?php
         }
 
-        protected function render_overlay_header($link = false) {            
+        protected function render_overlay_header($link = false) {
             ?>
-                <a <?php if ($link) { ?> style="position: absolute; top: 0;height: 100%;z-index: 10;"<?php } ?> class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); ?>">                
-            <div class="elementor-portfolio-item__overlay">
-            <?php
-        }
+            <a <?php if ($link) { ?> style="position: absolute; top: 0;height: 100%;z-index: 10;"<?php } ?> class="elementor-post__thumbnail__link" href="<?php echo get_permalink(); ?>">
+                <div class="elementor-portfolio-item__overlay">
+                    <?php
+                }
 
-        protected function render_overlay_footer() { ?>
-            </div></a>
+                protected function render_overlay_footer() {
+                    ?>
+                </div></a>
             <?php
         }
 

@@ -58,8 +58,8 @@ abstract class Base_Tag extends Tag {
         //parent::register_controls();
         //$tmp = explode('-', ELEMENTOR_VERSION); $version = reset($tmp);
         //if (version_compare($version, '3.1.0') < 0 || version_compare($version, '3.2.0') >= 0) {
-            //var_dump($version); die();
-            $this->register_controls();
+        //var_dump($version); die();
+        $this->register_controls();
         //}
     }
 
@@ -78,7 +78,7 @@ abstract class Base_Tag extends Tag {
      * @access protected
      */
     protected function register_controls() {
-        
+
     }
 
     /* public function get_panel_template_setting_key() {

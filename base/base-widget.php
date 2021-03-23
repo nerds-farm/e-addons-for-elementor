@@ -24,7 +24,7 @@ abstract class Base_Widget extends Widget_Base {
      * @access public
      */
     public function enqueue_editor_assets() {
-        
+
     }
 
     public function get_categories() {

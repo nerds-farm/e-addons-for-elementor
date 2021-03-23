@@ -29,7 +29,7 @@ if (class_exists('Elementor\Core\Kits\Documents\Tabs\Tab_Base')) {
         }
 
         protected function register_tab_controls() {
-            
+
         }
 
     }
@@ -67,7 +67,7 @@ if (class_exists('Elementor\Core\Kits\Documents\Tabs\Tab_Base')) {
         }
 
         protected function register_tab_controls() {
-            
+
         }
 
     }

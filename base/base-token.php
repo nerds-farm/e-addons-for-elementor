@@ -24,4 +24,5 @@ abstract class Base_Token extends Element_Base {
     static public function do_var_tokens($text, $name, $value) {
         return \EAddonsTokens\Modules\Tokens\Tokens::do_var_tokens($text, $name, $value);
     }
+
 }

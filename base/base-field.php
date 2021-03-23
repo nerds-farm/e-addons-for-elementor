@@ -29,9 +29,9 @@ if (class_exists('\ElementorPro\Modules\Forms\Fields\Field_Base')) {
         }
 
         public function render($item, $item_index, $form) {
-            
+
         }
-        
+
         public function _render_form($content, $widget) {
             return $content;
         }
@@ -61,7 +61,7 @@ if (class_exists('\ElementorPro\Modules\Forms\Fields\Field_Base')) {
          * @access public
          */
         public function __construct() {
-            
+
         }
 
     }

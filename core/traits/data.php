@@ -98,6 +98,22 @@ trait Data {
         return $content;
     }
 
+    public static function array_search_key_multi($array = array(), $key = '') {
+        if (is_array($array)) {
+            foreach($array as $akey => $avalue) {                
+                if ($akey == $key) {
+                    return $avalue;
+                } else {
+                    $sub = self::array_search_key_multi($avalue, $key);
+                    if ($sub !== false) {
+                        return $sub;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
     public static function get_array_value($array = array(), $keys = array()) {
         if (!empty($keys)) {
             $key = array_shift($keys);

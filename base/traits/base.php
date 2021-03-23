@@ -39,7 +39,7 @@ trait Base {
     );
 
     public function check_condition($field, $operator, $value) {
-        $value = Utils::get_dynamic_data($value);        
+        $value = Utils::get_dynamic_data($value);
         switch ($operator) {
             case 'empty':
                 return Utils::empty($field);
@@ -238,10 +238,10 @@ trait Base {
         if (!$slug) {
             $slug = $this->get_module_slug();
         }
-        $module = \EAddonsForElementor\Plugin::instance()->modules_manager->get_modules($slug);        
+        $module = \EAddonsForElementor\Plugin::instance()->modules_manager->get_modules($slug);
         return $module;
     }
-    
+
     public function get_module_url() {
         $widget_class = get_class($this);
         $tmp = explode('\\', $widget_class);
@@ -249,8 +249,8 @@ trait Base {
         array_pop($tmp);
         $module_path = implode('/', $tmp);
         $module_path = Utils::camel_to_slug($module_path);
-		$url = WP_PLUGIN_URL . '/' . $module_path . '/';
-		$url = str_replace('/-', '/', $url);
+        $url = WP_PLUGIN_URL . '/' . $module_path . '/';
+        $url = str_replace('/-', '/', $url);
         return $url;
     }
 
@@ -334,7 +334,7 @@ trait Base {
     protected function _get_default_child_type(array $element_data) {
         return \Elementor\Plugin::$instance->elements_manager->get_element_types('section');
     }
-    
+
     public function start_controls_e_section($widget, $tab = 'advanced', $label = '') {
         if (!$label) {
             $label = $this->get_label();

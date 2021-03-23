@@ -14,7 +14,7 @@ class Base_Tweak extends Element_Base {
     use \EAddonsForElementor\Base\Traits\Base;
 
     public function __construct() {
-        parent::__construct();        
+        parent::__construct();
         add_action('elementor/preview/enqueue_styles', [$this, 'enqueue_styles']);
     }
 
@@ -54,15 +54,15 @@ class Base_Tweak extends Element_Base {
                 ]
         );
     }
-    
+
     public function add_fields_class($content = '', $settings = array()) {
         // add repeater class
         if (!empty($settings['form_fields'])) {
             foreach ($settings['form_fields'] as $key => $item) {
-                $class = 'elementor-field-type-'.$item["field_type"].' elementor-field-group elementor-column elementor-field-group-'.$item["custom_id"];
-                $field_class = 'elementor-repeater-item-'.$item['_id'];
-                if (strpos($content, ' '.$field_class.' ') === false) {
-                    $content = str_replace($class.' ', $class.' '.$field_class.' ', $content);
+                $class = 'elementor-field-type-' . $item["field_type"] . ' elementor-field-group elementor-column elementor-field-group-' . $item["custom_id"];
+                $field_class = 'elementor-repeater-item-' . $item['_id'];
+                if (strpos($content, ' ' . $field_class . ' ') === false) {
+                    $content = str_replace($class . ' ', $class . ' ' . $field_class . ' ', $content);
                 }
             }
         }

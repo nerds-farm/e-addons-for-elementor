@@ -57,7 +57,7 @@ if (!Utils::is_plugin_active('elementor-pro') || !class_exists('ElementorPro\Mod
          * @param \Elementor\Widget_Base $widget
          */
         public function register_settings_section($widget) {
-            
+
         }
 
         /**

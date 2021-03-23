@@ -21,15 +21,15 @@ abstract class Base_Trigger extends Element_Base {
     }
 
     public function get_trigger_controls($element) {
-        
+
     }
 
     public function is_triggered($element, $settings) {
-        
+
     }
 
     public function print_trigger_scripts($element, $settings = array()) {
-        
+
     }
 
     public function add_triggered($trigger) {

@@ -62,18 +62,18 @@ class Plugin {
         require_once(E_ADDONS_PATH . 'core' . DIRECTORY_SEPARATOR . 'helper.php');
         //require_once(E_ADDONS_PATH . 'core'.DIRECTORY_SEPARATOR.'dashboard'.DIRECTORY_SEPARATOR.'dashboard.php');
 
-        
+
         spl_autoload_register([$this, 'autoload']);
 
         $this->setup_hooks();
 
         if (empty(self::$instance)) {
             // core plugin
-            $this->licenses_manager = new License();  
+            $this->licenses_manager = new License();
         } else {
             // extra plugin
             $this->maybe_vendor_autoload();
-            self::instance()->add_addon($this);                      
+            self::instance()->add_addon($this);
             self::instance()->licenses_manager->init_license($this);
             do_action('e_addons/init_license', $this);
         }
@@ -138,8 +138,8 @@ class Plugin {
 
     public function setup_hooks() {
         // fire actions
-        add_action('elementor/init', [$this, 'on_elementor_init']);
-        
+        add_action('elementor/init', [$this, 'on_elementor_init'], 9);
+
         add_filter("extra_plugin_headers", function($extra_headers) {
             $extra_headers['Free'] = 'Free';
             $extra_headers['Channel'] = 'Channel';
@@ -159,13 +159,28 @@ class Plugin {
         $this->assets_manager = new Assets();
         $this->controls_manager = new Controls();
         $this->modules_manager = new Modules();
-        $this->template_manager = new Template();        
-        
+        $this->template_manager = new Template();
+
         $this->ajax_manager = new \EAddonsForElementor\Core\Ajax\Actions();
-                
+
         if (is_admin()) {
             //$ajax = new \EAddonsForElementor\Core\Ajax\Actions();
             $dash = new \EAddonsForElementor\Core\Dashboard\Dashboard();
+        }
+
+        // Jet Engine fix
+        if (Utils::is_plugin_active('jet-engine')) {
+            global $wp_filter;
+            $tag = 'elementor/init';
+            if ( !empty( $wp_filter[ $tag ]->callbacks[10] ) ) {
+                // remove_action( 'elementor/init', array( '\Jet_Engine_Elementor_Views', 'register_category' ) );
+                foreach ($wp_filter[ $tag ]->callbacks[10] as $ckey => $callb) {
+                    if (strpos($ckey, 'register_category') !== false) {
+                        unset($wp_filter[ $tag ]->callbacks[10][$ckey]);
+                    }
+                }
+                //echo '<pre>';var_dump($wp_filter[ $tag ]->callbacks[10]);echo '</pre>'; die();
+            }
         }
 
         do_action('e_addons/init');
@@ -227,7 +242,7 @@ class Plugin {
         }
         return false;
     }
-    
+
     public function is_addon_valid($addon = null){
         if (empty($addon)) {
             $addon = $this->get_addon();
@@ -243,15 +258,15 @@ class Plugin {
 
     public function is_free($TextDomain = '') {
         $addon = $this->get_addon($TextDomain);
-        if ($addon) {            
+        if ($addon) {
             if (isset($addon['Free'])) {
                 return $addon['Free'];
-            }            
+            }
             return !$this->compare_price($addon);
         }
         return false;
     }
-    
+
     public function compare_price($addon, $price = 0, $compare = '>') {
         $addon_price = 0;
         if (is_array($addon)) {
@@ -287,7 +302,7 @@ class Plugin {
             $plugins = $this->get_plugins();
             $addons = Utils::get_addons();
             $update_cache = get_site_transient('update_plugins');
-            $update_cache = (array) $update_cache; 
+            $update_cache = (array) $update_cache;
             //var_dump($update_cache); die();
             foreach ($plugins as $e_plugin_name => $e_plugin) {
 
@@ -322,7 +337,7 @@ class Plugin {
                         $plugins[$e_plugin_name][$rkey] = $info;
                     }
                 }
-                                
+
                 $plugins[$e_plugin_name]['Channel'] = empty($e_plugin['Channel']) ? 'e-addons' : $e_plugin['Channel'];
                 $plugins[$e_plugin_name]['Free'] = (!empty($e_plugin['Free']) && $e_plugin['Free'] === 'true');
                 if (!empty($plugins[$e_plugin_name]['price'])) {
@@ -382,10 +397,10 @@ class Plugin {
                 mkdir($home, 0755, true);
             }
 
-            $composer = $home.'composer.phar'; 
+            $composer = $home.'composer.phar';
             if (!file_exists($home.'composer.phar')) {
                 $composer_phar = 'https://getcomposer.org/composer-stable.phar';
-                $tmp_file = download_url( $composer_phar );                       
+                $tmp_file = download_url( $composer_phar );
                 // Copies the file to the final destination and deletes temporary file.
                 copy( $tmp_file, $composer );
                 @unlink( $tmp_file );
@@ -394,7 +409,7 @@ class Plugin {
             if (file_exists($composer)) {
                 //var_dump(getcwd());
                 chdir($addon['path']);
-                $command = 'php '.$composer.' update 2>&1';                
+                $command = 'php '.$composer.' update 2>&1';
                 //$result = shell_exec('export COMPOSER_HOME='.$home.'./.config/composer;');
                 //shell_exec('COMPOSER_ALLOW_XDEBUG=1 php -d xdebug.remote_enable=0 -d xdebug.profiler_enable=0 -d xdebug.default_enable=0 composer.phar --version 2>&1');
                 //$result = shell_exec('php composer.phar --version 2>&1');
