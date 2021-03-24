@@ -65,6 +65,14 @@ h3.e_addons-title {
     background-color: #06507b;
     color: #fff;
 }
+.e_addons-button-danger{
+    color: #fff;
+    background-color: #dc3545;
+}
+.e_addons-button-danger:hover{
+    background-color: #dc3545;
+    color: #fff;
+}
 /* Pannello */
 .e_addons-panel {
     background-color: white;

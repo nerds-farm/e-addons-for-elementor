@@ -78,9 +78,19 @@ class Update extends Base_Global {
                                 $install_url = substr(str_replace('plugins/', 'edd/download.php?addon=', $addon['url']), 0, -1);
                                 ?>
                                 <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="btn-txt">DOWNLOAD <span class="dashicons dashicons-download"></span> FREE <span class="eadd-logo-e-addons"></span> ADDON</span></a>    
-                            <?php } else { ?>
+                            <?php } else {
+                                $license = get_option('e_addons_' . $akey . '_license_key');
+                                if ($license) {
+                                    $install_url = substr(str_replace('plugins/', 'edd/download.php?license='.$license.'&addon=', $addon['url']), 0, -1);
+                                    //https://e-addons.com/edd/download.php
+                                    ?>
+                                    <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="btn-txt">DOWNLOAD <span class="dashicons dashicons-download"></span> PRO <span class="eadd-logo-e-addons"></span> ADDON</span></a>
+                                    <?php
+                                } else {
+                                ?>
                                 <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_buy e_addons-button" href="<?php echo $addon['url']; ?>" target="_blank" title="<?php _e('Click to go to shop'); ?>"><span class="btn-txt"><span class="dashicons dashicons-plus"></span> PRO <span class="eadd-logo-e-addons"></span> ADDON</span></a>    
-                            <?php } ?>
+                            <?php }
+                                }?>
                         </div>
                         <div class="my_eaddon_body">
                             <div class="my_eaddon_desc">                            
