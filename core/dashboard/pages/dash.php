@@ -94,8 +94,9 @@ if (!empty($_REQUEST['action'])) {
         <br><br>
         <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> Install & Activate PRO through your account</a>
         <?php
-        foreach ($e_addons_plugins as $e_plugin) {
-            if (!empty($e_plugin['license'])) {
+        foreach ($all_addons as $akey => $e_plugin) {
+            $license = get_option('e_addons_' . $akey . '_license_key');
+            if ($license) {
                 ?>
                 <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove licenses</a>
                 <?php
