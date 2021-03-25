@@ -77,14 +77,15 @@ class Update extends Base_Global {
                             if (\EAddonsForElementor\Plugin::instance()->is_free($akey)) {
                                 $install_url = substr(str_replace('plugins/', 'edd/download.php?addon=', $addon['url']), 0, -1);
                                 ?>
-                                <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="btn-txt">DOWNLOAD <span class="dashicons dashicons-download"></span> FREE <span class="eadd-logo-e-addons"></span> ADDON</span></a>    
+                                <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addon_free e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="dashicons dashicons-download"></span> <span class="btn-txt">DOWNLOAD FREE <span class="eadd-logo-e-addons"></span> ADDON</span></a>    
                             <?php } else {
                                 $license = get_option('e_addons_' . $akey . '_license_key');
                                 if ($license) {
+                                    $addon['license_key'] = $license;
                                     $install_url = substr(str_replace('plugins/', 'edd/download.php?license='.$license.'&addon=', $addon['url']), 0, -1);
                                     //https://e-addons.com/edd/download.php
                                     ?>
-                                    <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="btn-txt">DOWNLOAD <span class="dashicons dashicons-download"></span> PRO <span class="eadd-logo-e-addons"></span> ADDON</span></a>
+                                    <a style="background-color: <?php echo $addon['color']; ?>" class="my_e_addon_install e_addon_pro e_addons-button" href="<?php echo $install_url; ?>" target="_blank" title="<?php _e('Click to install now this addons'); ?>"><span class="dashicons dashicons-download"></span> <span class="btn-txt">DOWNLOAD PRO <span class="eadd-logo-e-addons"></span> ADDON</span></a>
                                     <?php
                                 } else {
                                 ?>
@@ -100,7 +101,7 @@ class Update extends Base_Global {
                                 </figure>
                                 <div class="my_eaddon_desc">
                                     <p><?php echo $addon['excerpt']; ?></p>
-                                    <?php if (\EAddonsForElementor\Plugin::instance()->is_free($akey)) { ?>
+                                    <?php if (\EAddonsForElementor\Plugin::instance()->is_free($akey) || $addon['license_key']) { ?>
                                         <a class="e_addons-button e_addons-button-default" target="_blank" href="<?php echo $addon['url']; ?>?ref=dash"><span class="dashicons dashicons-info-outline"></span> Get more info</a>
                                     <?php } else { ?>
                                         <a class="e_addons-button e_addons-button-default" target="_blank" href="<?php echo $addon['url']; ?>?ref=dash"><span class="dashicons dashicons-cart"></span> Buy now</a>

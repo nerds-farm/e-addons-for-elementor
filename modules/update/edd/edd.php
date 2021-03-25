@@ -12,6 +12,8 @@ if (!defined('ABSPATH'))
  * For further details please visit http://docs.easydigitaldownloads.com/article/383-automatic-upgrades-for-wordpress-plugins
  */
 class Edd {
+    
+    const SHOP_URL = 'https://e-addons.com';
 
     public $addon;
     public $updater;
@@ -46,7 +48,10 @@ class Edd {
     }
 
     public function get_shop_url() {
-        return $this->addon['PluginURI'];
+        if (!empty($this->addon['PluginURI'])) {
+            return $this->addon['PluginURI'];
+        }
+        return self::SHOP_URL;
     }
 
     public function do_actions($action = '') {
@@ -118,6 +123,7 @@ class Edd {
                 var_dump($response);
                 $message = __('An error occurred, please try again.');
             }
+            return false;
         } else {
 
             $license_data = json_decode(wp_remote_retrieve_body($response));
@@ -179,6 +185,8 @@ class Edd {
                         $message .= ' &gt;&gt; ' . $license_data->error;
                         break;
                 }
+                
+                return false;
             }
             /* } else {
               $message = sprintf(__('This appears to be an invalid license key for %s. The license is valid for: %s'), $this->addon['TextDomain'], $license_data->item_name);
@@ -193,6 +201,7 @@ class Edd {
             $message = $this->addon['Name'] . ': ' . $message;
             \EAddonsForElementor\Core\Utils::e_admin_notice($message, 'warning');
         }
+        return true;
     }
 
     /*     * ********************************************

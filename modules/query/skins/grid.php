@@ -400,7 +400,9 @@ class Grid extends Base {
                 'default' => '',
                 'selectors' => [
                     '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'align-items: {{VALUE}};',
-                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};'
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-block > .elementor > .elementor-section-wrap' => 'display: flex; height: 100%;',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-block > .elementor > .elementor-section-wrap > .elementor-section' => 'align-self: {{VALUE}};',
                 ],
                 'condition' => [
                     //$this->get_control_id('flex_grow') => '0',
