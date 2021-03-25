@@ -76,7 +76,7 @@
     margin: 0;
 }
 .my_eaddon_desc{
-
+    width: 100%;
 }
 .my_eaddon_cta {
     text-align: center;
@@ -259,37 +259,110 @@
 }
 .my_e_addon_update-actions{
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.my_e_addon_update-actions-user{
+    margin: 20px 0;
+}
+
 .my_e_addon_update-actions .my_e_addon_update {
-    float: none;
-    display: inline-block;
-    border-radius: 50px;
     transition: all 0.5s ease;
 }
 .my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-key{
-    padding: 12px 20px;
-    background-color: #4cb164;
-}
-.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-key:hover{
-    padding: 12px 20px;
+    padding: 12px 35px 12px 20px;
     background-color: #FFF;
     color: #4cb164;
 }
-.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user {
-    background-color: #e9e9e9; 
-    color: #939393;
-    border: 1px solid #939393;
-    vertical-align: middle;
+.my_e_addon_update-actions .dashicons.e-key {
+	font-size: 22px;
+	color: #4cb164;
+	background: #fff;
+	display: block;
+	padding: 9px;
+	line-height: 23px;
+	border-radius: 50%;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: -30px 0 0 -30px;
+    border: 1px solid #C1C1C1;
 }
-.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user .eadd-logo-e-addons {
-    color: #9f16ff;
-    font-size: 20px;
-}
-.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user:hover{
-    background-color: #939393;
-    color: white;
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-key:hover{
+    background-color: #4cb164;
+    color: #FFF;
 }
 
+
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user {
+    background-color: #FFF; 
+    color: #939393;
+    vertical-align: middle;
+    border-radius: 50px;
+    outline: 0;
+}
+.my_e_addon_update-actions .my_e_addon_update:not(.my_e_addon_update-user-connected){
+    border: 1px solid #C1C1C1;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user-connected{
+    background-color: #47af4f;
+    color: #fff;
+    position: relative;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user-connected::after {
+	content: '';
+	display: block;
+	border: 5px solid #74db7c;
+    border-radius: 100px;
+	position: absolute;
+	top: -5px;
+    left: -5px;
+	width: 100%;
+    height: 100%;
+    pointer-events: none;
+    -webkit-animation-duration: 3s;
+	animation-duration: 3s;
+	-webkit-animation-name: updateconnectedpulse;
+	animation-name: updateconnectedpulse;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+@keyframes updateconnectedpulse {
+    0% { 
+      opacity: 1;
+    }
+    50%{
+        opacity: 0;
+      }
+    100%{
+      opacity: 1;
+    }
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-remove{
+    padding: 10px 5px;
+    background-color: transparent;
+    border: none;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-remove .dashicons{
+    margin-right: -4px;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-remove:hover{
+    color: #000;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user .eadd-logo-e-addons {
+    font-size: 20px;
+    margin-left: 7px;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user:not(.my_e_addon_update-user-connected) .eadd-logo-e-addons {
+    color: #9f16ff;
+    transition: color 0.5s ease;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user:hover{
+    background-color: #9f16ff;
+    color: #FFF;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user:not(.my_e_addon_update-user-connected):hover .eadd-logo-e-addons {
+    color: #FFF;
+}
 .my_e_addon_check_license {
     position: absolute;
     right: 25px;

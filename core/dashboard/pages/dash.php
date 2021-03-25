@@ -90,7 +90,7 @@ if (!empty($_REQUEST['action'])) {
 
     <h1 class="e_addons-title"><span class="e_addons_ic elementor-icon eicon-apps"></span> Your e-addons</h1>
 
-    <div class="my_e_addon_update-actions">
+    <div class="my_e_addon_update-actions my_e_addon_update-actions-user">
         <br><br>
         <?php 
         $has_license = false;
@@ -103,7 +103,7 @@ if (!empty($_REQUEST['action'])) {
         } ?>
         <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user<?php if ($has_license) { ?> my_e_addon_update-user-connected<?php } ?>" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> <?php if ($has_license) { ?>Account connected<?php } else { ?>Install & Activate PRO through your Account<?php } ?> <i class="eadd-logo-e-addons"></i></a>
         <?php if ($has_license) { ?>
-            <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Deactivate and Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove</a>
+            <a class="e_addons-button my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Deactivate and Remove ALL license keys?');"><span class="dashicons dashicons-no-alt"></span> Deconnect</a>
         <?php } ?>
         <br><br><br><br>
     </div>
@@ -216,7 +216,7 @@ if (!empty($_REQUEST['action'])) {
 
         <div class="my_e_addon_update-actions">
 <?php if ($has_license) { ?>
-                <input class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-key" type="submit" value="Save and Activate Licenses">
+    <input class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-key" type="submit" value="Activate Licenses from key"><span class="dashicons e-key dashicons-admin-network"></span>
 <?php } ?>
         </div>
 
