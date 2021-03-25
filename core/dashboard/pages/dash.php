@@ -23,13 +23,21 @@ if (!empty($_REQUEST['action'])) {
         } else {
             list($dwn, $addon_name) = explode('addon=', $addon_url);
         }
+        
         $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
         $e_addons_path = $wp_plugin_dir . DIRECTORY_SEPARATOR . $addon_name;
         $version_manager = \EAddonsForElementor\Plugin::instance()->version_manager;
         $version_manager->addon_backup($addon_name);
         $version_manager->download_plugin($addon_url, $e_addons_path);
+        $license = get_option('e_addons_' . $addon_name . '_license_key');
+        if ($license) {
+            $all_addons[$addon_name]['TextDomain'] = $addon_name;
+            $edd = new EAddonsForElementor\Modules\Update\Edd\Edd($all_addons[$addon_name]);
+            $activation = $edd->activate_license($license);
+        }
         $e_addons->clear_addons();
     }
+
     if (in_array($action, array('vendors'))) {
         if (!empty($_GET['plugin'])) {
             $addon = sanitize_key($_REQUEST['plugin']);
@@ -47,6 +55,7 @@ if (!empty($_REQUEST['action'])) {
         }
         $msg = __('All licenses have been removed!');
         Utils::e_admin_notice($msg, 'success');
+        $e_addons->clear_addons();
     }
 
     /* if (Utils::is_plugin_active('e-addons-manager')) {
@@ -81,6 +90,22 @@ if (!empty($_REQUEST['action'])) {
 
     <h1 class="e_addons-title"><span class="e_addons_ic elementor-icon eicon-apps"></span> Your e-addons</h1>
 
+    <div class="my_e_addon_update-actions">
+        <br><br>
+        <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> Install & Activate PRO through your account</a>
+        <?php
+        foreach ($e_addons_plugins as $e_plugin) {
+            if (!empty($e_plugin['license'])) {
+                ?>
+                <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove licenses</a>
+                <?php
+                break;
+            }
+        }
+        ?>
+        <br><br><br><br>
+    </div>
+
     <form action="?page=e_addons" method="POST" id="e_addons_form">
         <input type="hidden" name="page" value="e_addons">
         <div class="my_e_addons<?php if (count($e_addons_plugins) == 1) { ?> my_e_addons_foreveralone<?php } ?>">
@@ -93,18 +118,18 @@ if (!empty($_REQUEST['action'])) {
                 // http://localhost/wp-admin/update.php?action=upgrade-plugin&plugin=e-addons-dev%2Fe-addons-dev.php
                 ?>
                 <div class="my_e_addon<?php if (count($e_addons_plugins) == 1 && $_GET['page'] == 'e_addons') { ?> my_e_addons_foreveralone<?php } ?><?php if ($e_plugin['new_version']) { ?> my_e_addon_update<?php
-        };
-        if (!$e_plugin['active']) {
-                    ?> my_e_addon_disabled<?php } ?>" id="my_e_addons__<?php echo $e_plugin['TextDomain']; ?>">
+                     };
+                     if (!$e_plugin['active']) {
+                         ?> my_e_addon_disabled<?php } ?>" id="my_e_addons__<?php echo $e_plugin['TextDomain']; ?>">
                     <div class="my_eaddon_header">
 
                         <?php if ($e_plugin['TextDomain'] == 'e-addons-for-elementor') { ?>
                             <span class="my_e_addon_activation my_e_addon_activated my_e_addon_core"><span class="dashicons dashicons-heart"></span> <?php _e('Core', 'e-addons-for-elementor'); ?></span>
-                        <?php } else { ?>
+    <?php } else { ?>
                             <span class="my_e_addon_activation my_e_addon_activated"><span class="dashicons dashicons-yes-alt"></span> <?php _e('Enabled', 'e-addons-for-elementor'); ?></span>
                             <a class="my_e_addon_activation my_e_addon_activate" href="<?php echo wp_nonce_url('plugins.php?action=activate&amp;plugin=' . urlencode($e_plugin['plugin']), 'activate-plugin_' . $e_plugin['plugin']); ?>"><span class="dashicons dashicons-insert"></span> <span class="btn-txt"><?php _e('Enable addon', 'e-addons-for-elementor'); ?></span></a>
                             <a class="my_e_addon_activation my_e_addon_deactivate e_addons-button e_addon-button-icon" href="<?php echo wp_nonce_url('plugins.php?action=deactivate&amp;plugin=' . urlencode($e_plugin['plugin']), 'deactivate-plugin_' . $e_plugin['plugin']); ?>" title="<?php _e('Deactivate', 'e-addons-for-elementor'); ?>"><span class="dashicons dashicons-remove"></span></a>
-                        <?php
+                            <?php
                         }
                         //var_dump($e_plugin['Version']); var_dump($e_plugin['new_version']);
                         if ($e_plugin['new_version'] && version_compare($e_plugin['Version'], $e_plugin['new_version'], '<')) {
@@ -136,7 +161,8 @@ if (!empty($_REQUEST['action'])) {
                             <a class="my_e_addon_info e_addons-button e_addon-button-icon thickbox" href="<?php echo self_admin_url('plugin-install.php?tab=plugin-information&amp;plugin=' . $e_plugin['TextDomain'] . '&amp;TB_iframe=true&amp;width=800&amp;height=600'); ?>" target="_blank" title="<?php _e('Info'); ?>"><span class="dashicons dashicons-info"></span></a>
                         <?php } else { ?>
                             <a class="my_e_addon_info e_addons-button e_addon-button-icon" href="<?php echo $e_plugin['PluginURI'] . '/plugins/' . $e_plugin['TextDomain']; ?>" target="_blank" title="<?php _e('Info'); ?>"><span class="dashicons dashicons-info"></span></a>
-                        <?php }
+                        <?php
+                        }
 
                         if (WP_DEBUG && $e_addons->has_vendors($e_plugin['TextDomain'])) {
                             ?>
@@ -150,7 +176,7 @@ if (!empty($_REQUEST['action'])) {
                             <figure class="my_eaddon_figure">
                                 <img class="my_e_addon_thumb" height="auto" width="100" src="<?php echo $all_addons[$e_plugin['TextDomain']]['thumb']; ?>">
                             </figure>
-                        <?php } ?>
+                            <?php } ?>
                         <div class="my_eaddon_desc">
                             <h3 class="my_e_addon_title"><?php echo $e_plugin['Name']; ?></h3>
                             <?php /* if (defined('E_ADDONS_DEBUG') && E_ADDONS_DEBUG && !empty($e_plugin['price'])) { ?>
@@ -158,9 +184,9 @@ if (!empty($_REQUEST['action'])) {
                               <a href="https://e-addons.com/?edd_action=get_version&item_name=<?php echo $e_plugin['TextDomain']; ?>" target="_blank">Info</a>
                               <?php } */ ?>
                             <p class="my_e_addon_description"><?php echo $e_plugin['Description']; ?></p>
-                            <?php if (empty($e_plugin['Description']) && !empty($all_addons[$e_plugin['TextDomain']]['excerpt'])) { ?>
+    <?php if (empty($e_plugin['Description']) && !empty($all_addons[$e_plugin['TextDomain']]['excerpt'])) { ?>
                                 <p><?php echo $all_addons[$e_plugin['TextDomain']]['excerpt']; ?></p>
-                            <?php } ?>
+                    <?php } ?>
                         </div>
                     </div>
                     <?php /* if (count($e_addons_plugins) == 1 && $e_plugin['TextDomain'] == 'e-addons-for-elementor' && $_GET['page'] == 'e_addons') { ?>
@@ -179,19 +205,17 @@ if (!empty($_REQUEST['action'])) {
                     //echo '<pre>';var_dump($e_plugin);echo '</pre>';
                     ?>
                 </div>
-                <?php
-            }
-            ?>
+    <?php
+}
+?>
         </div>
         <input type="hidden" name="action" value="license_update">
 
 
         <div class="my_e_addon_update-actions">
-            <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> Activate ALL through your account</a>
-            <?php if (true || $has_license) { ?>
+<?php if ($has_license) { ?>
                 <input class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-key" type="submit" value="Save and Activate Licenses">
-                <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove ALL saved licenses</a>
-            <?php } ?>
+<?php } ?>
         </div>
 
     </form>

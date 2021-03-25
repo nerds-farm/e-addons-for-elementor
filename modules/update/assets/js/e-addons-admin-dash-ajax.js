@@ -1,7 +1,43 @@
+
+var eProAddon = '';
+function installProCookieCallback(json){
+    //console.log(json);
+    if (Object.keys(json).length === 0) {
+        // user not logged in
+        alert('Please login at e-addons.com with your profile for automatic installation');
+        window.location.href = eProAddon.attr('href');
+        return false;
+    }
+    for (var cookie in json) {
+        if (json.hasOwnProperty(cookie)) {
+            var proAddonUrl = eProAddon.attr('href').replace('?', '?cookie=' + json[cookie] + '&');
+            //alert(proAddonUrl);
+            jQuery.ajax({
+                url: window.location.href,
+                dataType: "html",
+                type: "POST",
+                data: {"url": proAddonUrl, "action": 'add'},
+                error: function () {
+                    console.log("error");
+                    window.location.href = eProAddon.attr('href');
+                },
+                success: function (data, status, xhr) {
+                    //console.log(proAddonUrl);
+                    //console.log(data);
+                    jQuery('#e_addons_form').html(jQuery(data).find('#e_addons_form').html());
+                    eProAddon.closest('.my_e_addon').fadeOut();
+                    jQuery('#adminmenu .dashicons-warning.e-count ').fadeOut();
+                },
+            });
+        }
+    }
+}
+
 jQuery(document).ready(function () {
-    jQuery(document).on('click', '.my_e_addon_install', function () {
-        jQuery(this).children('.dashicons-download').addClass('dashicons-update').addClass('spin').removeClass('dashicons-download');
-        jQuery(this).children('.btn-txt').text('INSTALLING...please wait');
+    jQuery(document).on('click', '.my_e_addon_install.e_addon_free', function () {
+        jQuery(this).find('.dashicons-download').addClass('dashicons-update').addClass('spin').removeClass('dashicons-download');
+        jQuery(this).find('.btn-txt').text('INSTALLING...please wait');
+        jQuery(this).css('pointer-events', 'none');
         jQuery.ajax({
             url: window.location.href,
             dataType: "html",
@@ -21,10 +57,34 @@ jQuery(document).ready(function () {
         });
         return false;
     });
+    
+    
+    
+    jQuery(document).on('click', '.my_e_addon_install.e_addon_pro', function () {
+        eProAddon = jQuery(this);
+        jQuery(this).find('.dashicons-download').addClass('dashicons-update').addClass('spin').removeClass('dashicons-download');
+        jQuery(this).find('.btn-txt').text('INSTALLING PRO...please wait');
+        jQuery(this).css('pointer-events', 'none');
+        jQuery.ajax({
+            url: 'https://e-addons.com/edd/cookie.php',
+            dataType: "jsonp",
+            jsonp: "installProCookieCallback",
+            error: function (data) {
+                //console.log("error");
+                //window.location.href = jQuery(this).attr('href');
+            },
+            success: function (data) {
+                console.log(data);     
+                //var cookie = jQuery.parseJSON( data );
+            },
+        });
+        return false;
+    });
 
     jQuery(document).on('click', '.my_e_addon_version_update', function () {
-        jQuery(this).children('.dashicons-update').addClass('spin');
-        jQuery(this).children('.btn-txt').text('UPDATING...');        
+        jQuery(this).find('.dashicons-update').addClass('spin');
+        jQuery(this).find('.btn-txt').text('UPDATING...');   
+        jQuery(this).css('pointer-events', 'none');
         jQuery.ajax({
             url: jQuery(this).data('update'),
             dataType: "html",
