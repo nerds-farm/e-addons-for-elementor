@@ -113,16 +113,20 @@
 .eadd-posts-list:before { content: '\e83a'; } /* '' */
 .eadd-qr-bars-code:before { content: '\e83b'; } /* '' */
 .eadd-pure-php:before { content: '\e83c'; } /* '' */
+
 .eadd-queryviews-carousel:before { content: '\e83d'; } /* '' */
 .eadd-queryviews-dualslider:before { content: '\e83f'; } /* '' */
 .eadd-queryviews-grid:before { content: '\e841'; } /* '' */
 .eadd-queryviews-filters:before { content: '\e842'; } /* '' */
 .eadd-queryviews-next-post:before { content: '\e843'; } /* '' */
 .eadd-queryviews-timeline:before { content: '\e846'; } /* '' */
+
 .eadd-remote-rest-api:before { content: '\e847'; } /* '' */
 .eadd-remote-iframe:before { content: '\e848'; } /* '' */
 .eadd-remote-screen:before { content: '\e849'; } /* '' */
 .eadd-remote-scraping:before { content: '\e84a'; } /* '' */
+.eadd-remote-rssfeed:before { content: '\e8d8'; } /* '' */
+
 .eadd-scroll-effects:before { content: '\e84b'; } /* '' */
 .eadd-scrol-indicator:before { content: '\e84c'; } /* '' */
 .eadd-scroll-snap:before { content: '\e84d'; } /* '' */
