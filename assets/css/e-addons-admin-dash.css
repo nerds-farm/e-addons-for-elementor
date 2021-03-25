@@ -275,11 +275,19 @@
     background-color: #FFF;
     color: #4cb164;
 }
-.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user{
-    background-color: #9f16ff;
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user {
+    background-color: #e9e9e9; 
+    color: #939393;
+    border: 1px solid #939393;
+    vertical-align: middle;
+}
+.my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user .eadd-logo-e-addons {
+    color: #9f16ff;
+    font-size: 20px;
 }
 .my_e_addon_update-actions .my_e_addon_update.my_e_addon_update-user:hover{
-    background-color: #580e8e;
+    background-color: #939393;
+    color: white;
 }
 
 .my_e_addon_check_license {

@@ -92,18 +92,19 @@ if (!empty($_REQUEST['action'])) {
 
     <div class="my_e_addon_update-actions">
         <br><br>
-        <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> Install & Activate PRO through your account</a>
-        <?php
+        <?php 
+        $has_license = false;
         foreach ($all_addons as $akey => $e_plugin) {
             $license = get_option('e_addons_' . $akey . '_license_key');
             if ($license) {
-                ?>
-                <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove licenses</a>
-                <?php
+                $has_license = true;
                 break;
             }
-        }
-        ?>
+        } ?>
+        <a class="e_addons-button e_addons-button-primary my_e_addon_update my_e_addon_update-user<?php if ($has_license) { ?> my_e_addon_update-user-connected<?php } ?>" href="https://e-addons.com/edd/activation.php?url=<?php echo admin_url('admin.php?page=e_addons'); ?>"><span class="dashicons dashicons-admin-users"></span> <?php if ($has_license) { ?>Account connected<?php } else { ?>Install & Activate PRO through your Account<?php } ?> <i class="eadd-logo-e-addons"></i></a>
+        <?php if ($has_license) { ?>
+            <a class="e_addons-button e_addons-button-danger my_e_addon_update my_e_addon_update-remove" href="?page=e_addons&action=license_remove" onclick="return confirm('Deactivate and Remove ALL license keys?');"><span class="dashicons dashicons-warning"></span> Remove</a>
+        <?php } ?>
         <br><br><br><br>
     </div>
 
@@ -249,6 +250,7 @@ if (!empty($_REQUEST['action'])) {
                 }
             }
         }
+        wp_redirect(admin_url('?page=e_addons'));
     }
     do_action('e_addons/dash/more', $not_installed);
     ?>
