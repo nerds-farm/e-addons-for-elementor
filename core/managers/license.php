@@ -71,7 +71,7 @@ class License {
                         <?php if (!empty($e_plugin['license'])) { ?>
                             <a title="Check License" class="my_e_addon_check_license" href="?page=<?php echo esc_attr($_GET['page']); ?>&action=check_license&e_addon=<?php echo $e_plugin['TextDomain']; ?>"><i class="eicon-info-circle-o"></i></a>
                             <?php if ($e_plugin['license'] && $e_plugin['license_status']) { ?>
-                                <a title="Deactivate License" class="my_e_addon_deactivate_license" href="?page=<?php echo esc_attr($_GET['page']); ?>&action=deactivate_license&e_addon=<?php echo $e_plugin['TextDomain']; ?>"><i class="eicon-close-circle"></i></a>
+                                <a title="Deactivate License" class="my_e_addon_deactivate_license" href="?page=<?php echo esc_attr($_GET['page']); ?>&action=deactivate_license&e_addon=<?php echo $e_plugin['TextDomain']; ?>" onclick="return confirm('Deactivate and Remove this license key?');"><i class="eicon-close-circle"></i></a>
                                     <?php
                                 }
                             }

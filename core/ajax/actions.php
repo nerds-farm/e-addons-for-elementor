@@ -159,6 +159,10 @@ class Actions {
                             $user = get_user_by('ID', $aobj['id']);
                             $data = array('user' => $user);
                             break;
+                        case 'values':
+                        case 'metas':                            
+                            $data = array('meta' => $text);                            
+                            break;
                     }
                     $text = Utils::get_dynamic_data($format, $data);
                     if (empty($text) || $text == $format) {
