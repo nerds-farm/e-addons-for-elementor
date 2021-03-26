@@ -69,14 +69,7 @@
 .eadd-do-shortcode:before { content: '\e80e'; } /* '' */
 .eadd-el-form-pro-act-coookie:before { content: '\e80f'; } /* '' */
 .eadd-dynamic-tag-token:before { content: '\e810'; } /* '' */
-.eadd-el-form-pro-act-export:before { content: '\e811'; } /* '' */
-.eadd-el-form-pro-act-csv:before { content: '\e812'; } /* '' */
-.eadd-el-form-pro-act-payments:before { content: '\e813'; } /* '' */
-.eadd-el-form-pro-act-multi-redirects:before { content: '\e814'; } /* '' */
-.eadd-el-form-pro-act-save:before { content: '\e815'; } /* '' */
-.eadd-el-form-pro-act-pdf-generator:before { content: '\e816'; } /* '' */
-.eadd-el-form-pro-ext-advanced-steps:before { content: '\e817'; } /* '' */
-.eadd-el-form-pro-act-send-custom-mail:before { content: '\e818'; } /* '' */
+
 .eadd-el-form-pro-ext-icons:before { content: '\e819'; } /* '' */
 .eadd-acf-fields:before { content: '\e81a'; } /* '' */
 .eadd-el-form-pro-target:before { content: '\e81b'; } /* '' */
@@ -158,42 +151,64 @@
 .eadd-el-form-pro-conditions-actions:before { content: '\e867'; } /* '' */
 .eadd-portfolio-skinbase-template:before { content: '\e868'; } /* '' */
 .eadd-portfolio-skin-template:before { content: '\e869'; } /* '' */
-.eadd-el-form-pro-ext-slider:before { content: '\e86a'; } /* '' */
 .eadd-el-form-pro-advanced-steps-displayall:before { content: '\e86b'; } /* '' */
+
 .eadd-el-form-pro-ext-width:before { content: '\e86c'; } /* '' */
 .eadd-el-form-pro-ext-date:before { content: '\e86d'; } /* '' */
 .eadd-el-form-pro-ext-mask:before { content: '\e86e'; } /* '' */
 .eadd-el-form-pro-ext-change:before { content: '\e86f'; } /* '' */
-.eadd-el-form-pro-act-send-whatsapp:before { content: '\e870'; } /* '' */
+.eadd-el-form-pro-ext-slider:before { content: '\e86a'; } /* '' */
+.eadd-el-form-pro-ext-range:before { content: '\e8d9'; } /* '' */
 .eadd-el-form-pro-ext-length:before { content: '\e871'; } /* '' */
 .eadd-el-form-pro-ext-inline:before { content: '\e872'; } /* '' */
-.eadd-el-form-pro-field-submit:before { content: '\e873'; } /* '' */
-.eadd-el-form-pro-act-message:before { content: '\e874'; } /* '' */
 .eadd-el-form-pro-ext-address:before { content: '\e875'; } /* '' */
-.eadd-el-form-pro-advanced-steps-save:before { content: '\e876'; } /* '' */
-.eadd-el-form-pro-advanced-steps-legend:before { content: '\e877'; } /* '' */
-.eadd-el-form-pro-advanced-steps-summary:before { content: '\e878'; } /* '' */
-.eadd-el-form-pro-ext-password:before { content: '\e879'; } /* '' */
-.eadd-el-form-pro-act-send-telegtam:before { content: '\e87c'; } /* '' */
-.eadd-el-form-pro-ext-wysiwyg:before { content: '\e87d'; } /* '' */
 .eadd-el-form-pro-ext-options:before { content: '\e87e'; } /* '' */
-.eadd-el-form-pro-field-reset:before { content: '\e87f'; } /* '' */
-.eadd-el-form-pro-field-signature:before { content: '\e880'; } /* '' */
-.eadd-el-form-pro-advanced-steps-top:before { content: '\e881'; } /* '' */
-.eadd-el-form-pro-field-calculator:before { content: '\E87A'; } /* '' */
-.eadd-el-form-pro-act-custom-php-script:before { content: '\E87B'; } /* '' */
-.eadd-e-addoons-updates:before { content: '\e882'; } /* '' */
-.eadd-e-addoons-wpml:before { content: '\e883'; } /* '' */
-.eadd-el-form-pro-ext-switcher:before { content: '\e884'; } /* '' */
-.eadd-enabledisabe_elementorwidgets:before { content: '\e885'; } /* '' */
+.eadd-el-form-pro-ext-wysiwyg:before { content: '\e87d'; } /* '' */
 .eadd-el-form-pro-ext-repeater:before { content: '\e886'; } /* '' */
 .eadd-el-form-pro-ext-color:before { content: '\e887'; } /* '' */
 .eadd-el-form-pro-ext-rates:before { content: '\e888'; } /* '' */
 .eadd-el-form-pro-ext-choose:before { content: '\e889'; } /* '' */
+.eadd-el-form-pro-ext-password:before { content: '\e879'; } /* '' */
+.eadd-el-form-pro-ext-switcher:before { content: '\e884'; } /* '' */
+
+.eadd-el-form-pro-field-submit:before { content: '\e873'; } /* '' */
+.eadd-el-form-pro-field-reset:before { content: '\e87f'; } /* '' */
+.eadd-el-form-pro-field-signature:before { content: '\e880'; } /* '' */
+.eadd-el-form-pro-field-calculator:before { content: '\E87A'; } /* '' */
+
+.eadd-el-form-pro-act-send-whatsapp:before { content: '\e870'; } /* '' */
+.eadd-el-form-pro-act-message:before { content: '\e874'; } /* '' */
+.eadd-el-form-pro-act-send-telegtam:before { content: '\e87c'; } /* '' */
+.eadd-el-form-pro-act-custom-php-script:before { content: '\E87B'; } /* '' */
 .eadd-el-form-pro-act-login:before { content: '\e88a'; } /* '' */
-.eadd-dynamic-tag-twig:before { content: '\e88e'; } /* '' */
+.eadd-el-form-pro-act-save-terms:before { content: '\e8af'; } /* '' */
+.eadd-el-form-pro-act-save-users:before { content: '\e8b0'; } /* '' */
+.eadd-el-form-pro-act-save-options:before { content: '\e8b1'; } /* '' */
+.eadd-el-form-pro-act-save-comments:before { content: '\e8b2'; } /* '' */
+.eadd-el-form-pro-act-save-db:before { content: '\e88c'; } /* '' */
+.eadd-el-form-pro-act-save-posts:before { content: '\e88d'; } /* '' */
+.eadd-el-form-pro-act-export:before { content: '\e811'; } /* '' */
+.eadd-el-form-pro-act-csv:before { content: '\e812'; } /* '' */
+.eadd-el-form-pro-act-payments:before { content: '\e813'; } /* '' */
+.eadd-el-form-pro-act-multi-redirects:before { content: '\e814'; } /* '' */
+.eadd-el-form-pro-act-save:before { content: '\e815'; } /* '' */
+.eadd-el-form-pro-act-pdf-generator:before { content: '\e816'; } /* '' */
+.eadd-el-form-pro-ext-advanced-steps:before { content: '\e817'; } /* '' */
+.eadd-el-form-pro-act-send-custom-mail:before { content: '\e818'; } /* '' */
+
+.eadd-el-form-pro-advanced-steps-save:before { content: '\e876'; } /* '' */
+.eadd-el-form-pro-advanced-steps-legend:before { content: '\e877'; } /* '' */
+.eadd-el-form-pro-advanced-steps-summary:before { content: '\e878'; } /* '' */
+.eadd-el-form-pro-advanced-steps-top:before { content: '\e881'; } /* '' */
+
+.eadd-e-addoons-updates:before { content: '\e882'; } /* '' */
+.eadd-e-addoons-wpml:before { content: '\e883'; } /* '' */
+.eadd-enabledisabe_elementorwidgets:before { content: '\e885'; } /* '' */
+
 .eadd-shortcode-twig:before { content: '\e88f'; } /* '' */
 .eadd-text-editor-twig:before { content: '\e890'; } /* '' */
+
+.eadd-dynamic-tag-twig:before { content: '\e88e'; } /* '' */
 .eadd-dynamic-tag-post:before { content: '\e891'; } /* '' */
 .eadd-dynamic-tag-term:before { content: '\e892'; } /* '' */
 .eadd-dynamic-tag-user:before { content: '\e893'; } /* '' */
@@ -225,12 +240,7 @@
 .eadd-dynamic-tag-options:before { content: '\e8ac'; } /* '' */
 .eadd-infinite-pagination:before { content: '\e8ad'; } /* '' */
 .eadd-numeric-pagination:before { content: '\e8ae'; } /* '' */
-.eadd-el-form-pro-act-save-terms:before { content: '\e8af'; } /* '' */
-.eadd-el-form-pro-act-save-users:before { content: '\e8b0'; } /* '' */
-.eadd-el-form-pro-act-save-options:before { content: '\e8b1'; } /* '' */
-.eadd-el-form-pro-act-save-comments:before { content: '\e8b2'; } /* '' */
-.eadd-el-form-pro-act-save-db:before { content: '\e88c'; } /* '' */
-.eadd-el-form-pro-act-save-posts:before { content: '\e88d'; } /* '' */
+
 .eadd-query-custom-db:before { content: '\e8b3'; } /* '' */
 .eadd-query-media:before { content: '\e8b4'; } /* '' */
 .eadd-query-users:before { content: '\e8b5'; } /* '' */
