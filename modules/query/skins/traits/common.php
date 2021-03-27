@@ -245,7 +245,9 @@ trait Common {
         // ---------------------------------------
         $attribute_button = 'button_' . $this->counter;
 
-        $this->parent->add_render_attribute($attribute_button, 'href', $this->current_permalink);
+        $use_link = $this->get_item_link($settings);
+
+        $this->parent->add_render_attribute($attribute_button, 'href', $use_link);
 
         //$this->parent->add_render_attribute($attribute_button, 'target', '_blank');
         //$this->parent->add_render_attribute($attribute_button, 'rel', 'nofollow');

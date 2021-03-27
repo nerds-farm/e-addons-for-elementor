@@ -45,7 +45,7 @@ trait Items_Advanced {
                             'item_posttype',
                             'item_date',
                             'item_registered',
-                            'item_readmore',
+                            //'item_readmore',
                             'item_termstaxonomy',
                             'item_content',
                             'item_excerpt',
