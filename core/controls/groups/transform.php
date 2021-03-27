@@ -87,7 +87,7 @@ class Transform extends Group_Control_Base {
             'size_units' => ['px'],
             'range' => [
                 'px' => [
-                  'max' => 500,
+                  'max' => 2000,
                   'min' => 0,
                   'step' => 1,
                ],
