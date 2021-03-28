@@ -53,8 +53,8 @@
 .e-add-posts-container .e-add-post-image.e-add-post-overlayhover:before{
 	z-index: 3;
 
-	-webkit-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+	-webkit-transition: all 0.6s ease;
+	transition: all 0.6s ease;
 
 	opacity: 0;
 }

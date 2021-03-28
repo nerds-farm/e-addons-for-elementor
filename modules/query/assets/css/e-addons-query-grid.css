@@ -401,6 +401,11 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
   	user-select: none;
   
   	pointer-events: none;
+	
+	/* @poglie new */
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 
