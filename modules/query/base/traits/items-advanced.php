@@ -63,6 +63,33 @@ trait Items_Advanced {
             ]
                 ]
         );
+        // blank
+        $target->add_control(
+            'blanklink_enable', [
+        'label' => __('Open in new window', 'e-addons'),
+        'type' => Controls_Manager::SWITCHER,
+        'condition' => [
+            'item_type!' => [
+                'item_posttype',
+                'item_date',
+                'item_registered',
+                //'item_readmore',
+                'item_termstaxonomy',
+                'item_content',
+                'item_excerpt',
+                'item_description',
+                'item_taxonomy',
+                'item_custommeta',
+                'item_caption',
+                'item_alternativetext',
+                'item_imagemeta',
+                'item_mimetype',
+                'item_counts'
+            ],
+            'use_link' => ['yes','shortcode'],
+        ]
+            ]
+    );
         $target->add_control(
                 'shortcode_link', [
             'label' => __('Shortcode link', 'e-addons'),
@@ -93,6 +120,7 @@ trait Items_Advanced {
             'label' => '<i class="fas fa-clipboard-list"></i> ' . __('Display', 'e-addons'),
             'type' => Controls_Manager::CHOOSE,
             'default' => '',
+            'separator' => 'before',
             'toggle' => true,
             'options' => [
                 'block' => [
@@ -157,6 +185,7 @@ trait Items_Advanced {
                 'icon_enable', [
             'label' => __('Icon', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
+            'separator' => 'before',
             'conditions' => [
                 'terms' => [
                     [
@@ -227,6 +256,7 @@ trait Items_Advanced {
             'label' => '<i class="fas fa-minus"></i> ' . __('Before', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'default' => '',
+            'separator' => 'before',
             'description' => __('Print Label before the Field', 'e-addons'),
             'conditions' => [
                 'relation' => 'or',
@@ -332,6 +362,7 @@ trait Items_Advanced {
             'label' => __('Fallback', 'e-addons') ,
             'type' => Controls_Manager::TEXT,
             'description' => __('Alternative Text for empty values', 'e-addons'),
+            'separator' => 'after',
             'conditions' => [
                 'relation' => 'and',
                 'terms' => [

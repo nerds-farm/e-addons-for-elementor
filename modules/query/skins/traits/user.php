@@ -25,7 +25,9 @@ trait User {
         $use_bgimage = $settings['use_bgimage'];
         $use_overlay = $settings['use_overlay'];
         $use_overlayimg_hover = $this->get_instance_value('use_overlayimg_hover');
+        
         $use_link = $this->get_item_link($settings);
+        $blanklink  = $settings['blanklink_enable'];
 
         //
         // ---------------------------------------
@@ -56,11 +58,16 @@ trait User {
 
         $html_tag = 'div';
         $attribute_link = '';
+        $attribute_target = '';
+
         if ($use_link) {
             $html_tag = 'a';
             $attribute_link = ' href="' . $use_link . '"';
+
+            if( !empty($blanklink))
+            $attribute_target = ' target="_blank"';
         }
-        echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . '>';
+        echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . $attribute_target .'>';
 
         if ($use_bgimage) {
             echo '<figure class="e-add-img e-add-bgimage" style="background: url(' . $avatar_url . ') no-repeat center; background-size: cover; display: block;"></figure>';
@@ -77,6 +84,8 @@ trait User {
         $c = $this->counter;
 
         $use_link = $this->get_item_link($settings);
+        $blanklink  = $settings['blanklink_enable'];
+
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'div';
         
         $start_a = '';
@@ -90,9 +99,13 @@ trait User {
 
             // in caso di website
             if ($usertype == 'website')
-                $attribute_link = 'href="' . $user_info->user_url . '" target="_blank"';
+                $attribute_link = 'href="' . $user_info->user_url ;
 
-            $start_a = '<a ' . $attribute_link . '>';
+            $attribute_target = '';
+            if( !empty($blanklink))
+            $attribute_target = ' target="_blank"';
+            
+            $start_a = '<a ' . $attribute_link . $attribute_target . '>';
             $end_a = '</a>';
         }
         

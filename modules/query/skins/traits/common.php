@@ -70,7 +70,7 @@ trait Common {
         //
         // @p definisco se l'immagine è linkata
         $use_link = $this->get_item_link($settings);
-
+        $blanklink  = $settings['blanklink_enable'];
 
         // ---------------------------------------
         // @p preparo il dato in base a 'thumbnail_size'
@@ -124,11 +124,15 @@ trait Common {
         $html_tag = 'div';
 
         $attribute_link = '';
+        $attribute_target = '';
         if ($use_link && $querytype != 'attachment') {
             $html_tag = 'a';
             $attribute_link = ' href="' . $use_link . '"';
+
+            if( !empty($blanklink))
+            $attribute_target = ' target="_blank"';
         }
-        echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . '>';
+        echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . $attribute_target . '>';
 
         if ($use_bgimage) {
             // @p questa è l'mmagine via URL
@@ -147,11 +151,21 @@ trait Common {
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'h3';
         //
         $use_link = $this->get_item_link($settings);
+        $blanklink  = $settings['blanklink_enable'];
+        
         // ---------------------------------------
         echo sprintf('<%1$s class="e-add-post-title">', $html_tag);
         ?>
-        <?php if ($use_link) { ?><a href="<?php echo $use_link; ?>"><?php } ?>
-            <?php
+        <?php if ($use_link) { 
+            $attribute_link = ' href="' . $use_link . '"';
+
+            $attribute_target = '';
+            if( !empty($blanklink))
+            $attribute_target = ' target="_blank"';
+            
+            echo '<a'. $attribute_link . $attribute_target . '>';
+            
+            }
             $querytype = $this->parent->get_querytype();
 
             switch ($querytype) {
@@ -171,7 +185,7 @@ trait Common {
                     break;
             }
             ?>
-            <?php if ($use_link) { ?></a><?php } ?>
+            <?php if ($use_link) { echo '</a>'; } ?>
             <?php
         echo sprintf('</%s>', $html_tag);
         ?>
@@ -246,10 +260,12 @@ trait Common {
         $attribute_button = 'button_' . $this->counter;
 
         $use_link = $this->get_item_link($settings);
-
+        $blanklink  = $settings['blanklink_enable'];
+        
         $this->parent->add_render_attribute($attribute_button, 'href', $use_link);
 
-        //$this->parent->add_render_attribute($attribute_button, 'target', '_blank');
+        if( !empty($blanklink))
+        $this->parent->add_render_attribute($attribute_button, 'target', '_blank');
         //$this->parent->add_render_attribute($attribute_button, 'rel', 'nofollow');
 
         $this->parent->add_render_attribute($attribute_button, 'class', ['elementor-button-link', 'elementor-button', 'e-add-button']);

@@ -23,6 +23,7 @@ trait Post {
         // Settings ------------------------------
         $avatar_image_size = $settings['author_image_size'];
         $use_link = $this->get_item_link($settings);
+        $blanklink  = $settings['blanklink_enable'];
 
         $author_user_key = array();
         if (count($settings['author_user_key']))
