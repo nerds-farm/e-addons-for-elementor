@@ -19,32 +19,80 @@ class Query extends Module_Base {
     }
 
     public function allow_posts_widget_pagination($handled, $wp_query) {
-
+        
         // If another plugin/theme already used this filter, exit here to avoid conflicts.
         if ($handled) {
             return true;
         }
-
+        
         // Check it's not already handled and it's a single paged query.
-        if (empty($wp_query->query_vars['page']) || !is_singular() || empty($wp_query->post)) {
+        if (empty($wp_query->query_vars['page']) && empty($wp_query->query_vars['paged'])) {
             return $handled;
         }
-
+        $page = empty($wp_query->query_vars['page']) ? $wp_query->query_vars['paged'] : $wp_query->query_vars['page'];
+        if ($page <= 1) {
+            return $handled;
+        }
+        
         // No Widgets which require pagination
         $query_widgets = $this->get_query_widgets();
         if (empty($query_widgets)) {
             return $handled;
         }
-
-        // Single Post built_with_elementor
-        if (\Elementor\Plugin::instance()->db->is_built_with_elementor($wp_query->post->ID) || Utils::is_plugin_active('elementor-pro')) {
-            $document = \Elementor\Plugin::instance()->documents->get($wp_query->post->ID);
-            if ($this->is_valid_pagination($document, $wp_query->query_vars['page'])) {
-                return true;
+        
+        $theme_builder = $this->get_theme_builder();        
+        
+        if (is_archive()) {            
+            // Elementor Pro
+            if ($theme_builder) {                
+                $locations = $theme_builder->get_locations_manager()->get_locations();                
+                if (!empty($locations['archive'])) {
+                    
+                    $archives = $theme_builder->get_conditions_manager()->get_documents_for_location('archive');
+                    if (!empty($archives)) {
+                        foreach ($archives as $document_id => $document) {
+                            //$instances = $theme_builder->get_conditions_manager()->get_document_instances($document_id);
+                            //var_dump($instances);
+                            if ($this->is_valid_pagination($document, $page)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
         }
+        
+        if (is_singular() && !empty($wp_query->post)) {
 
-        // Elementor Pro
+            // Single Post built_with_elementor
+            if (\Elementor\Plugin::instance()->db->is_built_with_elementor($wp_query->post->ID) || Utils::is_plugin_active('elementor-pro')) {
+                $document = \Elementor\Plugin::instance()->documents->get($wp_query->post->ID);
+                if ($this->is_valid_pagination($document, $page)) {
+                    return true;
+                }
+            }
+
+            // Elementor Pro
+            if ($theme_builder) {
+                $locations = $theme_builder->get_locations_manager()->get_locations();
+                if (!empty($locations['single'])) {
+                    $singles = $theme_builder->get_conditions_manager()->get_documents_for_location('single');                
+                    if (!empty($singles)) {
+                        foreach ($singles as $document_id => $document) {
+                            if ($this->is_valid_pagination($document, $page)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $handled;
+    }
+    
+    public function get_theme_builder() {
+        $theme_builder = false;
         if (Utils::is_plugin_active('elementor-pro')) {
             $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules('theme-builder');
             if (!$theme_builder) {
@@ -54,23 +102,8 @@ class Query extends Module_Base {
                     $theme_builder = $class_name::instance();
                 }
             }
-            $locations = $theme_builder->get_locations_manager()->get_locations();
-            
-            if (!empty($locations['single'])) {
-                $singles = $theme_builder->get_conditions_manager()->get_documents_for_location('single');                
-                if (!empty($singles)) {
-                    foreach ($singles as $document_id => $document) {
-                        //if ( $document_id != $wp_query->post->ID ) {
-                            if ($this->is_valid_pagination($document, $wp_query->query_vars['page'])) {
-                                return true;
-                            }
-                        //}
-                    }
-                }
-            }
         }
-
-        return $handled;
+        return $theme_builder;
     }
 
     public function get_query_widgets() {

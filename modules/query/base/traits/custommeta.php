@@ -747,7 +747,25 @@ trait Custommeta {
         if ($type_of_location == 'attachment') {
             $type_of_location = 'post';
         }
-        return get_metadata($type_of_location, $id_of_location, $custommeta_source_key, true);
+        
+        $custommeta_source = get_metadata($type_of_location, $id_of_location, $custommeta_source_key);
+        if (is_array($custommeta_source)) {
+            if (!empty($custommeta_source)) {
+                if (count($custommeta_source) > 1) {
+                    $custommeta_source_first = reset($custommeta_source);
+                    if (is_array($custommeta_source_first)) {
+                        // strange complex case...maybe never happend 
+                        return $custommeta_source_first;
+                    }
+                    // PODS, JET
+                    return $custommeta_source;
+                }
+                // ACF
+                return reset($custommeta_source); // single meta
+            }
+            return false;
+        }
+        return false;
     }
 
 }
