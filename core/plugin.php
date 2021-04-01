@@ -168,19 +168,19 @@ class Plugin {
             $dash = new \EAddonsForElementor\Core\Dashboard\Dashboard();
         }
 
-        // Jet Engine fix
-        if (Utils::is_plugin_active('jet-engine')) {
-            global $wp_filter;
-            $tag = 'elementor/init';
-            if ( !empty( $wp_filter[ $tag ]->callbacks[10] ) ) {
-                // remove_action( 'elementor/init', array( '\Jet_Engine_Elementor_Views', 'register_category' ) );
-                foreach ($wp_filter[ $tag ]->callbacks[10] as $ckey => $callb) {
-                    if (strpos($ckey, 'register_category') !== false) {
-                        unset($wp_filter[ $tag ]->callbacks[10][$ckey]);
-                    }
+        // Register Category fix
+        global $wp_filter;
+        $tag = 'elementor/init';
+        $tag_cat = 'elementor/elements/categories_registered';
+        if ( !empty( $wp_filter[ $tag ]->callbacks[10] ) ) {
+            // remove_action( 'elementor/init', array( '\XXX', 'register_category' ) );
+            foreach ($wp_filter[ $tag ]->callbacks[10] as $ckey => $callb) {
+                if (strpos($ckey, 'register_category') !== false) {
+                    $wp_filter[ $tag_cat ]->callbacks[10][$ckey] = $callb;
+                    unset($wp_filter[ $tag ]->callbacks[10][$ckey]);
                 }
-                //echo '<pre>';var_dump($wp_filter[ $tag ]->callbacks[10]);echo '</pre>'; die();
             }
+            //echo '<pre>';var_dump($wp_filter[ $tag ]->callbacks[10]);echo '</pre>'; die();
         }
 
         do_action('e_addons/init');

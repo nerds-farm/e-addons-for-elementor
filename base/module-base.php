@@ -161,13 +161,13 @@ abstract class Module_Base extends Module {
         foreach ($this->get_elements('widgets') as $widget) {
             $class_name = $this->get_reflection()->getNamespaceName() . '\Widgets\\' . $widget;
             //var_dump($class_name);
-            /*if (method_exists($class_name, 'get_categories_static')) {
+            if (method_exists($class_name, 'get_categories_static')) {
                 foreach ($class_name::get_categories_static() as $category) {
                     $elements->add_category($category, array(
                         'title' => ucfirst($category),
                     ));
                 }
-            }*/
+            }
             if (empty(self::$widgets[$class_name])) {
                 self::$widgets[$class_name] = new $class_name();
             }
@@ -177,17 +177,6 @@ abstract class Module_Base extends Module {
                     'title' => ucfirst($category),
                 ));
             }
-        }
-        
-        // Jet fix
-        if (Utils::is_plugin_active('jet-engine')) {
-            $elements->add_category(
-                'jet-listing-elements',
-                array(
-                        'title' => esc_html__( 'Listing Elements', 'jet-engine' ),
-                        'icon'  => 'font',
-                )
-            );
         }
     }
 

@@ -25,7 +25,7 @@ trait Custommeta {
             $type_q = $this->get_querytype();
         }
 
-        $target->add_control(
+        /*$target->add_control(
                 'avviso_meta_custommeta_source',
                 [
                     'type' => Controls_Manager::RAW_HTML,
@@ -36,7 +36,7 @@ trait Custommeta {
                         'query_type' => 'custommeta_source',
                     ],
                 ]
-        );
+        );*/
 
         //@p qui seleziono il tipo di sorgente
         $target->add_control(
@@ -751,21 +751,28 @@ trait Custommeta {
         $custommeta_source = get_metadata($type_of_location, $id_of_location, $custommeta_source_key);
         if (is_array($custommeta_source)) {
             if (!empty($custommeta_source)) {
-                if (count($custommeta_source) > 1) {
-                    $custommeta_source_first = reset($custommeta_source);
+                $custommeta_source_first = reset($custommeta_source);                
+                if (count($custommeta_source) > 1) {                    
                     if (is_array($custommeta_source_first)) {
-                        // strange complex case...maybe never happend 
-                        return $custommeta_source_first;
-                    }
-                    // PODS, JET
+                        if (!empty($custommeta_source_first['ID'])) {
+                            $tmp = array();
+                            foreach ($custommeta_source as $key => $value) {
+                                $tmp[] = $value['ID'];
+                            }
+                            // PODS
+                            return $tmp;
+                        }                        
+                    }   
+                    // JET
                     return $custommeta_source;
                 }
                 // ACF
                 return reset($custommeta_source); // single meta
             }
+            // empty, no custom field
             return false;
         }
-        return false;
+        return $custommeta_source;
     }
 
 }
