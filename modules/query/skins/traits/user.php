@@ -155,7 +155,9 @@ trait User {
             case 'bio' :
                 //echo 'sono la bio';
                 echo $this->render_label_before_item($settings,'Description: ');
-                echo $user_info->description;
+                $description_content = $user_info->description;
+                $description_content = Utils::get_dynamic_data($description_content);
+                echo $description_content;
                 break;
             case 'registered' :
                 //echo 'sono la user_registered';

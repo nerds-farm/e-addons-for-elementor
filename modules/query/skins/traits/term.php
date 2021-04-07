@@ -2,6 +2,8 @@
 
 namespace EAddonsForElementor\Modules\Query\Skins\Traits;
 
+use EAddonsForElementor\Core\Utils;
+
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Border;
@@ -53,6 +55,7 @@ trait Term {
         $textcontent_limit = $settings['textcontent_limit'];
         $term_info = $this->current_data;
         $description_content = $term_info->description;
+        $description_content = Utils::get_dynamic_data($description_content);
 
         if ($description_content)
             if ($textcontent_limit) {

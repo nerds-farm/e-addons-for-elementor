@@ -121,15 +121,21 @@ class Template {
         if ($tpl_id) {
             global $wp_query, $post, $authordata, $user, $current_user, $term;
 
-            $initial_queried_object = $wp_query->queried_object;
-            $initial_queried_object_id = $wp_query->queried_object_id;
+            //$initial_queried_object = $wp_query->queried_object;
+            //$initial_queried_object_id = $wp_query->queried_object_id;
+            $initial_wp_query = clone $wp_query; 
+            
+            
             if (!empty($args['post_id']) && intval($args['post_id'])) {
+                //var_dump($args['post_id']);
                 $initial_post = $post;
                 $post = get_post($args['post_id']);
                 if ($post) {
                     $wp_query->queried_object = $post;
                     $wp_query->queried_object_id = $args['post_id'];
-                    $wp_query->is_singular = true; // Form Fix
+                    if (wp_doing_ajax()) {
+                        $wp_query->is_singular = true; // Form Fix
+                    }
                 }
             }
             if (!empty($args['author_id']) && intval($args['author_id'])) {
@@ -138,6 +144,7 @@ class Template {
                 if ($authordata) {
                     $wp_query->queried_object = $authordata;
                     $wp_query->queried_object_id = $args['author_id'];
+                    $wp_query->is_author = true;
                 }
             }
             if (!empty($args['user_id']) && intval($args['user_id'])) {
@@ -153,12 +160,25 @@ class Template {
                 $term = get_term($args['term_id']);
                 if ($term) {
                     $wp_query->queried_object = $term;
-                    $wp_query->queried_object_id = $args['term_id'];
+                    $wp_query->queried_object_id = $args['term_id'];                    
+                    $wp_query->is_singular = false;
+                    $wp_query->is_category = $wp_query->is_tag = $wp_query->is_tax = false;
+                    switch ($term->taxonomy) {
+                        case 'category':
+                            $wp_query->is_category = true;
+                            break;
+                        case 'post_tag':
+                            $wp_query->is_tag = true;
+                            break;
+                        default:
+                            $wp_query->is_tax = true;
+                    }
+                    //var_dump($wp_query); die();
                 }
             }
 
             $with_css = (!empty($args['css']) && ($args['css'] == 'true' || $args['css'] === true));
-            if ((\Elementor\Plugin::$instance->editor->is_edit_mode() || wp_doing_ajax()) && $args['css'] !== false) {
+            if ((\Elementor\Plugin::$instance->editor->is_edit_mode() || wp_doing_ajax()) && (!empty($args['css']) && $args['css'] !== false)) {
                 $with_css = true;
             }
 
@@ -233,8 +253,9 @@ class Template {
                 $user = $initial_user;
                 $current_user = $initial_user;
             }
-            $wp_query->queried_object = $initial_queried_object;
-            $wp_query->queried_object_id = $initial_queried_object_id;
+            //$wp_query->queried_object = $initial_queried_object;
+            //$wp_query->queried_object_id = $initial_queried_object_id;
+            $wp_query = $initial_wp_query; 
             
             /*if (wp_doing_ajax()) {
                 $tpl_html .= $this->render_style($element);

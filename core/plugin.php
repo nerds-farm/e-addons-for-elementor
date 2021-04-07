@@ -140,7 +140,7 @@ class Plugin {
         // fire actions
         add_action('elementor/init', [$this, 'on_elementor_init'], 9);
 
-        add_filter("extra_plugin_headers", function($extra_headers) {
+        add_filter("extra_plugin_headers", function ($extra_headers) {
             $extra_headers['Free'] = 'Free';
             $extra_headers['Channel'] = 'Channel';
             return $extra_headers;
@@ -172,12 +172,12 @@ class Plugin {
         global $wp_filter;
         $tag = 'elementor/init';
         $tag_cat = 'elementor/elements/categories_registered';
-        if ( !empty( $wp_filter[ $tag ]->callbacks[10] ) ) {
+        if (!empty($wp_filter[$tag]->callbacks[10])) {
             // remove_action( 'elementor/init', array( '\XXX', 'register_category' ) );
-            foreach ($wp_filter[ $tag ]->callbacks[10] as $ckey => $callb) {
+            foreach ($wp_filter[$tag]->callbacks[10] as $ckey => $callb) {
                 if (strpos($ckey, 'register_category') !== false) {
-                    $wp_filter[ $tag_cat ]->callbacks[10][$ckey] = $callb;
-                    unset($wp_filter[ $tag ]->callbacks[10][$ckey]);
+                    $wp_filter[$tag_cat]->callbacks[10][$ckey] = $callb;
+                    unset($wp_filter[$tag]->callbacks[10][$ckey]);
                 }
             }
             //echo '<pre>';var_dump($wp_filter[ $tag ]->callbacks[10]);echo '</pre>'; die();
@@ -243,7 +243,7 @@ class Plugin {
         return false;
     }
 
-    public function is_addon_valid($addon = null){
+    public function is_addon_valid($addon = null) {
         if (empty($addon)) {
             $addon = $this->get_addon();
         }
@@ -373,52 +373,54 @@ class Plugin {
     public function maybe_vendor_autoload($TextDomain = '') {
         $addon = $this->get_addon($TextDomain);
         if ($this->has_vendors($TextDomain)) {
-            $file = $addon['path']. DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+            $file = $addon['path'] . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
             if (file_exists($file)) {
                 require_once $file;
             }
         }
     }
+
     public function has_vendors($TextDomain = '') {
         $addon = $this->get_addon($TextDomain);
         if (empty($addon['path'])) {
             return false;
         }
-        $composer = $addon['path'].DIRECTORY_SEPARATOR.'composer.json';
+        $composer = $addon['path'] . DIRECTORY_SEPARATOR . 'composer.json';
         return file_exists($composer);
     }
+
     public function update_vendors($TextDomain = '') {
         $wdir = getcwd();
         $addon = $this->get_addon($TextDomain);
         if (!empty($addon['path'])) {
-            $home = WP_CONTENT_DIR.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'composer'.DIRECTORY_SEPARATOR;
+            $home = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'composer' . DIRECTORY_SEPARATOR;
             if (!is_dir($home)) {
                 // create dir
                 mkdir($home, 0755, true);
             }
 
-            $composer = $home.'composer.phar';
-            if (!file_exists($home.'composer.phar')) {
+            $composer = $home . 'composer.phar';
+            if (!file_exists($home . 'composer.phar')) {
                 $composer_phar = 'https://getcomposer.org/composer-stable.phar';
-                $tmp_file = download_url( $composer_phar );
+                $tmp_file = download_url($composer_phar);
                 // Copies the file to the final destination and deletes temporary file.
-                copy( $tmp_file, $composer );
-                @unlink( $tmp_file );
+                copy($tmp_file, $composer);
+                @unlink($tmp_file);
             }
 
             if (file_exists($composer)) {
                 //var_dump(getcwd());
                 chdir($addon['path']);
-                $command = 'php '.$composer.' update 2>&1';
+                $command = 'php ' . $composer . ' update 2>&1';
                 //$result = shell_exec('export COMPOSER_HOME='.$home.'./.config/composer;');
                 //shell_exec('COMPOSER_ALLOW_XDEBUG=1 php -d xdebug.remote_enable=0 -d xdebug.profiler_enable=0 -d xdebug.default_enable=0 composer.phar --version 2>&1');
                 //$result = shell_exec('php composer.phar --version 2>&1');
-                $command = "export COMPOSER_HOME=".$home.".config/composer; ".$command;
+                $command = "export COMPOSER_HOME=" . $home . ".config/composer; " . $command;
                 $result = shell_exec($command);
                 //var_dump($command); var_dump($result); die();
                 //exec( $command, $output, $return_var ); var_dump($output);var_dump($return_var);
                 if ($result) {
-                    $msg = __('All Vendors in '.$addon['Name'].' are succefully updated');
+                    $msg = __('All Vendors in ' . $addon['Name'] . ' are succefully updated');
                     Utils::e_admin_notice($msg, 'success');
                 }
             }
@@ -426,4 +428,5 @@ class Plugin {
             chdir($wdir);
         }
     }
+
 }

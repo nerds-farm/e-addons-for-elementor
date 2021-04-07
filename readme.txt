@@ -4,8 +4,8 @@ Donate link: https://e-addons.com/donate/
 Tags: elementor, addons, extension, dynamic, template, token, widget, module, design
 Requires at least: 5.0
 Tested up to: 5.7.1
-Elementor tested up to: 3.2.0
-Stable tag: 2.5
+Elementor tested up to: 3.3.0
+Stable tag: 2.5.2
 Requires PHP: 7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -52,15 +52,16 @@ With E-ADDONS for Elementor you can offer your clients the most advanced feature
 = Minimum Requirements =
 
 * WordPress 5.0 or greater
-* Elementor Free 2.* or 3.*
-* PHP version 5.6 or greater
+* Elementor Free 3.*
+* PHP version 7.1 or greater
 * MySQL version 5.0 or greater
+* WordPress Memory limit of 64 MB
 
 = We recommend your host supports: =
 
-* PHP version 7.2 or greater
-* MySQL version 5.6 or greater
-* WordPress Memory limit of 64 MB or greater (128 MB or higher is preferred)
+* PHP version 8.0 or greater
+* MySQL version 8.0 or greater
+* WordPress Memory limit of 128 MB or higher is preferred
 
 = Installation =
 
@@ -96,6 +97,17 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 3. **More e-addons** enable only wanted and really needed features
 
 == Changelog ==
+
+= 2.5.2 - 07-04-2021 =
+* Add: Template support for Term and Authors in Query
+* Add: do shortcode on Term Description and User Bio
+* Fix: Query Pagination fix on Archive page
+
+= 2.5.1 - 01-04-2021 =
+* Add: Query Readmore item support PopUp
+* Add: Query Custom Field support for ACF, JET & PODS
+* Fix: Editor Categories fix
+* Fix: minor fix
 
 = 2.5 - 25-03-2021 =
 * Add: Automatic istallation for PRO Addons from Dash

@@ -60,7 +60,7 @@ class Base extends Base_Skin {
 
     public function register_controls_layout(Widget_Base $widget) {
         //$this->parent = $widget;
-        // BLOCKS generic style 
+        // BLOCKS generic style
         $this->register_style_controls();
         // PAGINATION style
         $this->register_style_pagination_controls();
@@ -124,140 +124,138 @@ class Base extends Base_Skin {
                 ]
         );
         /*
-        $this->add_responsive_control(
-            'blocks_align_flex', [
-                    'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-                    'type' => Controls_Manager::SELECT,
-                    'default' => '',
-                    'options' => [
-                        '' => 'Default',
-                        'flex-start' => 'Left',
-                        'center' => 'Center',
-                        'flex-end' => 'Right',
-                        'space-between' => 'Space Between',
-                        'space-around' => 'Space Around',
-                        //'stretch' => 'Stretch',
-                    ],
-                    'selectors' => [
-                        '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
-                    ],
-                //'condition' => [
-                //  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-                //],
-            ]
-        );*/
+          $this->add_responsive_control(
+          'blocks_align_flex', [
+          'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+          'type' => Controls_Manager::SELECT,
+          'default' => '',
+          'options' => [
+          '' => 'Default',
+          'flex-start' => 'Left',
+          'center' => 'Center',
+          'flex-end' => 'Right',
+          'space-between' => 'Space Between',
+          'space-around' => 'Space Around',
+          //'stretch' => 'Stretch',
+          ],
+          'selectors' => [
+          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
+          ],
+          //'condition' => [
+          //  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
+          //],
+          ]
+          ); */
         /*
-        $this->add_control(
-            'blocks_align_flex', [
-                'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-                'type' => 'ui_selector',
-                'toggle' => false,
-                'type_selector' => 'image',
-                'label_block' => true,
-                'columns_grid' => 5,
-                'options' => [
-                    '' => [
-                        'title' => __('Left','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_left.svg',
-                    ],
-                    'center' => [
-                        'title' => __('Middle','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_middle.svg',
-                    ],
-                    'flex-end' => [
-                        'title' => __('Right','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_right.svg',
-                    ],
-                    'space-between' => [
-                        'title' => __('Space Between','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-between.svg',
-                    ],
-                    'space-around' => [
-                        'title' => __('Space Around','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-around.svg',
-                    ],
-                ],
-                'default' => '',
-                'selectors' => [
-                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
-                ],
-                
-            ]
-        );
-        */
+          $this->add_control(
+          'blocks_align_flex', [
+          'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+          'type' => 'ui_selector',
+          'toggle' => false,
+          'type_selector' => 'image',
+          'label_block' => true,
+          'columns_grid' => 5,
+          'options' => [
+          '' => [
+          'title' => __('Left','e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_left.svg',
+          ],
+          'center' => [
+          'title' => __('Middle','e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_middle.svg',
+          ],
+          'flex-end' => [
+          'title' => __('Right','e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_right.svg',
+          ],
+          'space-between' => [
+          'title' => __('Space Between','e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-between.svg',
+          ],
+          'space-around' => [
+          'title' => __('Space Around','e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-around.svg',
+          ],
+          ],
+          'default' => '',
+          'selectors' => [
+          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
+          ],
+
+          ]
+          );
+         */
 
         /*
-        $this->add_responsive_control(
+          $this->add_responsive_control(
+          'blocks_align_justify', [
+          'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
+          'type' => Controls_Manager::SELECT,
+          'default' => '',
+          'options' => [
+          '' => 'Default',
+          'flex-start' => 'Top',
+          'center' => 'Middle',
+          'flex-end' => 'Bottom',
+          'space-between' => 'Space Between',
+          'space-around' => 'Space Around',
+          //'stretch' => 'Stretch',
+          ],
+          'selectors' => [
+          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
+          ],
+          //'separator' => 'after',
+          //     'condition' => [
+          //      $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
+          //  ],
+          //]
+          ); */
+        $this->add_control(
                 'blocks_align_justify', [
             'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
-            'type' => Controls_Manager::SELECT,
-            'default' => '',
+            'type' => 'ui_selector',
+            'toggle' => false,
+            'label_block' => true,
+            'type_selector' => 'image',
+            'columns_grid' => 5,
             'options' => [
-                '' => 'Default',
-                'flex-start' => 'Top',
-                'center' => 'Middle',
-                'flex-end' => 'Bottom',
-                'space-between' => 'Space Between',
-                'space-around' => 'Space Around',
-                //'stretch' => 'Stretch',
+                '' => [
+                    'title' => __('Top', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/flex_top.svg',
+                ],
+                'center' => [
+                    'title' => __('Center', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/flex_middle.svg',
+                ],
+                'flex-end' => [
+                    'title' => __('Bottom', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/flex_bottom.svg',
+                ],
+                'space-between' => [
+                    'title' => __('Space Betweens', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/flex_space-between.svg',
+                ],
+                'space-around' => [
+                    'title' => __('Space Around', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/flex_space-around.svg',
+                ]
             ],
+            'default' => '',
             'selectors' => [
                 '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
             ],
-            //'separator' => 'after',
-            //     'condition' => [
-            //      $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-            //  ], 
-            //]
-        );*/
-        $this->add_control(
-            'blocks_align_justify', [
-                'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
-                'type' => 'ui_selector',
-                'toggle' => false,
-                'label_block' => true,
-                'type_selector' => 'image',
-                'columns_grid' => 5,
-                'options' => [
-                    '' => [
-                        'title' => __('Top','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_top.svg',
-                    ],
-                    'center' => [
-                        'title' => __('Center','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_middle.svg',
-                    ],
-                    'flex-end' => [
-                        'title' => __('Bottom','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_bottom.svg',
-                    ],
-                    'space-between' => [
-                        'title' => __('Space Betweens','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_space-between.svg',
-                    ],
-                    'space-around' => [
-                        'title' => __('Space Around','e-addons'),
-                        'return_val' => 'val',
-                        'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/flex_space-around.svg',
-                    ]
-                ],
-                'default' => '',
-                'selectors' => [
-                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
-                ],
-            ]
+                ]
         );
-
-
 
         $this->add_control(
                 'blocks_bgcolor', [
@@ -355,7 +353,7 @@ class Base extends Base_Skin {
                 }
                 break;
             case 'term':
-                if (empty($query) || empty($query->get_terms()) || is_wp_error($query->get_terms())) {                    
+                if (empty($query) || empty($query->get_terms()) || is_wp_error($query->get_terms())) {
                     return false;
                 }
                 break;
@@ -389,7 +387,7 @@ class Base extends Base_Skin {
         $querytype = $this->parent->get_querytype();
 
         if ($this->has_results($query, $querytype)) {
-            
+
             /** @p enquequo gli script e gli style... */
             $this->enqueue();
 
@@ -419,8 +417,6 @@ class Base extends Base_Skin {
                     wp_reset_postdata();
                     break;
                 case 'user':
-                    //global $user;
-                    //$user_temp = $user;
                     foreach ($query->get_results() as $user) {
                         $this->current_permalink = get_author_posts_url($user->ID);
                         $this->current_id = $user->ID;
@@ -428,13 +424,11 @@ class Base extends Base_Skin {
                         //
                         $this->render_element_item();
                     }
-                    //$user = $user_temp;                   
                     break;
                 case 'term':
                     foreach ($query->get_terms() as $term) {
                         if ($term && !is_wp_error($term)) {
                             $link = get_term_link($term->term_id, $term->taxonomy);
-                            //var_dump($term->taxonomy);
                             $this->current_permalink = $link;
                             $this->current_id = $term->term_id;
                             $this->current_data = $term;
@@ -442,7 +436,6 @@ class Base extends Base_Skin {
                             $this->render_element_item();
                         }
                     }
-
                     break;
                 case 'listof':
                     //echo 'questo è LISTOF (che nella mia testa è il widget-ACFrepeater)';
@@ -480,11 +473,11 @@ class Base extends Base_Skin {
             }
         }
     }
-    
+
     public function render_full_block_link() {
         $linkable = $this->parent->get_settings_for_display('templatemode_linkable');
         if ($linkable) {
-            echo '<a class="e-full-block-link" href="'.$this->current_permalink.'"></a>';
+            echo '<a class="e-full-block-link" href="' . $this->current_permalink . '"></a>';
         }
     }
 
@@ -534,7 +527,12 @@ class Base extends Base_Skin {
         if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
             $args['css'] = true;
         }
-        $args['post_id'] = $this->current_id;
+
+        $querytype = $this->parent->get_querytype();
+        if ($querytype == 'user') {
+            $querytype = 'author';
+        }
+        $args[$querytype . '_id'] = $this->current_id;
 
         echo \EAddonsForElementor\Core\Managers\Template::e_template($id_temp, $args);
     }
@@ -723,7 +721,7 @@ class Base extends Base_Skin {
                         break;
                     case 'item_descriptiontext': $this->render_item_descriptiontext($item);
                         break;
-                    case 'item_imageoricon': 
+                    case 'item_imageoricon':
                         if ($useimg) {
                             $this->render_item_imageoricon($item);
                         }
@@ -818,11 +816,11 @@ class Base extends Base_Skin {
         ?>>
             <div class="e-add-post-block<?php echo $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
-                <?php
-            }
+        <?php
+    }
 
-            protected function render_item_end() {
-                ?>
+    protected function render_item_end() {
+        ?>
 
             </div>
         </article>
@@ -861,46 +859,46 @@ class Base extends Base_Skin {
         ?>
         <?php $this->render_container_before(); ?>
         <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container'); ?>>
-            <?php $this->render_posts_before(); ?>
+        <?php $this->render_posts_before(); ?>
             <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container_wrap'); ?>>
-                <?php
-                $this->render_postsWrapper_before();
-            }
-
-            protected function render_loop_end() {
-                $this->render_postsWrapper_after();
-                ?>      
-            </div>
             <?php
-            $this->render_posts_after();
+            $this->render_postsWrapper_before();
+        }
+
+        protected function render_loop_end() {
+            $this->render_postsWrapper_after();
             ?>
+            </div>
+                <?php
+                $this->render_posts_after();
+                ?>
         </div>
-        <?php $this->render_container_after(); ?>
+            <?php $this->render_container_after(); ?>
         <?php
     }
 
     protected function render_container_before() {
-        
+
     }
 
     protected function render_container_after() {
-        
+
     }
 
     protected function render_posts_before() {
-        
+
     }
 
     protected function render_posts_after() {
-        
+
     }
 
     protected function render_postsWrapper_before() {
-        
+
     }
 
     protected function render_postsWrapper_after() {
-        
+
     }
 
     // Classes ----------
@@ -917,7 +915,7 @@ class Base extends Base_Skin {
     }
 
     public function get_image_class() {
-        
+
     }
 
     public function get_scrollreveal_class() {
@@ -943,7 +941,7 @@ class Base extends Base_Skin {
         }
         return $content;
     }
-    
+
     public function get_item_link($settings) {
         if (!empty($settings['use_link'])) {
             switch ($settings['use_link']) {
@@ -956,29 +954,29 @@ class Base extends Base_Skin {
                     }
                     break;
                 case 'popup':
-                    if (!empty($settings['popup_link'])) {                        
-                        $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+                    if (!empty($settings['popup_link'])) {
+                        $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules('theme-builder');
                         if (Utils::is_plugin_active('elementor-pro')) {
                             if (!$theme_builder) {
                                 $class_name = '\ElementorPro\Modules\ThemeBuilder\Module';
                                 /** @var Module_Base $class_name */
-                                if ( $class_name::is_active() ) {
+                                if ($class_name::is_active()) {
                                     $theme_builder = $class_name::instance();
                                 }
                             }
                         }
                         if ($theme_builder) {
                             $popup_id = $settings['popup_link'];
-                            $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash( 'popup:open', [
+                            $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash('popup:open', [
                                 'id' => $popup_id,
                                 'toggle' => true,
-                            ] );
+                                    ]);
                             $link_action_url = str_replace(':', '%3A', $link_action_url);
                             $link_action_url = str_replace('=', '%3D', $link_action_url);
                             $link_action_url = str_replace('%3D%3D', '%3D', $link_action_url);
-                            $link_action_url = str_replace('&', '%26', $link_action_url);  
+                            $link_action_url = str_replace('&', '%26', $link_action_url);
                             //
-                            $theme_builder->get_locations_manager()->add_doc_to_location( 'popup', $popup_id );                              
+                            $theme_builder->get_locations_manager()->add_doc_to_location('popup', $popup_id);
                             return $link_action_url;
                         }
                     }
@@ -991,12 +989,11 @@ class Base extends Base_Skin {
                     break;
                 case 'yes':
                 default:
-                    if (!is_wp_error($this->current_permalink)) { 
+                    if (!is_wp_error($this->current_permalink)) {
                         return $this->current_permalink;
                     }
             }
-            
-        } 
+        }
         return false;
     }
 

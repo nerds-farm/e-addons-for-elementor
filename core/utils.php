@@ -30,7 +30,8 @@ class Utils {
                     $value[$key] = self::get_dynamic_data($setting, $fields, $var);
                 }
             } else if (is_string($value)) {
-                $value = apply_filters('e_addons/dynamic', $value, $fields, $var);                
+                $value = apply_filters('e_addons/dynamic', $value, $fields, $var); 
+                $value = do_shortcode($value);
             }
         }
         return $value;
