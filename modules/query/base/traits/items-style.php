@@ -593,24 +593,24 @@ trait Items_Style {
                 ]
         );
         $target->add_responsive_control(
-                'item_padding', [
-            'label' => __('Padding', 'e-addons'),
-            'type' => Controls_Manager::DIMENSIONS,
-            'size_units' => ['px', '%', 'rem'],
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *, {{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-            ],
-                ]
+            'item_padding', [
+                'label' => __('Padding', 'e-addons'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *, {{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
         );
         $target->add_responsive_control(
-                'item_margin', [
-            'label' => __('Margin', 'e-addons'),
-            'type' => Controls_Manager::DIMENSIONS,
-            'size_units' => ['px', '%', 'rem'],
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-            ],
-                ]
+            'item_margin', [
+                'label' => __('Margin', 'e-addons'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
         );
     }
 

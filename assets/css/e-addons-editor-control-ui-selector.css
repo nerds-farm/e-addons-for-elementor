@@ -81,7 +81,7 @@
 
 .elementor-uiselector-item input[type=radio]:checked + .elementor-uiselector-label {
     color: #fff;
-    background-color: #a4afb7;
+    background-color: #e7e7e7;
     border-color: #444444;
     opacity: 1;
 }

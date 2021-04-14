@@ -1092,7 +1092,14 @@ class Carousel extends Base {
             'type' => Controls_Manager::COLOR,
             'default' => '',
             'selectors' => [
-                '{{WRAPPER}} .swiper-pagination-bullets.nav--default .swiper-pagination-bullet-active, {{WRAPPER}} .swiper-pagination-bullets.nav--ubax .swiper-pagination-bullet-active:after, {{WRAPPER}} .swiper-pagination-bullets.nav--shamso .swiper-pagination-bullet:not(.swiper-pagination-bullet-active), {{WRAPPER}} .swiper-pagination-bullets.nav--shamso .swiper-pagination-bullet-active:before, {{WRAPPER}} .swiper-pagination-bullets.nav--xusni .swiper-pagination-bullet-active:before, {{WRAPPER}} .swiper-pagination-bullets.nav--etefu .swiper-pagination-bullet-active:before, {{WRAPPER}} .swiper-pagination-bullets.nav--timiro .swiper-pagination-bullet-active:before, {{WRAPPER}} .swiper-pagination-bullets.nav--magool .swiper-pagination-bullet-active:after' => 'background-color: {{VALUE}};',
+                '{{WRAPPER}} .swiper-pagination-bullets.nav--default .swiper-pagination-bullet-active, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--ubax .swiper-pagination-bullet-active:after, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--shamso .swiper-pagination-bullet:not(.swiper-pagination-bullet-active), 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--shamso .swiper-pagination-bullet-active:before, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--xusni .swiper-pagination-bullet-active:before, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--etefu .swiper-pagination-bullet-active:before, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--timiro .swiper-pagination-bullet-active:before, 
+                 {{WRAPPER}} .swiper-pagination-bullets.nav--magool .swiper-pagination-bullet-active:after' => 'background-color: {{VALUE}};',
                 '{{WRAPPER}} .swiper-pagination-bullets.nav--shamso .swiper-pagination-bullet-active::after' => 'box-shadow: inset 0 0 0 3px {{VALUE}};'
             ],
             'condition' => [
