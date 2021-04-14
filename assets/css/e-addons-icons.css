@@ -286,7 +286,7 @@
 .eadd-copy-clipboard:before { content: '\e8d2'; } /* '' */
 .eadd-copy-id:before { content: '\e8d4'; } /* '' */
 
-.eadd-tabs-slider:before { content: '\e8da'; } /* '' */
+.eadd-slider-section:before { content: '\e8da'; } /* '' */
 .eadd-tabs-section:before { content: '\e8db'; } /* '' */
 .eadd-dynamic-tag-media:before { content: '\e8dc'; } /* '' */
 .eadd-el-form-pro-field-media:before { content: '\e8dd'; } /* '' */
