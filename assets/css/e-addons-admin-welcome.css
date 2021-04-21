@@ -80,14 +80,14 @@
     font-weight: 900;
 }
 .e-addons-start-page__content_first .e-addons-evidence {
-	background-color: #000;
-	color: #fff;
-	padding: 20px;
-	border-radius: 20px;
-	font-size: 22px;
-	line-height: 1.3;
-	font-weight: 700;
-	border: #9f16ff 7px solid;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 22px;
+    line-height: 1.3;
+    font-weight: 700;
+    border: #9f16ff 7px solid;
 }
 .e-addons-start-page__content_first .e-addons-version{
     font-size: 60px;
@@ -151,12 +151,12 @@
     border: none;
 }
 .e-addons-many-more{
-        color: #000;
-        display: block;
-        padding: 18px 30px;
-        border-radius: 50px;
-        margin: 30px auto;
-        font-size: 30px;
+    color: #000;
+    display: block;
+    padding: 18px 30px;
+    border-radius: 50px;
+    margin: 30px auto;
+    font-size: 30px;
 }
 .e-addons-title-feature{
     font-size: 25px;

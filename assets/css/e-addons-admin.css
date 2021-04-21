@@ -123,20 +123,20 @@ h3.e_addons-title {
     margin-left: 5px;
 }
 #adminmenu .update-plugins.e-count, #adminmenu li a.wp-has-current-submenu .update-plugins.e-count {
-	color: #fff;
-	padding: 0px 5px !important;
-	display: inline-block;
-	height: 22px;
-	min-width: 22px;
-	vertical-align: middle;
-	position: absolute;
-	top: 7px;
-	line-height: 1.8;
-	right: 17px;
-	background-color: rgba(0,0,0,0.1);
-	border-radius: 100px;
-	margin: 0;
-	border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 0px 5px !important;
+    display: inline-block;
+    height: 22px;
+    min-width: 22px;
+    vertical-align: middle;
+    position: absolute;
+    top: 7px;
+    line-height: 1.8;
+    right: 17px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 100px;
+    margin: 0;
+    border: 1px solid rgba(255,255,255,0.4);
 }
 /* Avvisi */
 .notice.e-add-notiice{

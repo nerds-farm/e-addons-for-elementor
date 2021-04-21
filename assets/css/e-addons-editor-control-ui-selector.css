@@ -76,7 +76,7 @@
     height: 0;
 }
 .elementor-uiselector-item input[type=radio] + .elementor-uiselector-label {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .elementor-uiselector-item input[type=radio]:checked + .elementor-uiselector-label {

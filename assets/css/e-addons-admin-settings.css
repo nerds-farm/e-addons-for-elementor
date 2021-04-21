@@ -168,24 +168,24 @@ input[type="checkbox"]:focus{
     outline:0;
 }
 input[type="checkbox"] {
-	appearance: none;
-	background-color: #fafafa;
-	border: 1px solid #d3d3d3;
-	border-radius: 26px;
-	cursor: pointer;
-	height: 30px;
-	transition: border .25s .15s, box-shadow .25s .3s, padding .25s;
-	width: 75px;
-	vertical-align: top;
-	-webkit-appearance: none;
-        position: relative;
-        bottom: 2px;
+    appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #d3d3d3;
+    border-radius: 26px;
+    cursor: pointer;
+    height: 30px;
+    transition: border .25s .15s, box-shadow .25s .3s, padding .25s;
+    width: 75px;
+    vertical-align: top;
+    -webkit-appearance: none;
+    position: relative;
+    bottom: 2px;
 }
 input[type="checkbox"].e-setting-input-checkbox {
     position: absolute;
-	bottom: -13px;
-	left: 50%;
-	transform: translateX(-50%);
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 input[type="checkbox"]::after {
     background-color: white;
