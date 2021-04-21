@@ -100,17 +100,14 @@ trait Post {
             case 'post':
                 //$content_type = $settings['content_type'];
                 //
-                if (!$excerpt) {
-                    if ($textcontent_limit) {
-                        echo $this->limit_content($textcontent_limit);
-                    } else {
-                        echo wpautop(get_the_content());
-                    }
-                }
                 // Excerpt
                 if ($excerpt) {
                     $post = get_post();
-                    echo $post->post_excerpt; //$this->limit_excerpt( $settings['textcontent_limit'] ); //
+                    $post_excerpt = $post->post_excerpt;
+                    if ($textcontent_limit) {
+                        $post_excerpt = $this->limit_text($post_excerpt, $textcontent_limit);
+                    }
+                    echo $post_excerpt; //$this->limit_excerpt( $settings['textcontent_limit'] ); //
         
                     /*
                       // Da valutare se fare così...
@@ -126,6 +123,13 @@ trait Post {
                       remove_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
                       remove_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
                      */
+                } else {
+                    // CONTENT
+                    if ($textcontent_limit) {
+                        echo $this->limit_content($textcontent_limit);
+                    } else {
+                        echo wpautop(get_the_content());
+                    }
                 }
                 break;
         }
@@ -228,10 +232,10 @@ trait Post {
                         $linkClose = '';
 
                         if ($use_link) {
-                            if ($use_link == 'custom') {
-                                $term_url = $settings['custom_link'];
+                            if ($use_link != 'yes') {
+                                $term_url = $this->get_item_link($settings);
                             }
-                            $linkOpen = '<a class="e-add-link" href="' . $term_url . '">';
+                            $linkOpen = '<a class="e-add-link" href="' . $term_url . '"'.( !empty($settings['blanklink_enable']) ? ' target="_blank"' : '').'>';
                             $linkClose = '</a>';
                         }
                         //@p il divisore in caso di inline

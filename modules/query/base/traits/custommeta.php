@@ -76,6 +76,19 @@ trait Custommeta {
             ],
                 ]
         );
+        if ($type_q == 'post') {
+            $target->add_control(
+                    'custommeta_source_reverse', [
+                'label' => __('Reverse Relationship', 'e-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'condition' => [
+                    'query_type' => 'custommeta_source',
+                    'custommeta_source_querytype' => 'post'
+                ],
+                    ]
+            );
+        }
+        
         // ---------------- term
         $target->add_control(
                 'custommeta_source_key_term', [

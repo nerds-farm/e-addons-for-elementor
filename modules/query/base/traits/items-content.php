@@ -505,74 +505,23 @@ trait Items_Content {
             $type = $this->get_querytype();
         }
 
-        if ($type == 'post') {
-            /*$target->add_control(
-                    'content_type', [
-                'label' => __('Content type', 'e-addons'),
-                'type' => Controls_Manager::CHOOSE,
-                'toggle' => false,
-                'label_block' => false,
-                'options' => [
-                    '1' => [
-                        'title' => __('Content', 'e-addons'),
-                        'icon' => 'fa fa-align-left',
-                    ],
-                    '0' => [
-                        'title' => __('Excerpt', 'e-addons'),
-                        'icon' => 'fa fa-ellipsis-h',
-                    ]
-                ],
-                'default' => '1',
-                'conditions' => [
-                    'terms' => [
-                        [
-                            'name' => 'item_type',
-                            'value' => 'item_content',
-                        ]
+        $target->add_control(
+                'textcontent_limit', [
+            'label' => __('Number of characters', 'e-addons'),
+            'type' => Controls_Manager::NUMBER,
+            'description' => __('Leave Empty for all text.', 'e-addons'),
+            'min' => 1,
+            'conditions' => [
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'operator' => 'in',
+                        'value' => ['item_content', 'item_excerpt', 'item_bio', 'item_description'],
                     ]
                 ]
-                    ]
-            );*/
-            $target->add_control(
-                    'textcontent_limit', [
-                'label' => __('Number of characters', 'e-addons'),
-                'type' => Controls_Manager::NUMBER,
-                'description' => __('Leave Empty for all text.', 'e-addons'),
-                'default' => '',
-                'conditions' => [
-                    'terms' => [
-                        [
-                            'name' => 'item_type',
-                            'operator' => 'in',
-                            'value' => ['item_content'],
-                        ],
-                        /*[
-                            'name' => 'content_type',
-                            'value' => '1',
-                        ]*/
-                    ]
+            ]
                 ]
-                    ]
-            );
-        } else {
-            $target->add_control(
-                    'textcontent_limit', [
-                'label' => __('Number of characters', 'e-addons'),
-                'type' => Controls_Manager::NUMBER,
-                'description' => __('Leave Empty for all text.', 'e-addons'),
-                'default' => '',
-                'conditions' => [
-                    'terms' => [
-                        [
-                            'name' => 'item_type',
-                            'operator' => 'in',
-                            'value' => ['item_content', 'item_bio', 'item_description'],
-                        ]
-                    ]
-                ]
-                    ]
-            );
-        }
+        );
     }
 
     // +********************* Terms of Taxonomy [metadata] (Category, Tag, CustomTax)

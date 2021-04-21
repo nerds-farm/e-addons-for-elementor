@@ -148,6 +148,10 @@ trait Wordpress {
         return $fields;
     }
 
+    public static function get_field($obj, $field, $single = true) {
+        return self::get_wp_object_field($obj, $field, $single);
+    }
+    
     public static function get_wp_object_field($obj, $field, $single = true) {
         $value = $type = null;
 

@@ -42,7 +42,7 @@ class Template {
         $content = '';
         $post_id = apply_filters('wpml_object_id', $post_id, 'elementor_library', true);
         $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);
-        $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);        
+        $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);
         if ($is_elementor) {
             //var_dump($post_id);
             $content = \Elementor\Plugin::instance()->frontend->get_builder_content($post_id, $with_css);
@@ -123,9 +123,8 @@ class Template {
 
             //$initial_queried_object = $wp_query->queried_object;
             //$initial_queried_object_id = $wp_query->queried_object_id;
-            $initial_wp_query = clone $wp_query; 
-            
-            
+            $initial_wp_query = clone $wp_query;
+
             if (!empty($args['post_id']) && intval($args['post_id'])) {
                 //var_dump($args['post_id']);
                 $initial_post = $post;
@@ -160,7 +159,7 @@ class Template {
                 $term = get_term($args['term_id']);
                 if ($term) {
                     $wp_query->queried_object = $term;
-                    $wp_query->queried_object_id = $args['term_id'];                    
+                    $wp_query->queried_object_id = $args['term_id'];
                     $wp_query->is_singular = false;
                     $wp_query->is_category = $wp_query->is_tag = $wp_query->is_tax = false;
                     switch ($term->taxonomy) {
@@ -227,7 +226,7 @@ class Template {
                                         });
                                     }, {offset: "100%", triggerOnce: true});
                                 });
-                            }
+                            });
                         });
                     })(jQuery);
                 </script>
@@ -255,11 +254,11 @@ class Template {
             }
             //$wp_query->queried_object = $initial_queried_object;
             //$wp_query->queried_object_id = $initial_queried_object_id;
-            $wp_query = $initial_wp_query; 
-            
-            /*if (wp_doing_ajax()) {
-                $tpl_html .= $this->render_style($element);
-            }*/
+            $wp_query = $initial_wp_query;
+
+            /* if (wp_doing_ajax()) {
+              $tpl_html .= $this->render_style($element);
+              } */
 
             return $tpl_html;
         }
@@ -279,7 +278,7 @@ class Template {
                     $q_o = self::get_queried_object();
                     $element_class = 'e-' . $q_o['type'] . '-' . $q_o['id'];
                     //if (Utils::is_preview(true) || strpos($content, $element_class) === false || wp_doing_ajax()) {
-                    if (strpos($content, ' '.$element_class) === false) {
+                    if (strpos($content, ' ' . $element_class) === false) {
                         $content = str_replace('class="elementor elementor-' . $tpl_id . ' ', 'class="elementor elementor-' . $tpl_id . ' ' . $element_class . ' ', $content);
                         $content = str_replace('class="elementor elementor-' . $tpl_id . '"', 'class="elementor elementor-' . $tpl_id . ' ' . $element_class . '"', $content);
                         $content = preg_replace('/data-elementor-id="/', 'data-' . $q_o['type'] . '-id="' . $q_o['id'] . '" data-obj-id="' . $q_o['id'] . '" data-elementor-id="', $content, 1);
@@ -309,30 +308,30 @@ class Template {
     public function render_style($element) {
         self::render_element_style($element);
     }
-    
+
     public static function render_element_style($element) {
         $settings = $element->get_settings_for_display();
         $element_id = $element->get_id();
         $element_controls = $element->get_controls();
         $q_o = self::get_queried_object();
-        
+
         if (!empty($settings['__globals__'])) {
             // TODO
             // "reveal_bgcolor" => "globals/colors?id=33547690"
             /*
-            $kit = \Elementor\Plugin::instance()->kits_manager->get_active_kit_for_frontend();
-            $kit_settings = $kit->get_settings_for_display();
-            foreach ($settings['__globals__'] as $skey => $sglob) {
-                $id = end(explode('id=', $sglob));                
-                foreach ( $kit_settings as $setting) {
-                    foreach ( $setting as $index => $item ) {
-                        if ($id == $item['_id']) {
-                            $settings[$skey] = $item['color'];
-                        }
-                    }
-                }
-            }
-            */
+              $kit = \Elementor\Plugin::instance()->kits_manager->get_active_kit_for_frontend();
+              $kit_settings = $kit->get_settings_for_display();
+              foreach ($settings['__globals__'] as $skey => $sglob) {
+              $id = end(explode('id=', $sglob));
+              foreach ( $kit_settings as $setting) {
+              foreach ( $setting as $index => $item ) {
+              if ($id == $item['_id']) {
+              $settings[$skey] = $item['color'];
+              }
+              }
+              }
+              }
+             */
         }
         if (!empty($settings['__dynamic__'])) {
             $style = '';

@@ -14,6 +14,8 @@ abstract class Module_Base extends Module {
     public $disabled = [];
     
     public static $widgets = [];
+    public static $actions = [];
+    public static $fields = [];
 
     public function __construct() {
         
@@ -55,8 +57,10 @@ abstract class Module_Base extends Module {
         add_action('e_addons/init_triggers', [$this, 'init_triggers']);
 
         $this->init_skins();
-        add_action('elementor_pro/init', [$this, 'init_fields']);
-        add_action('elementor_pro/init', [$this, 'init_actions']);
+        //add_action('elementor_pro/init', [$this, 'init_fields']);
+        //add_action('elementor_pro/init', [$this, 'init_actions']);
+        add_action('elementor_pro/forms/register_action', [$this, 'init_fields']);
+        add_action('elementor_pro/forms/register_action', [$this, 'init_actions']);
        
     }
 
@@ -281,19 +285,31 @@ abstract class Module_Base extends Module {
         }
     }
 
-    public function init_fields() {        
-        foreach ($this->get_elements('fields') as $field) {
+    public function init_fields($form_module = null) {   
+        if (!$form_module) {
+            $form_module = \ElementorPro\Plugin::instance()->modules_manager->get_modules('forms');
+        }
+        foreach ($this->get_elements('fields') as $field) {            
             $class_name = $this->get_reflection()->getNamespaceName() . '\Fields\\' . $field;
-            $form_field = new $class_name();
-            \ElementorPro\Modules\Forms\Module::instance()->add_form_field_type( $form_field->get_type(), $form_field );
+            if (empty(self::$fields[$class_name])) {
+                $form_field = new $class_name();
+                $form_module->add_form_field_type( $form_field->get_type(), $form_field );
+                self::$fields[$class_name] = $form_field;
+            }
         }
     }
-    public function init_actions() {
+    public function init_actions($form_module = null) {
+        if (!$form_module) {
+            $form_module = \ElementorPro\Plugin::instance()->modules_manager->get_modules('forms');
+        }
         foreach ($this->get_elements('actions') as $action) {
             $class_name = $this->get_reflection()->getNamespaceName() . '\Actions\\' . $action;
-            $form_action = new $class_name();
-            // Register the action with form widget
-            \ElementorPro\Plugin::instance()->modules_manager->get_modules('forms')->add_form_action($form_action->get_name(), $form_action);
+            if (empty(self::$actions[$class_name])) {
+                $form_action = new $class_name();
+                // Register the action with form widget
+                $form_module->add_form_action($form_action->get_name(), $form_action);
+                self::$actions[$class_name] = $form_action;
+            }
         }
         //var_dump(array_keys(\ElementorPro\Plugin::instance()->modules_manager->get_modules('forms')->get_form_actions()));
     }

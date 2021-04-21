@@ -309,12 +309,16 @@ $e_addons_plugins = \EAddonsForElementor\Plugin::instance()->get_addons(true);
 
     </form>
     
-    
+    <?php
+    $disabled = get_option('e_addons_disabled');
+    if (!empty($disabled)) {
+        //var_dump($disabled);
+    ?>
     <a class="button button-primary button-large" style="background-color: #a00;border-color: white;" href="?page=<?php echo $_GET['page']; ?>&action=reset">        
         <i class="eicon-editor-close"></i>
         <?php _e('Reset to defaults', 'e-addons-for-elementor'); ?>
     </a>
-
+    <?php } ?>
 </div>
 
 <script>

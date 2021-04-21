@@ -23,12 +23,23 @@ class Form {
                 $fields[$id] = $field['value'];
             }
         }
-
+        
         //var_dump($_POST);
         if (!empty($_POST['form_fields'])) {
             foreach ($_POST['form_fields'] as $id => $field) {
                 if (!isset($fields[$id])) {
                     $fields[$id] = $field;
+                }
+            }
+        }
+        
+        foreach ($fields as $id => $field) {
+            $tmp = explode('__value', $id);
+            if (count($tmp) == 2) {
+                $oid = reset($tmp);
+                if (empty($fields[$oid])) {
+                    $fields[$oid] = $fields[$id];
+                    unset($fields[$id]);
                 }
             }
         }
@@ -538,7 +549,7 @@ class Form {
             foreach ($fields as $akey => $adatas) {
                 $afield = self::get_field($akey, $settings);
                 if ($afield) {
-                    if (in_array($afield['field_type'], array('upload', 'signature'))) {
+                    if (in_array($afield['field_type'], array('upload', 'media', 'signature'))) {
                         $files = Utils::explode($adatas);
                         if (!empty($files)) {
                             foreach ($files as $adata) {
@@ -596,35 +607,38 @@ class Form {
             foreach ($fields as $akey => $adatas) {
                 $afield = self::get_field($akey, $settings);
                 if ($afield) {
-                    if ($afield['field_type'] == 'upload') {
+                    if (in_array($afield['field_type'], array('upload', 'media', 'signature'))) {
                         $files = Utils::explode($adatas);
                         if (!empty($files)) {
                             foreach ($files as $adata) {
                                 if (filter_var($adata, FILTER_VALIDATE_URL)) {
                                     //$adata = str_replace(get_bloginfo('url'), WP, $value);
                                     $filename = Utils::url_to_path($adata);
-                                    if (is_file($filename)) {
-                                        // Check the type of file. We'll use this as the 'post_mime_type'.
-                                        $filetype = wp_check_filetype(basename($filename), null);
-                                        $fileinfo = pathinfo($filename);
-                                        // Prepare an array of post data for the attachment.
-                                        $attachment = array(
-                                            'guid' => $adata,
-                                            'post_mime_type' => $filetype['type'],
-                                            'post_status' => 'inherit',
-                                            'post_title' => $fileinfo['filename'],
-                                                //'post_content' => '',
-                                        );
-                                        if ($obj_id) {
-                                            $attachment['post_parent'] = $obj_id;
+                                    if (is_file($filename)) {                                        
+                                        $attach_id = Utils::url_to_postid($adata); // check if exists
+                                        if (!$attach_id) {
+                                            // Check the type of file. We'll use this as the 'post_mime_type'.
+                                            $filetype = wp_check_filetype(basename($filename), null);
+                                            $fileinfo = pathinfo($filename);
+                                            // Prepare an array of post data for the attachment.
+                                            $attachment = array(
+                                                'guid' => $adata,
+                                                'post_mime_type' => $filetype['type'],
+                                                'post_status' => 'inherit',
+                                                'post_title' => $fileinfo['filename'],
+                                                    //'post_content' => '',
+                                            );
+                                            if ($obj_id) {
+                                                $attachment['post_parent'] = $obj_id;
+                                            }
+                                            // Insert the attachment.
+                                            $attach_id = wp_insert_attachment($attachment, $filename, $obj_id);
+                                            // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+                                            require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                                            // Generate the metadata for the attachment, and update the database record.
+                                            $attach_data = wp_generate_attachment_metadata($attach_id, $filename);
+                                            wp_update_attachment_metadata($attach_id, $attach_data);
                                         }
-                                        // Insert the attachment.
-                                        $attach_id = wp_insert_attachment($attachment, $filename, $obj_id);
-                                        // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-                                        require_once( ABSPATH . 'wp-admin/includes/image.php' );
-                                        // Generate the metadata for the attachment, and update the database record.
-                                        $attach_data = wp_generate_attachment_metadata($attach_id, $filename);
-                                        wp_update_attachment_metadata($attach_id, $attach_data);
                                         if ($afield['allow_multiple_upload']) {
                                             if (is_array($fields[$akey])) {
                                                 $fields[$akey][] = $attach_id;

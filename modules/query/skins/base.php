@@ -469,6 +469,7 @@ class Base extends Base_Skin {
         if ($query_no_result) {
             $query_no_result_txt = $this->parent->get_settings_for_display('query_no_result_txt');
             if (!empty($query_no_result_txt)) {
+                $query_no_result_txt = Utils::get_dynamic_data($query_no_result_txt);
                 echo $query_no_result_txt;
             }
         }
@@ -645,111 +646,112 @@ class Base extends Base_Skin {
             //----------------------------------
             $this->render_repeateritem_end();
         }
-        //
-        // ITEMS ///////////////////////
-        foreach ($_items as $item) {
-            $_id = $item['_id'];
-            $item_type = $item['item_type'];
-            //$custommetakey = $item['metafield_key'];
+        if (!empty($_items)) {
+            // ITEMS ///////////////////////
+            foreach ($_items as $item) {
+                $_id = $item['_id'];
+                $item_type = $item['item_type'];
+                //$custommetakey = $item['metafield_key'];
 
-            if (!empty($item)) {
+                if (!empty($item)) {
 
-                //if( $item_type == 'item_custommeta' && $this->get_value_custommeta($custommetakey) )
-                $this->render_repeateritem_start($_id, $item_type);
-                //----------------------------------
-                // posts
-                switch ($item_type) {
-                    case 'item_title': $this->render_item_title($item);
-                        break;
-                    case 'item_date': $this->render_item_date($item);
-                        break;
-                    case 'item_author': $this->render_item_author($item);
-                        break;
-                    case 'item_termstaxonomy': $this->render_item_termstaxonomy($item);
-                        break;
-                    case 'item_excerpt': $this->render_item_content($item, true);
-                        break;
-                    case 'item_content': $this->render_item_content($item);
-                        break;
-                    case 'item_posttype': $this->render_item_posttype($item);
-                        break;
+                    //if( $item_type == 'item_custommeta' && $this->get_value_custommeta($custommetakey) )
+                    $this->render_repeateritem_start($_id, $item_type);
                     //----------------------------------
-                    // ueser
-                    case 'item_displayname': $this->render_item_userdata('displayname', $item);
-                        break;
-                    case 'item_user': $this->render_item_userdata('user', $item);
-                        break;
-                    case 'item_role': $this->render_item_userdata('role', $item);
-                        break;
-                    case 'item_firstname': $this->render_item_userdata('firstname', $item);
-                        break;
-                    case 'item_lastname': $this->render_item_userdata('lastname', $item);
-                        break;
-                    case 'item_nickname': $this->render_item_userdata('nickname', $item);
-                        break;
-                    case 'item_email': $this->render_item_userdata('email', $item);
-                        break;
-                    case 'item_website': $this->render_item_userdata('website', $item);
-                        break;
-                    case 'item_bio': $this->render_item_userdata('bio', $item);
-                        break;
-                    case 'item_registered': $this->render_item_date($item); //render_item_userdata('registered', $item);
-                        break;
+                    // posts
+                    switch ($item_type) {
+                        case 'item_title': $this->render_item_title($item);
+                            break;
+                        case 'item_date': $this->render_item_date($item);
+                            break;
+                        case 'item_author': $this->render_item_author($item);
+                            break;
+                        case 'item_termstaxonomy': $this->render_item_termstaxonomy($item);
+                            break;
+                        case 'item_excerpt': $this->render_item_content($item, true);
+                            break;
+                        case 'item_content': $this->render_item_content($item);
+                            break;
+                        case 'item_posttype': $this->render_item_posttype($item);
+                            break;
+                        //----------------------------------
+                        // ueser
+                        case 'item_displayname': $this->render_item_userdata('displayname', $item);
+                            break;
+                        case 'item_user': $this->render_item_userdata('user', $item);
+                            break;
+                        case 'item_role': $this->render_item_userdata('role', $item);
+                            break;
+                        case 'item_firstname': $this->render_item_userdata('firstname', $item);
+                            break;
+                        case 'item_lastname': $this->render_item_userdata('lastname', $item);
+                            break;
+                        case 'item_nickname': $this->render_item_userdata('nickname', $item);
+                            break;
+                        case 'item_email': $this->render_item_userdata('email', $item);
+                            break;
+                        case 'item_website': $this->render_item_userdata('website', $item);
+                            break;
+                        case 'item_bio': $this->render_item_userdata('bio', $item);
+                            break;
+                        case 'item_registered': $this->render_item_date($item); //render_item_userdata('registered', $item);
+                            break;
+                        //----------------------------------
+                        // terms
+                        case 'item_counts': $this->render_item_postscount($item);
+                            break;
+                        case 'item_taxonomy': $this->render_item_taxonomy($item);
+                            break;
+                        case 'item_imagemeta': $this->render_item_imagemeta($item);
+                            break;
+                        case 'item_mimetype': $this->render_item_mimetype($item);
+                            break;
+                        case 'item_description': $this->render_item_description($item);
+                            break;
+                        //----------------------------------
+                        // media
+                        case 'item_caption': $this->render_item_caption($item);
+                            break;
+                        case 'item_alternativetext': $this->render_item_alternativetext($item);
+                            break;
+                        case 'item_uploadedto': $this->render_item_uploadedto($item);
+                            break;
+                        //----------------------------------
+                        // items list
+                        case 'item_subtitle': $this->render_item_subtitle($item);
+                            break;
+                        case 'item_descriptiontext': $this->render_item_descriptiontext($item);
+                            break;
+                        case 'item_imageoricon':
+                            if ($useimg) {
+                                $this->render_item_imageoricon($item);
+                            }
+                            break;
+                        //----------------------------------
+                        // posts/user/terms
+                        case 'item_custommeta': $this->render_item_custommeta($item);
+                            break;
+                        case 'item_readmore': $this->render_item_readmore($item);
+                            break;
+                        case 'item_label': $this->render_item_labelhtml($item);
+                            break;
+                        case 'item_template': $this->render_item_template($item);
+                            break;
+                        case 'item_image':
+                            if ($useimg) {
+                                $this->render_item_image($item);
+                            }
+                            break;
+                        case 'item_avatar':
+                            if ($useimg) {
+                                $this->render_item_avatar($item);
+                            }
+                            break;
+                    }
+
                     //----------------------------------
-                    // terms
-                    case 'item_counts': $this->render_item_postscount($item);
-                        break;
-                    case 'item_taxonomy': $this->render_item_taxonomy($item);
-                        break;
-                    case 'item_imagemeta': $this->render_item_imagemeta($item);
-                        break;
-                    case 'item_mimetype': $this->render_item_mimetype($item);
-                        break;
-                    case 'item_description': $this->render_item_description($item);
-                        break;
-                    //----------------------------------
-                    // media
-                    case 'item_caption': $this->render_item_caption($item);
-                        break;
-                    case 'item_alternativetext': $this->render_item_alternativetext($item);
-                        break;
-                    case 'item_uploadedto': $this->render_item_uploadedto($item);
-                        break;
-                    //----------------------------------
-                    // items list
-                    case 'item_subtitle': $this->render_item_subtitle($item);
-                        break;
-                    case 'item_descriptiontext': $this->render_item_descriptiontext($item);
-                        break;
-                    case 'item_imageoricon':
-                        if ($useimg) {
-                            $this->render_item_imageoricon($item);
-                        }
-                        break;
-                    //----------------------------------
-                    // posts/user/terms
-                    case 'item_custommeta': $this->render_item_custommeta($item);
-                        break;
-                    case 'item_readmore': $this->render_item_readmore($item);
-                        break;
-                    case 'item_label': $this->render_item_labelhtml($item);
-                        break;
-                    case 'item_template': $this->render_item_template($item);
-                        break;
-                    case 'item_image':
-                        if ($useimg) {
-                            $this->render_item_image($item);
-                        }
-                        break;
-                    case 'item_avatar':
-                        if ($useimg) {
-                            $this->render_item_avatar($item);
-                        }
-                        break;
+                    $this->render_repeateritem_end();
                 }
-
-                //----------------------------------
-                $this->render_repeateritem_end();
             }
         }
     }
@@ -934,13 +936,19 @@ class Base extends Base_Skin {
     protected function limit_content($limit = 100) {
         $post = get_post();
         $content = $post->post_content; //do_shortcode($post['post_content']); //$content_post->post_content; //
+        $content = $this->limit_text($content, $limit);
+        return $content;
+    }
+    
+    public function limit_text($content, $limit = 100, $extra = '...') {
         $content = wp_strip_all_tags($content);
         if (strlen($content) > $limit) {
-            $content = substr($content, 0, $limit) . '...'; //
+            $content = substr($content, 0, $limit) . $extra; //
             // TODO preserve words
         }
         return $content;
     }
+    
 
     public function get_item_link($settings) {
         if (!empty($settings['use_link'])) {

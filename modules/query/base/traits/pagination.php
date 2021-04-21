@@ -351,7 +351,7 @@ trait Pagination {
             if ($settings['pagination_show_numbers'])
                 for ($i = 1; $i <= $pages; $i++) {
                     if (1 != $pages && (!($i >= $paged + $range + 1 || $i <= $paged - $range - 1) || $pages <= $showitems )) {
-                        echo ($paged == $i) ? "<span class=\"current\">" . $i . "</span>" : "<a href='" . self::get_linkpage($i) . "' class=\"inactive\">" . $i . "</a>";
+                        echo ($paged == $i) ? '<span class="current">' . $i . '</span>' : '<a href="' . self::get_linkpage($i) . '" class="inactive">' . $i . '</a>';
                     }
                 }
 

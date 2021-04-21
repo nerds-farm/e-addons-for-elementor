@@ -70,7 +70,7 @@ trait Common {
         //
         // @p definisco se l'immagine è linkata
         $use_link = $this->get_item_link($settings);
-        $blanklink  = $settings['blanklink_enable'];
+        $blanklink  = !empty($settings['blanklink_enable']);
 
         // ---------------------------------------
         // @p preparo il dato in base a 'thumbnail_size'
