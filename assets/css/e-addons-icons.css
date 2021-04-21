@@ -291,5 +291,10 @@
 .eadd-dynamic-tag-media:before { content: '\e8dc'; } /* '' */
 .eadd-el-form-pro-field-media:before { content: '\e8dd'; } /* '' */
 .eadd-el-form-pro-select-optgroup:before { content: '\e8de'; } /* '' */
-.eadd-modals-popup-overlay:before { content: '\e8df'; } /* '' */
 .eadd-el-form-pro-field-disabled:before { content: '\e8e0'; } /* '' */
+
+.eadd-modals-popup-overlay:before { content: '\e8df'; } /* '' */
+.eadd-modals-popup-live:before { content: '\e8e2'; } /* '' */
+
+.eadd-multilevel-menu:before { content: '\e8e1'; } /* '' */
+.eadd-section-transitions:before { content: '\e8e3'; } /* '' */
