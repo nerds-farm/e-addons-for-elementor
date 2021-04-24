@@ -513,6 +513,9 @@ class Actions {
                 if (!empty($params['author_id'])) {
                     $query_params['author__in'] = Utils::explode($params['author_id']);
                 }
+                if (!empty($params['post_parent'])) {
+                    $query_params['post_parent'] = $params['post_parent'];
+                }   
                 if (!empty($params['tax_query'])) {
                     $terms = Utils::explode($params['tax_query']);
                     $term = Utils::get_term(reset($terms));
@@ -631,6 +634,14 @@ class Actions {
             'search' => $params['q'],
             'hide_empty' => false,
         ];
+        //$query_params = array_merge($query_params, $params);
+        if (!empty($params['parent'])) {
+           $query_params['parent'] = $params['parent'];
+           $term = Utils::get_term($params['parent']);
+           if ($term) {
+                $query_params['taxonomy'] = $term->taxonomy;
+           }
+        }
         $terms = get_terms($query_params);
         foreach ($terms as $term) {
             if (is_object($term) && get_class($term) == 'WP_Term') {

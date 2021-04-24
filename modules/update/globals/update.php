@@ -97,7 +97,7 @@ class Update extends Base_Global {
                                 </figure>
                                 <div class="my_eaddon_desc">
                                     <p><?php echo $addon['excerpt']; ?></p>
-                                    <?php if (\EAddonsForElementor\Plugin::instance()->is_free($akey) || $addon['license_key']) { ?>
+                                    <?php if (\EAddonsForElementor\Plugin::instance()->is_free($akey) || !empty($addon['license_key'])) { ?>
                                         <a class="e_addons-button e_addons-button-default" target="_blank" href="<?php echo $addon['url']; ?>?ref=dash"><span class="dashicons dashicons-info-outline"></span> Get more info</a>
                                     <?php } else { ?>
                                         <a class="e_addons-button e_addons-button-default" target="_blank" href="<?php echo $addon['url']; ?>?ref=dash"><span class="dashicons dashicons-cart"></span> Buy now</a>

@@ -26,6 +26,7 @@ trait Items_Advanced {
                 '' => __('None'),
                 'yes' => __('Current'),                
                 'shortcode' => __('Shortcode'),
+                'custom' => __('Custom'),
             ];
         if (Utils::is_plugin_active('elementor-pro') && Utils::is_plugin_active('e-addons-extended')) {
             $options['popup'] = __('Open PopUp');
@@ -92,10 +93,10 @@ trait Items_Advanced {
     );
         $target->add_control(
                 'shortcode_link', [
-            'label' => __('Shortcode link', 'e-addons'),
+            'label' => __('Custom link', 'e-addons'),
             'type' => Controls_Manager::TEXT,
             'condition' => [
-                'use_link' => 'shortcode',
+                'use_link' => ['shortcode', 'custom'],
             ]
                 ]
         );

@@ -241,6 +241,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
 .e-add-posts-container.e-add-skin-grid .e-add-post-item .e-add-post-block{
 	display: flex;
+        flex-wrap: wrap;
 }
 /* solo x default
 .e-add-posts-layout-default .e-add-posts-container .e-add-post-item .e-add-post-block{
@@ -279,9 +280,9 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 
 /*Top*/
-.e-add-posts-layout-default .e-add-post-item .e-add-post-block{
+/*.e-add-posts-layout-default .e-add-post-item .e-add-post-block{
 	flex-direction: column;
-}
+}*/
 
 /*Left*/
 .e-add-posts-layout-left .e-add-post-item .e-add-post-block{

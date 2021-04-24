@@ -28,6 +28,7 @@ if (!defined('ABSPATH'))
  */
 class Query extends Base_Widget {
     
+    use Traits\Common;
     use Traits\Pagination;
     use Traits\Infinite_Scroll;
     use Traits\Custommeta;

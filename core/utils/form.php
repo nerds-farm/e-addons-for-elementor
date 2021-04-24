@@ -696,5 +696,12 @@ class Form {
             }
         }
     }
+    
+    static public function get_form_id() {
+        if (!empty($_REQUEST['form_id'])) {
+            return sanitize_key($_REQUEST['form_id']);
+        }
+        return false;
+    }
 
 }

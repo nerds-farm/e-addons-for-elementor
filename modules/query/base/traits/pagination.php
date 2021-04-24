@@ -10,6 +10,8 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
 
+use EAddonsForElementor\Core\Utils;
+
 /**
  * Description of infinite-scroll
  *
@@ -222,8 +224,8 @@ trait Pagination {
         if ('' === $this->get_settings_for_display('pagination_enable')) {
             return 1;
         }
-
-        return max(1, get_query_var('paged'), get_query_var('page'));
+        return Utils::get_current_page_num();
+        
     }
 
     ///
@@ -234,7 +236,7 @@ trait Pagination {
         if (empty($paged))
             $paged = 1;
 
-        $link_next = self::get_linkpage($paged + 1);
+        $link_next = Utils::get_linkpage($paged + 1);
 
         return $link_next;
     }
@@ -340,68 +342,36 @@ trait Pagination {
             //First
             if ($settings['pagination_show_firstlast'])
                 if ($paged > 2 && $paged > $range + 1 && $showitems < $pages)
-                    echo '<a href="' . self::get_linkpage(1) . '" class="pagefirst">' . $icon_first . ' ' . __($settings['pagination_first_label'], 'e-addons' . '_texts') . '</a>';
+                    echo '<a href="' . Utils::get_linkpage(1) . '" class="pagefirst">' . $icon_first . ' ' . __($settings['pagination_first_label'], 'e-addons' . '_texts') . '</a>';
 
             //Prev
             if ($settings['pagination_show_prevnext'])
                 if ($paged > 1 && $showitems < $pages)
-                    echo '<a href="' . self::get_linkpage($paged - 1) . '" class="pageprev">' . $icon_prev . ' ' . __($settings['pagination_prev_label'], 'e-addons' . '_texts') . '</a>';
+                    echo '<a href="' . Utils::get_linkpage($paged - 1) . '" class="pageprev">' . $icon_prev . ' ' . __($settings['pagination_prev_label'], 'e-addons' . '_texts') . '</a>';
 
             //Numbers
             if ($settings['pagination_show_numbers'])
                 for ($i = 1; $i <= $pages; $i++) {
                     if (1 != $pages && (!($i >= $paged + $range + 1 || $i <= $paged - $range - 1) || $pages <= $showitems )) {
-                        echo ($paged == $i) ? '<span class="current">' . $i . '</span>' : '<a href="' . self::get_linkpage($i) . '" class="inactive">' . $i . '</a>';
+                        echo ($paged == $i) ? '<span class="current">' . $i . '</span>' : '<a href="' . Utils::get_linkpage($i) . '" class="inactive">' . $i . '</a>';
                     }
                 }
 
             //Next
             if ($settings['pagination_show_prevnext'])
                 if ($paged < $pages && $showitems < $pages)
-                    echo '<a href="' . self::get_linkpage($paged + 1) . '" class="pagenext">' . __($settings['pagination_next_label'], 'e-addons' . '_texts') . $icon_next . '</a>';
+                    echo '<a href="' . Utils::get_linkpage($paged + 1) . '" class="pagenext">' . __($settings['pagination_next_label'], 'e-addons' . '_texts') . $icon_next . '</a>';
 
             //Last
             if ($settings['pagination_show_firstlast'])
                 if ($paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages)
-                    echo '<a href="' . self::get_linkpage($pages) . '" class="pagelast">' . __($settings['pagination_last_label'], 'e-addons' . '_texts') . $icon_last . '</a>';
+                    echo '<a href="' . Utils::get_linkpage($pages) . '" class="pagelast">' . __($settings['pagination_last_label'], 'e-addons' . '_texts') . $icon_last . '</a>';
 
             echo '</nav>';
         }
     }
+    
 
-    //
-    public static function get_linkpage($i) {
-        if (!is_singular() || is_front_page()) {
-            return get_pagenum_link($i);
-        }
-
-        // Based on wp-includes/post-template.php:957 `_wp_link_page`.
-        global $wp_rewrite;
-        $id_page = get_the_ID();
-        $post = get_post();
-        $query_args = [];
-        $url = get_permalink($id_page);
-
-        if ($i > 1) {
-            if ('' === get_option('permalink_structure') || in_array($post->post_status, ['draft', 'pending'])) {
-                $url = add_query_arg('page', $i, $url);
-            } elseif (get_option('show_on_front') === 'page' && (int) get_option('page_on_front') === $post->ID) {
-                $url = trailingslashit($url) . user_trailingslashit("$wp_rewrite->pagination_base/" . $i, 'single_paged');
-            } else {
-                $url = trailingslashit($url) . user_trailingslashit($i, 'single_paged');
-            }
-        }
-
-        if (is_preview()) {
-            if (( 'draft' !== $post->post_status ) && isset($_GET['preview_id'], $_GET['preview_nonce'])) {
-                $query_args['preview_id'] = wp_unslash($_GET['preview_id']);
-                $query_args['preview_nonce'] = wp_unslash($_GET['preview_nonce']);
-            }
-
-            $url = get_preview_post_link($post, $query_args, $url);
-        }
-
-        return $url;
-    }
+    
 
 }

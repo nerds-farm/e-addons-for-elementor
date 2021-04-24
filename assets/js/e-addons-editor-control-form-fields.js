@@ -1,15 +1,29 @@
+var e_model_cid = e_model_cid || false;
+
+jQuery(window).on('load', function () {
+    elementor.hooks.addAction('panel/open_editor/section', function (panel, model, view) {
+        e_model_cid = model.cid;
+    });
+    elementor.hooks.addAction('panel/open_editor/column', function (panel, model, view) {
+        e_model_cid = model.cid;
+    });
+    elementor.hooks.addAction('panel/open_editor/widget', function (panel, model, view) {
+        e_model_cid = model.cid;
+    });
+});
+
 var formFieldsItemView = elementor.modules.controls.BaseData.extend({
     onReady: function () {
 
         //console.log('form_fields');
 
-        var selectedElement = elementor.getCurrentElement();
+        var selectedElement = (typeof elementor.getCurrentElement === 'function') ? elementor.getCurrentElement() : false;
         if (selectedElement) {
             var cid = selectedElement.model.cid;
         } else {
-            var cid = jQuery('.elementor-navigator__item.elementor-editing').parent().data('model-cid');
+            var cid = e_model_cid; //jQuery('.elementor-navigator__item.elementor-editing').parent().data('model-cid');
         }
-        //console.log(cid);
+        console.log(cid);
 
         if (elementorFrontend.config.elements.data[cid]) {
             var settings = elementorFrontend.config.elements.data[cid].attributes;
@@ -34,11 +48,13 @@ var formFieldsItemView = elementor.modules.controls.BaseData.extend({
             // single field
             var select = this.$el.find('select');
             var data_setting = select.data('setting');
-
+            //var self = this;
+            
             setTimeout(() => {
-                if (this.options.container.type == 'repeater') {
+                //console.log(this);
+                if (this.options.container && this.options.container.type == 'repeater') {
                     // in repeater
-                    //console.log(this);
+                    //
                     var index = this._parent._index;
                     var repeter = this.options.container.model.attributes.name;
                     //console.log(index);

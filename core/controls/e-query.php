@@ -56,9 +56,9 @@ class E_Query extends Control_Select2 {
         $settings['dynamic'] = [
             'active' => true,
             'categories' => [
-                TagsModule::BASE_GROUP,
-                TagsModule::TEXT_CATEGORY,
-                TagsModule::NUMBER_CATEGORY,
+                'base', //TagsModule::BASE_GROUP,
+                'text', //TagsModule::TEXT_CATEGORY,
+                'number', //TagsModule::NUMBER_CATEGORY,
             ],
         ];
         return $settings;

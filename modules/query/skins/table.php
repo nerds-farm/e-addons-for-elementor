@@ -686,14 +686,12 @@ class Table extends Base {
       $this->render_items_content();
       } */
 
-    protected function render_repeateritem_start($id, $item_type) {
-        $classItem = 'class="e-add-item e-add-' . $item_type . ' elementor-repeater-item-' . $id . '"';
-        $dataIdItem = ' data-item-id="' . $id . '"';
-        echo '<td ' . $classItem . $dataIdItem . '>';
+    protected function render_repeateritem_start($item, $tag = 'td') {
+        parent::render_repeateritem_start($item, $tag);
     }
 
-    protected function render_repeateritem_end() {
-        echo '</td>';
+    protected function render_repeateritem_end($tag = 'td') {
+        parent::render_repeateritem_end($tag);
     }
     
 }

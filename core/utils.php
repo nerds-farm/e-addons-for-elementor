@@ -22,6 +22,7 @@ class Utils {
     use \EAddonsForElementor\Core\Traits\Elementor;
     use \EAddonsForElementor\Core\Traits\Data;    
     use \EAddonsForElementor\Core\Traits\Path;
+    use \EAddonsForElementor\Core\Traits\Pagination;
 
     public static function get_dynamic_data($value, $fields = array(), $var = '') {
         if (!empty($value)) {

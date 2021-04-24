@@ -138,7 +138,7 @@ trait Items_Style {
             Group_Control_Typography::get_type(), [
                 'name' => 'item_typography',
                 'label' => __('Typography', 'e-addons'),
-                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *',
+                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} .elementor-button',
                 'separator' => 'before',
                 'conditions' => [
                     'relation' => 'or',

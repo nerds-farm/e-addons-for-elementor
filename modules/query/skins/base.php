@@ -79,7 +79,7 @@ class Base extends Base_Skin {
                     'tab' => Controls_Manager::TAB_STYLE,
                     'condition' => [
                         'style_items!' => 'template',
-                        '_skin!' => 'table',
+                        '_skin!' => ['table', 'list'],
                     ]
                 ]
         );
@@ -592,7 +592,11 @@ class Base extends Base_Skin {
         //QUERY_MEDIA //////////////////
         //@p l'immagine viene renderizzata sempre per il query_media widget
         if ($querytype == 'attachment') {
-            $this->render_repeateritem_start('e-add-media-image', 'item_image');
+            $item = array(
+                '_id' => 'e-add-media-image',
+                'item_type' => 'item_image',
+            );
+            $this->render_repeateritem_start($item);
             //----------------------------------
             $this->render_item_image($this->parent->get_settings_for_display());
             //----------------------------------
@@ -601,27 +605,25 @@ class Base extends Base_Skin {
             //
             // ITEMS ///////////////////////
             foreach ($_items as $item) {
-                $_id = $item['_id'];
-                $item_type = $item['item_type'];
                 //
-                if (!empty($item)) {
-
-                    if ($item_type == 'item_image') {
-                        $this->render_repeateritem_start($_id, $item_type);
+                if (!empty($item['item_type'])) {
+                    switch($item['item_type']) {
+                    case 'item_image':
+                        $this->render_repeateritem_start($item);
                         //----------------------------------
                         $this->render_item_image($item);
                         //----------------------------------
                         $this->render_repeateritem_end();
-                    }
-                    if ($item_type == 'item_imageoricon') {
-                        $this->render_repeateritem_start($_id, $item_type);
+                        break;
+                    case 'item_imageoricon':
+                        $this->render_repeateritem_start($item);
                         //----------------------------------
                         $this->render_item_imageoricon($item);
                         //----------------------------------
                         $this->render_repeateritem_end();
-                    }
-                    if ($item_type == 'item_avatar') {
-                        $this->render_repeateritem_start($_id, $item_type);
+                        break;
+                    case 'item_avatar':
+                        $this->render_repeateritem_start($item);
                         //----------------------------------
                         $this->render_item_avatar($item);
                         //----------------------------------
@@ -640,7 +642,11 @@ class Base extends Base_Skin {
         // QUERY_MEDIA //////////////////
         //@p l'immagine viene renderizzata sempre per il query_media widget
         if ($querytype == 'attachment' && $useimg) {
-            $this->render_repeateritem_start('e-add-media-image', 'item_image');
+            $item = array(
+                '_id' => 'e-add-media-image',
+                'item_type' => 'item_image',
+            );
+            $this->render_repeateritem_start($item);
             //----------------------------------
             $this->render_item_image($this->parent->get_settings_for_display());
             //----------------------------------
@@ -649,17 +655,18 @@ class Base extends Base_Skin {
         if (!empty($_items)) {
             // ITEMS ///////////////////////
             foreach ($_items as $item) {
-                $_id = $item['_id'];
-                $item_type = $item['item_type'];
+                
+                
                 //$custommetakey = $item['metafield_key'];
 
-                if (!empty($item)) {
+                if (!empty($item['item_type'])) {
 
                     //if( $item_type == 'item_custommeta' && $this->get_value_custommeta($custommetakey) )
-                    $this->render_repeateritem_start($_id, $item_type);
+                    $this->render_repeateritem_start($item);
                     //----------------------------------
+                    //
                     // posts
-                    switch ($item_type) {
+                    switch ($item['item_type']) {
                         case 'item_title': $this->render_item_title($item);
                             break;
                         case 'item_date': $this->render_item_date($item);
@@ -757,7 +764,7 @@ class Base extends Base_Skin {
     }
 
     // REPEATER-ITEM start
-    protected function render_repeateritem_start($id, $item_type) {
+    protected function render_repeateritem_start($item, $tag = 'div') {
         /* echo 'eadditem_' . $id . '_' . $item_type;
           $this->parent->add_render_attribute('eadditem_' . $id . '_' . $item_type, [
           'class' => [
@@ -770,15 +777,32 @@ class Base extends Base_Skin {
           ]
           ]
           ); */
-        $classItem = 'class="e-add-item e-add-' . $item_type . ' elementor-repeater-item-' . $id . '"';
-        $dataIdItem = ' data-item-id="' . $id . '"';
+        
+        $width = '100';
+        if (!empty($item['width'])) {
+            $width = intval($item['width']);
+        }
+        $width = ' elementor-column elementor-col-'.$width;
+        if ( ! empty( $item['width_tablet'] ) ) {
+                $width .= ' elementor-md-' . $item['width_tablet'];
+        }
+        if ( ! empty( $item['width_mobile'] ) ) {
+                $width .= ' elementor-sm-' . $item['width_mobile'];
+        }
 
-        echo '<div ' . $classItem . $dataIdItem /* $this->parent->get_render_attribute_string('eadditem_' . $id . '_' . $item_type) */ . '>';
+        if (!empty($item['display_inline']) && $item['display_inline'] == 'inline-block') {
+            $width = '';
+        }
+        
+        $classItem = 'class="e-add-item e-add-' . $item['item_type'] . ' elementor-repeater-item-' . $item['_id'] . $width . '"';
+        $dataIdItem = ' data-item-id="' . $item['_id'] . '"';
+
+        echo '<'.$tag. ' ' . $classItem . $dataIdItem /* $this->parent->get_render_attribute_string('eadditem_' . $id . '_' . $item_type) */ . '>';
     }
 
     // REPEATE-ITEM end
-    protected function render_repeateritem_end() {
-        echo '</div>';
+    protected function render_repeateritem_end($tag = 'div') {
+        echo '</'.$tag.'>';
     }
 
     /////////////////////////////////////////////////////////////
@@ -953,6 +977,19 @@ class Base extends Base_Skin {
     public function get_item_link($settings) {
         if (!empty($settings['use_link'])) {
             switch ($settings['use_link']) {
+                case 'custom':
+                    if (!empty($settings['shortcode_link'])) {
+                        $raw_settings = $this->parent->get_settings('list_items');
+                        foreach($raw_settings as $raw_setting) {
+                            if ($raw_setting['_id'] == $settings['_id']) {
+                                $type = $this->parent->get_querytype();
+                                //var_dump($this->current_data); die();                                
+                                $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
+                                return $link;
+                            }
+                        }                        
+                    }
+                    break;
                 case 'shortcode':
                     if (!empty($settings['shortcode_link'])) {
                         ob_start();
