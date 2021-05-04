@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
@@ -135,50 +136,50 @@ trait Items_Style {
           ]
          */
         $target->add_group_control(
-            Group_Control_Typography::get_type(), [
-                'name' => 'item_typography',
-                'label' => __('Typography', 'e-addons'),
-                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} .elementor-button',
-                'separator' => 'before',
-                'conditions' => [
-                    'relation' => 'or',
-                    'terms' => [
-                        [
-                            'name' => 'item_type',
-                            'operator' => '!in',
-                            'value' => ['item_image', 'item_avatar', 'item_author', 'item_label', 'item_custommeta'],
-                        ],
-                        [
-                            'relation' => 'and',
-                            'terms' => [
-                                [
-                                    'name' => 'item_type',
-                                    'value' => 'item_label'
-                                ],
-                                [
-                                    'name' => 'label_html_type',
-                                    'operator' => '!=',
-                                    'value' => 'image'
-                                ]
+                Group_Control_Typography::get_type(), [
+            'name' => 'item_typography',
+            'label' => __('Typography', 'e-addons'),
+            'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} .elementor-button',
+            'separator' => 'before',
+            'conditions' => [
+                'relation' => 'or',
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'operator' => '!in',
+                        'value' => ['item_image', 'item_avatar', 'item_author', 'item_label', 'item_custommeta'],
+                    ],
+                    [
+                        'relation' => 'and',
+                        'terms' => [
+                            [
+                                'name' => 'item_type',
+                                'value' => 'item_label'
+                            ],
+                            [
+                                'name' => 'label_html_type',
+                                'operator' => '!=',
+                                'value' => 'image'
                             ]
-                        ],
-                        [
-                            'relation' => 'and',
-                            'terms' => [
-                                [
-                                    'name' => 'item_type',
-                                    'value' => 'item_custommeta'
-                                ],
-                                [
-                                    'name' => 'metafield_type',
-                                    'operator' => '!in',
-                                    'value' => ['image', 'oembed']
-                                ]
+                        ]
+                    ],
+                    [
+                        'relation' => 'and',
+                        'terms' => [
+                            [
+                                'name' => 'item_type',
+                                'value' => 'item_custommeta'
+                            ],
+                            [
+                                'name' => 'metafield_type',
+                                'operator' => '!in',
+                                'value' => ['image', 'oembed']
                             ]
                         ]
                     ]
                 ]
             ]
+                ]
         );
         $target->add_control(
                 'item_space', [
@@ -200,6 +201,16 @@ trait Items_Style {
             ],
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+            ],
+                ]
+        );
+        $target->add_control(
+                'item_z_index', [
+            'label' => __('Z Index', 'e-addons'),
+            'type' => Controls_Manager::NUMBER,
+            'min' => 0,
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}}' => 'position: relative; z-index: {{VALUE}};'
             ],
                 ]
         );
@@ -264,6 +275,16 @@ trait Items_Style {
                     ]
                 ]
             ]
+                ]
+        );
+        $target->add_group_control(
+                Group_Control_Text_Shadow::get_type(),
+                [
+                    'name' => 'shadow_item',
+                    'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} a',
+                    'condition' => [
+                        'item_type!' => ['item_image', 'item_avatar'],
+                    ]
                 ]
         );
         $target->add_control(
@@ -363,8 +384,8 @@ trait Items_Style {
                         'name' => 'item_type',
                         'operator' => '!in',
                         'value' => [
-                            'item_image', 
-                            'item_avatar', 
+                            'item_image',
+                            'item_avatar',
                             'item_author',
                             'item_posttype',
                             'item_date',
@@ -593,24 +614,24 @@ trait Items_Style {
                 ]
         );
         $target->add_responsive_control(
-            'item_padding', [
-                'label' => __('Padding', 'e-addons'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'rem'],
-                'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *, {{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
+                'item_padding', [
+            'label' => __('Padding', 'e-addons'),
+            'type' => Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%', 'rem'],
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *, {{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+                ]
         );
         $target->add_responsive_control(
-            'item_margin', [
-                'label' => __('Margin', 'e-addons'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'rem'],
-                'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
+                'item_margin', [
+            'label' => __('Margin', 'e-addons'),
+            'type' => Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%', 'rem'],
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+                ]
         );
     }
 
@@ -769,7 +790,7 @@ trait Items_Style {
             ]
                 ]
         );
-        
+
         $target->add_control(
                 'label_after_style_heading', [
             'type' => Controls_Manager::RAW_HTML,
@@ -823,8 +844,8 @@ trait Items_Style {
                         'name' => 'item_type',
                         'operator' => 'in',
                         'value' => [
-                            'item_termstaxonomy', 
-                            'item_date', 
+                            'item_termstaxonomy',
+                            'item_date',
                             'item_registered',
                             'item_custommeta'
                         ],
@@ -892,8 +913,8 @@ trait Items_Style {
                         'name' => 'item_type',
                         'operator' => 'in',
                         'value' => [
-                            'item_termstaxonomy', 
-                            'item_date', 
+                            'item_termstaxonomy',
+                            'item_date',
                             'item_registered',
                             'item_custommeta'
                         ],

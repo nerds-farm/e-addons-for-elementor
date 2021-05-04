@@ -57,10 +57,10 @@ abstract class Module_Base extends Module {
         add_action('e_addons/init_triggers', [$this, 'init_triggers']);
 
         $this->init_skins();
-        //add_action('elementor_pro/init', [$this, 'init_fields']);
-        //add_action('elementor_pro/init', [$this, 'init_actions']);
-        add_action('elementor_pro/forms/register_action', [$this, 'init_fields']);
-        add_action('elementor_pro/forms/register_action', [$this, 'init_actions']);
+        add_action('elementor_pro/init', [$this, 'init_fields']); // old Elementor PRO
+        add_action('elementor_pro/init', [$this, 'init_actions']); // old Elementor PRO
+        add_action('elementor_pro/forms/register_action', [$this, 'init_fields']); // > Elementor PRO 3.1.x
+        add_action('elementor_pro/forms/register_action', [$this, 'init_actions']); // > Elementor PRO 3.1.x
        
     }
 

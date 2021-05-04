@@ -155,6 +155,7 @@ class Query {
             'meta_value' => 'Meta Value',
             'meta_value_num' => 'Meta Value NUM',
             'meta_value_date' => 'Meta Value DATE',
+            'rand' => 'Random',
         );
 
         return $orderby;
@@ -172,6 +173,7 @@ class Query {
             'post_count' => 'Post count',
             'meta_value_num' => 'Meta Value NUM',
             'meta_value_date' => 'Meta Value DATE',
+            'rand' => 'Random',
         );
 
         return $orderby;

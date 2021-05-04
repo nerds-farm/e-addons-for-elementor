@@ -66,6 +66,8 @@
 
 .e-add-posts-container .e-add-post-block {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
 }
 .e-add-posts-container .e-add-post-block .e-full-block-link {
     position: absolute;
@@ -81,8 +83,9 @@
 /* --------------- ITEMS -------------- */
 /*--------------------------------------*/
 /*image*/
-.e-add-posts-container .e-add-post-image{
+.e-add-posts-container .e-add-post-image {
     width: 100%;
+    display: block;
 }
 .e-add-posts-container .e-add-post-image{
     -webkit-transition: -webkit-filter 0.3s, opacity 0.3s;

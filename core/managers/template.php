@@ -267,10 +267,12 @@ class Template {
     public static function fix_template_class($content = '', $tpl_id = 0) {
         if ($content) {
             $tpl_html_id = Utils::get_template_from_html($content);
-            if ($tpl_id && $tpl_id != $tpl_html_id) {
-                $content = str_replace('class="elementor elementor-' . $tpl_html_id . ' ', 'class="elementor elementor-' . $tpl_id . ' ', $content);
-            } else {
-                $tpl_id = $tpl_html_id;
+            if ($tpl_html_id) {
+                if ($tpl_id && $tpl_id != $tpl_html_id) {
+                    $content = str_replace('class="elementor elementor-' . $tpl_html_id . ' ', 'class="elementor elementor-' . $tpl_id . ' ', $content);
+                } else {
+                    $tpl_id = $tpl_html_id;
+                }
             }
             if ($tpl_id) {
                 $template_type = get_post_meta($tpl_id, '_elementor_template_type', true);

@@ -21,28 +21,6 @@ trait Common {
                 ]
         );
         
-        $target->add_responsive_control(
-                'width',
-                [
-                    'label' => __('Column Width', 'elementor'),
-                    'type' => Controls_Manager::SELECT,
-                    'options' => [
-                        '' => __('Default', 'elementor'),
-                        '100' => '100%',
-                        '80' => '80%',
-                        '75' => '75%',
-                        '70' => '70%',
-                        '66' => '66%',
-                        '60' => '60%',
-                        '50' => '50%',
-                        '40' => '40%',
-                        '33' => '33%',
-                        '30' => '30%',
-                        '25' => '25%',
-                        '20' => '20%',
-                    ],
-                ]
-        );
     }
 
 }
