@@ -397,11 +397,16 @@
 .my_eaddon_header .e_addons-button{
     position: relative;
 }
-.my_eaddon_header .e_addons-button .btn-txt{
-    position: relative;
-    z-index: 10;
+
+/* Button */
+.my_e_addons .e_addons-button-default {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+    transition: all 0.4s ease;
 }
 
+/* l'abbassamento al roll-hover */
 .my_e_addons-add .my_eaddon_header .e_addons-button:after{
     transition: all 0.5s ease;
     background-color: rgba(0,0,0,0.4);
@@ -418,6 +423,13 @@
     opacity: 1;
 
 }
+/*  */
+.my_eaddon_header .e_addons-button .btn-txt, .my_eaddon_header .e_addons-button .dashicons{
+    position: relative;
+    z-index: 10;
+}
+
+
 .e_addons-button.my_e_addon_cache,
 .e_addons-button.my_e_addon_install {
     background-color: #555; /*9f16ff #4474b5*/
