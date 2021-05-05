@@ -274,12 +274,66 @@ trait Base {
         $module_slug = Utils::camel_to_slug($module_ns);
         return $module_slug;
     }
+    
+    /* ASSETS */
+    
+    public function _enqueue_scripts() {
+        $scripts = $this->get_script_depends();
+        if (!empty($scripts)) {
+            foreach ($scripts as $script) {
+                wp_enqueue_script($script);
+            }
+        }
+    }
+
+    public function _enqueue_styles() {
+        $styles = $this->get_style_depends();
+        if (!empty($styles)) {
+            foreach ($styles as $style) {
+                wp_enqueue_style($style);
+            }
+        }
+    }
+
+    public function _print_styles() {
+        $styles = $this->get_style_depends();
+        if (!empty($styles)) {
+            foreach ($styles as $style) {
+                wp_print_styles(array($style));
+            }
+        }
+    }
+
+    public function _print_scripts() {
+        $scripts = $this->get_script_depends();
+        if (!empty($scripts)) {
+            foreach ($scripts as $script) {
+                wp_print_scripts(array($script));
+            }
+        }
+    }
+
+    public function enqueue() {
+        $this->_enqueue_styles();
+        $this->_enqueue_scripts();
+    }
+
+    public function print_assets() {
+        $this->_print_styles();
+        $this->_print_scripts();
+    }
 
     public function get_script_depends() {
+        if (property_exists($this, 'depended_scripts')) {
+            return $this->depended_scripts;
+        }
         return [];
     }
 
     public function get_style_depends() {
+        if (property_exists($this, 'depended_styles')) {
+            return $this->depended_styles;
+        }
         return [];
     }
 

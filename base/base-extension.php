@@ -52,52 +52,6 @@ abstract class Base_Extension extends Element_Base {
         add_action('elementor/preview/enqueue_scripts', [$this, 'enqueue']);
     }
 
-    public function _enqueue_scripts() {
-        $scripts = $this->get_script_depends();
-        if (!empty($scripts)) {
-            foreach ($scripts as $script) {
-                wp_enqueue_script($script);
-            }
-        }
-    }
-
-    public function _enqueue_styles() {
-        $styles = $this->get_style_depends();
-        if (!empty($styles)) {
-            foreach ($styles as $style) {
-                wp_enqueue_style($style);
-            }
-        }
-    }
-
-    public function _print_styles() {
-        $styles = $this->get_style_depends();
-        if (!empty($styles)) {
-            foreach ($styles as $style) {
-                wp_print_styles(array($style));
-            }
-        }
-    }
-
-    public function _print_scripts() {
-        $scripts = $this->get_script_depends();
-        if (!empty($scripts)) {
-            foreach ($scripts as $script) {
-                wp_print_scripts(array($script));
-            }
-        }
-    }
-
-    public function enqueue() {
-        $this->_enqueue_styles();
-        $this->_enqueue_scripts();
-    }
-
-    public function print_assets() {
-        $this->_print_styles();
-        $this->_print_scripts();
-    }
-
     public function _add_sections($element, $section_id, $args) {
 
         $stack_name = $element->get_name();
