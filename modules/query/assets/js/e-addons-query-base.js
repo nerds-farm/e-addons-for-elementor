@@ -202,7 +202,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                         //infscr_options['history'] = 'push';
                         infscr_options['history'] = 'replace';
                     }
-
+                    console.log(infscr_options);
                     this.elements.$containerWrapper.infiniteScroll(infscr_options);
                     this.elements.$containerWrapper.on('append.infiniteScroll', (event, response, path, items) => {
 
@@ -227,7 +227,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     //console.log(elementorFrontend.utils);
 
                 };
-                if (elementSettings.infiniteScroll_enable) {
+                if (elementSettings.infiniteScroll_enable) {                    
                     setTimeout(function () {
                         activeInfiniteScroll();
                     }, 200);

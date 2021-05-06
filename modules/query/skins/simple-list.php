@@ -250,6 +250,7 @@ class Simple_List extends Base {
                 'e-list',
                 'e-add-posts-container',
                 'e-add-posts',
+                'e-add-posts-wrapper',
                 $this->get_scrollreveal_class(), //@p prevedo le classi per generare il reveal,
                 $this->get_container_class(), //@p una classe personalizzata per lo skin
             ],
@@ -272,7 +273,7 @@ class Simple_List extends Base {
         $item_class = ' ' . $this->get_item_class();
         ?>
         <li<?php
-        echo ' class="e-add-item e-add-item-' . $this->parent->get_id() . $item_class . '"';
+        echo ' class="e-add-item e-add-post-item-' . $this->parent->get_id().' e-add-item-' . $this->parent->get_id() . $item_class . '"';
         //post_class(['e-add-post e-add-post-item e-add-post-item-' . $this->parent->get_id() . $item_class]);
         echo $data_post_id . $data_post_index;
         ?>><?php

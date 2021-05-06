@@ -292,7 +292,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 /*Le 2 aree in caso di left, right, alternate ecc */
 .e-add-posts-container .e-add-post-item .e-add-item-area{
-	
+	width: 100%;
 }
 .e-add-posts-container .e-add-post-item .e-add-item-area{
 	z-index: 2;

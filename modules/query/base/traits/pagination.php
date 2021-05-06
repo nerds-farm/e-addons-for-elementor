@@ -27,7 +27,7 @@ trait Pagination {
             'type' => Controls_Manager::SWITCHER,
             'condition' => [
                 //@p il massimo è che la paginazione funzioni con tutti gli skins...
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'gridtofullscreen3d', 'table'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'list', 'table'],
                 'infiniteScroll_enable' => '',
                 'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
             ],
@@ -40,7 +40,7 @@ trait Pagination {
             'separator' => 'before',
             'frontend_available' => true,
             'condition' => [
-                '_skin' => ['', 'grid', 'filters', 'gridtofullscreen3d', 'table'],
+                '_skin' => ['', 'grid', 'filters', 'list', 'table'],
                 'pagination_enable!' => ''
             ],
                 ]
@@ -54,7 +54,7 @@ trait Pagination {
             'label' => '<i class="eaddicon eicon-post-navigation" aria-hidden="true"></i> ' . __('Pagination', 'e-addons'),
             'tab' => Controls_Manager::TAB_CONTENT,
             'condition' => [
-                'pagination_enable' => 'yes',
+                'pagination_enable!' => '',
                 'infiniteScroll_enable' => ''
             ],
                 ]
