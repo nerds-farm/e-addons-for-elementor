@@ -80,7 +80,7 @@
 }
 
 .elementor-uiselector-item input[type=radio]:checked + .elementor-uiselector-label {
-    color: #fff;
+    color: #5bc0de;
     background-color: #e7e7e7;
     border-color: #444444;
     opacity: 1;

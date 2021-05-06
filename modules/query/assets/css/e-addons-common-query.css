@@ -21,7 +21,9 @@
 .e-add-item > *{
     margin: 0;
 }
-
+.elementor-page:not(.elementor-editor-preview) .elementor-edit-mode .e-add-grid-debug-yes .e-add-item{
+    outline: 1px dashed #999999;
+}
 /*-------------------------------------------*/
 /* --------- OVERLAY image & hover* -------- */
 /*-------------------------------------------*/

@@ -3,7 +3,6 @@
 namespace EAddonsForElementor\Modules\Query\Base\Traits;
 
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Image_Size;
 
 /**
  * Description of label
@@ -19,6 +18,17 @@ trait Common {
             'label' => __('Label', 'e-addons'),
             'type' => Controls_Manager::TEXT,
                 ]
+        );
+        
+    }
+    public function controls_items_grid_debug($target) {
+        $target->add_control(
+            'items_grid_debug', [
+                'label' => '<span style="color: #fff; background-color: #93003c; padding: 5px 10px; border-radius: 20px;">' . __('Show grid for DEBUG', 'e-addons') . '</span>',
+                'type' => Controls_Manager::SWITCHER,
+                'prefix_class' => 'e-add-grid-debug-',
+                'separator' => 'before'
+            ]
         );
         
     }

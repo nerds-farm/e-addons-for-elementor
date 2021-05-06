@@ -67,7 +67,7 @@ trait Items_Advanced {
         // blank
         $target->add_control(
             'blanklink_enable', [
-        'label' => __('Open in new window', 'e-addons'),
+        'label' => '<i class="fas fa-external-link-alt"></i> '.__('Open in new window', 'e-addons'),
         'type' => Controls_Manager::SWITCHER,
         'condition' => [
             'item_type!' => [
@@ -116,7 +116,7 @@ trait Items_Advanced {
             );
         }
         
-        $target->add_control(
+        $target->add_responsive_control(
                 'display_inline', [
             'label' => '<i class="fas fa-clipboard-list"></i> ' . __('Display', 'e-addons'),
             'type' => Controls_Manager::CHOOSE,
@@ -182,14 +182,15 @@ trait Items_Advanced {
             ]
                 ]
         );
-        
+          
         $target->add_responsive_control(
                 'width',
                 [
-                    'label' => __('Column Width', 'elementor'),
+                    'label' => '<i class="fas fa-columns"></i> '.__('Column Width', 'e-addons'),
                     'type' => Controls_Manager::SELECT,
+                    'separator' => 'before',
                     'options' => [
-                        '' => __('Default', 'elementor'),
+                        
                         '100' => '100%',
                         '80' => '80%',
                         '75' => '75%',
@@ -202,13 +203,34 @@ trait Items_Advanced {
                         '30' => '30%',
                         '25' => '25%',
                         '20' => '20%',
+                        '' => __('Custom', 'e-addons'),
                     ],
                     'condition' => [
                         'display_inline!' => 'inline-block',
                     ],
+                    'default' => 100,
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{VALUE}}%;',
+                    ],
                 ]
         );
-        
+        $target->add_responsive_control(
+            'custom_width', [
+                'label' => __('Custom Width', 'e-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => '',
+                ],
+                'size_units' => ['%'],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}%;',
+                ],
+                'condition' => [
+                    'width' => ''
+                ]
+            ]
+        );
+
         $target->add_control(
                 'icon_enable', [
             'label' => __('Icon', 'e-addons'),

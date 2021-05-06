@@ -231,6 +231,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 .e-add-posts-container:not(.e-add-skin-table) .e-add-post-item{
 	display: flex;
+	height: auto;
 	/*word-break: break-word;*/
 }
 
