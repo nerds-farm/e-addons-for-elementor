@@ -98,6 +98,7 @@
 }
 .e-add-posts-container .e-add-post-image.e-add-post-bgimage{
     height: 100px;
+    position: relative;
 }
 .e-add-posts-container .e-add-post-image .e-add-img{
     overflow: hidden;
@@ -115,6 +116,7 @@
     display: block;
 
     width: 100%;
+    height: auto;
 
     max-height: none;
     max-width: none;

@@ -67,7 +67,7 @@ jQuery(window).on('elementor/frontend/init', () => {
             return {
                 selectors: {
                     //xxxx: '.e-add-rellax',
-                    images: '.e-add-item_image',
+                    images: '.e-add-item_image, .e-add-item_imageoricon',
 
                     //img: '.e-add-img img',
                     container: '.e-add-posts-container',
@@ -155,7 +155,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                      */
 
 
-                    scope.find('.e-add-item_image').each(function () {
+                    scope.find('.e-add-item_image,.e-add-item_imageoricon').each(function () {
                         var _this = jQuery(this),
                                 $post = _this.find('.e-add-post-image'),
                                 $itemId = _this.data('item-id'),

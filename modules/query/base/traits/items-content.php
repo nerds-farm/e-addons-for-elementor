@@ -247,7 +247,7 @@ trait Items_Content {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-post-image' => 'width: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-timeline) .e-add-post-image, {{WRAPPER}} .e-add-timeline {{CURRENT_ITEM}} .e-add-post-image img' => 'width: {{SIZE}}{{UNIT}};',
             ],
             'conditions' => [
                 'terms' => [
@@ -288,7 +288,7 @@ trait Items_Content {
                 'height_bgimage', [
             'label' => __('Height', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
-            'size_units' => ['px', 'vh'],
+            'size_units' => ['px','%','vh'],
             'range' => [
                 'px' => [
                     'min' => 1,
@@ -411,7 +411,7 @@ trait Items_Content {
             'label' => __('Icon Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'color: {{VALUE}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'color: {{VALUE}};',
             ],
             'condition' => [
                 'item_type' => 'item_imageoricon'
@@ -430,12 +430,14 @@ trait Items_Content {
             'range' => [
                 'px' => [
                     'min' => 10,
-                    'max' => 300,
+                    'max' => 100,
                     'step' => 1
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}}.e-add-item_imageoricon .e-add-query-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}}.e-add-item_imageoricon svg' => 'width: {{SIZE}}%;',
+
             ],
             'condition' => [
                 'item_type' => 'item_imageoricon'

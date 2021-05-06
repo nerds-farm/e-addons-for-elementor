@@ -50,7 +50,7 @@ trait Items_Style {
                             [
                                 'name' => 'item_type',
                                 'operator' => '!in',
-                                'value' => ['item_image', 'item_avatar'],
+                                'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
                             ],
                             [
                                 'name' => 'display_inline',
@@ -90,7 +90,7 @@ trait Items_Style {
                             [
                                 'name' => 'item_type',
                                 'operator' => 'in',
-                                'value' => ['item_image', 'item_avatar'],
+                                'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
                             ],
                             [
                                 'name' => 'use_bgimage',
@@ -112,7 +112,7 @@ trait Items_Style {
           [
           'name' => 'item_type',
           'operator' => '!in',
-          'value' => ['item_image','item_avatar','item_label'],
+          'value' => ['item_image','item_imageoricon', 'item_avatar','item_label'],
           ],
           [
           'name' => 'display_inline',
@@ -137,49 +137,49 @@ trait Items_Style {
          */
         $target->add_group_control(
                 Group_Control_Typography::get_type(), [
-            'name' => 'item_typography',
-            'label' => __('Typography', 'e-addons'),
-            'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} .elementor-button',
-            'separator' => 'before',
-            'conditions' => [
-                'relation' => 'or',
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_author', 'item_label', 'item_custommeta'],
-                    ],
-                    [
-                        'relation' => 'and',
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'value' => 'item_label'
-                            ],
-                            [
-                                'name' => 'label_html_type',
-                                'operator' => '!=',
-                                'value' => 'image'
+                'name' => 'item_typography',
+                'label' => __('Typography', 'e-addons'),
+                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} .elementor-button',
+                'separator' => 'before',
+                'conditions' => [
+                    'relation' => 'or',
+                    'terms' => [
+                        [
+                            'name' => 'item_type',
+                            'operator' => '!in',
+                            'value' => ['item_image', 'item_avatar','item_imageoricon', 'item_author', 'item_label', 'item_custommeta'],
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'value' => 'item_label'
+                                ],
+                                [
+                                    'name' => 'label_html_type',
+                                    'operator' => '!=',
+                                    'value' => 'image'
+                                ]
                             ]
-                        ]
-                    ],
-                    [
-                        'relation' => 'and',
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'value' => 'item_custommeta'
-                            ],
-                            [
-                                'name' => 'metafield_type',
-                                'operator' => '!in',
-                                'value' => ['image', 'oembed']
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'value' => 'item_custommeta'
+                                ],
+                                [
+                                    'name' => 'metafield_type',
+                                    'operator' => '!in',
+                                    'value' => ['image', 'oembed']
+                                ]
                             ]
                         ]
                     ]
                 ]
             ]
-                ]
         );
         $target->add_control(
                 'item_space', [
@@ -233,7 +233,7 @@ trait Items_Style {
                             [
                                 'name' => 'item_type',
                                 'operator' => '!in',
-                                'value' => ['item_image', 'item_avatar'],
+                                'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
                             ]
                         ]
                     ]
@@ -252,7 +252,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
                     ]
                 ]
             ]
@@ -271,7 +271,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_author'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_author'],
                     ]
                 ]
             ]
@@ -283,7 +283,7 @@ trait Items_Style {
                     'name' => 'shadow_item',
                     'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} > *, {{WRAPPER}} {{CURRENT_ITEM}} a',
                     'condition' => [
-                        'item_type!' => ['item_image', 'item_avatar'],
+                        'item_type!' => ['item_image', 'item_imageoricon', 'item_avatar'],
                     ]
                 ]
         );
@@ -328,7 +328,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_author',
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_author',
                             'item_posttype',
                             'item_date',
                             'item_registered',
@@ -385,6 +385,7 @@ trait Items_Style {
                         'operator' => '!in',
                         'value' => [
                             'item_image',
+                            'item_imageoricon',
                             'item_avatar',
                             'item_author',
                             'item_posttype',
@@ -657,7 +658,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore', 'item_author'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore', 'item_author'],
                     ]
                 ]
             ],
@@ -674,7 +675,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore'],
                     ]
                 ]
             ],
@@ -692,7 +693,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => '!in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore', 'item_author'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore', 'item_author'],
                     ]
                 ]
             ],
@@ -710,7 +711,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => 'in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore', 'item_author'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore', 'item_author'],
                     ]
                 ]
             ],
@@ -727,7 +728,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => 'in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore'],
                     ]
                 ]
             ],
@@ -745,7 +746,7 @@ trait Items_Style {
                     [
                         'name' => 'item_type',
                         'operator' => 'in',
-                        'value' => ['item_image', 'item_avatar', 'item_readmore', 'item_author'],
+                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_readmore', 'item_author'],
                     ]
                 ]
             ],
