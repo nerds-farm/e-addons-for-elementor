@@ -16,6 +16,7 @@ class Base_Tweak extends Element_Base {
     public function __construct() {
         parent::__construct();
         add_action('elementor/preview/enqueue_styles', [$this, 'enqueue_styles']);
+        add_action('elementor/preview/enqueue_scripts', [$this, 'enqueue_scripts']);
     }
 
     public function get_name() {
