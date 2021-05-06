@@ -27,7 +27,10 @@ trait Common {
                 'label' => '<span style="color: #fff; background-color: #93003c; padding: 5px 10px; border-radius: 20px;">' . __('Show grid for DEBUG', 'e-addons') . '</span>',
                 'type' => Controls_Manager::SWITCHER,
                 'prefix_class' => 'e-add-grid-debug-',
-                'separator' => 'before'
+                'separator' => 'before',
+                'condition' => [
+                    '_skin!' => ['table'],
+                ],
             ]
         );
         

@@ -24,7 +24,7 @@ trait Infinite_Scroll {
             'label' => '<i class="eaddicon eicon-navigation-horizontal" aria-hidden="true"></i> ' . __('Infinite Scroll', 'e-addons'),
             'tab' => Controls_Manager::TAB_CONTENT,
             'condition' => [
-                '_skin' => ['', 'grid', 'filters', 'timeline', 'gridtofullscreen3d', 'table'],
+                '_skin' => ['', 'grid', 'filters', 'timeline', 'list', 'table'],
                 'infiniteScroll_enable' => 'yes',
                 'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
             ],
