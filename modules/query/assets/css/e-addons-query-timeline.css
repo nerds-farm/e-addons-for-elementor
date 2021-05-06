@@ -94,13 +94,19 @@
   border-radius: 50%;
   overflow: hidden;
   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 0;
 
   transform-origin: center center;
   
   visibility: visible;
 
   border: 4px solid #cccccc;
-  
+  background-color: #fff;
+
   transform: translate3D(-50%,-50%,0) scale(1);
   -webkit-transform: translate3D(-50%,-50%,0) scale(1);
   

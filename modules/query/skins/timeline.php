@@ -209,14 +209,23 @@ class Timeline extends Base {
         );
 
         $this->add_control(
-                'timleline_line_color', [
-            'label' => __('Line Color', 'e-addons'),
-            'type' => Controls_Manager::COLOR,
-            'selectors' => [
-                '{{WRAPPER}} .e-add-timeline-wrapper::before' => 'background-color: {{VALUE}};',
-                '{{WRAPPER}} .e-add-timeline__block .e-add-timeline__img' => 'border-color: {{VALUE}}'
-            ],
-                ]
+            'timleline_line_color', [
+                'label' => __('Line Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-timeline-wrapper::before' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-timeline__block .e-add-timeline__img' => 'border-color: {{VALUE}}'
+                ],
+            ]
+        );
+        $this->add_control(
+            'timleline_bg_color', [
+                'label' => __('Background Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-timeline__block .e-add-timeline__img' => 'background-color: {{VALUE}}'
+                ],
+            ]
         );
         $this->add_control(
                 'timeline_line_size', [
@@ -286,6 +295,15 @@ class Timeline extends Base {
                 '{{WRAPPER}} .e-add-timeline__block.e-add-timeline__focus .e-add-timeline__img' => 'border-color: {{VALUE}}'
             ],
                 ]
+        );
+        $this->add_control(
+            'timleline_active_bg_color', [
+                'label' => __('Active Background Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-timeline__block.e-add-timeline__focus .e-add-timeline__img' => 'background-color: {{VALUE}}'
+                ],
+            ]
         );
         $this->add_control(
                 'timeline_activeline_size', [
@@ -428,14 +446,14 @@ class Timeline extends Base {
         ];
 
         $querytype = $this->parent->get_querytype();
-
+        /*
         switch ($querytype) {
             case 'attachment':
             case 'post':
 
                 // image
                 $p_image = wp_get_attachment_image(get_post_thumbnail_id(), 'thumbnail', false, $image_attr);
-
+                 
                 break;
             case 'user':
                 $user_info = $this->current_data;
@@ -459,9 +477,9 @@ class Timeline extends Base {
 
 
                 break;
-        }
+        }*/
         //-----------------------------------------------
-        // author image
+        // author image 
         $p_author = get_the_author_meta('display_name');
         $p_authorimage = get_avatar_url(get_the_author_meta('ID'));
 
@@ -470,7 +488,7 @@ class Timeline extends Base {
         ?>
         <div class="e-add-timeline__block">
             <div class="e-add-timeline__img e-add-timeline__img--picture">
-                <?php echo $p_image; ?>
+                <?php /*echo $p_image;*/$this->render_items_image() ?>
             </div> <!-- e-add-timeline__img -->
 
             <div class="e-add-timeline__content">
