@@ -213,6 +213,9 @@ body[data-elementor-device-mode=mobile] .e-add-timeline__img {
   border-radius: 0.25em;
   padding: 1em;
 
+  display: flex;
+  flex-flow: wrap;
+
   transition: background-color 0.5s;
   -webkit-transition: background-color 0.5s;
 }
