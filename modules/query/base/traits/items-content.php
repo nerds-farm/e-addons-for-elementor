@@ -72,6 +72,7 @@ trait Items_Content {
 
         //@p se mi trovo in post scelgo tra Featured o Custom image 
         //@p se mi trovo in user scelgo tra Avatar o Custom image
+        //@p se mi trovo in repeater scego il subField repeater
         if ($type == 'post' || $type == 'user') {
             //@p questa è solo l'etichetta string
             if ($type == 'post') {
@@ -147,6 +148,10 @@ trait Items_Content {
                 ]
                     ]
             );
+        } else if ($type == 'repeater') {
+
+            $this->controls_repeaterfield_content($target);
+
         }
         $target->add_control(
             'image_content_heading', [

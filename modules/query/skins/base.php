@@ -11,8 +11,14 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
-use EAddonsForElementor\Core\Utils;
+
 use EAddonsForElementor\Base\Base_Skin;
+
+use EAddonsForElementor\Core\Utils;
+use EAddonsForElementor\Core\Utils\Query as Query_Utils;
+
+// '??? chiedere Fish comee gestirlo ......
+use EAddonsQuery\Core\Utils\Acf ;
 
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
@@ -356,8 +362,12 @@ class Base extends Base_Skin {
                     return false;
                 }
                 break;
-            case 'listof':
-                return false;
+            case 'repeater':
+                // da verificareeeeeee......
+                $repeater_list = $this->parent->get_settings_for_display('acf_repeater_field');
+                if (empty($repeater_list)) {
+                    return false;
+                }
                 break;
             case 'items':
                 // il ripetitore di contenuti statici
@@ -391,7 +401,7 @@ class Base extends Base_Skin {
             $this->enqueue();
 
             $this->render_loop_start();
-
+            
             switch ($querytype) {
                 case 'attachment':
                 case 'post':
@@ -436,8 +446,40 @@ class Base extends Base_Skin {
                         }
                     }
                     break;
-                case 'listof':
-                    //echo 'questo è LISTOF (che nella mia testa è il widget-ACFrepeater)';
+                case 'repeater':
+                    //echo 'questo è REPEATER';
+                    $repeater_field = $this->parent->get_settings_for_display('acf_repeater_field');                    
+                    // -----------------------------
+                    // PER ACF 
+                    
+                    // Check rows exists.
+                    if( have_rows($repeater_field, get_the_ID()) ):
+                        $sub_fields = Acf::get_acf_repeater_fields( $repeater_field );
+                        $list_items = $this->parent->get_settings_for_display('list_items');
+
+                        // Loop through rows.
+                        while( have_rows($repeater_field, get_the_ID() )) : the_row();
+                            $repeater_values = [];
+                            
+                            //  ciclo 'list_items' e ne ricavo le chiavi
+                            foreach($list_items as $key => $item){
+                                $repeater_values[$key] = get_sub_field($item['metafield_key']);
+                                //var_dump($repeater_values[$key]);
+                            }
+
+                            $this->current_permalink = '#';
+                            $this->current_id = Query_Utils::is_id_of();
+                            $this->current_data = $repeater_values;
+
+                            $this->render_element_item();
+                        // End loop.
+                        endwhile;
+
+                    // No value.
+                    else :
+                        // Do something...
+                    endif;
+                    // ---------------------------------------
                     break;
                 case 'items':
                     // il ripetitore di contenuti statici
@@ -653,6 +695,7 @@ class Base extends Base_Skin {
         }
         if (!empty($_items)) {
             // ITEMS ///////////////////////
+            
             foreach ($_items as $item) {
                 
                 
@@ -660,7 +703,6 @@ class Base extends Base_Skin {
 
                 if (!empty($item['item_type'])) {
 
-                    //if( $item_type == 'item_custommeta' && $this->get_value_custommeta($custommetakey) )
                     $this->render_repeateritem_start($item);
                     //----------------------------------
                     //
@@ -758,6 +800,7 @@ class Base extends Base_Skin {
                     //----------------------------------
                     $this->render_repeateritem_end();
                 }
+               
             }
         }
     }

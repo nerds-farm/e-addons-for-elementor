@@ -3,7 +3,7 @@
 namespace EAddonsForElementor\Modules\Query\Skins\Traits;
 
 use EAddonsForElementor\Core\Utils;
-
+use EAddonsForElementor\Core\Utils\Query as Query_Utils;
 /**
  * Description of Common
  *
@@ -15,11 +15,24 @@ trait Custommeta {
 
         if (!empty($metakey)) {
             $querytype = $this->parent->get_querytype();
-            
+
+            //@p solo in caso di repeater acf
+            if($querytype == 'repeater'){
+                $querytype = Query_Utils::is_type_of();
+                
+                //@fish pensaci tu
+                $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
+                //get_acf_field_value($idField, $id_page = null, $format = true);
+                
+                return $meta_value;
+            }
+
+            // ---------------------------------------------
+
             if ($querytype == 'attachment') {
                 $querytype = 'post';
             }
-
+            
             //@p il meta è forzatamente singolo
             $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
 

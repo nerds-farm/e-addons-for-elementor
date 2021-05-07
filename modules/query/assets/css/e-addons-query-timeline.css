@@ -29,7 +29,7 @@
   z-index: 0;
   height: var(--lineFixed);
   width: 4px;
-  background: #000;
+  background: #999;
 }
 /*la line a che si allunga*/
 .e-add-timeline-wrapper::after {
@@ -42,7 +42,7 @@
   z-index: 1;
   height: var(--lineProgress);
   width: 4px;
-  background: #ff0000;
+  background: #000;
 
 }
 @media only screen and (min-width: 1024px) {
@@ -98,7 +98,7 @@
   
   visibility: visible;
 
-  border: 4px solid #cccccc;
+  border: 4px solid #999;
   background-color: #fff;
 
   transform: translate3D(-50%,-50%,0) scale(1);
@@ -124,6 +124,9 @@
 	-webkit-animation: e-add-bounce-image 0.6s cubic-bezier(0,-0.01,.1,1.57) both;
             animation: e-add-bounce-image 0.6s cubic-bezier(0,-0.01,.1,1.57) both;
 }
+.e-add-timeline__img img{
+  object-fit: cover;
+}
 /* 
 .e-add-timeline__img img {
   	display: block;
@@ -140,6 +143,8 @@
   	height: 100%;
 }
 */
+
+/* @p queste correggono peer centrare l'immaginne nel cerchio */
 .e-add-timeline__img .e-add-item,
 .e-add-timeline__img .e-add-post-image,
 .e-add-timeline__img .e-add-img{
@@ -278,10 +283,10 @@ body[data-elementor-device-mode=mobile] .e-add-timeline__content::before {
 /*TABLET*/
 @media only screen and (min-width: 768px) {
   .e-add-timeline__block:nth-child(odd) .e-add-item_date {
-    margin-left: 10px;
+    margin-left: 25px;
   }
   .e-add-timeline__block:nth-child(even) .e-add-item_date {
-    margin-right: 10px;
+    margin-right: 25px;
   }
 }
 

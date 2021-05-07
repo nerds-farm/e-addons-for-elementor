@@ -35,10 +35,11 @@ class Query extends Base_Widget {
     use Traits\Items_Content;
     use Traits\Items_Style;
     use Traits\Items_Advanced;
+    use Traits\Repeater;
 
     //@ questa è una variabile globale che memorizza la query in corso
     protected $query = null;
-    //@ questa è una variabile globale che memorizza se la query è: 1-post, 2-user, 3-term, 4-listof 5-items 
+    //@ questa è una variabile globale che memorizza se la query è: 1-post, 2-user, 3-term, 4-repeater_list 5-items 
     protected $querytype = null;
     //@ questo serve a rimuovere lo skin default perché non voglio fare nessun render direttamente nel widget
     protected $_has_template_content = false;
@@ -276,6 +277,9 @@ class Query extends Base_Widget {
 
         //@p qui infilo i controllo relativamente agli items..
         $this->items_query_controls();
+
+        //@p qui infilo i controllo relativamente a query-repeater..
+        $this->repeater_query_controls();
 
         $this->add_control(
                 'heading_pagination',
@@ -918,11 +922,14 @@ class Query extends Base_Widget {
     }
 
     // -------------- Methods ---------
-    // @p questo metodo viene usato da items_list per iniettare gli elementi ripetitore 
+    // @p questo metodo viene usato da items_list per igniettare gli elementi ripetitore 
     public function items_query_controls() {
         
     }
-
+    // @p questo metodo viene usato da repeater per igniettare gli elementi ripetitore 
+    public function repeater_query_controls() {
+        
+    }
     // il metodo (che viene ereditato) e che esegue le query su: POSTS - USERS - TERMS
     public function query_the_elements() {
         
