@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Table Skin
+ * Simple List Skin
  *
  * Elementor widget query-posts for e-addons
  *
@@ -49,30 +49,30 @@ class Simple_List extends Base {
         //var_dump($this->parent->get_settings('_skin')); //->get_current_skin()->get_id();
 
         $this->start_controls_section(
-                'section_list', [
-            'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
-            'tab' => Controls_Manager::TAB_CONTENT,
-                ]
+            'section_list', [
+                'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
         );
 
         $this->add_control(
-                'type',
-                [
-                    'label' => __('Ordered or Unordered', 'e-addons'),
-                    'type' => Controls_Manager::CHOOSE,
-                    'toggle' => false,
-                    'options' => [
-                        'ul' => [
-                            'title' => __('Unordered', 'e-addons'),
-                            'icon' => 'eicon-editor-list-ul',
-                        ],
-                        'ol' => [
-                            'title' => __('Ordered', 'e-addons'),
-                            'icon' => 'eicon-editor-list-ol',
-                        ],
+            'type',
+            [
+                'label' => __('Ordered or Unordered', 'e-addons'),
+                'type' => Controls_Manager::CHOOSE,
+                'toggle' => false,
+                'options' => [
+                    'ul' => [
+                        'title' => __('Unordered', 'e-addons'),
+                        'icon' => 'eicon-editor-list-ul',
                     ],
-                    'default' => 'ul',
-                ]
+                    'ol' => [
+                        'title' => __('Ordered', 'e-addons'),
+                        'icon' => 'eicon-editor-list-ol',
+                    ],
+                ],
+                'default' => 'ul',
+            ]
         );
 
         $this->end_controls_section();
@@ -82,18 +82,18 @@ class Simple_List extends Base {
         parent::register_style_controls();
 
         $this->start_controls_section(
-                'section_style_table',
-                [
-                    'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
-                    'tab' => Controls_Manager::TAB_STYLE,
-                ]
+            'section_style_table',
+            [
+                'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
         );
         
         $this->add_control(
-                    'list_wrapper', [
-                'label' => __('List Wrapper', 'e-addons'),
-                'type' => Controls_Manager::HEADING,
-                    ]
+                'list_wrapper', [
+                    'label' => __('List Wrapper', 'e-addons'),
+                    'type' => Controls_Manager::HEADING,
+                ]
             );
         $this->add_responsive_control(
                     'oul_padding', [

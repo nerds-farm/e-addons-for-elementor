@@ -453,8 +453,6 @@ class Base extends Base_Skin {
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
                     $repeater_field_link = $this->parent->get_settings_for_display('acf_repeater_field_link');
                     $data_source = $this->parent->get_settings_for_display('data_source');
-
-                    
                     
                     if(empty($data_source)){
                         if(empty($this->parent->get_settings_for_display('other_post_source_'.$customfields_type))){

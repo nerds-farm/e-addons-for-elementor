@@ -189,6 +189,19 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
+         // skin: simple list
+         $this->add_control(
+            'skin_dis_horizontalscroll',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'show_label' => false,
+                    'raw' => '<i class="eaddicon-skin eadd-scroll-horizzontal"></i>',
+                    'content_classes' => 'e-add-skin-dis',
+                    'condition' => [
+                        '_skin' => 'horizontalscroll'
+                    ],
+                ]
+        );
         // skin: Dualslider
         $this->add_control(
                 'skin_dis_dualslider',
@@ -374,7 +387,7 @@ class Query extends Base_Widget {
             //'tablet_default' => '',
             //'mobile_default' => '',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'smoothscroll', 'triggerscroll', 'threed'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
             ],
                 ]
         );
@@ -399,7 +412,7 @@ class Query extends Base_Widget {
                 '{{WRAPPER}} .e-add-content-area' => 'width: calc( 100% - {{SIZE}}% );',
             ],
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'smoothscroll', 'triggerscroll', 'threed'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['left', 'right', 'alternate'],
             ],
                 ]
@@ -414,7 +427,7 @@ class Query extends Base_Widget {
                     'raw' => '<i class="eaddicon eicon-image-rollover" aria-hidden="true"></i> ' . __('Float style allows you to create animations between the content and the underlying image, from "Hover effect" Panel you can set the features.', 'e-addons'),
                     'content_classes' => 'e-add-info-panel',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items' => ['float'],
                     ],
                 ]
@@ -428,7 +441,7 @@ class Query extends Base_Widget {
                     'raw' => '<i class="far fa-image"></i> &nbsp;' . __('IMAGE:', 'e-addons'),
                     'content_classes' => 'e-add-icon-heading',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                     ],
                 ]
@@ -442,7 +455,7 @@ class Query extends Base_Widget {
             'label_on' => __('Custom', 'e-addons'),
             'return_value' => 'yes',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
             ],
                 ]
@@ -456,7 +469,7 @@ class Query extends Base_Widget {
                     'type' => Controls_Manager::HEADING,
                     'separator' => 'before',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                         'imagemask_popover' => 'yes',
                     ],
@@ -469,7 +482,7 @@ class Query extends Base_Widget {
                     'label' => __('Mask', 'e-addons'),
                     'selector' => '{{WRAPPER}} .e-add-posts-container .e-add-post-image',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                         'imagemask_popover' => 'yes',
                     ],
@@ -485,7 +498,7 @@ class Query extends Base_Widget {
                     'return_value' => 'yes',
                     'render_type' => 'ui',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                     ],
                 ]
@@ -500,7 +513,7 @@ class Query extends Base_Widget {
                     'selector' => '{{WRAPPER}} .e-add-post-item .e-add-image-area',
                     'separator' => 'before',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                         'imagetransforms_popover' => 'yes',
                     ],
@@ -516,7 +529,7 @@ class Query extends Base_Widget {
                     'render_type' => 'ui',
                     'selector' => '{{WRAPPER}} .e-add-post-block .e-add-post-image img',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                     ],
                 ]
@@ -530,7 +543,7 @@ class Query extends Base_Widget {
                     'raw' => '<i class="fas fa-align-left"></i> &nbsp;' . __('CONTENT:', 'e-addons'),
                     'content_classes' => 'e-add-icon-heading',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items!' => ['default', 'template'],
                     ],
                 ]
@@ -545,7 +558,7 @@ class Query extends Base_Widget {
             'return_value' => 'yes',
             'render_type' => 'ui',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'smoothscroll'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
             ],
                 ]
@@ -561,7 +574,7 @@ class Query extends Base_Widget {
                 '{{WRAPPER}} .e-add-post-item .e-add-content-area' => 'background-color: {{VALUE}};'
             ],
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
                 'contentstyle_popover' => 'yes',
             ],
@@ -572,7 +585,7 @@ class Query extends Base_Widget {
             'name' => 'contentzone_border',
             'selector' => '{{WRAPPER}} .e-add-post-item .e-add-content-area',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
                 'contentstyle_popover' => 'yes',
             ],
@@ -587,7 +600,7 @@ class Query extends Base_Widget {
                 '{{WRAPPER}} .e-add-post-item .e-add-content-area' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
                 'contentstyle_popover' => 'yes',
             ],
@@ -603,7 +616,7 @@ class Query extends Base_Widget {
                 '{{WRAPPER}} .e-add-post-item .e-add-content-area' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items!' => ['default', 'template'],
                 'contentstyle_popover' => 'yes',
             ],
@@ -622,7 +635,7 @@ class Query extends Base_Widget {
             'return_value' => 'yes',
             'render_type' => 'ui',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['overlay', 'textzone', 'float'],
             ],
                 ]
@@ -649,7 +662,7 @@ class Query extends Base_Widget {
             ],
             'condition' => [
                 'contenttransform_popover' => 'yes',
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['overlay', 'textzone', 'float'],
             ],
                 ]
@@ -675,7 +688,7 @@ class Query extends Base_Widget {
             ],
             'condition' => [
                 'contenttransform_popover' => 'yes',
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['overlay', 'textzone', 'float'],
             ],
                 ]
@@ -701,7 +714,7 @@ class Query extends Base_Widget {
             ],
             'condition' => [
                 'contenttransform_popover' => 'yes',
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['overlay', 'textzone', 'float'],
             ],
                 ]
@@ -727,7 +740,7 @@ class Query extends Base_Widget {
             ],
             'condition' => [
                 'contenttransform_popover' => 'yes',
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['float'],
             ],
                 ]
@@ -754,7 +767,7 @@ class Query extends Base_Widget {
             'separator' => 'before',
             'prefix_class' => 'force-default-mobile-',
             'condition' => [
-                '_skin' => ['', 'grid', 'filters', 'carousel', 'dualslider'],
+                '_skin' => ['', 'grid', 'filters', 'carousel', 'dualslider', 'horizontalscroll'],
                 'style_items' => ['left', 'right', 'alternate']
             ],
                 ]
@@ -771,7 +784,7 @@ class Query extends Base_Widget {
                     'render_type' => 'template',
                     'object_type' => 'elementor_library',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items' => 'template',
                     //'native_templatemode_enable' => ''
                     ],
@@ -785,7 +798,7 @@ class Query extends Base_Widget {
             'default' => '',
             'render_type' => 'template',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => 'template',
             //'native_templatemode_enable' => '',
             ],
@@ -804,7 +817,7 @@ class Query extends Base_Widget {
                     'object_type' => 'elementor_library',
                     'render_type' => 'template',
                     'condition' => [
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                         'style_items' => 'template',
                         'templatemode_enable_2!' => '',
                     //'native_templatemode_enable' => ''
@@ -830,7 +843,7 @@ class Query extends Base_Widget {
             'separator' => 'before',
             'render_type' => 'template',
             'condition' => [
-                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider'],
+                '_skin' => ['', 'grid', 'carousel', 'filters', 'dualslider', 'horizontalscroll'],
                 'style_items' => 'template',
             ],
                 ]
