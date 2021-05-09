@@ -120,4 +120,5 @@ jQuery(window).on('elementor/frontend/init', () => {
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.grid', Widget_EADD_Query_grid_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.grid', Widget_EADD_Query_grid_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.grid', Widget_EADD_Query_grid_Handler);
+	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.grid', Widget_EADD_Query_grid_Handler);
 });

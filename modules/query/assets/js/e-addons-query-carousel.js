@@ -375,4 +375,5 @@ jQuery(window).on('elementor/frontend/init', () => {
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.carousel', Widget_EADD_Query_carousel_Handler);
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.carousel', Widget_EADD_Query_carousel_Handler);
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.carousel', Widget_EADD_Query_carousel_Handler);
+    elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.carousel', Widget_EADD_Query_carousel_Handler);
 });

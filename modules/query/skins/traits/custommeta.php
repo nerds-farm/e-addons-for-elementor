@@ -11,18 +11,17 @@ use EAddonsForElementor\Core\Utils\Query as Query_Utils;
  */
 trait Custommeta {
 
-    protected function get_value_custommeta($metakey) {
+    protected function get_value_custommeta($metakey,$i = 0) {
 
         if (!empty($metakey)) {
             $querytype = $this->parent->get_querytype();
 
-            //@p solo in caso di repeater acf
+            //@p solo in caso di repeater
             if($querytype == 'repeater'){
                 $querytype = Query_Utils::is_type_of();
                 
-                //@fish pensaci tu
-                $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
-                //get_acf_field_value($idField, $id_page = null, $format = true);
+                //in caso di repeater uso il dato registrato in: current_data
+                $meta_value = $this->current_data['item_custommeta_'.$i];
                 
                 return $meta_value;
             }
@@ -33,7 +32,7 @@ trait Custommeta {
                 $querytype = 'post';
             }
             
-            //@p il meta è forzatamente singolo
+            //@p prendo il valore del meta (forzatamente singolo)
             $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
 
             return $meta_value;
@@ -42,7 +41,7 @@ trait Custommeta {
     }
 
     // questo vale per tutti Posts - Users - Terms
-    protected function render_item_custommeta($metaitem) {
+    protected function render_item_custommeta($metaitem,$i = 0) {
 
         //la chiave del custom_meta selezionata
         $metafield_key = $metaitem['metafield_key'];
@@ -61,8 +60,10 @@ trait Custommeta {
             $attribute_a_link = 'a_link_' . $this->counter . '_' . $_id;
             $attribute_custommeta_item = 'custommeta_item-' . $this->counter . '_' . $_id;
             //
-            //@p il meta
-            $meta_value = $this->get_value_custommeta($metafield_key);
+
+            //@p il meta +++++++++++++++++++++++++++++++++++++++++++++
+            $meta_value = $this->get_value_custommeta($metafield_key,$i);
+            // +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             if (empty($meta_value)) {
                 if (!empty($settings['use_fallback'])) {
@@ -157,12 +158,12 @@ trait Custommeta {
 
                     break;
                 case 'oembed':
-                    //var_dump($meta_value);
-                    //youtube
-                    //; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture
-                    if (strpos($meta_value, 'https://') !== false)
-                        $meta_html = '<div class="e-add-oembed"><iframe src="' . $meta_value . '" width="560" height="315" frameborder="0" allow="autoplay" allowfullscreen></iframe></div>';
-
+                    //var_dump($meta_value);                    
+                    if (strpos($meta_value, 'https://') !== false){
+                        $meta_html = '<div class="e-add-oembed">'.wp_oembed_get($meta_value).'</div>';
+                    }
+                    //<iframe width="560" height="315" src="https://www.youtube.com/embed/wb-mj2ug1iI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    //$meta_html = '<div class="e-add-oembed">' . $meta_value . '</div>';
                     //vimeo
                     //$meta_html .= '<div class="e-add-videocontainer"><iframe src="https://player.vimeo.com/video/477245251" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>';
 
@@ -340,7 +341,7 @@ trait Custommeta {
 
                     break;
                 case 'gallery':
-                    //var_dump($meta_value);
+                    //var_dump($meta_value[0]['ID']);
                     $gallery_type = 'grid'; //$metaitem['metafield_gallery_type']
                     $meta_html = '<ul class="e-add-list-meta e-add-list-meta-gallery e-add-list-meta-' . $gallery_type . '">';
                     $metavalues = array();

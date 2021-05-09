@@ -148,10 +148,6 @@ trait Items_Content {
                 ]
                     ]
             );
-        } else if ($type == 'repeater') {
-
-            $this->controls_repeaterfield_content($target);
-
         }
         $target->add_control(
             'image_content_heading', [

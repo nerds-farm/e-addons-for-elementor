@@ -193,7 +193,9 @@ jQuery(window).on('elementor/frontend/init', () => {
 				};
 
 				this.elements.$containerTimeline.imagesLoaded( () => {
-					this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline,elementsObject);
+					setTimeout(() => {
+						this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline,elementsObject);
+					},300);
 				  });
 				
 			
@@ -222,4 +224,5 @@ jQuery(window).on('elementor/frontend/init', () => {
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.timeline', Widget_EADD_Query_timeline_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.timeline', Widget_EADD_Query_timeline_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.timeline', Widget_EADD_Query_timeline_Handler);
+	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.timeline', Widget_EADD_Query_timeline_Handler);
 });

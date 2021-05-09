@@ -86,4 +86,5 @@ jQuery(window).on('elementor/frontend/init', () => {
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.table', Widget_EADD_Query_table_Handler);
     //elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.table', Widget_EADD_Query_table_Handler);
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.table', Widget_EADD_Query_table_Handler);
+    elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.table', Widget_EADD_Query_table_Handler);
 });

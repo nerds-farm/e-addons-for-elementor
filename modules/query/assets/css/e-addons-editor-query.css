@@ -1,3 +1,7 @@
+.elementor-control-acf_repeater_field .select2-selection--single.select2-selection, 
+.elementor-control-metafield_key .select2-selection--single.select2-selection {
+    background-color: #e8edee;
+}
 .elementor-control-section_items .e-add-control-spinner,
 .elementor-control-section_custommeta .e-add-control-spinner{
     float: right;

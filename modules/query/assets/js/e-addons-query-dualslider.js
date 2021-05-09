@@ -187,4 +187,5 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.dualslider', Widget_EADD_Query_dualslider_Handler);
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.dualslider', Widget_EADD_Query_dualslider_Handler);
     elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.dualslider', Widget_EADD_Query_dualslider_Handler);
+    elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.dualslider', Widget_EADD_Query_dualslider_Handler);
 });

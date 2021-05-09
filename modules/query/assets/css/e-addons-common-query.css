@@ -630,7 +630,8 @@ td.e-add-item.elementor-column.elementor-col-100 {
 .elementor-widget-e-query-users:after,
 .elementor-widget-e-query-terms:after,
 .elementor-widget-e-query-media:after,
-.elementor-widget-e-query-itemslist:after{
+.elementor-widget-e-query-itemslist:after,
+.elementor-widget-e-query-repeater:after{
     display: none;
 }
 

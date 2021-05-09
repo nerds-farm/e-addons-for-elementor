@@ -115,7 +115,8 @@ jQuery(window).on('elementor/frontend/init', () => {
                     widgetType == 'e-query-users' ||
                     widgetType == 'e-query-terms' ||
                     widgetType == 'e-query-media' ||
-                    widgetType == 'e-query-itemslist'
+                    widgetType == 'e-query-itemslist' ||
+                    widgetType == 'e-query-repeater'
                     ) {
                 const fitV = function () {
                     // ---------------------------------------------

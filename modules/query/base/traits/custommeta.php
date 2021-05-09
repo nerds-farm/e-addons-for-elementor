@@ -666,7 +666,7 @@ trait Custommeta {
                 ]
         );
         //The Link... 
-        // @p abilito il link se loo voglio x i custommmeta di tipo users, terms, posts
+        // @p abilito il link se lo voglio x i custommmeta di tipo users, terms, posts
         $target->add_control(
                 'metafield_list_link', [
             'label' => __('Link', 'e-addons'),
@@ -681,23 +681,23 @@ trait Custommeta {
         // 1 - al post (naturale)
         // 2 - custom (ad altro)
         $target->add_control(
-                'link_to', [
-            'label' => __('Link to', 'e-addons'),
-            'type' => Controls_Manager::SELECT,
-            'default' => '',
-            'separator' => 'before',
-            'options' => [
-                '' => __('None', 'e-addons'),
-                'post' => strtoupper($type_q) . ' URL',
-                'custom' => __('Custom URL', 'e-addons'),
-            ],
-            'condition' => [
-                //'','textarea','date','button','file','oembed','map','term','post','user','gallery'
-                // 
-                'metafield_type' => ['image', 'text'],
-                'item_type' => 'item_custommeta'
-            ]
+            'link_to', [
+                'label' => __('Link to', 'e-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '',
+                'separator' => 'before',
+                'options' => [
+                    '' => __('None', 'e-addons'),
+                    'post' => strtoupper($type_q) . ' URL',
+                    'custom' => __('Custom URL', 'e-addons'),
+                ],
+                'condition' => [
+                    //'','textarea','date','button','file','oembed','map','term','post','user','gallery'
+                    // 
+                    'metafield_type' => ['image', 'text'],
+                    'item_type' => 'item_custommeta'
                 ]
+            ]
         );
         $target->add_control(
                 'link', [

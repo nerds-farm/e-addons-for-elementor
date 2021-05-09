@@ -19,7 +19,7 @@ use EAddonsForElementor\Core\Utils;
  */
 trait Common {
 
-    protected function render_item_image($settings) {
+    protected function render_item_image($settings,$i = 0) {
 
         $querytype = $this->parent->get_querytype();
 
@@ -46,6 +46,10 @@ trait Common {
                 case 'items':
                     //se mi trovo in item_list
                     $image_id = $this->current_data['sl_image']['id'];
+                    break;
+                case 'repeater':
+                    //se mi trovo in repeater
+                    $image_id = $this->current_data['item_image_'.$i];
                     break;
             }
         }
@@ -146,7 +150,7 @@ trait Common {
         echo '</' . $html_tag . '>';
     }
 
-    protected function render_item_title($settings) {
+    protected function render_item_title($settings,$i = 0) {
         // Settings ------------------------------
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'h3';
         //
@@ -183,6 +187,13 @@ trait Common {
                     //se mi trovo in item_list
                     echo $this->current_data['sl_title'];
                     break;
+                case 'repeater':
+                    //se mi trovo in item_list
+                    // ..... echo $this->current_data['sl_title'];
+                    echo $this->current_data['item_title_'.$i];
+                    //echo $settings['item_type'].' - '.$i;
+                    //echo $settings['item_type'].' - '.$this->counter.' - '.$this->itemindex;
+                    break;
             }
             ?>
             <?php if ($use_link) { echo '</a>'; } ?>
@@ -192,7 +203,7 @@ trait Common {
         <?php
     }
 
-    protected function render_item_date($settings) {
+    protected function render_item_date($settings,$i = 0) {
         $querytype = $this->parent->get_querytype();
         // Settings ------------------------------
         $date_format = $settings['date_format'];
@@ -236,6 +247,16 @@ trait Common {
                 if (!empty($this->current_data['sl_date'])) {
                     $date = date_create($this->current_data['sl_date']);
                     $date = date_format($date, $date_format);
+                }
+                break;
+            case 'repeater':
+                //se mi trovo in repeater
+                //$date = $this->current_data['sl_date'];
+                
+                if (!empty($this->current_data['item_date_'.$i])) {
+                    $date = date_create($this->current_data['item_date_'.$i]);
+                    $date = date_format($date, $date_format);
+                    
                 }
                 break;
         }

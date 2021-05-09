@@ -98,4 +98,5 @@ jQuery(window).on('elementor/frontend/init', () => {
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-terms.justifiedgrid', Widget_EADD_Query_justifiedgrid_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-itemslist.justifiedgrid', Widget_EADD_Query_justifiedgrid_Handler);
 	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-media.justifiedgrid', Widget_EADD_Query_justifiedgrid_Handler);
+	elementorFrontend.hooks.addAction('frontend/element_ready/e-query-repeater.justifiedgrid', Widget_EADD_Query_justifiedgrid_Handler);
 });

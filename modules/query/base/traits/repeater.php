@@ -10,12 +10,12 @@ use Elementor\Controls_Manager;
  * @author poglie
  */
 trait Repeater {
-
+    
     // -------------- Repeater Field ---------
     public function controls_repeaterfield_content($target) {
         
         $target->add_control(
-            'acf_repeater_field',
+            'metafield_key',
             [
                 'label' => '<b>'.__('The field Repeater (ACF)', 'e-addons').'</b>',
                 'type' => 'e-query',
@@ -24,6 +24,9 @@ trait Repeater {
                 'label_block' => true,
                 'query_type' => 'acf',
 
+                'condition' => [
+                    'item_type!' => 'item_label'
+                ]
             ]
         );
     }

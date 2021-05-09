@@ -49,6 +49,7 @@ class Base extends Base_Skin {
     protected $current_id;
     protected $current_data;
     protected $counter = 0;
+    protected $itemindex = 0;  
     protected $depended_scripts = [];
     protected $depended_styles = [];
 
@@ -448,30 +449,66 @@ class Base extends Base_Skin {
                     break;
                 case 'repeater':
                     //echo 'questo è REPEATER';
-                    $repeater_field = $this->parent->get_settings_for_display('acf_repeater_field');                    
+                    $repeater_field = $this->parent->get_settings_for_display('acf_repeater_field');
+                    $customfields_type = $this->parent->get_settings_for_display('customfields_type');
+                    $repeater_field_link = $this->parent->get_settings_for_display('acf_repeater_field_link');
+                    $data_source = $this->parent->get_settings_for_display('data_source');
+
+                    
+                    
+                    if(empty($data_source)){
+                        if(empty($this->parent->get_settings_for_display('other_post_source_'.$customfields_type))){
+                            $id_target = get_queried_object_id();
+                        }else{
+                            $id_target = $this->parent->get_settings_for_display('other_post_source_'.$customfields_type);
+                        }
+                    }else{
+                        $id_target = get_queried_object_id();
+                    }
                     // -----------------------------
-                    // PER ACF 
+                    // PER ACF
+                    switch($customfields_type){
+                        case 'attachment':
+                        case 'post':
+                            $id_target = $id_target;
+                            break;
+                        case 'term':
+                            $id_target = 'term_'.$id_target;
+                            break;
+                        case 'user':
+                            $id_target = 'user_'.$id_target;
+                            break;
+                    }
                     
                     // Check rows exists.
-                    if( have_rows($repeater_field, get_the_ID()) ):
-                        $sub_fields = Acf::get_acf_repeater_fields( $repeater_field );
+                    if( have_rows($repeater_field, $id_target ) ):
                         $list_items = $this->parent->get_settings_for_display('list_items');
-
+                        //var_dump($list_items);
                         // Loop through rows.
-                        while( have_rows($repeater_field, get_the_ID() )) : the_row();
+                        $index = 0;
+                        while( have_rows($repeater_field, $id_target )) : the_row();
                             $repeater_values = [];
                             
                             //  ciclo 'list_items' e ne ricavo le chiavi
-                            foreach($list_items as $key => $item){
-                                $repeater_values[$key] = get_sub_field($item['metafield_key']);
-                                //var_dump($repeater_values[$key]);
+                            if(!empty($list_items)){
+                                foreach($list_items as $key => $item){
+                                    $data_row = get_sub_field_object( $item['metafield_key'], false); //get_sub_field($item['metafield_key']);
+                                    $repeater_values[$item['item_type'].'_'.$key] = $data_row['value'];
+                                    //var_dump($key);
+                                }
+                                //
                             }
+                            //var_dump($repeater_values);
+                            $acf_repeater_field_link = get_sub_field_object( $repeater_field_link, false); //$this->parent->get_settings_for_display('acf_repeater_field_link') || '';
+                            $acf_repeater_field_link_url = $acf_repeater_field_link['value'];
 
-                            $this->current_permalink = '#';
-                            $this->current_id = Query_Utils::is_id_of();
+                            $this->current_permalink = $acf_repeater_field_link_url;
+                            $this->current_id = $id_target;
                             $this->current_data = $repeater_values;
 
                             $this->render_element_item();
+
+                            $index ++;
                         // End loop.
                         endwhile;
 
@@ -645,14 +682,14 @@ class Base extends Base_Skin {
         } else {
             //
             // ITEMS ///////////////////////
-            foreach ($_items as $item) {
+            foreach ($_items as $key =>$item) {
                 //
                 if (!empty($item['item_type'])) {
                     switch($item['item_type']) {
                     case 'item_image':
                         $this->render_repeateritem_start($item);
                         //----------------------------------
-                        $this->render_item_image($item);
+                        $this->render_item_image($item,$key);
                         //----------------------------------
                         $this->render_repeateritem_end();
                         break;
@@ -696,7 +733,7 @@ class Base extends Base_Skin {
         if (!empty($_items)) {
             // ITEMS ///////////////////////
             
-            foreach ($_items as $item) {
+            foreach ($_items as $key => $item) {
                 
                 
                 //$custommetakey = $item['metafield_key'];
@@ -706,12 +743,14 @@ class Base extends Base_Skin {
                     $this->render_repeateritem_start($item);
                     //----------------------------------
                     //
-                    // posts
+                    
                     switch ($item['item_type']) {
-                        case 'item_title': $this->render_item_title($item);
+                        // commmon
+                        case 'item_title': $this->render_item_title($item,$key);
                             break;
-                        case 'item_date': $this->render_item_date($item);
+                        case 'item_date': $this->render_item_date($item,$key);
                             break;
+                        // posts
                         case 'item_author': $this->render_item_author($item);
                             break;
                         case 'item_termstaxonomy': $this->render_item_termstaxonomy($item);
@@ -776,8 +815,8 @@ class Base extends Base_Skin {
                             }
                             break;
                         //----------------------------------
-                        // posts/user/terms
-                        case 'item_custommeta': $this->render_item_custommeta($item);
+                        // posts/user/terms 
+                        case 'item_custommeta': $this->render_item_custommeta($item,$key);
                             break;
                         case 'item_readmore': $this->render_item_readmore($item);
                             break;
@@ -785,9 +824,9 @@ class Base extends Base_Skin {
                             break;
                         case 'item_template': $this->render_item_template($item);
                             break;
-                        case 'item_image':
+                        case 'item_image': //(common)
                             if ($useimg) {
-                                $this->render_item_image($item);
+                                $this->render_item_image($item,$key);
                             }
                             break;
                         case 'item_avatar':
@@ -800,7 +839,7 @@ class Base extends Base_Skin {
                     //----------------------------------
                     $this->render_repeateritem_end();
                 }
-               
+                $this->itemindex = $key;
             }
         }
     }
