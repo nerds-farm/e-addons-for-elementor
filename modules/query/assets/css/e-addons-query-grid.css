@@ -268,7 +268,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
 .e-add-posts-container.e-add-skin-grid .e-add-post-item .e-add-post-block{
 	display: flex;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 /* solo x default
 .e-add-posts-layout-default .e-add-posts-container .e-add-post-item .e-add-post-block{
@@ -353,7 +353,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
 [data-elementor-device-mode="mobile"] .force-default-mobile-yes .e-add-image-area, 
 [data-elementor-device-mode="mobile"] .force-default-mobile-yes .e-add-content-area{
-	width: 100%;
+	width: 100% !important;
 }
 
 /*Overlay*/

@@ -1,10 +1,5 @@
 ;
 var EADD_skinPrefix = '';
-var galleryThumbs = null;
-var smsc = null;
-var trgsc = null;
-var gtf3d = null;
-var crs = null;
 
 class eadd_animationReveal {
 
@@ -101,13 +96,16 @@ jQuery(window).on('elementor/frontend/init', () => {
         }
 
         bindEvents() {
-            let id_scope = this.elements.$id_scope,
-                    scope = this.elements.$scope,
-                    elementSettings = this.getElementSettings(),
-                    widgetType = this.getWidgetType();
-
             // IMPORTANTISSIMO !!!!!
             EADD_skinPrefix = this.elements.$widgetType[1] + '_';
+            this.skinPrefix = EADD_skinPrefix;
+            this.elementSettings = this.getElementSettings();
+
+            let id_scope = this.elements.$id_scope,
+                    scope = this.elements.$scope,
+                    widgetType = this.getWidgetType();
+
+            
 
             //console.log(this.elements.$widgetType[0]);
 
@@ -178,8 +176,8 @@ jQuery(window).on('elementor/frontend/init', () => {
                 // infiniteScroll load paginations
                 const activeInfiniteScroll = () => {
 
-                    // elementSettings.infiniteScroll_trigger
-                    // elementSettings.infiniteScroll_enable_history
+                    // this.elementSettings.infiniteScroll_trigger
+                    // this.elementSettings.infiniteScroll_enable_history
 
                     //alert(this.elements.$containerWrapper.parent().attr('class'));
                     let infscr_options = {
@@ -191,7 +189,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                         outlayer: this.elements.$container.data('masonry'),
                         checkLastPage: true
                     };
-                    if (elementSettings.infiniteScroll_trigger == 'button') {
+                    if (this.elementSettings.infiniteScroll_trigger == 'button') {
                         infscr_options['button'] = '.e-add-view-more-button-' + id_scope;
                         infscr_options['scrollThreshold'] = false;
                     }
@@ -199,7 +197,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                      infscr_options['button'] = false;
                      infscr_options['scrollThreshold'] = 300;
                      }*/
-                    if (elementSettings.infiniteScroll_enable_history) {
+                    if (this.elementSettings.infiniteScroll_enable_history) {
                         //infscr_options['history'] = 'push';
                         infscr_options['history'] = 'replace';
                     }
@@ -207,15 +205,15 @@ jQuery(window).on('elementor/frontend/init', () => {
                     this.elements.$containerWrapper.infiniteScroll(infscr_options);
                     this.elements.$containerWrapper.on('append.infiniteScroll', (event, response, path, items) => {
 
-                        if (elementSettings[EADD_skinPrefix + 'scrollreveal_effect_type']) {
-                            var isLive = elementSettings[EADD_skinPrefix + 'scrollreveal_live'] ? false : true;
+                        if (this.elementSettings[this.skinPrefix + 'scrollreveal_effect_type']) {
+                            var isLive = this.elementSettings[this.skinPrefix + 'scrollreveal_live'] ? false : true;
                             this.elements.$animationReveal = new eadd_animationReveal(this.elements.$container, isLive);
 
                             fitImages();
                             fitV();
 
                         }
-                        /*if( elementSettings[EADD_skinPrefix+'scrollreveal_effect_type'] ){
+                        /*if( this.elementSettings[this.skinPrefix+'scrollreveal_effect_type'] ){
                          
                          jQuery(items).each(function(i,el){
                          setTimeout(function(){
@@ -228,7 +226,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     //console.log(elementorFrontend.utils);
 
                 };
-                if (elementSettings.infiniteScroll_enable) {                    
+                if (this.elementSettings.infiniteScroll_enable) {                    
                     setTimeout(function () {
                         activeInfiniteScroll();
                     }, 200);

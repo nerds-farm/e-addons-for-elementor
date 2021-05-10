@@ -397,7 +397,7 @@ class Query extends Base_Widget {
             'label' => __('Distribution (%)', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
             'default' => [
-                'size' => '',
+                'size' => '50',
                 'unit' => '%',
             ],
             'size_units' => ['%'],

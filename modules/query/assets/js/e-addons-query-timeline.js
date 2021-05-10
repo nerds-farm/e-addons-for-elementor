@@ -182,21 +182,23 @@ jQuery(window).on('elementor/frontend/init', () => {
 				$timelineObject: null,
 			};
 		}
-
+ 
 		bindEvents() {
+			this.skinPrefix = EADD_skinPrefix;
+			this.elementSettings = this.getElementSettings();
+
 			let scope = this.elements.$scope,
-				id_scope = this.elements.$id_scope,
-				elementSettings = this.getElementSettings();
+				id_scope = this.elements.$id_scope;
 
-				let elementsObject = {
-					timelineVerticalposition: elementSettings[EADD_skinPrefix+'timeline_verticalposition'] ? Number(elementSettings[EADD_skinPrefix+'timeline_verticalposition']['size']) : 50,
-				};
+			let elementsObject = {
+				timelineVerticalposition: this.elementSettings[this.skinPrefix+'timeline_verticalposition'] ? Number(this.elementSettings[this.skinPrefix+'timeline_verticalposition']['size']) : 50,
+			};
 
-				this.elements.$containerTimeline.imagesLoaded( () => {
-					setTimeout(() => {
-						this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline,elementsObject);
-					},300);
-				  });
+			this.elements.$containerTimeline.imagesLoaded( () => {
+				setTimeout(() => {
+					this.elements.$timelineObject = new eadd_timeline(this.elements.$containerTimeline,elementsObject);
+				},300);
+			});
 				
 			
 		}

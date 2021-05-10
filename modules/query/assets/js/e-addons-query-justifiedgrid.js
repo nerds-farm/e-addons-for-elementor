@@ -34,16 +34,18 @@ jQuery(window).on('elementor/frontend/init', () => {
 		}
 
 		bindEvents() {
+			this.skinPrefix = EADD_skinPrefix;
+			this.elementSettings = this.getElementSettings();
+
 			let scope = this.elements.$scope,
 				id_scope = this.elements.$id_scope,
-				elementSettings = this.getElementSettings(),
-				justified_rowHeight = Number(elementSettings[EADD_skinPrefix+'justified_rowHeight']['size']) || 270,
-				justified_margin = Number(elementSettings[EADD_skinPrefix+'justified_margin']['size']) || 0,
-				justified_lastRow = elementSettings[EADD_skinPrefix+'justified_lastRow'] || 'justify';
+				justified_rowHeight = Number(this.elementSettings[this.skinPrefix+'justified_rowHeight']['size']) || 270,
+				justified_margin = Number(this.elementSettings[this.skinPrefix+'justified_margin']['size']) || 0,
+				justified_lastRow = this.elementSettings[this.skinPrefix+'justified_lastRow'] || 'justify';
 			
 			// -------------------------------------------
-			if( elementSettings[EADD_skinPrefix+'scrollreveal_effect_type'] ){
-				var isLive = elementSettings[EADD_skinPrefix+'scrollreveal_live'] ? false : true;
+			if( this.elementSettings[this.skinPrefix+'scrollreveal_effect_type'] ){
+				var isLive = this.elementSettings[this.skinPrefix+'scrollreveal_live'] ? false : true;
 				this.elements.$animationReveal = new eadd_animationReveal( this.elements.$container, isLive );
 			}
 			
@@ -68,17 +70,17 @@ jQuery(window).on('elementor/frontend/init', () => {
 		
 		onElementChange(propertyName){
 			//console.log(propertyName);
-			let elementSettings = this.getElementSettings();
+			this.elementSettings = this.getElementSettings();
 
 			/*
-			if (EADD_skinPrefix+'grid_type' === propertyName) {
+			if (this.skinPrefix+'grid_type' === propertyName) {
 				if(  elementSettings[propertyName] != 'masonry' && this.elements.$masonryObject ){
 					this.elements.$masonryObject.removeMasonry();
 				}
 			}
 
-			if ( EADD_skinPrefix+'columns_grid' === propertyName ||
-				EADD_skinPrefix+'row_gap' === propertyName && this.elements.$masonryObject ) {
+			if ( this.skinPrefix+'columns_grid' === propertyName ||
+				this.skinPrefix+'row_gap' === propertyName && this.elements.$masonryObject ) {
 				if(this.elements.$masonryObject)
 					this.elements.$masonryObject.layoutMasonry();
 			}*/

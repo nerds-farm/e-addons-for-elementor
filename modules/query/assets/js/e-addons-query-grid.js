@@ -36,14 +36,13 @@ jQuery(window).on('elementor/frontend/init', () => {
 		}
 
 		bindEvents() {
+			this.skinPrefix = EADD_skinPrefix;
+			this.elementSettings = this.getElementSettings();
+
 			let scope = this.elements.$scope,
-				id_scope = this.elements.$id_scope,
-				elementSettings = this.getElementSettings();
-			
-			//if( elementSettings[EADD_skinPrefix+'grid_type'] == 'masonry' )
-			//imagesLoaded(this.elements.$tems, function(){ new eadd_masonry($containerGridMasonry) });
-			
-			if( elementSettings[EADD_skinPrefix+'grid_type'] == 'masonry' ){
+				id_scope = this.elements.$id_scope;
+
+			if( this.elementSettings[this.skinPrefix+'grid_type'] == 'masonry' ){
 				//elementorFrontend.utils.eadd_masonry = new eadd_masonry(this.elements.$containerGridMasonry);
 				this.elements.$masonryObject = new eadd_masonry(this.elements.$containerGridMasonry,id_scope);
 			}
@@ -54,8 +53,8 @@ jQuery(window).on('elementor/frontend/init', () => {
 			//console.log(elementorFrontend.utils);
 
 			// -------------------------------------------
-			if( elementSettings[EADD_skinPrefix+'scrollreveal_effect_type'] ){
-				var isLive = elementSettings[EADD_skinPrefix+'scrollreveal_live'] ? false : true;
+			if( this.elementSettings[this.skinPrefix+'scrollreveal_effect_type'] ){
+				var isLive = this.elementSettings[this.skinPrefix+'scrollreveal_live'] ? false : true;
 				this.elements.$animationReveal = new eadd_animationReveal( this.elements.$container, isLive );
 			}
 
@@ -91,16 +90,16 @@ jQuery(window).on('elementor/frontend/init', () => {
 		}*/
 		onElementChange(propertyName){
 			//console.log(propertyName);
-			let elementSettings = this.getElementSettings();
+			this.elementSettings = this.getElementSettings();
 
-			if (EADD_skinPrefix+'grid_type' === propertyName) {
-				if(  elementSettings[propertyName] != 'masonry' && this.elements.$masonryObject ){
+			if (this.skinPrefix+'grid_type' === propertyName) {
+				if(  this.elementSettings[propertyName] != 'masonry' && this.elements.$masonryObject ){
 					this.elements.$masonryObject.removeMasonry();
 				}
 			}
 
-			if ( EADD_skinPrefix+'columns_grid' === propertyName ||
-				EADD_skinPrefix+'row_gap' === propertyName && this.elements.$masonryObject ) {
+			if ( this.skinPrefix+'columns_grid' === propertyName ||
+				this.skinPrefix+'row_gap' === propertyName && this.elements.$masonryObject ) {
 				if(this.elements.$masonryObject)
 					this.elements.$masonryObject.layoutMasonry();
 			}

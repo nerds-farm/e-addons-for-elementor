@@ -22,12 +22,13 @@ jQuery(window).on('elementor/frontend/init', () => {
 
         initDataTables() {
             let scope = this.elements.$scope,
-                    table = this.elements.$table,
-                    elementSettings = this.getElementSettings();
+                    table = this.elements.$table;
+                    
+            this.elementSettings = this.getElementSettings();
 
                     
             let buttons = [];
-            if (Boolean(elementSettings['table_buttons'])) {
+            if (Boolean(this.elementSettings['table_buttons'])) {
                 buttons = [
                     'copyHtml5',
                     'excelHtml5',
@@ -37,7 +38,7 @@ jQuery(window).on('elementor/frontend/init', () => {
             }
             
             let lang = [];
-            if (Boolean(elementSettings['table_searching'])) {
+            if (Boolean(this.elementSettings['table_searching'])) {
                 lang = {
                     search: "_INPUT_",
                     searchPlaceholder: "Search..."
@@ -49,13 +50,13 @@ jQuery(window).on('elementor/frontend/init', () => {
 
                 dom: 'Bfrtip',
                 buttons: buttons,
-                info: Boolean(elementSettings['table_info']),
-                fixedHeader: Boolean(elementSettings['table_fixed_header']),
-                responsive: Boolean(elementSettings['table_responsive']),
+                info: Boolean(this.elementSettings['table_info']),
+                fixedHeader: Boolean(this.elementSettings['table_fixed_header']),
+                responsive: Boolean(this.elementSettings['table_responsive']),
                 
-                searching: Boolean(elementSettings['table_searching']),
+                searching: Boolean(this.elementSettings['table_searching']),
                 language: lang,
-                ordering: Boolean(elementSettings['table_ordering']),
+                ordering: Boolean(this.elementSettings['table_ordering']),
                 
                 paging: false,
             });
@@ -63,11 +64,13 @@ jQuery(window).on('elementor/frontend/init', () => {
         }
 
         bindEvents() {
-            let scope = this.elements.$scope,
-                    id_scope = this.elements.$id_scope,
-                    elementSettings = this.getElementSettings();
+            this.skinPrefix = EADD_skinPrefix;
+            this.elementSettings = this.getElementSettings();
 
-            if (elementSettings['table_datatables']) {
+            let scope = this.elements.$scope,
+                    id_scope = this.elements.$id_scope;
+
+            if (this.elementSettings['table_datatables']) {
                 this.initDataTables()
             }
 

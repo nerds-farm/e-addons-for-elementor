@@ -34,16 +34,19 @@ jQuery(window).on('elementor/frontend/init', () => {
         }
 
         bindEvents() {
+            this.skinPrefix = EADD_skinPrefix;
+            this.isCarouselEnabled = false;
+            this.elementSettings = this.getElementSettings();
+
             let scope = this.elements.$scope,
                 id_scope = this.elements.$id_scope,
-                elementSettings = this.getElementSettings(),
                 widgetType = this.getWidgetType(),
                 eaddPostsSwiper = null;
 
-            this.isCarouselEnabled = false;
-
+            
+            
             if(eaddPostsSwiper) eaddPostsSwiper.destroy();
-            eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, elementSettings ) );
+            eaddPostsSwiper = new Swiper( this.elements.$containerCarousel[0], this.carouselOptions( id_scope, this.elementSettings ) );
             this.elements.$eaddPostsSwiper = eaddPostsSwiper;
             
             this.elements.$scope.data('eaddPostsSwiper',eaddPostsSwiper);
@@ -73,10 +76,10 @@ jQuery(window).on('elementor/frontend/init', () => {
         
     onElementChange(propertyName){
             
-        if (    EADD_skinPrefix+'ratio_image' === propertyName || 
-                EADD_skinPrefix+'dualslider_distribution_vertical' === propertyName || 
-                EADD_skinPrefix+'dualslider_height_container' === propertyName ||
-                EADD_skinPrefix+'height_container' === propertyName
+        if (    this.skinPrefix+'ratio_image' === propertyName || 
+                this.skinPrefix+'dualslider_distribution_vertical' === propertyName || 
+                this.skinPrefix+'dualslider_height_container' === propertyName ||
+                this.skinPrefix+'height_container' === propertyName
             ) {
             this.elements.$eaddPostsSwiper.update();
 
@@ -88,42 +91,42 @@ jQuery(window).on('elementor/frontend/init', () => {
         //@p qui vado a restituire l'oggettoo per configurare loo swiper ;-)
         var eaddSwiperOptions = {
             // Optional parameters
-            direction: String(elementSettings[EADD_skinPrefix+'direction_slider']) || 'horizontal', //vertical
+            direction: String(elementSettings[this.skinPrefix+'direction_slider']) || 'horizontal', //vertical
             // 
             //initialSlide: slideInitNum,
             //
-            reverseDirection: Boolean( elementSettings[EADD_skinPrefix+'reverseDirection'] ),
+            reverseDirection: Boolean( elementSettings[this.skinPrefix+'reverseDirection'] ),
             // 
-            speed: Number(elementSettings[EADD_skinPrefix+'speed_slider']) || 300,
+            speed: Number(elementSettings[this.skinPrefix+'speed_slider']) || 300,
             // setWrapperSize: false, // Enabled this option and plugin will set width/height on swiper wrapper equal to total size of all slides. Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well
             // virtualTranslate: false, // Enabled this option and swiper will be operated as usual except it will not move, real translate values on wrapper will not be set. Useful when you may need to create custom slide transition
-            autoHeight: Boolean( elementSettings[EADD_skinPrefix+'autoHeight'] ), //false, // Set to true and slider wrapper will adopt its height to the height of the currently active slide
-            //roundLengths: Boolean( elementSettings[EADD_skinPrefix+'roundLengths'] ) || false, //false, // Set to true to round values of slides width and height to prevent blurry texts on usual resolution screens (if you have such)
-            // nested : Boolean( elementSettings[EADD_skinPrefix+'nested ), //false, // Set to true on nested Swiper for correct touch events interception. Use only on nested swipers that use same direction as the parent one
+            autoHeight: Boolean( elementSettings[this.skinPrefix+'autoHeight'] ), //false, // Set to true and slider wrapper will adopt its height to the height of the currently active slide
+            //roundLengths: Boolean( elementSettings[this.skinPrefix+'roundLengths'] ) || false, //false, // Set to true to round values of slides width and height to prevent blurry texts on usual resolution screens (if you have such)
+            // nested : Boolean( elementSettings[this.skinPrefix+'nested ), //false, // Set to true on nested Swiper for correct touch events interception. Use only on nested swipers that use same direction as the parent one
             // uniqueNavElements: true, // If enabled (by default) and navigation elements' parameters passed as a string (like ".pagination") then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar elements
             //
             //effect: 'cube', "slide", "fade", "cube", "coverflow" or "flip"
-            effect: elementSettings[EADD_skinPrefix+'effects'] || 'slide',
+            effect: elementSettings[this.skinPrefix+'effects'] || 'slide',
             cubeEffect: {
-                shadow: Boolean( elementSettings[EADD_skinPrefix+'cube_shadow'] ),
-                slideShadows: Boolean( elementSettings[EADD_skinPrefix+'slideShadows'] ),
+                shadow: Boolean( elementSettings[this.skinPrefix+'cube_shadow'] ),
+                slideShadows: Boolean( elementSettings[this.skinPrefix+'slideShadows'] ),
                 //shadowOffset: 20,
                 //shadowScale: 0.94,
             },
             coverflowEffect: {
                 rotate: 50,
-                stretch: Number(elementSettings[EADD_skinPrefix+'coverflow_stretch']) || 0,
+                stretch: Number(elementSettings[this.skinPrefix+'coverflow_stretch']) || 0,
                 depth: 100,
-                modifier: Number(elementSettings[EADD_skinPrefix+'coverflow_modifier']) || 1,
-                slideShadows: Boolean( elementSettings[EADD_skinPrefix+'slideShadows'] ),
+                modifier: Number(elementSettings[this.skinPrefix+'coverflow_modifier']) || 1,
+                slideShadows: Boolean( elementSettings[this.skinPrefix+'slideShadows'] ),
             },
             flipEffect: {
                 rotate: 30,
-                slideShadows: Boolean( elementSettings[EADD_skinPrefix+'slideShadows'] ),
+                slideShadows: Boolean( elementSettings[this.skinPrefix+'slideShadows'] ),
                 limitRotation: true,
             },
             fadeEffect: {
-                crossFade: Boolean( elementSettings[EADD_skinPrefix+'crossFade'] )
+                crossFade: Boolean( elementSettings[this.skinPrefix+'crossFade'] )
             },
             // PARALLAX (è da implementare)
             //paralax: true,
@@ -148,35 +151,35 @@ jQuery(window).on('elementor/frontend/init', () => {
             containerClass:    'swiper-zoom-container', // CSS class name of zoom container
             zoomedSlideClass: 'swiper-slide-zoomed' // CSS class name of zoomed in container
             },*/
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'slidesPerView']) || 'auto',
-            slidesPerGroup: Number(elementSettings[EADD_skinPrefix+'slidesPerGroup']) || 1, // Set numbers of slides to define and enable group sliding. Useful to use with slidesPerView > 1
-            slidesPerColumn: Number(elementSettings[EADD_skinPrefix+'slidesColumn']) || 1, // 1, // Number of slides per column, for multirow layout
+            slidesPerView: Number(elementSettings[this.skinPrefix+'slidesPerView']) || 'auto',
+            slidesPerGroup: Number(elementSettings[this.skinPrefix+'slidesPerGroup']) || 1, // Set numbers of slides to define and enable group sliding. Useful to use with slidesPerView > 1
+            slidesPerColumn: Number(elementSettings[this.skinPrefix+'slidesColumn']) || 1, // 1, // Number of slides per column, for multirow layout
     
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0, // 30,
-            slidesOffsetBefore: Number(elementSettings[EADD_skinPrefix+'slidesOffsetBefore']) || 0, //   Add (in px) additional slide offset in the beginning of the container (before all slides)
-            slidesOffsetAfter: Number(elementSettings[EADD_skinPrefix+'slidesOffsetAfter']) || 0, //    Add (in px) additional slide offset in the end of the container (after all slides)
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween']) || 0, // 30,
+            slidesOffsetBefore: Number(elementSettings[this.skinPrefix+'slidesOffsetBefore']) || 0, //   Add (in px) additional slide offset in the beginning of the container (before all slides)
+            slidesOffsetAfter: Number(elementSettings[this.skinPrefix+'slidesOffsetAfter']) || 0, //    Add (in px) additional slide offset in the end of the container (after all slides)
             
-            slidesPerColumnFill: String(elementSettings[EADD_skinPrefix+'slidesPerColumnFill']) || 'row', //Could be 'column' or 'row'. Defines how slides should fill rows, by column or by row
+            slidesPerColumnFill: String(elementSettings[this.skinPrefix+'slidesPerColumnFill']) || 'row', //Could be 'column' or 'row'. Defines how slides should fill rows, by column or by row
     
             centerInsufficientSlides: true,
     
-            //watchOverflow: Boolean( elementSettings[EADD_skinPrefix+'watchOverflow'] ),
-            centeredSlides: Boolean( elementSettings[EADD_skinPrefix+'centeredSlides'] ),
-            centeredSlidesBounds: Boolean( elementSettings[EADD_skinPrefix+'centeredSlidesBounds'] ),
+            //watchOverflow: Boolean( elementSettings[this.skinPrefix+'watchOverflow'] ),
+            centeredSlides: Boolean( elementSettings[this.skinPrefix+'centeredSlides'] ),
+            centeredSlidesBounds: Boolean( elementSettings[this.skinPrefix+'centeredSlidesBounds'] ),
             //
-            grabCursor: Boolean( elementSettings[EADD_skinPrefix+'grabCursor'] ), //true,
+            grabCursor: Boolean( elementSettings[this.skinPrefix+'grabCursor'] ), //true,
     
             //------------------- Freemode
-            freeMode: Boolean( elementSettings[EADD_skinPrefix+'freeMode'] ),
-            freeModeMomentum: Boolean( elementSettings[EADD_skinPrefix+'freeModeMomentum'] ),
-            freeModeMomentumRatio: Number(elementSettings[EADD_skinPrefix+'freeModeMomentumRatio']) || 1,
-            freeModeMomentumVelocityRatio: Number(elementSettings[EADD_skinPrefix+'freeModeMomentumVelocityRatio']) || 1,
-            freeModeMomentumBounce: Boolean( elementSettings[EADD_skinPrefix+'freeModeMomentumBounce'] ),
-            freeModeMomentumBounceRatio: Number(elementSettings[EADD_skinPrefix+'speed']) || 1,
-            freeModeMinimumVelocity: Number(elementSettings[EADD_skinPrefix+'speed']) || 0.02,
-            freeModeSticky: Boolean( elementSettings[EADD_skinPrefix+'freeModeSticky'] ),
+            freeMode: Boolean( elementSettings[this.skinPrefix+'freeMode'] ),
+            freeModeMomentum: Boolean( elementSettings[this.skinPrefix+'freeModeMomentum'] ),
+            freeModeMomentumRatio: Number(elementSettings[this.skinPrefix+'freeModeMomentumRatio']) || 1,
+            freeModeMomentumVelocityRatio: Number(elementSettings[this.skinPrefix+'freeModeMomentumVelocityRatio']) || 1,
+            freeModeMomentumBounce: Boolean( elementSettings[this.skinPrefix+'freeModeMomentumBounce'] ),
+            freeModeMomentumBounceRatio: Number(elementSettings[this.skinPrefix+'speed']) || 1,
+            freeModeMinimumVelocity: Number(elementSettings[this.skinPrefix+'speed']) || 0.02,
+            freeModeSticky: Boolean( elementSettings[this.skinPrefix+'freeModeSticky'] ),
     
-            loop: Boolean( elementSettings[EADD_skinPrefix+'loop'] ) , // true,
+            loop: Boolean( elementSettings[this.skinPrefix+'loop'] ) , // true,
             //loopFillGroupWithBlank: true,
     
             // ----------------------------
@@ -213,21 +216,21 @@ jQuery(window).on('elementor/frontend/init', () => {
                 el: '.pagination-' + id_scope,
                 clickable: true,
                 //hideOnClick: true,
-                type: String(elementSettings[EADD_skinPrefix+'pagination_type']) || 'bullets', //"bullets", "fraction", "progressbar" or "custom"
+                type: String(elementSettings[this.skinPrefix+'pagination_type']) || 'bullets', //"bullets", "fraction", "progressbar" or "custom"
                 
                 //bulletElement: 'span',
-                dynamicBullets: Boolean( elementSettings[EADD_skinPrefix+'dynamicBullets'] ),
+                dynamicBullets: Boolean( elementSettings[this.skinPrefix+'dynamicBullets'] ),
                 //dynamicMainBullets: 1,
                 
                 renderBullet: function (index, className) {
-                    var indexLabel = !Boolean( elementSettings[EADD_skinPrefix+'dynamicBullets']) && Boolean( elementSettings[EADD_skinPrefix+'bullets_numbers']) ? '<span class="swiper-pagination-bullet-title">'+(index+1)+'</span>' : '';
+                    var indexLabel = !Boolean( elementSettings[this.skinPrefix+'dynamicBullets']) && Boolean( elementSettings[this.skinPrefix+'bullets_numbers']) ? '<span class="swiper-pagination-bullet-title">'+(index+1)+'</span>' : '';
     
                 return '<span class="' + className + '">'+indexLabel+'</span>';
                 //return '<span class="' + className + '">' + (index + 1) + '</span>';
                 },
                 renderFraction: function (currentClass, totalClass) {
                             return '<span class="' + currentClass + '"></span>' +
-                                '<span class="separator">' + String(elementSettings[EADD_skinPrefix+'fraction_separator']) + '</span>' +
+                                '<span class="separator">' + String(elementSettings[this.skinPrefix+'fraction_separator']) + '</span>' +
                                 '<span class="' + totalClass + '"></span>';
                             },
                 renderProgressbar: function (progressbarFillClass) {
@@ -241,7 +244,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                 <li><a href="#6f9669f" class="nav__item nav__item--current" aria-label="3"><span class="nav__item-title">03</span></a></li>
                 <li><a href="#b8a16d0" class="nav__item" aria-label="4"><span class="nav__item-title">04</span></a></li>
                 </ul>*/
-                /*var custom_pagination_type = String(elementSettings[EADD_skinPrefix+'custom_pagination_type']);
+                /*var custom_pagination_type = String(elementSettings[this.skinPrefix+'custom_pagination_type']);
                 var list = '<ul class="e-add-carousel-custom-pagination nav--'+custom_pagination_type+'">';
                 for(i = 1; i <= total; i++){
                     //list += current+' ';
@@ -263,16 +266,16 @@ jQuery(window).on('elementor/frontend/init', () => {
                 // progressbarFillClass:    'swiper-pagination-progressbar-fill', //    CSS class name of pagination progressbar fill element
                 // clickableClass:  'swiper-pagination-clickable', //   CSS class name set to pagination when it is clickable
             },
-            // watchSlidesProgress:  Boolean( elementSettings[EADD_skinPrefix+'watchSlidesProgress ), //false, // Enable this feature to calculate each slides progress
-            // watchSlidesVisibility:  Boolean( elementSettings[EADD_skinPrefix+'watchSlidesVisibility ), // false, // watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class
+            // watchSlidesProgress:  Boolean( elementSettings[this.skinPrefix+'watchSlidesProgress ), //false, // Enable this feature to calculate each slides progress
+            // watchSlidesVisibility:  Boolean( elementSettings[this.skinPrefix+'watchSlidesVisibility ), // false, // watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class
             scrollbar: {
                 el: '.swiper-scrollbar', //    null    String with CSS selector or HTML element of the container with scrollbar.
-                hide: Boolean( elementSettings[EADD_skinPrefix+'scrollbar_hide'] ),    // boolean  true    Hide scrollbar automatically after user interaction
-                draggable: Boolean( elementSettings[EADD_skinPrefix+'scrollbar_draggable'] ), //true, // Set to true to enable make scrollbar draggable that allows you to control slider position
+                hide: Boolean( elementSettings[this.skinPrefix+'scrollbar_hide'] ),    // boolean  true    Hide scrollbar automatically after user interaction
+                draggable: Boolean( elementSettings[this.skinPrefix+'scrollbar_draggable'] ), //true, // Set to true to enable make scrollbar draggable that allows you to control slider position
                 snapOnRelease: true, // Set to true to snap slider position to slides when you release scrollbar
                 //dragSize: 'auto', //     string/number   Size of scrollbar draggable element in px
             },
-            mousewheel: Boolean( elementSettings[EADD_skinPrefix+'mousewheelControl'] ), // true,
+            mousewheel: Boolean( elementSettings[this.skinPrefix+'mousewheelControl'] ), // true,
             /*mousewheel: {
                 forceToAxis: false //   Set to true to force mousewheel swipes to axis. So in horizontal mode mousewheel will work only with horizontal mousewheel scrolling, and only with vertical scrolling in vertical mode.
                 releaseOnEdges: false // Set to true and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)
@@ -280,10 +283,10 @@ jQuery(window).on('elementor/frontend/init', () => {
                 sensitivity: 1, // Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity
                 eventsTarged: 'container' // String with CSS selector or HTML element of the container accepting mousewheel events. By default it is swiper-container
             },*/
-            //keyboard: Boolean( elementSettings[EADD_skinPrefix+'keyboardControl ),
+            //keyboard: Boolean( elementSettings[this.skinPrefix+'keyboardControl ),
             
             keyboard: {
-                enabled: Boolean( elementSettings[EADD_skinPrefix+'keyboardControl'] ),
+                enabled: Boolean( elementSettings[this.skinPrefix+'keyboardControl'] ),
                 //onlyInViewport: false,
             },
             //     },
@@ -305,57 +308,57 @@ jQuery(window).on('elementor/frontend/init', () => {
             }
         };
 
-        if(EADD_skinPrefix == 'dualslider_'){
+        if(this.skinPrefix == 'dualslider_'){
             eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, {thumbs: {
                 swiper: this.elements.$scope.data('thumbscarousel'),
             }});
         }
-        if (elementSettings[EADD_skinPrefix+'useAutoplay']) {
+        if (elementSettings[this.skinPrefix+'useAutoplay']) {
             
             //default
             eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, {autoplay: true});
     
             //
-            var autoplayDelay = Number(elementSettings[EADD_skinPrefix+'autoplay']);
+            var autoplayDelay = Number(elementSettings[this.skinPrefix+'autoplay']);
             //console.log( autoplayDelay );
             if ( !autoplayDelay ) {
-                //delay: Number(elementSettings[EADD_skinPrefix+'autoplay) || 3000, // 2500, // Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
+                //delay: Number(elementSettings[this.skinPrefix+'autoplay) || 3000, // 2500, // Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
                 autoplayDelay = 3000;
             }else{
-                autoplayDelay = Number(elementSettings[EADD_skinPrefix+'autoplay']);
+                autoplayDelay = Number(elementSettings[this.skinPrefix+'autoplay']);
             }
-            eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, {autoplay: {delay: autoplayDelay, disableOnInteraction: Boolean(elementSettings[EADD_skinPrefix+'autoplayDisableOnInteraction']), stopOnLastSlide: Boolean(elementSettings[EADD_skinPrefix+'autoplayStopOnLast']) }});
+            eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, {autoplay: {delay: autoplayDelay, disableOnInteraction: Boolean(elementSettings[this.skinPrefix+'autoplayDisableOnInteraction']), stopOnLastSlide: Boolean(elementSettings[this.skinPrefix+'autoplayStopOnLast']) }});
     
         }
         //@p il responsive per i valori: 
         var elementorBreakpoints = elementorFrontend.config.breakpoints;
         var responsivePoints = eaddSwiperOptions.breakpoints = {};
         responsivePoints[elementorBreakpoints.lg] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'slidesPerView']) || 'auto',
-            slidesPerGroup: Number(elementSettings[EADD_skinPrefix+'slidesPerGroup']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
-            slidesPerColumn: Number(elementSettings[EADD_skinPrefix+'slidesColumn']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
-            slidesOffsetBefore: Number(elementSettings[EADD_skinPrefix+'slidesOffsetBefore']) || 0,
-            slidesOffsetAfter: Number(elementSettings[EADD_skinPrefix+'slidesOffsetAfter']) || 0,
+            slidesPerView: Number(elementSettings[this.skinPrefix+'slidesPerView']) || 'auto',
+            slidesPerGroup: Number(elementSettings[this.skinPrefix+'slidesPerGroup']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween']) || 0,
+            slidesPerColumn: Number(elementSettings[this.skinPrefix+'slidesColumn']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween']) || 0,
+            slidesOffsetBefore: Number(elementSettings[this.skinPrefix+'slidesOffsetBefore']) || 0,
+            slidesOffsetAfter: Number(elementSettings[this.skinPrefix+'slidesOffsetAfter']) || 0,
         };
         responsivePoints[elementorBreakpoints.md] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'slidesPerView_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesPerView']) || 'auto',
-            slidesPerGroup: Number(elementSettings[EADD_skinPrefix+'slidesPerGroup_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesPerGroup']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween_tablet']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
-            slidesPerColumn: Number(elementSettings[EADD_skinPrefix+'slidesColumn_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesColumn']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween_tablet']) || 0,
-            slidesOffsetBefore: Number(elementSettings[EADD_skinPrefix+'slidesOffsetBefore_tablet']) || 0,
-            slidesOffsetAfter: Number(elementSettings[EADD_skinPrefix+'slidesOffsetAfter_tablet']) || 0,
+            slidesPerView: Number(elementSettings[this.skinPrefix+'slidesPerView_tablet']) || Number(elementSettings[this.skinPrefix+'slidesPerView']) || 'auto',
+            slidesPerGroup: Number(elementSettings[this.skinPrefix+'slidesPerGroup_tablet']) || Number(elementSettings[this.skinPrefix+'slidesPerGroup']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween_tablet']) || Number(elementSettings[this.skinPrefix+'spaceBetween']) || 0,
+            slidesPerColumn: Number(elementSettings[this.skinPrefix+'slidesColumn_tablet']) || Number(elementSettings[this.skinPrefix+'slidesColumn']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween_tablet']) || 0,
+            slidesOffsetBefore: Number(elementSettings[this.skinPrefix+'slidesOffsetBefore_tablet']) || 0,
+            slidesOffsetAfter: Number(elementSettings[this.skinPrefix+'slidesOffsetAfter_tablet']) || 0,
         };
         responsivePoints[elementorBreakpoints.xs] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'slidesPerView_mobile']) || Number(elementSettings[EADD_skinPrefix+'slidesPerView_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesPerView']) || 'auto',
-            slidesPerGroup: Number(elementSettings[EADD_skinPrefix+'slidesPerGroup_mobile']) || Number(elementSettings[EADD_skinPrefix+'slidesPerGroup_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesPerGroup']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween_mobile']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween_tablet']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
-            slidesPerColumn: Number(elementSettings[EADD_skinPrefix+'slidesColumn_mobile']) || Number(elementSettings[EADD_skinPrefix+'slidesColumn_tablet']) || Number(elementSettings[EADD_skinPrefix+'slidesColumn']) || 1,
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'spaceBetween_mobile']) || 0,
-            slidesOffsetBefore: Number(elementSettings[EADD_skinPrefix+'slidesOffsetBefore_mobile']) || 0,
-            slidesOffsetAfter: Number(elementSettings[EADD_skinPrefix+'slidesOffsetAfter_mobile']) || 0,
+            slidesPerView: Number(elementSettings[this.skinPrefix+'slidesPerView_mobile']) || Number(elementSettings[this.skinPrefix+'slidesPerView_tablet']) || Number(elementSettings[this.skinPrefix+'slidesPerView']) || 'auto',
+            slidesPerGroup: Number(elementSettings[this.skinPrefix+'slidesPerGroup_mobile']) || Number(elementSettings[this.skinPrefix+'slidesPerGroup_tablet']) || Number(elementSettings[this.skinPrefix+'slidesPerGroup']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween_mobile']) || Number(elementSettings[this.skinPrefix+'spaceBetween_tablet']) || Number(elementSettings[this.skinPrefix+'spaceBetween']) || 0,
+            slidesPerColumn: Number(elementSettings[this.skinPrefix+'slidesColumn_mobile']) || Number(elementSettings[this.skinPrefix+'slidesColumn_tablet']) || Number(elementSettings[this.skinPrefix+'slidesColumn']) || 1,
+            spaceBetween: Number(elementSettings[this.skinPrefix+'spaceBetween_mobile']) || 0,
+            slidesOffsetBefore: Number(elementSettings[this.skinPrefix+'slidesOffsetBefore_mobile']) || 0,
+            slidesOffsetAfter: Number(elementSettings[this.skinPrefix+'slidesOffsetAfter_mobile']) || 0,
         };
         eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, responsivePoints);
         

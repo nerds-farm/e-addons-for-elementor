@@ -39,17 +39,21 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
     }
 
     bindEvents() {
-        let scope = this.elements.$scope,
-            id_scope = this.elements.$id_scope,
-            elementSettings = this.getElementSettings(),
-            widgetType = this.getWidgetType(),
-            galleryThumbs = null;
+        this.skinPrefix = EADD_skinPrefix;
+        this.elementSettings = this.getElementSettings();
 
         this.isThumbsCarouselEnabled = false;
         this.adapteHeight();
+        
+        let scope = this.elements.$scope,
+            id_scope = this.elements.$id_scope,
+            widgetType = this.getWidgetType(),
+            galleryThumbs = null;
+
+        
 
         if(galleryThumbs) galleryThumbs.destroy();
-        galleryThumbs = new Swiper( this.elements.$thumbsCarousel[0], this.thumbCarouselOptions( id_scope, elementSettings ) );
+        galleryThumbs = new Swiper( this.elements.$thumbsCarousel[0], this.thumbCarouselOptions( id_scope ) );
         this.elements.$galleryThumbs = galleryThumbs;
         this.elements.$scope.data('thumbscarousel', galleryThumbs);
 
@@ -93,10 +97,11 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 		
 	}
     onElementChange(propertyName){
+        this.elementSettings = this.getElementSettings();
         
-        if (    EADD_skinPrefix+'ratio_image' === propertyName || 
-                EADD_skinPrefix+'dualslider_distribution_vertical' === propertyName || 
-                EADD_skinPrefix+'dualslider_height_container' === propertyName
+        if (    this.skinPrefix+'ratio_image' === propertyName || 
+                this.skinPrefix+'dualslider_distribution_vertical' === propertyName || 
+                this.skinPrefix+'dualslider_height_container' === propertyName
             ) {
             this.elements.$galleryThumbs.update();
             this.adapteHeight();
@@ -104,25 +109,25 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
         }
     }
     adapteHeight(){
-        let elementSettings = this.getElementSettings();
-        if(elementSettings[EADD_skinPrefix+'dualslider_style'] == 'row-reverse' || elementSettings[EADD_skinPrefix+'dualslider_style'] == 'row'){
+        // this.elementSettings = this.getElementSettings();
+        if(this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row-reverse' || this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row'){
             this.elements.$thumbsCarousel.height( this.elements.$dualsliderCarousel.height() );
         }
     }
-    thumbCarouselOptions( id_scope, elementSettings ){ 
+    thumbCarouselOptions( id_scope ){ 
         
-        let slidesPerView = Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView']),
+        let slidesPerView = Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']),
             elementorBreakpoints = elementorFrontend.config.breakpoints,
             directionThumbSlider = 'horizontal';
 
-        if(elementSettings[EADD_skinPrefix+'dualslider_style'] == 'row-reverse' || elementSettings[EADD_skinPrefix+'dualslider_style'] == 'row'){
+        if(this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row-reverse' || this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row'){
             directionThumbSlider = 'vertical';
-        }else if(elementSettings[EADD_skinPrefix+'dualslider_style'] == 'column-reverse' || elementSettings[EADD_skinPrefix+'dualslider_style'] == 'column'){
+        }else if(this.elementSettings[this.skinPrefix+'dualslider_style'] == 'column-reverse' || this.elementSettings[this.skinPrefix+'dualslider_style'] == 'column'){
             directionThumbSlider = 'horizontal';
         }
 
         var eaddSwiperOptions = {
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'dualslider_gap']) || 0,
+            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap']) || 0,
             slidesPerView: slidesPerView || 'auto',
             //freeMode: true,
             
@@ -157,16 +162,16 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
         
         var responsivePoints = eaddSwiperOptions.breakpoints = {};
         responsivePoints[elementorBreakpoints.lg] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView']) || 'auto',
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'dualslider_gap']) || 0,
+            slidesPerView: Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']) || 'auto',
+            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap']) || 0,
         };
         responsivePoints[elementorBreakpoints.md] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView_tablet']) || Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView']) || 'auto',
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'dualslider_gap_tablet']) || Number(elementSettings[EADD_skinPrefix+'dualslider_gap']) || 0,
+            slidesPerView: Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView_tablet']) || Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']) || 'auto',
+            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap_tablet']) || Number(this.elementSettings[this.skinPrefix+'dualslider_gap']) || 0,
         };
         responsivePoints[elementorBreakpoints.xs] = {
-            slidesPerView: Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView_mobile']) || Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView_tablet']) || Number(elementSettings[EADD_skinPrefix+'thumbnails_slidesPerView']) || 'auto',
-            spaceBetween: Number(elementSettings[EADD_skinPrefix+'dualslider_gap_mobile']) || Number(elementSettings[EADD_skinPrefix+'dualslider_gap_tablet']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
+            slidesPerView: Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView_mobile']) || Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView_tablet']) || Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']) || 'auto',
+            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap_mobile']) || Number(this.elementSettings[this.skinPrefix+'dualslider_gap_tablet']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
         };
         eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, responsivePoints);
 
