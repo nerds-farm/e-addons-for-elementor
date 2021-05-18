@@ -19,15 +19,19 @@ class Actions {
     /*
       'options',
       'fields', // post, user, term, comment
+      'custom_fields',
+      'repeaters',
       'values', // post, user, term, comment
       'uploads', // dir, file
       'metas', // post, user, term, comment, attachment
-      'posts', // type, meta, post_type
+      'posts', // type, meta, post_type__name, public, private, 'abc,efg,!xyz'
       'term_posts',
       'terms', // taxonomy, post_type
       'taxonomies',
       'users', // role, user_roles
       'authors',
+      'acf',
+      'jet',
      */
 
     public function __construct() {
@@ -103,9 +107,8 @@ class Actions {
      * @since  1.0.1
      * @return array
      */
-    public function get_control_options($params) {
+    public function get_control_options($params, $control_options = []) {
         $method = '_get_' . $params['query_type'];
-        $control_options = array();
         if (method_exists($this, $method)) {
             $control_options = call_user_func([$this, $method], $params);
         }
@@ -113,12 +116,11 @@ class Actions {
         return $control_options;
     }
 
-    public function get_control_search(array $params) {
+    public function get_control_search(array $params, $control_options = []) {
         if (empty($params['query_type']) || empty($params['q'])) {
             throw new \Exception('Bad Request');
         }
         $method = 'get_' . $params['query_type'];
-        $control_options = array();
         if (method_exists($this, $method)) {
             $control_options = call_user_func([$this, $method], $params);
         }
@@ -128,7 +130,7 @@ class Actions {
         ];
     }
 
-    public function _search(array $params, $format = '') {
+    public function _search(array $params, $format = '', $control_options = []) {
         if (empty($params['query_type'])) {
             return false;
         }
@@ -136,7 +138,6 @@ class Actions {
             $params['q'] = NULL;
         }
         $method = 'get_' . $params['query_type'];
-        $control_options = array();
         if (method_exists($this, $method)) {
             $control_options = call_user_func([$this, $method], $params);
         }
@@ -179,8 +180,7 @@ class Actions {
 
     /*     * *********************************************************************** */
 
-    public function get_options($params) {
-        $control_options = [];
+    public function get_options($params, $control_options = []) {
         $options = Utils::get_options($params['q']);
         if (!empty($options)) {
             foreach ($options as $okey => $oname) {
@@ -193,8 +193,7 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_options($params) {
-        $control_options = [];
+    public function _get_options($params, $control_options = []) {
         $uid = (array) $params['id'];
         $options = Utils::get_options($uid);
         if (!empty($options)) {
@@ -208,8 +207,7 @@ class Actions {
         return $control_options;
     }
     
-    public function get_comments($params) {
-        $control_options = [];
+    public function get_comments($params, $control_options = []) {
         $args = array(); 
         if (is_numeric($params['q'])) {
             $args['ID'] = intval($params['q']);// args here 
@@ -229,8 +227,7 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_comments($params) {
-        $control_options = [];
+    public function _get_comments($params, $control_options = []) {
         $uid = (array) $params['id'];        
         foreach ( $uid as $comment_id ) {
             $comment = get_comment(intval($comment_id));
@@ -244,8 +241,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_fields($params) {
-        $control_options = [];
+    public function get_fields($params, $control_options = []) {
         if ($params['object_type'] == self::ANY) {
             $object_types = array('post', 'user', 'term', 'comment');
         } else {
@@ -266,9 +262,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_fields($params) {
+    public function _get_fields($params, $control_options = []) {
         $uid = (array) $params['id'];
-        $control_options = [];
         if ($params['object_type'] == self::ANY) {
             $object_types = array('post', 'user', 'term');
         } else {
@@ -290,8 +285,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_taxonomies($params) {
-        $control_options = [];
+    public function get_taxonomies($params, $control_options = []) {
         $taxonomies = Utils::get_taxonomies(false, $params['q']);
         if (!empty($taxonomies)) {
             foreach ($taxonomies as $field_key => $field_name) {
@@ -306,9 +300,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_taxonomies($params) {
+    public function _get_taxonomies($params, $control_options = []) {
         $uid = (array) $params['id'];
-        $control_options = [];
         foreach ($uid as $value) {
             $taxonomies = Utils::get_taxonomies(false, null, $value);
             if (!empty($taxonomies)) {
@@ -322,8 +315,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_uploads($params) {
-        $control_options = [];
+    public function get_uploads($params, $control_options = []) {
         $types = (!empty($params['object_type'])) ? $params['object_type'] : null;
 
         $upload_dir = wp_upload_dir();
@@ -361,8 +353,7 @@ class Actions {
         return $this->_get_files($params);
     }
 
-    public function get_files($params) {
-        $control_options = [];
+    public function get_files($params, $control_options = []) {
         $root_dir = ABSPATH;
         $contents = glob($root_dir . $params['q'] . '*');
 
@@ -381,17 +372,15 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_files($params) {
+    public function _get_files($params, $control_options = []) {
         $uid = (array) $params['id'];
-        $control_options = [];
         foreach ($uid as $aid) {
             $control_options[$aid] = basename($aid);
         }
         return $control_options;
     }
 
-    public function get_metas($params) {
-        $control_options = [];
+    public function get_metas($params, $control_options = []) {        
         $fields = Utils::get_metas($params['object_type'], $params['q']);
         foreach ($fields as $field_key => $field_name) {
             if ($field_key) {
@@ -404,9 +393,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_metas($params) {
-        $uid = (array) $params['id'];
-        $control_options = [];
+    public function _get_metas($params, $control_options = []) {
+        $uid = (array) $params['id'];        
         foreach ($uid as $aid) {
             $fields = Utils::get_metas($params['object_type'], $aid);
             foreach ($fields as $field_key => $field_name) {
@@ -418,8 +406,7 @@ class Actions {
         return $control_options;
     }
     
-    public function get_values($params) {
-        $control_options = [];
+    public function get_values($params, $control_options = []) {
         global $wpdb;
         $table = $wpdb->prefix . $params['object_type'] . 'meta';
         //$query = 'SELECT meta_id, meta_value FROM ' . $table;
@@ -456,9 +443,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_values($params) {
-        $uid = (array) $params['id'];
-        $control_options = [];
+    public function _get_values($params, $control_options = []) {
+        $uid = (array) $params['id'];        
         foreach ($uid as $aid) {
             $control_options[$aid] = $aid;
         }
@@ -466,8 +452,7 @@ class Actions {
     }
     
     
-    public function get_types($params) {
-        $control_options = [];
+    public function get_types($params, $control_options = []) {        
         $post_types = Utils::get_post_types();
         if (!empty($post_types)) {
             foreach ($post_types as $akey => $apt) {
@@ -485,10 +470,15 @@ class Actions {
         return $control_options;
     }
 
-    public function get_posts($params) {
-        $control_options = [];
+    public function get_posts($params, $control_options = []) {        
         $object_type = (!empty($params['object_type'])) ? $params['object_type'] : self::ANY;
-
+        $post_type_public = null;
+        $post_type_excluded = array();
+        if (!empty($params['object_type']) && in_array($params['object_type'], array('public', 'private'))) {
+            $objecy_type = self::ANY;
+            $post_type_public = $params['object_type'] == 'public' ? true : false;
+        }
+        
         switch ($object_type) {
             case 'type':
                 $control_options = $this->get_types($params);
@@ -505,6 +495,16 @@ class Actions {
                 }
                 break;
             default:
+                $object_type = Utils::explode($object_type);
+                foreach($object_type as $okey => $otype) {
+                    if (substr($otype, 0, 1) == '!') {
+                        $post_type_excluded[] = substr($otype, 1);
+                        unset($object_type[$okey]);
+                    }
+                }
+                if (empty($object_type)) {
+                    $object_type = self::ANY;
+                }
                 $query_params = [
                     'post_type' => $object_type,
                     's' => $params['q'],
@@ -552,6 +552,17 @@ class Actions {
                         $etype = get_post_meta($post->ID, '_elementor_template_type', true);
                         $post_title = '[' . $post->ID . '] ' . $post_title . ' (' . $post->post_type . ' > ' . $etype . ')';
                     }
+                    
+                    if (in_array($post->post_type, $post_type_excluded)) {
+                        continue;
+                    }
+
+                    if ($post_type_public != null) {
+                        $post_type = get_post_type_object($post->post_type);
+                        if ($post_type->public != $post_type_public) {
+                            continue;
+                        }
+                    }
                     $control_options[] = [
                         'id' => $post->ID,
                         'text' => $post_title,
@@ -561,9 +572,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_posts($params) {
-        $uid = (array) $params['id'];
-        $control_options = [];
+    public function _get_posts($params, $control_options = []) {
+        $uid = (array) $params['id'];        
         $is_txt = false;
         if (!empty($uid)) {
             if (is_array($uid)) {
@@ -617,8 +627,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_terms($params) {
-        $control_options = [];
+    public function get_terms($params, $control_options = []) {
         if (empty($params['object_type'])) {
             $taxonomies = get_object_taxonomies('');
         } else {
@@ -662,9 +671,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_terms($params) {
-        $uid = (array) $params['id'];
-        $control_options = [];
+    public function _get_terms($params, $control_options = []) {
+        $uid = (array) $params['id'];        
         $term_id = reset($uid);
         $query_params = array('hide_empty' => false);
         if (is_numeric($term_id)) {
@@ -679,8 +687,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_users($params) {
-        $control_options = [];
+    public function get_users($params, $control_options = []) {
         $object_type = (!empty($params['object_type'])) ? $params['object_type'] : false;
         if ($object_type == 'role') {
             $user_roles = Utils::get_user_roles();
@@ -715,9 +722,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_users($params) {
+    public function _get_users($params, $control_options = []) {
         $uid = (array) $params['id'];
-        $control_options = [];
         $is_role = false;
         if (!empty($uid)) {
             $first = reset($uid);
@@ -748,8 +754,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_authors($params) {
-        $control_options = [];
+    public function get_authors($params, $control_options = []) {
         $query_params = [
             'who' => 'authors',
             'has_published_posts' => true,
@@ -767,9 +772,8 @@ class Actions {
         return $control_options;
     }
 
-    public function _get_authors($params) {
+    public function _get_authors($params, $control_options = []) {
         $uid = (array) $params['id'];
-        $control_options = [];
         $query_params = [
             'who' => 'authors',
             'has_published_posts' => true,
@@ -783,8 +787,7 @@ class Actions {
         return $control_options;
     }
 
-    public function get_term_posts($params) {
-        $control_options = [];
+    public function get_term_posts($params, $control_options = []) {
         $term = Utils::get_term($params['object_type']);
         $query_params = [
             'post_type' => self::ANY,
@@ -817,8 +820,7 @@ class Actions {
         return $this->_get_posts($params);
     }
     
-    public function get_author_posts($params) {
-        $control_options = [];
+    public function get_author_posts($params, $control_options = []) {
         $author_id = intval($params['object_type']);
         $query_params = [
             'post_type' => self::ANY,
@@ -844,6 +846,117 @@ class Actions {
 
     public function _get_author_posts($params) {        
         return $this->_get_posts($params);
+    }
+    
+    
+    public function get_repeaters($params, $control_options = []) { 
+        $params['object_type'] = 'repeater';
+        if (defined('ACF_PRO')) {
+            foreach(self::get_acf($params) as $acf) {
+                $control_options[] = $acf;
+            }
+        }
+        if (class_exists( 'Jet_Engine' )) {
+            foreach(self::get_jet($params) as $jet) {
+                $control_options[] = $jet;
+            }
+        }
+        return $control_options;
+    }
+    
+    public function _get_repeaters($params, $control_options = []) { 
+        //$params['object_type'] = 'repeater';
+        if (defined('ACF_PRO')) {
+            $control_options += self::_get_acf($params);
+        }
+        if (class_exists( 'Jet_Engine' )) {
+            $control_options += self::_get_jet($params);
+        }
+        return $control_options;
+    }
+    
+    public function get_custom_fields($params, $control_options = []) { 
+        if (defined('ACF_PRO')) {
+            foreach(self::get_acf($params) as $acf) {
+                $control_options[] = $acf;
+            }
+        }
+        if (class_exists( 'Jet_Engine' )) {
+            foreach(self::get_jet($params) as $jet) {
+                $control_options[] = $jet;
+            }
+        }
+        return $control_options;
+    }
+    
+    public function _get_custom_fields($params, $control_options = []) { 
+        if (defined('ACF_PRO')) {
+            $control_options += self::_get_acf($params);
+        }
+        if (class_exists( 'Jet_Engine' )) {
+            $control_options += self::_get_jet($params);
+        }
+        return $control_options;
+    }
+    
+    public function get_acf($params, $control_options = []) {        
+        $types = (!empty($params['object_type'])) ? $params['object_type'] : array();
+        $acfs = \EAddonsForElementor\Core\Utils\Acf::get_acf_fields($types);
+        if (!empty($acfs)) {
+            foreach ($acfs as $akey => $acf) {
+                if (strlen($params['q']) > Actions::MIN_LENGHT) {
+                    if (strpos($akey, $params['q']) === false && strpos($acf, $params['q']) === false) {
+                        continue;
+                    }
+                }
+                $control_options[] = [
+                    'id' => $akey,
+                    'text' => $acf,
+                ];
+            }
+        }
+        return $control_options;
+    }
+
+    public function _get_acf($params, $control_options = []) {
+        $uid = (array) $params['id'];
+        foreach ($uid as $aid) {
+            $acf = acf_get_field_post($aid);
+            if ($acf) {
+                $control_options[$aid] = $acf->post_title;
+            }
+        }
+        return $control_options;
+    }
+    
+    public function get_jet($params, $control_options = []) {        
+        $types = (!empty($params['object_type'])) ? $params['object_type'] : array();
+        $jets = \EAddonsForElementor\Core\Utils\Jet::get_jet_fields($types);
+        if (!empty($jets)) {
+            foreach ($jets as $akey => $ajet) {
+                if (strlen($params['q']) > Actions::MIN_LENGHT) {
+                    if (strpos($akey, $params['q']) === false && strpos($ajet, $params['q']) === false) {
+                        continue;
+                    }
+                }
+                $control_options[] = [
+                    'id' => $akey,
+                    'text' => $ajet,
+                ];
+            }
+        }
+        return $control_options;
+    }
+
+    public function _get_jet($params, $control_options = []) {
+        $uid = (array) $params['id'];
+        foreach ($uid as $aid) {
+            $title = \EAddonsForElementor\Core\Utils\Jet::get_jet_field($aid);
+            if ($title) {
+                $control_options[$aid] = $title;
+            }
+        }
+        return $control_options;
     }
 
 }

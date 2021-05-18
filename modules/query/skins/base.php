@@ -11,14 +11,9 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
-
 use EAddonsForElementor\Base\Base_Skin;
-
 use EAddonsForElementor\Core\Utils;
 use EAddonsForElementor\Core\Utils\Query as Query_Utils;
-
-// '??? chiedere Fish comee gestirlo ......
-use EAddonsQuery\Core\Utils\Acf ;
 
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
@@ -49,7 +44,7 @@ class Base extends Base_Skin {
     protected $current_id;
     protected $current_data;
     protected $counter = 0;
-    protected $itemindex = 0;  
+    protected $itemindex = 0;
     protected $depended_scripts = [];
     protected $depended_styles = [];
 
@@ -153,50 +148,49 @@ class Base extends Base_Skin {
           //],
           ]
           ); */
-        
-          $this->add_control(
-          'blocks_align_flex', [
-                'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-                'type' => 'ui_selector',
-                'toggle' => true,
-                'type_selector' => 'image',
-                'label_block' => true,
-                'columns_grid' => 5,
-                'options' => [
-                    '' => [
-                    'title' => __('Left','e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_left.svg',
-                    ],
-                    'center' => [
-                    'title' => __('Middle','e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_middle.svg',
-                    ],
-                    'flex-end' => [
-                    'title' => __('Right','e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_right.svg',
-                    ],
-                    'space-between' => [
-                    'title' => __('Space Between','e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-between.svg',
-                    ],
-                    'space-around' => [
-                    'title' => __('Space Around','e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL.'modules/query/assets/img/grid_alignments/block_space-around.svg',
-                    ],
-                ],
-                'default' => '',
-                'selectors' => [
-                '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
-                ],
 
-            ]
+        $this->add_control(
+                'blocks_align_flex', [
+            'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+            'type' => 'ui_selector',
+            'toggle' => true,
+            'type_selector' => 'image',
+            'label_block' => true,
+            'columns_grid' => 5,
+            'options' => [
+                '' => [
+                    'title' => __('Left', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_left.svg',
+                ],
+                'center' => [
+                    'title' => __('Middle', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_middle.svg',
+                ],
+                'flex-end' => [
+                    'title' => __('Right', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_right.svg',
+                ],
+                'space-between' => [
+                    'title' => __('Space Between', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-between.svg',
+                ],
+                'space-around' => [
+                    'title' => __('Space Around', 'e-addons'),
+                    'return_val' => 'val',
+                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-around.svg',
+                ],
+            ],
+            'default' => '',
+            'selectors' => [
+                '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
+            ],
+                ]
         );
-        
+
         /*
           $this->add_responsive_control(
           'blocks_align_justify', [
@@ -364,10 +358,23 @@ class Base extends Base_Skin {
                 }
                 break;
             case 'repeater':
-                // da verificareeeeeee......
-                $repeater_list = $this->parent->get_settings_for_display('acf_repeater_field');
-                if (empty($repeater_list)) {
-                    return false;
+                $repeater_field = $this->parent->get_settings_for_display('repeater_field');
+                if ($repeater_field) {
+                    $customfields_type = $this->parent->get_settings_for_display('customfields_type');
+                    if ($customfields_type == 'option') {
+                        if (empty(get_option($repeater_field))) {
+                            return false;
+                        }
+                    } else {
+                        $data_source = $this->parent->get_settings_for_display('data_source');
+                        $id_target = get_queried_object_id();
+                        if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
+                            $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
+                        }
+                        if (empty(get_metadata($customfields_type, $id_target, $repeater_field))) {
+                            return false;
+                        }
+                    }
                 }
                 break;
             case 'items':
@@ -402,10 +409,11 @@ class Base extends Base_Skin {
             $this->enqueue();
 
             $this->render_loop_start();
-            
+
             switch ($querytype) {
                 case 'attachment':
                 case 'post':
+
                     /** @p qui identifico se mi trovo in un loop, altrimenti uso la wp_query */
                     if ($query->in_the_loop) {
                         $this->current_permalink = get_permalink();
@@ -414,14 +422,34 @@ class Base extends Base_Skin {
                         //
                         $this->render_element_item();
                     } else {
+                        $i = 0;
+                        $j = 0;
+                        $offset = $this->parent->get_settings_for_display('posts_offset');
+                        $limit = $this->parent->get_settings_for_display('posts_limit');
                         while ($query->have_posts()) {
+                            $i++;
                             $query->the_post();
-
-                            $this->current_permalink = get_permalink();
-                            $this->current_id = get_the_ID();
-                            $this->current_data = get_post(get_the_ID());
-                            //
-                            $this->render_element_item();
+                            $continue = false;
+                            if ($limit) {
+                                if ($offset) {
+                                    if ($i <= $offset) {
+                                        $continue = true;
+                                    }
+                                }
+                                if (!$continue) {
+                                    $j++;
+                                }
+                                if ($j > $limit) {
+                                    $continue = true;
+                                }
+                            }
+                            if (!$continue) {
+                                $this->current_permalink = get_permalink();
+                                $this->current_id = get_the_ID();
+                                $this->current_data = get_post(get_the_ID());
+                                //
+                                $this->render_element_item();
+                            }
                         }
                     }
                     wp_reset_postdata();
@@ -449,71 +477,102 @@ class Base extends Base_Skin {
                     break;
                 case 'repeater':
                     //echo 'questo è REPEATER';
-                    $repeater_field = $this->parent->get_settings_for_display('acf_repeater_field');
+
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                    $repeater_field_link = $this->parent->get_settings_for_display('acf_repeater_field_link');
                     $data_source = $this->parent->get_settings_for_display('data_source');
-                    
-                    if(empty($data_source)){
-                        if(empty($this->parent->get_settings_for_display('other_post_source_'.$customfields_type))){
-                            $id_target = get_queried_object_id();
-                        }else{
-                            $id_target = $this->parent->get_settings_for_display('other_post_source_'.$customfields_type);
-                        }
-                    }else{
-                        $id_target = get_queried_object_id();
+
+                    $id_target = get_queried_object_id();
+                    if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
+                        $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
                     }
-                    // -----------------------------
-                    // PER ACF
-                    switch($customfields_type){
-                        case 'attachment':
-                        case 'post':
-                            $id_target = $id_target;
-                            break;
-                        case 'term':
-                            $id_target = 'term_'.$id_target;
-                            break;
-                        case 'user':
-                            $id_target = 'user_'.$id_target;
-                            break;
-                    }
-                    
-                    // Check rows exists.
-                    if( have_rows($repeater_field, $id_target ) ):
-                        $list_items = $this->parent->get_settings_for_display('list_items');
-                        //var_dump($list_items);
-                        // Loop through rows.
-                        $index = 0;
-                        while( have_rows($repeater_field, $id_target )) : the_row();
-                            $repeater_values = [];
-                            
-                            //  ciclo 'list_items' e ne ricavo le chiavi
-                            if(!empty($list_items)){
-                                foreach($list_items as $key => $item){
-                                    $data_row = get_sub_field_object( $item['metafield_key'], false); //get_sub_field($item['metafield_key']);
-                                    $repeater_values[$item['item_type'].'_'.$key] = $data_row['value'];
-                                    //var_dump($key);
-                                }
-                                //
+
+                    $list_items = $this->parent->get_settings_for_display('list_items');
+
+                    /*
+                      if ( defined( 'PODS_VERSION' ) ) {}
+                     */
+
+                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');
+                    $repeater_field_link = $this->parent->get_settings_for_display('repeater_field_link');
+                    //var_dump($repeater_field);
+                    //var_dump($id_target);
+                    //var_dump($customfields_type);
+                    if ($repeater_field) {
+                        $repeater_rows = [];
+                        if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
+                            // PER ACF
+                            switch ($customfields_type) {
+                                case 'attachment':
+                                case 'post':
+                                    $id_target = $id_target;
+                                    break;
+                                case 'term':
+                                    $id_target = 'term_' . $id_target;
+                                    break;
+                                case 'user':
+                                    $id_target = 'user_' . $id_target;
+                                    break;
+                                case 'option':
+                                    $id_target = 'option';
+                                    break;
                             }
-                            //var_dump($repeater_values);
-                            $acf_repeater_field_link = get_sub_field_object( $repeater_field_link, false); //$this->parent->get_settings_for_display('acf_repeater_field_link') || '';
-                            $acf_repeater_field_link_url = $acf_repeater_field_link['value'];
+                            // Check rows exists.
+                            if (have_rows($repeater_field, $id_target)) {
+                                // Loop through rows.
+                                $i = 0;
+                                while (have_rows($repeater_field, $id_target)) {
+                                    the_row();
+                                    //  ciclo 'list_items' e ne ricavo i valori
+                                    if (!empty($list_items)) {
+                                        foreach ($list_items as $key => $item) {
+                                            if (!empty($item['metafield_key'])) {
+                                                $data_row = get_sub_field_object($item['metafield_key'], false); //get_sub_field($item['metafield_key']);
+                                                $repeater_rows[$i][$item['metafield_key']] = $data_row['value'];
+                                            }
+                                        }
+                                    }
+                                    $i++;
+                                    // End loop.
+                                }
+                            }
+                        } else {
+                            if ('option' === $customfields_type) {
+                                $repeater_rows = get_option($repeater_field);
+                            } else {
+                                $repeater_rows = get_metadata($customfields_type, $id_target, $repeater_field, true);
+                            }
+                        }
 
-                            $this->current_permalink = $acf_repeater_field_link_url;
-                            $this->current_id = $id_target;
-                            $this->current_data = $repeater_values;
+                        if (!empty($repeater_rows)) {
+                            foreach ($repeater_rows as $repeater_row) {
 
-                            $this->render_element_item();
+                                $repeater_values = [];
+                                //  ciclo 'list_items' e ne ricavo le chiavi
+                                if (!empty($list_items)) {
+                                    foreach ($list_items as $key => $item) {
+                                        if (!empty($item['metafield_key'])) {
+                                            $data_row = !empty($repeater_row[$item['metafield_key']]) ? $repeater_row[$item['metafield_key']] : false;
+                                            $repeater_values[$item['item_type'] . '_' . $key] = $data_row;
+                                            //var_dump($key);
+                                        }
+                                    }
+                                }
 
-                            $index ++;
-                        // End loop.
-                        endwhile;
+                                $repeater_field_link_url = get_permalink();
+                                if ($repeater_field_link) {
+                                    if (!empty($repeater_row[$repeater_field_link])) {
+                                        $repeater_field_link_url = $repeater_row[$repeater_field_link];
+                                    }
+                                }
 
-                    // No value.
-                    else :
-                        // Do something...
-                    endif;
+                                $this->current_permalink = $repeater_field_link_url;
+                                $this->current_id = $id_target;
+                                $this->current_data = $repeater_values;
+                                $this->render_element_item();
+                            }
+                        }
+                    }
+
                     // ---------------------------------------
                     break;
                 case 'items':
@@ -680,30 +739,30 @@ class Base extends Base_Skin {
         } else {
             //
             // ITEMS ///////////////////////
-            foreach ($_items as $key =>$item) {
+            foreach ($_items as $key => $item) {
                 //
                 if (!empty($item['item_type'])) {
-                    switch($item['item_type']) {
-                    case 'item_image':
-                        $this->render_repeateritem_start($item);
-                        //----------------------------------
-                        $this->render_item_image($item,$key);
-                        //----------------------------------
-                        $this->render_repeateritem_end();
-                        break;
-                    case 'item_imageoricon':
-                        $this->render_repeateritem_start($item);
-                        //----------------------------------
-                        $this->render_item_imageoricon($item);
-                        //----------------------------------
-                        $this->render_repeateritem_end();
-                        break;
-                    case 'item_avatar':
-                        $this->render_repeateritem_start($item);
-                        //----------------------------------
-                        $this->render_item_avatar($item);
-                        //----------------------------------
-                        $this->render_repeateritem_end();
+                    switch ($item['item_type']) {
+                        case 'item_image':
+                            $this->render_repeateritem_start($item);
+                            //----------------------------------
+                            $this->render_item_image($item, $key);
+                            //----------------------------------
+                            $this->render_repeateritem_end();
+                            break;
+                        case 'item_imageoricon':
+                            $this->render_repeateritem_start($item);
+                            //----------------------------------
+                            $this->render_item_imageoricon($item);
+                            //----------------------------------
+                            $this->render_repeateritem_end();
+                            break;
+                        case 'item_avatar':
+                            $this->render_repeateritem_start($item);
+                            //----------------------------------
+                            $this->render_item_avatar($item);
+                            //----------------------------------
+                            $this->render_repeateritem_end();
                     }
                 }
             }
@@ -730,10 +789,10 @@ class Base extends Base_Skin {
         }
         if (!empty($_items)) {
             // ITEMS ///////////////////////
-            
+
             foreach ($_items as $key => $item) {
-                
-                
+
+
                 //$custommetakey = $item['metafield_key'];
 
                 if (!empty($item['item_type'])) {
@@ -741,12 +800,12 @@ class Base extends Base_Skin {
                     $this->render_repeateritem_start($item);
                     //----------------------------------
                     //
-                    
+
                     switch ($item['item_type']) {
                         // commmon
-                        case 'item_title': $this->render_item_title($item,$key);
+                        case 'item_title': $this->render_item_title($item, $key);
                             break;
-                        case 'item_date': $this->render_item_date($item,$key);
+                        case 'item_date': $this->render_item_date($item, $key);
                             break;
                         // posts
                         case 'item_author': $this->render_item_author($item);
@@ -814,7 +873,7 @@ class Base extends Base_Skin {
                             break;
                         //----------------------------------
                         // posts/user/terms 
-                        case 'item_custommeta': $this->render_item_custommeta($item,$key);
+                        case 'item_custommeta': $this->render_item_custommeta($item, $key);
                             break;
                         case 'item_readmore': $this->render_item_readmore($item);
                             break;
@@ -824,7 +883,7 @@ class Base extends Base_Skin {
                             break;
                         case 'item_image': //(common)
                             if ($useimg) {
-                                $this->render_item_image($item,$key);
+                                $this->render_item_image($item, $key);
                             }
                             break;
                         case 'item_avatar':
@@ -857,32 +916,32 @@ class Base extends Base_Skin {
           ]
           ); */
         /*
-        $width = '100';
-        if (!empty($item['width'])) {
-            $width = intval($item['width']);
-        }
-        $width = ' elementor-column elementor-col-'.$width;
-        if ( ! empty( $item['width_tablet'] ) ) {
-                $width .= ' elementor-md-' . $item['width_tablet'];
-        }
-        if ( ! empty( $item['width_mobile'] ) ) {
-                $width .= ' elementor-sm-' . $item['width_mobile'];
-        }
+          $width = '100';
+          if (!empty($item['width'])) {
+          $width = intval($item['width']);
+          }
+          $width = ' elementor-column elementor-col-'.$width;
+          if ( ! empty( $item['width_tablet'] ) ) {
+          $width .= ' elementor-md-' . $item['width_tablet'];
+          }
+          if ( ! empty( $item['width_mobile'] ) ) {
+          $width .= ' elementor-sm-' . $item['width_mobile'];
+          }
 
-        if (!empty($item['display_inline']) && $item['display_inline'] == 'inline-block') {
-            $width = '';
-        }
-        */
+          if (!empty($item['display_inline']) && $item['display_inline'] == 'inline-block') {
+          $width = '';
+          }
+         */
 
         $classItem = 'class="e-add-item e-add-' . $item['item_type'] . ' elementor-repeater-item-' . $item['_id'] . '"';
         $dataIdItem = ' data-item-id="' . $item['_id'] . '"';
 
-        echo '<'.$tag. ' ' . $classItem . $dataIdItem /* $this->parent->get_render_attribute_string('eadditem_' . $id . '_' . $item_type) */ . '>';
+        echo '<' . $tag . ' ' . $classItem . $dataIdItem /* $this->parent->get_render_attribute_string('eadditem_' . $id . '_' . $item_type) */ . '>';
     }
 
     // REPEATE-ITEM end
     protected function render_repeateritem_end($tag = 'div') {
-        echo '</'.$tag.'>';
+        echo '</' . $tag . '>';
     }
 
     /////////////////////////////////////////////////////////////
@@ -984,27 +1043,27 @@ class Base extends Base_Skin {
     }
 
     protected function render_container_before() {
-
+        
     }
 
     protected function render_container_after() {
-
+        
     }
 
     protected function render_posts_before() {
-
+        
     }
 
     protected function render_posts_after() {
-
+        
     }
 
     protected function render_postsWrapper_before() {
-
+        
     }
 
     protected function render_postsWrapper_after() {
-
+        
     }
 
     // Classes ----------
@@ -1021,7 +1080,7 @@ class Base extends Base_Skin {
     }
 
     public function get_image_class() {
-
+        
     }
 
     public function get_scrollreveal_class() {
@@ -1043,7 +1102,7 @@ class Base extends Base_Skin {
         $content = $this->limit_text($content, $limit);
         return $content;
     }
-    
+
     public function limit_text($content, $limit = 100, $extra = '...') {
         $content = wp_strip_all_tags($content);
         if (strlen($content) > $limit) {
@@ -1052,7 +1111,6 @@ class Base extends Base_Skin {
         }
         return $content;
     }
-    
 
     public function get_item_link($settings) {
         if (!empty($settings['use_link'])) {
@@ -1060,14 +1118,14 @@ class Base extends Base_Skin {
                 case 'custom':
                     if (!empty($settings['shortcode_link'])) {
                         $raw_settings = $this->parent->get_settings('list_items');
-                        foreach($raw_settings as $raw_setting) {
+                        foreach ($raw_settings as $raw_setting) {
                             if ($raw_setting['_id'] == $settings['_id']) {
                                 $type = $this->parent->get_querytype();
                                 //var_dump($this->current_data); die();                                
                                 $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
                                 return $link;
                             }
-                        }                        
+                        }
                     }
                     break;
                 case 'shortcode':
@@ -1095,7 +1153,7 @@ class Base extends Base_Skin {
                             $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash('popup:open', [
                                 'id' => $popup_id,
                                 'toggle' => true,
-                                    ]);
+                            ]);
                             $link_action_url = str_replace(':', '%3A', $link_action_url);
                             $link_action_url = str_replace('=', '%3D', $link_action_url);
                             $link_action_url = str_replace('%3D%3D', '%3D', $link_action_url);

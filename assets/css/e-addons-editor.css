@@ -165,9 +165,9 @@
 .elementor-control.elementor-control-source_heading,
 .elementor-control.elementor-control-customfields_type,
 .elementor-control.elementor-control-data_source,
-.elementor-control.elementor-control-other_post_source_post,
-.elementor-control.elementor-control-other_post_source_term,
-.elementor-control.elementor-control-other_post_source_user,
-.elementor-control.elementor-control-other_post_source_attachment{
+.elementor-control.elementor-control-source_post,
+.elementor-control.elementor-control-source_term,
+.elementor-control.elementor-control-source_user,
+.elementor-control.elementor-control-source_attachment{
     background-color: #f5f5f5;
 }

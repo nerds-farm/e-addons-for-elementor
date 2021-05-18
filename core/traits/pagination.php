@@ -96,7 +96,9 @@ trait Pagination {
             if (wp_doing_ajax()) {
                 $current_url = admin_url('admin-ajax.php');                    
                 if (empty($_POST['url'])) {
-                    $base_url = get_permalink($_POST['queried_id']);                    
+                    if (!empty($_POST['queried_id'])) {
+                        $base_url = get_permalink($_POST['queried_id']);                    
+                    }
                 } else {
                     $base_url = esc_url_raw($_POST['url']);
                     //var_dump(Utils::get_current_page_num());
