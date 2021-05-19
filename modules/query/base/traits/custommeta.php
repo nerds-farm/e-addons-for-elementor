@@ -214,14 +214,14 @@ trait Custommeta {
     }
 
     // -------------- Custom Fields for Posts/Users/Terms ---------
-    public function custommeta_items($target, $type_q = '', $is_repeater = false) {
+    public function custommeta_items($target, $type_q = '') {
         if (!$type_q) {
             $type_q = $this->get_querytype();
         }
-        if($is_repeater){
+        if($type_q != 'repeater'){
             //Repeater Field Control
-            $this->controls_repeaterfield_content($target);
-        }else{
+            //$this->controls_repeaterfield_content($target);
+            //}else{
             //Key
             $target->add_control(
                 'metafield_key', [

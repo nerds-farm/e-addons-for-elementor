@@ -19,10 +19,10 @@ use EAddonsForElementor\Core\Utils;
  */
 trait Common {
 
-    protected function render_item_image($settings,$i = 0) {
+    protected function render_item_image($settings, $i = 0) {
 
         $querytype = $this->parent->get_querytype();
-
+        $image_id = false;
         //considero se l'immagine è un metavalue invece della featured image
 
         if (!empty($settings['image_custom_metafield'])) {
@@ -49,7 +49,9 @@ trait Common {
                     break;
                 case 'repeater':
                     //se mi trovo in repeater
-                    $image_id = $this->current_data['item_image_'.$i];
+                    if (!empty($this->current_data['item_image_' . $i])) {
+                        $image_id = $this->current_data['item_image_' . $i];
+                    }
                     break;
             }
         }
@@ -74,7 +76,7 @@ trait Common {
         //
         // @p definisco se l'immagine è linkata
         $use_link = $this->get_item_link($settings);
-        $blanklink  = !empty($settings['blanklink_enable']);
+        $blanklink = !empty($settings['blanklink_enable']);
 
         // ---------------------------------------
         // @p preparo il dato in base a 'thumbnail_size'
@@ -133,8 +135,8 @@ trait Common {
             $html_tag = 'a';
             $attribute_link = ' href="' . $use_link . '"';
 
-            if( !empty($blanklink))
-            $attribute_target = ' target="_blank"';
+            if (!empty($blanklink))
+                $attribute_target = ' target="_blank"';
         }
         echo '<' . $html_tag . ' class="e-add-post-image' . $bgimage . $overlayimage . $overlayhover . '"' . $attribute_link . $attribute_target . '>';
 
@@ -150,60 +152,62 @@ trait Common {
         echo '</' . $html_tag . '>';
     }
 
-    protected function render_item_title($settings,$i = 0) {
+    protected function render_item_title($settings, $i = 0) {
         // Settings ------------------------------
         $html_tag = !empty($settings['html_tag']) ? $settings['html_tag'] : 'h3';
         //
         $use_link = $this->get_item_link($settings);
-        $blanklink  = $settings['blanklink_enable'];
-        
+        $blanklink = $settings['blanklink_enable'];
+
         // ---------------------------------------
         echo sprintf('<%1$s class="e-add-post-title">', $html_tag);
         ?>
-        <?php if ($use_link) { 
+        <?php
+        if ($use_link) {
             $attribute_link = ' href="' . $use_link . '"';
 
             $attribute_target = '';
-            if( !empty($blanklink))
-            $attribute_target = ' target="_blank"';
-            
-            echo '<a'. $attribute_link . $attribute_target . '>';
-            
-            }
-            $querytype = $this->parent->get_querytype();
+            if (!empty($blanklink))
+                $attribute_target = ' target="_blank"';
 
-            switch ($querytype) {
-                case 'attachment':
-                case 'post':
-                    //se mi trovo in post
-                    get_the_title() ? the_title() : the_ID();
-                    break;
-                case 'term':
-                    //se mi trovo in term
-                    $term_info = $this->current_data;
-                    echo $term_info->name;
-                    break;
-                case 'items':
-                    //se mi trovo in item_list
-                    echo $this->current_data['sl_title'];
-                    break;
-                case 'repeater':
-                    //se mi trovo in item_list
-                    // ..... echo $this->current_data['sl_title'];
-                    echo $this->current_data['item_title_'.$i];
-                    //echo $settings['item_type'].' - '.$i;
-                    //echo $settings['item_type'].' - '.$this->counter.' - '.$this->itemindex;
-                    break;
-            }
-            ?>
-            <?php if ($use_link) { echo '</a>'; } ?>
-            <?php
+            echo '<a' . $attribute_link . $attribute_target . '>';
+        }
+        $querytype = $this->parent->get_querytype();
+
+        switch ($querytype) {
+            case 'attachment':
+            case 'post':
+                //se mi trovo in post
+                get_the_title() ? the_title() : the_ID();
+                break;
+            case 'term':
+                //se mi trovo in term
+                $term_info = $this->current_data;
+                echo $term_info->name;
+                break;
+            case 'items':
+                //se mi trovo in item_list
+                echo $this->current_data['sl_title'];
+                break;
+            case 'repeater':
+                //se mi trovo in item_list
+                // ..... echo $this->current_data['sl_title'];
+                echo $this->current_data['item_title_' . $i];
+                //echo $settings['item_type'].' - '.$i;
+                //echo $settings['item_type'].' - '.$this->counter.' - '.$this->itemindex;
+                break;
+        }
+        ?>
+        <?php if ($use_link) {
+            echo '</a>';
+        } ?>
+        <?php
         echo sprintf('</%s>', $html_tag);
         ?>
         <?php
     }
 
-    protected function render_item_date($settings,$i = 0) {
+    protected function render_item_date($settings, $i = 0) {
         $querytype = $this->parent->get_querytype();
         // Settings ------------------------------
         $date_format = $settings['date_format'];
@@ -252,11 +256,10 @@ trait Common {
             case 'repeater':
                 //se mi trovo in repeater
                 //$date = $this->current_data['sl_date'];
-                
-                if (!empty($this->current_data['item_date_'.$i])) {
-                    $date = date_create($this->current_data['item_date_'.$i]);
+
+                if (!empty($this->current_data['item_date_' . $i])) {
+                    $date = date_create($this->current_data['item_date_' . $i]);
                     $date = date_format($date, $date_format);
-                    
                 }
                 break;
         }
@@ -281,12 +284,12 @@ trait Common {
         $attribute_button = 'button_' . $this->counter;
 
         $use_link = $this->get_item_link($settings);
-        $blanklink  = $settings['blanklink_enable'];
-        
+        $blanklink = $settings['blanklink_enable'];
+
         $this->parent->add_render_attribute($attribute_button, 'href', $use_link);
 
-        if( !empty($blanklink))
-        $this->parent->add_render_attribute($attribute_button, 'target', '_blank');
+        if (!empty($blanklink))
+            $this->parent->add_render_attribute($attribute_button, 'target', '_blank');
         //$this->parent->add_render_attribute($attribute_button, 'rel', 'nofollow');
 
         $this->parent->add_render_attribute($attribute_button, 'class', ['elementor-button-link', 'elementor-button', 'e-add-button']);
@@ -334,7 +337,7 @@ trait Common {
                 $class_icon = $class_icon ? $class_icon . ' ' : '';
                 ?>
                 <i class="e-add-icon <?php echo $class_icon . esc_attr($metaitem[$icon4_key]); ?>" aria-hidden="true"></i>
-            <?php
+                <?php
             }
             return ob_get_clean();
         }

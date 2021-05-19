@@ -34,7 +34,7 @@ class Form {
         }
         
         foreach ($fields as $id => $field) {
-            $tmp = explode('__value', $id);
+            $tmp = explode('__value', $id); // media field
             if (count($tmp) == 2) {
                 $oid = reset($tmp);
                 if (empty($fields[$oid])) {
@@ -57,7 +57,7 @@ class Form {
                 $e_form[$key] = $value;
             }
         } else {
-            $e_form = $fields; // for form tokens
+            $e_form = $fields; // for form twig
         }
         // set them globally in _POST var
         foreach ($fields as $key => $value) {
@@ -307,6 +307,12 @@ class Form {
     }
 
     public static function get_field($custom_id, $settings = array()) {
+        if (empty($settings)) {
+            $form_id = self::get_form_id();
+            if ($form_id) {
+                $settings = Utils::get_settings_by_element_id($form_id);
+            }
+        }
         if (!empty($settings['form_fields'])) {
             foreach ($settings['form_fields'] as $afield) {
                 if ($afield['custom_id'] == $custom_id) {

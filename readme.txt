@@ -232,6 +232,3 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 
 = 1.0.0 - 28-06-2020 =
 * Initial release
-
-= 0.0.1 - 03-05-2017 =
-* First steps
