@@ -361,17 +361,25 @@ class Base extends Base_Skin {
                 $repeater_field = $this->parent->get_settings_for_display('repeater_field');
                 if ($repeater_field) {
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                    if ($customfields_type == 'option') {
-                        if (empty(get_option($repeater_field))) {
+                    
+                    if ($customfields_type == 'option') {                        
+                        $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
+                        $option_data = get_option($option_name);
+                        if (empty($option_data)) {
                             return false;
+                        } else {
+                            if (empty($option_data[$repeater_field])) {
+                                return false;
+                            }
                         }
                     } else {
                         $data_source = $this->parent->get_settings_for_display('data_source');
-                        $id_target = get_queried_object_id();
+                        $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
                         if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
                             $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
                         }
-                        if (empty(get_metadata($customfields_type, $id_target, $repeater_field))) {
+                        $repeater_data = get_metadata($customfields_type, $id_target, $repeater_field);
+                        if (empty($repeater_data)) {
                             return false;
                         }
                     }
@@ -481,7 +489,7 @@ class Base extends Base_Skin {
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
                     $data_source = $this->parent->get_settings_for_display('data_source');
 
-                    $id_target = get_queried_object_id();
+                    $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
                     if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
                         $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
                     }
@@ -500,7 +508,7 @@ class Base extends Base_Skin {
                     if ($repeater_field) {
                         $repeater_rows = [];
                         if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
-                            // PER ACF
+                            // ACF
                             switch ($customfields_type) {
                                 case 'attachment':
                                 case 'post':
@@ -536,8 +544,13 @@ class Base extends Base_Skin {
                                 }
                             }
                         } else {
+                            // JET
                             if ('option' === $customfields_type) {
-                                $repeater_rows = get_option($repeater_field);
+                                $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
+                                $option_data = get_option($option_name);
+                                if (!empty($option_data[$repeater_field])) {
+                                    $repeater_rows = $option_data[$repeater_field];
+                                }
                             } else {
                                 $repeater_rows = get_metadata($customfields_type, $id_target, $repeater_field, true);
                             }
