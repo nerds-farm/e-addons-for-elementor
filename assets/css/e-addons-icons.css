@@ -113,6 +113,9 @@
 .eadd-queryviews-filters:before { content: '\e842'; } /* '' */
 .eadd-queryviews-next-post:before { content: '\e843'; } /* '' */
 .eadd-queryviews-timeline:before { content: '\e846'; } /* '' */
+.eadd-queryviews-piling:before { content: '\e8e5'; } /* '' */
+.eadd-queryviews-circular:before { content: '\e8e6'; } /* '' */
+.eadd-queryviews-cards:before { content: '\e8e7'; } /* '' */
 
 .eadd-remote-rest-api:before { content: '\e847'; } /* '' */
 .eadd-remote-iframe:before { content: '\e848'; } /* '' */
@@ -189,12 +192,15 @@
 .eadd-el-form-pro-act-save-posts:before { content: '\e88d'; } /* '' */
 .eadd-el-form-pro-act-export:before { content: '\e811'; } /* '' */
 .eadd-el-form-pro-act-csv:before { content: '\e812'; } /* '' */
-.eadd-el-form-pro-act-payments:before { content: '\e813'; } /* '' */
 .eadd-el-form-pro-act-multi-redirects:before { content: '\e814'; } /* '' */
 .eadd-el-form-pro-act-save:before { content: '\e815'; } /* '' */
 .eadd-el-form-pro-act-pdf-generator:before { content: '\e816'; } /* '' */
 .eadd-el-form-pro-ext-advanced-steps:before { content: '\e817'; } /* '' */
 .eadd-el-form-pro-act-send-custom-mail:before { content: '\e818'; } /* '' */
+
+.eadd-el-form-pro-act-payments:before { content: '\e813'; } /* '' */
+.eadd-saved-payments:before { content: '\e8e8'; } /* '' */
+.eadd-paypal-payments:before { content: '\e8e9'; } /* '' */
 
 .eadd-el-form-pro-advanced-steps-save:before { content: '\e876'; } /* '' */
 .eadd-el-form-pro-advanced-steps-legend:before { content: '\e877'; } /* '' */
@@ -299,3 +305,5 @@
 .eadd-multilevel-menu:before { content: '\e8e1'; } /* '' */
 .eadd-section-transitions:before { content: '\e8e3'; } /* '' */
 .eadd-section-reveal:before { content: '\e8e4'; } /* '' */
+
+.eadd-extension-bgimage-sizes:before { content: '\e8ea'; } /* '' */
