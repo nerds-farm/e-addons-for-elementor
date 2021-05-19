@@ -920,7 +920,7 @@ class Base extends Base_Skin {
         post_class(['e-add-post e-add-post-item e-add-post-item-' . $this->parent->get_id() . $item_class]);
         echo $data_post_id . $data_post_index;
         ?>>
-            <div class="e-add-post-block<?php echo $overlayhover . $hoverEffects_class . $animation_class; ?>">
+            <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
         <?php
     }

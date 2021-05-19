@@ -171,3 +171,6 @@
 .elementor-control.elementor-control-other_post_source_attachment{
     background-color: #f5f5f5;
 }
+.elementor-control-type-button .elementor-button{
+    padding: 0 10px;
+}

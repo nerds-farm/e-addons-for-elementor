@@ -394,7 +394,7 @@ trait Items_Content {
     public function controls_items_icon_content($target) {
         //Icon color-size
         $target->add_control(
-                'icon_style_heading', [
+                'icon_content_heading', [
             'type' => Controls_Manager::RAW_HTML,
             'show_label' => false,
             'raw' => '<i class="fas fa-star"></i> <b>' . __('Icon', 'e-addons') . '</b>',
@@ -408,7 +408,7 @@ trait Items_Content {
         
 
         $target->add_control(
-                'color_item_icon', [
+                'color_item_iconorimage', [
             'label' => __('Icon Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
@@ -421,7 +421,7 @@ trait Items_Content {
                 ]
         );
         $target->add_responsive_control(
-                'icon_size', [
+                'icon_size_imageoricon', [
             'label' => __('Icon size', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
             'default' => [
