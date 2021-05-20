@@ -19,14 +19,12 @@ class Acf {
         }
         return array("text", "textarea", "number", "range", "email", "url", "password", "image", "file", "wysiwyg", "oembed", "gallery", "select", "checkbox", "radio", "button_group", "true_false", "link", "post_object", "page_link", "relationship", "taxonomy", "user", "google_map", "date_picker", "date_time_picker", "time_picker", "color_picker", "message", "accordion", "tab", "group", "repeater", "flexible_content", "clone");
     }
-
+    
     public static function get_post_meta_name($meta_key) {
-        if (self::is_plugin_active('acf')) {
-            $acf = get_field_object($meta_key);
-            if ($acf) {
-                return $acf['label'];
-            }
-        }
+        $acf = get_field_object($meta_key);
+        if ($acf) {
+            return $acf['label'];
+        }        
         return $meta_key;
     }
 

@@ -362,16 +362,24 @@ class Base extends Base_Skin {
                 if ($repeater_field) {
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
                     
-                    if ($customfields_type == 'option') {                        
-                        $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
-                        $option_data = get_option($option_name);
-                        if (empty($option_data)) {
-                            return false;
-                        } else {
-                            if (empty($option_data[$repeater_field])) {
+                    if ($customfields_type == 'option') {   
+                        if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
+                            $option_data = get_field($repeater_field, 'option');                                           
+                            if (empty($option_data)) {
                                 return false;
                             }
+                        } else {
+                            $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
+                            $option_data = get_option($option_name);
+                            if (empty($option_data)) {
+                                return false;
+                            } else {
+                                if (empty($option_data[$repeater_field])) {
+                                    return false;
+                                }
+                            }
                         }
+                        
                     } else {
                         $data_source = $this->parent->get_settings_for_display('data_source');
                         $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();

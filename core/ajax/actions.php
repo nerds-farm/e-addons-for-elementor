@@ -532,12 +532,14 @@ class Actions {
                 if (!wp_doing_ajax()) { //$object_type != 'any') {
                     $query_params['post_status'] = 'publish';
                 }
-                if ('attachment' === $query_params['post_type']) {
+                if ('attachment' === $query_params['post_type'] 
+                    || (is_array($query_params['post_type']) && in_array('attachment', $query_params['post_type']))) {
                     $query_params['post_status'] = 'inherit';
                 }
                 if (!empty($params['post_status'])) {
                     $query_params['post_status'] = $params['post_status'];
-                }                
+                }    
+                //var_dump($query_params); die();
                 if (class_exists('EAddonsForElementor\Overrides\E_Query')) {
                     $query = new \EAddonsForElementor\Overrides\E_Query($query_params);
                 } else {
