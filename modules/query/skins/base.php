@@ -360,15 +360,35 @@ class Base extends Base_Skin {
             case 'repeater':
                 $repeater_field = $this->parent->get_settings_for_display('repeater_field');
                 if ($repeater_field) {
+                    $data_source = $this->parent->get_settings_for_display('data_source');
                     $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                    
-                    if ($customfields_type == 'option') {   
-                        if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
-                            $option_data = get_field($repeater_field, 'option');                                           
-                            if (empty($option_data)) {
-                                return false;
-                            }
-                        } else {
+                    $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
+                    if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
+                        $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
+                    }
+                    if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
+                        // ACF
+                        switch ($customfields_type) {
+                            case 'attachment':
+                            case 'post':
+                                $id_target = $id_target;
+                                break;
+                            case 'term':
+                                $id_target = 'term_' . $id_target;
+                                break;
+                            case 'user':
+                                $id_target = 'user_' . $id_target;
+                                break;
+                            case 'option':
+                                $id_target = 'option';
+                                break;
+                        }
+                        $repeater_data = get_field($repeater_field, $id_target);
+                        if (empty($repeater_data)) {
+                            return false;
+                        }
+                    } else {
+                        if ($customfields_type == 'option') {
                             $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
                             $option_data = get_option($option_name);
                             if (empty($option_data)) {
@@ -378,17 +398,12 @@ class Base extends Base_Skin {
                                     return false;
                                 }
                             }
-                        }
-                        
-                    } else {
-                        $data_source = $this->parent->get_settings_for_display('data_source');
-                        $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
-                        if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
-                            $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
-                        }
-                        $repeater_data = get_metadata($customfields_type, $id_target, $repeater_field);
-                        if (empty($repeater_data)) {
-                            return false;
+                        } else {
+                            $customfields_type = $customfields_type == 'attachment' ? 'post' : $customfields_type;
+                            $repeater_data = get_metadata($customfields_type, $id_target, $repeater_field);
+                            if (empty($repeater_data)) {
+                                return false;
+                            }
                         }
                     }
                 }
@@ -1002,11 +1017,11 @@ class Base extends Base_Skin {
         ?>>
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
-        <?php
-    }
+                <?php
+            }
 
-    protected function render_item_end() {
-        ?>
+            protected function render_item_end() {
+                ?>
 
             </div>
         </article>
@@ -1045,21 +1060,21 @@ class Base extends Base_Skin {
         ?>
         <?php $this->render_container_before(); ?>
         <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container'); ?>>
-        <?php $this->render_posts_before(); ?>
+            <?php $this->render_posts_before(); ?>
             <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container_wrap'); ?>>
-            <?php
-            $this->render_postsWrapper_before();
-        }
-
-        protected function render_loop_end() {
-            $this->render_postsWrapper_after();
-            ?>
-            </div>
                 <?php
-                $this->render_posts_after();
+                $this->render_postsWrapper_before();
+            }
+
+            protected function render_loop_end() {
+                $this->render_postsWrapper_after();
                 ?>
+            </div>
+            <?php
+            $this->render_posts_after();
+            ?>
         </div>
-            <?php $this->render_container_after(); ?>
+        <?php $this->render_container_after(); ?>
         <?php
     }
 
