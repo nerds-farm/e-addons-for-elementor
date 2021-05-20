@@ -199,8 +199,8 @@
 .eadd-el-form-pro-act-send-custom-mail:before { content: '\e818'; } /* '' */
 
 .eadd-el-form-pro-act-payments:before { content: '\e813'; } /* '' */
-.eadd-saved-payments:before { content: '\e8e8'; } /* '' */
-.eadd-paypal-payments:before { content: '\e8e9'; } /* '' */
+.eadd-button-payments:before { content: '\e8e8'; } /* '' */
+.eadd-saved-payments:before { content: '\e8e9'; } /* '' */
 
 .eadd-el-form-pro-advanced-steps-save:before { content: '\e876'; } /* '' */
 .eadd-el-form-pro-advanced-steps-legend:before { content: '\e877'; } /* '' */
