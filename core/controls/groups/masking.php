@@ -79,7 +79,7 @@ class Masking extends Group_Control_Base {
                     'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/diagonal_lines.jpg'
                 ],
                 'mask4' => [
-                    'title' => 'Rhombu Pattern',
+                    'title' => 'Rhombus Pattern',
                     'image' => E_ADDONS_URL . 'assets/img/masking/rombs_pattern.png',
                     'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/rombs_pattern.jpg'
                 ],
