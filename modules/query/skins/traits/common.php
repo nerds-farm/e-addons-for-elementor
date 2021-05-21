@@ -24,7 +24,7 @@ trait Common {
         $querytype = $this->parent->get_querytype();
         $image_id = false;
         //considero se l'immagine è un metavalue invece della featured image
-
+        
         if (!empty($settings['image_custom_metafield'])) {
             $meta_value = get_metadata($querytype, $this->current_id, $settings['image_custom_metafield'], true);
             $image_id = $meta_value;

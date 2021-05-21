@@ -1018,9 +1018,9 @@ class Base extends Base_Skin {
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
                 <?php
-            }
+    }
 
-            protected function render_item_end() {
+    protected function render_item_end() {
                 ?>
 
             </div>

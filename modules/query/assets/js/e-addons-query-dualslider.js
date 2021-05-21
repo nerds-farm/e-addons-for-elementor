@@ -105,14 +105,18 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             ) {
             this.elements.$galleryThumbs.update();
             this.adapteHeight();
-            console.log(propertyName);
+            //console.log(propertyName);
+        }
+        if(this.skinPrefix+'dualslider_image_height' === propertyName){
+            this.elements.$galleryThumbs.update();
+            console.log(this.elementSettings[this.skinPrefix+'dualslider_image_height']);
         }
     }
     adapteHeight(){
         // this.elementSettings = this.getElementSettings();
         if(this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row-reverse' || this.elementSettings[this.skinPrefix+'dualslider_style'] == 'row'){
-            this.elements.$thumbsCarousel.height( this.elements.$dualsliderCarousel.height() );
-        }
+            this.elements.$thumbsCarousel.height(this.elements.$dualsliderCarousel.height());
+        }//this.elementSettings[this.skinPrefix+'dualslider_image_height']
     }
     thumbCarouselOptions( id_scope ){ 
         
@@ -131,7 +135,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             slidesPerView: slidesPerView || 'auto',
             //freeMode: true,
             
-            autoHeight: true,
+            autoHeight: false,
             //watchOverflow: true,
             
             direction:  directionThumbSlider,

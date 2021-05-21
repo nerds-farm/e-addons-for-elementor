@@ -29,19 +29,34 @@ trait User {
         $use_link = $this->get_item_link($settings);
         $blanklink  = $settings['blanklink_enable'];
 
+
         //
         // ---------------------------------------
         // @p preparo il dato in base a 'thumbnail_size'
         $avatarsize = $settings['avatar_size'];
-
+        $avatar_url = '';
+        $avatar_html = '';
         $image_attr = [
             'class' => $this->get_image_class()
         ];
-        // @p questa è l'mmagine avatar HTML
-        $avatar_html = get_avatar($user_info->user_email, $avatarsize);
-        // @p questa è l'mmagine avatar URL
-        $avatar_url = get_avatar_url($user_info->user_email, $avatarsize);
 
+        if (!empty($settings['image_custom_metafield'])) {
+            $meta_value = get_metadata('user', $this->current_id, $settings['image_custom_metafield'], true);
+            $image_id = $meta_value;
+            
+            $img_url = wp_get_attachment_image_src($image_id, $avatarsize, false);
+            $avatar_url = $img_url[0];
+            $avatar_html = wp_get_attachment_image($image_id, $avatarsize, false);
+        }
+
+        if(empty($avatar_url)){
+            // @p questa è l'mmagine avatar URL
+            $avatar_url = get_avatar_url($user_info->user_email, $avatarsize);
+        }
+        if(empty($avatar_html)){
+            // @p questa è l'mmagine avatar HTML
+            $avatar_html = get_avatar($user_info->user_email, $avatarsize);
+        }
 
         $bgimage = '';
         if ($use_bgimage) {
