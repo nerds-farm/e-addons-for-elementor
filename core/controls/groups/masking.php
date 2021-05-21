@@ -61,42 +61,42 @@ class Masking extends Group_Control_Base {
             'toggle' => false,
             'type_selector' => 'image',
             'columns_grid' => 4,
-            'default' => E_ADDONS_URL . 'assets/img/mask/flower.png',
+            'default' => E_ADDONS_URL . 'assets/img/masking/splash.png',
             'options' => [
                 'mask1' => [
-                    'title' => 'Flower',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/flower.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/flower.jpg'
+                    'title' => 'Splash',
+                    'image' => E_ADDONS_URL . 'assets/img/masking/splash.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/splash.jpg'
                 ],
                 'mask2' => [
-                    'title' => 'Blob',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/blob.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/blob.jpg'
+                    'title' => 'Blobber',
+                    'image' => E_ADDONS_URL . 'assets/img/masking/blobber.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/blobber.jpg'
                 ],
                 'mask3' => [
-                    'title' => 'Diagonals',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/diagonal.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/diagonal.jpg'
+                    'title' => 'Diagonal Lines',
+                    'image' => E_ADDONS_URL . 'assets/img/masking/diagonal_lines.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/diagonal_lines.jpg'
                 ],
                 'mask4' => [
-                    'title' => 'Rhombus',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/rombs.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/rombs.jpg'
+                    'title' => 'Rhombu Pattern',
+                    'image' => E_ADDONS_URL . 'assets/img/masking/rombs_pattern.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/rombs_pattern.jpg'
                 ],
                 'mask5' => [
                     'title' => 'Waves',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/waves.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/waves.jpg'
+                    'image' => E_ADDONS_URL . 'assets/img/masking/waves_horizontal.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/waves_horizontal.jpg'
                 ],
                 'mask6' => [
                     'title' => 'Drawing',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/draw.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/draw.jpg'
+                    'image' => E_ADDONS_URL . 'assets/img/masking/drawing.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/drawing.jpg'
                 ],
                 'mask7' => [
-                    'title' => 'Sketch',
-                    'image' => E_ADDONS_URL . 'assets/img/mask/sketch.png',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/mask/low/sketch.jpg'
+                    'title' => 'Sketching',
+                    'image' => E_ADDONS_URL . 'assets/img/masking/sketching.png',
+                    'image_preview' => E_ADDONS_URL . 'assets/img/masking/low/sketching.jpg'
                 ],
                 'custom_mask' => [
                     'title' => 'Custom mask',
@@ -349,127 +349,127 @@ class Masking extends Group_Control_Base {
                 'polygon(50% 0%, 0% 100%, 100% 100%)' => [
                     'title' => 'Triangle',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/triangle.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/triangle.svg'
                 ],
                 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' => [
                     'title' => 'Trapezoid',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/trapezoid.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/trapezoid.svg'
                 ],
                 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' => [
                     'title' => 'Parallelogram',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/parallelogram.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/parallelogram.svg'
                 ],
                 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' => [
                     'title' => 'Rombus',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/rombus.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/rombus.svg'
                 ],
                 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' => [
                     'title' => 'Pentagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/pentagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/pentagon.svg'
                 ],
                 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' => [
                     'title' => 'Hexagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/hexagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/hexagon.svg'
                 ],
                 'polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)' => [
                     'title' => 'Heptagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/heptagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/heptagon.svg'
                 ],
                 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)' => [
                     'title' => 'Octagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/octagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/octagon.svg'
                 ],
                 'polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%)' => [
                     'title' => 'Nonagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/nonagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/nonagon.svg'
                 ],
                 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)' => [
                     'title' => 'Decagon',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/decagon.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/decagon.svg'
                 ],
                 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)' => [
                     'title' => 'Bevel',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/bevel.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/bevel.svg'
                 ],
                 'polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)' => [
                     'title' => 'Rabbet',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/rabbet.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/rabbet.svg'
                 ],
                 'polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%)' => [
                     'title' => 'Left arrow',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/leftarrow.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/leftarrow.svg'
                 ],
                 'polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%)' => [
                     'title' => 'Right arrow',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/rightarrow.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/rightarrow.svg'
                 ],
                 'polygon(25% 0%, 100% 1%, 100% 100%, 25% 100%, 0% 50%)' => [
                     'title' => 'Left point',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/leftpoint.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/leftpoint.svg'
                 ],
                 'polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%)' => [
                     'title' => 'Right point',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/rightpoint.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/rightpoint.svg'
                 ],
                 'polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)' => [
                     'title' => 'Left chevron',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/leftchevron.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/leftchevron.svg'
                 ],
                 'polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%)' => [
                     'title' => 'Right Chevron',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/rightchevron.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/rightchevron.svg'
                 ],
                 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' => [
                     'title' => 'Star',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/star.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/star.svg'
                 ],
                 'polygon(10% 25%, 35% 25%, 35% 0%, 65% 0%, 65% 25%, 90% 25%, 90% 50%, 65% 50%, 65% 100%, 35% 100%, 35% 50%, 10% 50%)' => [
                     'title' => 'Cross',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/cross.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/cross.svg'
                 ],
                 'polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)' => [
                     'title' => 'Message',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/message.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/message.svg'
                 ],
                 'polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%)' => [
                     'title' => 'Close',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/close.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/close.svg'
                 ],
                 'polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%)' => [
                     'title' => 'Frame',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/frame.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/frame.svg'
                 ],
                 'circle(50% at 50% 50%)' => [
                     'title' => 'Circle',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/circle.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/circle.svg'
                 ],
                 'ellipse(25% 40% at 50% 50%)' => [
                     'title' => 'Ellipse',
                     'return_val' => 'val',
-                    'image_preview' => E_ADDONS_URL . 'assets/img/shapes/ellipse.png'
+                    'image_preview' => E_ADDONS_URL . 'assets/img/clippath/ellipse.svg'
                 ],
             ],
             'condition' => [
