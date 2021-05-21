@@ -34,6 +34,8 @@ trait Base {
         "le" => 'Less than equal',
         "contain" => "Contain",
         "not_contain" => 'Not Contain',
+        "in_array" => "Contained In",
+        "not_in_array" => 'Not Contained In',
         "is_checked" => "Is Checked",
         "not_checked" => "Not Checked",
     );

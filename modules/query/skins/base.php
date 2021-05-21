@@ -358,54 +358,8 @@ class Base extends Base_Skin {
                 }
                 break;
             case 'repeater':
-                $repeater_field = $this->parent->get_settings_for_display('repeater_field');
-                if ($repeater_field) {
-                    $data_source = $this->parent->get_settings_for_display('data_source');
-                    $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                    $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
-                    if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
-                        $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
-                    }
-                    if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
-                        // ACF
-                        switch ($customfields_type) {
-                            case 'attachment':
-                            case 'post':
-                                $id_target = $id_target;
-                                break;
-                            case 'term':
-                                $id_target = 'term_' . $id_target;
-                                break;
-                            case 'user':
-                                $id_target = 'user_' . $id_target;
-                                break;
-                            case 'option':
-                                $id_target = 'option';
-                                break;
-                        }
-                        $repeater_data = get_field($repeater_field, $id_target);
-                        if (empty($repeater_data)) {
-                            return false;
-                        }
-                    } else {
-                        if ($customfields_type == 'option') {
-                            $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
-                            $option_data = get_option($option_name);
-                            if (empty($option_data)) {
-                                return false;
-                            } else {
-                                if (empty($option_data[$repeater_field])) {
-                                    return false;
-                                }
-                            }
-                        } else {
-                            $customfields_type = $customfields_type == 'attachment' ? 'post' : $customfields_type;
-                            $repeater_data = get_metadata($customfields_type, $id_target, $repeater_field);
-                            if (empty($repeater_data)) {
-                                return false;
-                            }
-                        }
-                    }
+                if ($this->parent->is_empty_repeater()) {
+                    return false;
                 }
                 break;
             case 'items':
@@ -508,78 +462,21 @@ class Base extends Base_Skin {
                     break;
                 case 'repeater':
                     //echo 'questo è REPEATER';
-
-                    $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                    $data_source = $this->parent->get_settings_for_display('data_source');
-
-                    $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
-                    if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
-                        $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
-                    }
-
-                    $list_items = $this->parent->get_settings_for_display('list_items');
-
-                    /*
-                      if ( defined( 'PODS_VERSION' ) ) {}
-                     */
-
-                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');
-                    $repeater_field_link = $this->parent->get_settings_for_display('repeater_field_link');
+                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');                    
                     //var_dump($repeater_field);
                     //var_dump($id_target);
                     //var_dump($customfields_type);
                     if ($repeater_field) {
-                        $repeater_rows = [];
-                        if (defined('ACF_PRO') && \EAddonsForElementor\Core\Utils\Acf::is_acf($repeater_field)) {
-                            // ACF
-                            switch ($customfields_type) {
-                                case 'attachment':
-                                case 'post':
-                                    $id_target = $id_target;
-                                    break;
-                                case 'term':
-                                    $id_target = 'term_' . $id_target;
-                                    break;
-                                case 'user':
-                                    $id_target = 'user_' . $id_target;
-                                    break;
-                                case 'option':
-                                    $id_target = 'option';
-                                    break;
-                            }
-                            // Check rows exists.
-                            if (have_rows($repeater_field, $id_target)) {
-                                // Loop through rows.
-                                $i = 0;
-                                while (have_rows($repeater_field, $id_target)) {
-                                    the_row();
-                                    //  ciclo 'list_items' e ne ricavo i valori
-                                    if (!empty($list_items)) {
-                                        foreach ($list_items as $key => $item) {
-                                            if (!empty($item['metafield_key'])) {
-                                                $data_row = get_sub_field_object($item['metafield_key'], false); //get_sub_field($item['metafield_key']);
-                                                $repeater_rows[$i][$item['metafield_key']] = $data_row['value'];
-                                            }
-                                        }
-                                    }
-                                    $i++;
-                                    // End loop.
-                                }
-                            }
-                        } else {
-                            // JET
-                            if ('option' === $customfields_type) {
-                                $option_name = \EAddonsForElementor\Core\Utils\Jet::get_field_row_slug($repeater_field);
-                                $option_data = get_option($option_name);
-                                if (!empty($option_data[$repeater_field])) {
-                                    $repeater_rows = $option_data[$repeater_field];
-                                }
-                            } else {
-                                $repeater_rows = get_metadata($customfields_type, $id_target, $repeater_field, true);
-                            }
-                        }
-
+                        $repeater_rows = $this->parent->get_repeater_rows();                        
                         if (!empty($repeater_rows)) {
+                            $list_items = $this->parent->get_settings_for_display('list_items');
+                            $customfields_type = $this->parent->get_settings_for_display('customfields_type');
+                            $data_source = $this->parent->get_settings_for_display('data_source');
+                            $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
+                            if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
+                                $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
+                            }
+                            $repeater_field_link = $this->parent->get_settings_for_display('repeater_field_link');
                             foreach ($repeater_rows as $repeater_row) {
 
                                 $repeater_values = [];
