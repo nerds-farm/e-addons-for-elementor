@@ -29,7 +29,7 @@ class Grid extends Base {
     }
 
     public function get_style_depends() {
-        return ['e-addons-common-query', 'e-addons-query-grid'];
+        return ['font-awesome','e-addons-common-query', 'e-addons-query-grid'];
     }
 
     public function get_id() {
@@ -125,7 +125,7 @@ class Grid extends Base {
                 '1.25' => '4/5',
             ],
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid-blog .e-add-post-item:nth-child(1)' => 'width: calc(100% / {{VALUE}}); flex-basis: calc( 100% / {{VALUE}} );',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid-blog .e-add-item-grid:nth-child(1)' => 'width: calc(100% / {{VALUE}}); flex-basis: calc( 100% / {{VALUE}} );',
             ],
             'condition' => [
                 $this->get_control_id('grid_type') => ['blog']
@@ -151,7 +151,7 @@ class Grid extends Base {
             'prefix_class' => 'e-add-col%s-',
             //'frontend_available' => true,
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-item' => 'width: calc(100% / {{VALUE}}); flex: 0 1 calc( 100% / {{VALUE}} );',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-grid' => 'width: calc(100% / {{VALUE}}); flex: 0 1 calc( 100% / {{VALUE}} );',
             //'{{WRAPPER}} .e-add-posts-container.e-add-skin-grid ' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
             ]
                 ]
@@ -203,8 +203,8 @@ class Grid extends Base {
                 $this->get_control_id('grid_type') => 'flex'
             ],
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper .e-add-post-item:nth-child(even)' => 'margin-right: {{SIZE}}{{UNIT}};',
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper .e-add-post-item:nth-child(odd)' => 'margin-left: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid .e-add-item-grid:nth-child(even)' => 'margin-right: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid .e-add-item-grid:nth-child(odd)' => 'margin-left: {{SIZE}}{{UNIT}};',
             ]
                 ]
         );
@@ -244,7 +244,7 @@ class Grid extends Base {
             ],
             'default' => '0',
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-item' => 'flex-grow: {{VALUE}};',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-grid' => 'flex-grow: {{VALUE}};',
             ],
             'condition' => [
                 $this->get_control_id('grid_type!') => ['masonry']
@@ -277,7 +277,7 @@ class Grid extends Base {
                 'space-around' => 'Space Around',
             ],
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'justify-content: {{VALUE}};',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid' => 'justify-content: {{VALUE}};',
             ],
             'condition' => [
                 $this->get_control_id('flex_grow') => '0',
@@ -327,7 +327,7 @@ class Grid extends Base {
                 ],
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'justify-content: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid' => 'justify-content: {{VALUE}};',
                 ],
                 'condition' => [
                     $this->get_control_id('flex_grow') => '0',
@@ -349,7 +349,7 @@ class Grid extends Base {
                 'stretch' => 'Stretch',
             ],
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'align-items: {{VALUE}};',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid' => 'align-items: {{VALUE}};',
                 '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};'
             ],
             'condition' => [
@@ -399,10 +399,10 @@ class Grid extends Base {
                 ],
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'align-items: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid' => 'align-items: {{VALUE}};',
                     '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-area' => 'justify-content: {{VALUE}};',
-                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-block > .elementor > .elementor-section-wrap' => 'display: flex; height: 100%;',
-                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-block > .elementor > .elementor-section-wrap > .elementor-section' => 'align-self: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-grid > .e-add-post-block > .elementor > .elementor-section-wrap' => 'display: flex; height: 100%;',
+                    '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-grid > .e-add-post-block > .elementor > .elementor-section-wrap > .elementor-section' => 'align-self: {{VALUE}};',
                 ],
                 'condition' => [
                     //$this->get_control_id('flex_grow') => '0',
@@ -441,8 +441,8 @@ class Grid extends Base {
                     ],
                     'selectors' => [
                         //'{{WRAPPER}} .e-add-posts-container' => 'column-gap: {{SIZE}}{{UNIT}}',
-                        '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-post-item' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
-                        '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
+                        '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-item-grid' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
+                        '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
                     ],
                 ]
         );

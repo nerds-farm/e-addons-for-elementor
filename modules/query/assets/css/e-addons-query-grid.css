@@ -277,7 +277,9 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
 */
 
-
+.e-add-posts-container.e-add-skin-grid .e-add-item-grid > .e-add-post-block > .elementor{
+	width: 100%;
+}
 /*---------- Flex --------*/
 .e-add-posts-container.e-add-skin-grid-flex .e-add-post-item{
 

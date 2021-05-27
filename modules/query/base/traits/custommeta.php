@@ -754,13 +754,13 @@ trait Custommeta {
             case 'post':
             default:
                 $type_of_location = 'post';
+                
                 if (!empty($settings['custommeta_source_' . $type_of_location])) {
                     $id_of_location = $settings['custommeta_source_' . $type_of_location];
                 } else {
                     $id_of_location = get_the_ID();
                 }
         }
-        
         $custommeta_source_key = $settings['custommeta_source_key_' . $type_of_location];
         if ($type_of_location == 'attachment') {
             $type_of_location = 'post';

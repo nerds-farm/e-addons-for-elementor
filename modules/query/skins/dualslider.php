@@ -629,6 +629,12 @@ class Dualslider extends Carousel {
     }
 
     public function render() {
+        if (!$this->parent) {
+            return;
+        }
+
+        $this->parent->render();
+
         $settings = $this->parent->get_settings_for_display('list_items');
         // @p [apro] il wrapper che defifinisce la direction style del dualslider
         echo '<div class="e-add-style-position-' . $this->get_id() . '">';
@@ -638,7 +644,7 @@ class Dualslider extends Carousel {
         echo '</div>';
 
         /** @p elaboro la query... */
-        $this->parent->query_the_elements();
+        //$this->parent->query_the_elements();
 
         /** @p qui prendo il valore di $query elaborato in base > query.php */
         $query = $this->parent->get_query();
@@ -734,7 +740,7 @@ class Dualslider extends Carousel {
         echo '</div>'; // @p END: swiper-wrapper
         
         // @p le freccine di navigazione
-        echo '<div class="e-add-dualslider-controls e-add-dualslider-controls-' . $this->get_instance_value('dualslider_style') . '">';
+        echo '<div class="e-add-dualslider-controls  e-add-dualslider-controls-' . $this->get_instance_value('dualslider_style') . '" data-post-id="' . $this->current_id . '">';
         $this->render_thumb_navigation();
         echo '</div>';
 
@@ -752,8 +758,8 @@ class Dualslider extends Carousel {
             $arrow_2 = 'down';
         }
         //if ( $this->get_instance_value('useNavigation') ) {
-        echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '"><i class="fa fas fa-chevron-' . $arrow_1 . '"></i></div>';
-        echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '"><i class="fa fas fa-chevron-' . $arrow_2 . '"></i></div>';
+        echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '-' . $this->current_id . '"><i class="fa fas fa-chevron-' . $arrow_1 . '"></i></div>';
+        echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '-' . $this->current_id . '"><i class="fa fas fa-chevron-' . $arrow_2 . '"></i></div>';
         //}
     }
 
@@ -896,11 +902,11 @@ class Dualslider extends Carousel {
             $image_attr = [
                 'class' => $this->get_image_class()
             ];
+
             $image_url = wp_get_attachment_image_src($image_id, $setting_key, true);
             $image_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
 
             echo '<div class="e-add-thumbnail-image">';
-
 
             if ($use_bgimage) {
                 echo '<figure class="e-add-img e-add-bgimage" style="background: url(' . $image_url[0] . ') no-repeat center; background-size: cover; display: block;"></figure>';

@@ -1957,7 +1957,7 @@ class Carousel extends Base {
     }
 
     protected function render_container_after() {
-        echo '<div class="e-add-carousel-controls">';
+        echo '<div class="e-add-carousel-controls" data-post-id="' . $this->current_id . '">';
         if ($this->get_instance_value('usePagination')) {
             //@p questi sono degli stili aggiuntivi per i bullets
             $bullets_style = $this->get_instance_value('bullets_style');
@@ -1965,18 +1965,18 @@ class Carousel extends Base {
             $dynamicBullets = $this->get_instance_value('dynamicBullets');
             $bullets_class = !empty($bullets_style) && $style_pagination == 'bullets' && !$dynamicBullets ? ' e-add-nav-style nav--' . $bullets_style : ' nav--default';
             // Add Pagination
-            echo '<div class="e-add-container-pagination swiper-container-' . $this->get_instance_value('direction_slider') . '"><div class="swiper-pagination pagination-' . $this->parent->get_id() . $bullets_class . '"></div></div>';
+            echo '<div class="e-add-container-pagination swiper-container-' . $this->get_instance_value('direction_slider') . '"><div class="swiper-pagination pagination-' . $this->parent->get_id() . '-' . $this->current_id . $bullets_class . '"></div></div>';
         }
         if ($this->get_instance_value('useNavigation')) {
             // Add Arrows
             echo '<div class="e-add-container-navigation swiper-container-' . $this->get_instance_value('direction_slider') . '">';
-            echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '"><svg x="-10px" y="-10px"
+            echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '-' . $this->current_id . '"><svg x="-10px" y="-10px"
             width="85.039px" height="85.039px" viewBox="378.426 255.12 85.039 85.039" xml:space="preserve">
             <line fill="none" stroke="#000000" stroke-width="1.3845" stroke-dasharray="0,0" stroke-miterlimit="10" x1="382.456" y1="298.077" x2="458.375" y2="298.077"/>
             <polyline fill="none" stroke="#000000" stroke-width="1.3845" stroke-dasharray="0,0" stroke-miterlimit="10" points="416.287,331.909 382.456,298.077 
             416.287,264.245 "/>
             </svg></div>';
-            echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '"><svg xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '-' . $this->current_id . '"><svg xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             width="85.039px" height="85.039px" viewBox="378.426 255.12 85.039 85.039" xml:space="preserve">
             <line fill="none" stroke="#000000" stroke-width="1.3845" stroke-miterlimit="10" x1="458.375" y1="298.077" x2="382.456" y2="298.077"/>
             <polyline fill="none" stroke="#000000" stroke-width="1.3845" stroke-miterlimit="10" points="424.543,264.245 458.375,298.077 
