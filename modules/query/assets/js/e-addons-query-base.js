@@ -1,6 +1,4 @@
 ;
-var EADD_skinPrefix = '';
-
 class eadd_animationReveal {
 
     constructor($target, $live) {
@@ -20,7 +18,7 @@ class eadd_animationReveal {
             setTimeout(function () {
                 el.addClass('animate');
             }, 100 * el_i);
-            // play  
+            // play
         } else if (dir == 'up') {
             el.removeClass('animate');
             // stop
@@ -63,7 +61,6 @@ jQuery(window).on('elementor/frontend/init', () => {
                 selectors: {
                     //xxxx: '.e-add-rellax',
                     images: '.e-add-item_image, .e-add-item_imageoricon',
-
                     //img: '.e-add-img img',
                     container: '.e-add-posts-container',
                     containerWrapper: '.e-add-posts-wrapper',
@@ -76,36 +73,31 @@ jQuery(window).on('elementor/frontend/init', () => {
 
         getDefaultElements() {
             const selectors = this.getSettings('selectors');
-
             return {
                 $scope: this.$element,
-                $widgetType: this.$element.attr('data-widget_type').split('.'),
-
+                $widgetType: this.$element.data('widget_type').split('.'),
                 $id_scope: this.getID(), //this.$element.attr('data-id')
                 $images: this.$element.find(selectors.images),
                 $container: this.$element.find(selectors.container),
                 $containerWrapper: this.$element.find(selectors.containerWrapper),
                 $items: this.$element.find(selectors.items),
                 $hovereffects: this.$element.find(selectors.hovereffects),
-
                 $animationReveal: null
-                        //$infiniteScroll: 
+                        //$infiniteScroll:
                         //$xxxx: this.$element.find(selectors.xxxx),
                         //$instanceXxxx: null
             };
         }
 
         bindEvents() {
-            // IMPORTANTISSIMO !!!!!
-            EADD_skinPrefix = this.elements.$widgetType[1] + '_';
-            this.skinPrefix = EADD_skinPrefix;
+            this.skinPrefix = this.$element.data('widget_type').split('.').pop() + '_';
             this.elementSettings = this.getElementSettings();
 
             let id_scope = this.elements.$id_scope,
                     scope = this.elements.$scope,
                     widgetType = this.getWidgetType();
 
-            
+
 
             //console.log(this.elements.$widgetType[0]);
 
@@ -125,7 +117,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                 }
                 // ---------------------------------------------
                 // FIT IMAGES RATIO ........
-                // 3 - 
+                // 3 -
                 const fitImage = ($post) => {
                     let $imageParent = $post.find('.e-add-img'),
                             $image = $imageParent.find('img'),
@@ -144,7 +136,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     var itemRatio = getComputedStyle(this.elements.$scope[0], ':after').content;
                     this.elements.$container.toggleClass('e-add-is_ratio', !!itemRatio.match(/\d/));
                 }
-                // 1 - 
+                // 1 -
                 const fitImages = () => {
                     toggleRatio(); // <-- 2
                     /*
@@ -214,19 +206,19 @@ jQuery(window).on('elementor/frontend/init', () => {
 
                         }
                         /*if( this.elementSettings[this.skinPrefix+'scrollreveal_effect_type'] ){
-                         
+
                          jQuery(items).each(function(i,el){
                          setTimeout(function(){
                          jQuery(el).addClass('animate');
                          },100*i);
                          })
-                         
+
                          }*/
                     });
                     //console.log(elementorFrontend.utils);
 
                 };
-                if (this.elementSettings.infiniteScroll_enable) {                    
+                if (this.elementSettings.infiniteScroll_enable) {
                     setTimeout(function () {
                         activeInfiniteScroll();
                     }, 200);

@@ -75,6 +75,7 @@ class Query extends Module_Base {
             // Elementor Pro
             if ($theme_builder) {
                 $locations = $theme_builder->get_locations_manager()->get_locations();
+                // array(8) { [0]=> string(6) "header" [1]=> string(6) "footer" [2]=> string(7) "archive" [3]=> string(6) "single" [4]=> string(5) "popup" [5]=> string(14) "elementor_head" [6]=> string(20) "elementor_body_start" [7]=> string(18) "elementor_body_end" } 
                 if (!empty($locations['single'])) {
                     $singles = $theme_builder->get_conditions_manager()->get_documents_for_location('single');                
                     if (!empty($singles)) {
@@ -133,7 +134,8 @@ class Query extends Module_Base {
         \Elementor\Plugin::instance()->db->iterate_data($elements, function($element) use (&$is_valid, $query_widgets, $current_page) {
             if (isset($element['widgetType']) && in_array($element['widgetType'], $query_widgets, true)) {
                 // Has pagination.
-                if (!empty($element['settings']['pagination_enable'])) {
+                if (!empty($element['settings']['pagination_enable']) 
+                        || !empty($element['settings']['infiniteScroll_enable'])) {
                     $is_valid = true;
                 }
             }

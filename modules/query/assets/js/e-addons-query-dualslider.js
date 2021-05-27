@@ -1,7 +1,7 @@
 jQuery(window).on('elementor/frontend/init', () => {
 
 class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handlers.Base {
-    
+
     getDefaultSettings() {
         // e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-masonry
         return {
@@ -15,7 +15,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             },
         };
     }
-    
+
     getDefaultElements() {
         const selectors = this.getSettings('selectors');
 
@@ -30,28 +30,28 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             $dualsliderCarousel: this.$element.find(selectors.dualsliderCarousel),
 
             $containerWrapper: this.$element.find(selectors.containerWrapper),
-            
+
             $items: this.$element.find(selectors.items),
-            
+
             $animationReveal: null,
             $galleryThumbs: null
         };
     }
 
     bindEvents() {
-        this.skinPrefix = EADD_skinPrefix;
+        this.skinPrefix = this.$element.data('widget_type').split('.').pop()+'_';
         this.elementSettings = this.getElementSettings();
 
         this.isThumbsCarouselEnabled = false;
         this.adapteHeight();
         this.postId = this.elements.$scope.find('.e-add-dualslider-controls').attr('data-post-id');
-        
+
         let scope = this.elements.$scope,
             id_scope = this.elements.$id_scope,
             widgetType = this.getWidgetType(),
             galleryThumbs = null;
 
-        
+
 
         if(galleryThumbs) galleryThumbs.destroy();
         galleryThumbs = new Swiper( this.elements.$thumbsCarousel[0], this.thumbCarouselOptions( id_scope ) );
@@ -63,7 +63,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
         //elementorFrontend.elementsHandler.runReadyTrigger(jQUery(widgetType+'.carousel'));
 
         elementorFrontend.hooks.doAction('frontend/element_ready/'+widgetType+'.carousel', scope);
-        
+
 
         //da fare.... l'evento di resizng per getire l'altezza delle tumbnail in caso di left-right
         this.initEvents();
@@ -95,13 +95,13 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 		window.addEventListener("resize", (event) => {
 			this.adapteHeight();
 		});
-		
+
 	}
     onElementChange(propertyName){
         this.elementSettings = this.getElementSettings();
-        
-        if (    this.skinPrefix+'ratio_image' === propertyName || 
-                this.skinPrefix+'dualslider_distribution_vertical' === propertyName || 
+
+        if (    this.skinPrefix+'ratio_image' === propertyName ||
+                this.skinPrefix+'dualslider_distribution_vertical' === propertyName ||
                 this.skinPrefix+'dualslider_height_container' === propertyName
             ) {
             this.elements.$galleryThumbs.update();
@@ -119,8 +119,8 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             this.elements.$thumbsCarousel.height(this.elements.$dualsliderCarousel.height());
         }//this.elementSettings[this.skinPrefix+'dualslider_image_height']
     }
-    thumbCarouselOptions( id_scope ){ 
-        
+    thumbCarouselOptions( id_scope ){
+        var self;
         let slidesPerView = Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']),
             elementorBreakpoints = elementorFrontend.config.breakpoints,
             directionThumbSlider = 'horizontal';
@@ -135,15 +135,15 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap']) || 0,
             slidesPerView: slidesPerView || 'auto',
             //freeMode: true,
-            
+
             autoHeight: false,
             //watchOverflow: true,
-            
+
             direction:  directionThumbSlider,
 
             watchSlidesVisibility: true,
             watchSlidesProgress: true,
-            
+
             navigation: {
                 nextEl: '.next-' + id_scope + '-' + this.postId, //'.swiper-button-next',
                 prevEl: '.prev-' + id_scope + '-' + this.postId, //'.swiper-button-prev',
@@ -154,17 +154,17 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 
             // centeredSlides: true,
             loop: true,
-            
+
             // loopedSlides: 4
 
             on: {
                 init: function () {
-                    this.isThumbsCarouselEnabled = true;    
+                    this.isThumbsCarouselEnabled = true;
                 },
-                
+
             }
         };
-        
+
         var responsivePoints = eaddSwiperOptions.breakpoints = {};
         responsivePoints[elementorBreakpoints.lg] = {
             slidesPerView: Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']) || 'auto',
@@ -176,7 +176,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
         };
         responsivePoints[elementorBreakpoints.xs] = {
             slidesPerView: Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView_mobile']) || Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView_tablet']) || Number(this.elementSettings[this.skinPrefix+'thumbnails_slidesPerView']) || 'auto',
-            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap_mobile']) || Number(this.elementSettings[this.skinPrefix+'dualslider_gap_tablet']) || Number(elementSettings[EADD_skinPrefix+'spaceBetween']) || 0,
+            spaceBetween: Number(this.elementSettings[this.skinPrefix+'dualslider_gap_mobile']) || Number(this.elementSettings[this.skinPrefix+'dualslider_gap_tablet']) || Number(elementSettings[self.skinPrefix+'spaceBetween']) || 0,
         };
         eaddSwiperOptions = jQuery.extend(eaddSwiperOptions, responsivePoints);
 
@@ -185,7 +185,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 }
 
     const Widget_EADD_Query_dualslider_Handler = ($element) => {
-       
+
         elementorFrontend.elementsHandler.addHandler(WidgetQueryDualSliderHandlerClass, {
             $element,
         });

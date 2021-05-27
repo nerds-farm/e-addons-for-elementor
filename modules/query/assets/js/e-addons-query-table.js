@@ -23,10 +23,10 @@ jQuery(window).on('elementor/frontend/init', () => {
         initDataTables() {
             let scope = this.elements.$scope,
                     table = this.elements.$table;
-                    
+
             this.elementSettings = this.getElementSettings();
 
-                    
+
             let buttons = [];
             if (Boolean(this.elementSettings['table_buttons'])) {
                 buttons = [
@@ -36,7 +36,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     'pdfHtml5'
                 ];
             }
-            
+
             let lang = [];
             if (Boolean(this.elementSettings['table_searching'])) {
                 lang = {
@@ -44,7 +44,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     searchPlaceholder: "Search..."
                 }
             }
-            
+
             table.DataTable({
                 order: [],
 
@@ -53,18 +53,18 @@ jQuery(window).on('elementor/frontend/init', () => {
                 info: Boolean(this.elementSettings['table_info']),
                 fixedHeader: Boolean(this.elementSettings['table_fixed_header']),
                 responsive: Boolean(this.elementSettings['table_responsive']),
-                
+
                 searching: Boolean(this.elementSettings['table_searching']),
                 language: lang,
                 ordering: Boolean(this.elementSettings['table_ordering']),
-                
+
                 paging: false,
             });
-            
+
         }
 
         bindEvents() {
-            this.skinPrefix = EADD_skinPrefix;
+            this.skinPrefix = this.$element.data('widget_type').split('.').pop() + '_';
             this.elementSettings = this.getElementSettings();
 
             let scope = this.elements.$scope,
