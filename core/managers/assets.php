@@ -62,6 +62,7 @@ final class Assets {
             $css = self::find_assets($assets_path, 'css');
             if (!empty($css)) {
                 $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
+                $wp_plugin_dir = str_replace('//', '/', $wp_plugin_dir);
                 foreach ($css as $acss) {
                     list($path, $url) = explode($wp_plugin_dir . DIRECTORY_SEPARATOR, $acss, 2);
                     //var_dump(DIRECTORY_SEPARATOR.PLUGINDIR.DIRECTORY_SEPARATOR.$url); die();
@@ -79,6 +80,7 @@ final class Assets {
             $js = self::find_assets($assets_path, 'js');
             if (!empty($js)) {
                 $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
+                $wp_plugin_dir = str_replace('//', '/', $wp_plugin_dir);
                 foreach ($js as $ajs) {
                     list($path, $url) = explode($wp_plugin_dir . DIRECTORY_SEPARATOR, $ajs, 2);
 					$url = str_replace('/-', '/', $url);

@@ -130,7 +130,7 @@ class Version {
                         $e_addons_path = $wp_plugin_dir . DIRECTORY_SEPARATOR . $plugin_name;
                         $rollback = $this->download_plugin($roll_url, $e_addons_path);
                         if (is_bool($rollback)) {
-                            exit(wp_redirect("admin.php?page=e_addons"));
+                            exit(wp_redirect(admin_url('?page=e_addons')));
                         } else {
                             die($rollback);
                         }

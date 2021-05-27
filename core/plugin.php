@@ -165,7 +165,9 @@ class Plugin {
 
         if (is_admin()) {
             //$ajax = new \EAddonsForElementor\Core\Ajax\Actions();
+            add_action('admin_notices', '\EAddonsForElementor\Core\Utils::e_admin_notices');
             $dash = new \EAddonsForElementor\Core\Dashboard\Dashboard();
+            
         }
 
         // Register Category fix
@@ -189,6 +191,7 @@ class Plugin {
     public function get_plugins() {
         $plugins = array();
         $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
+        $wp_plugin_dir = str_replace('//', '/', $wp_plugin_dir);
         $e_addons_plugin = glob($wp_plugin_dir . DIRECTORY_SEPARATOR . 'e-addons*');
         foreach ($e_addons_plugin as $e_plugin) {
             if (is_dir($e_plugin)) {

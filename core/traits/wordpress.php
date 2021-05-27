@@ -8,9 +8,13 @@ use EAddonsForElementor\Core\Utils;
  * @author francesco
  */
 trait Wordpress {
+    
+    public static $admin_notices_fired = false;
+    public static $notices = [];
 
     public static function e_admin_notice($msg = '', $level = 'warning', $dismissible = true) {
         $msg = Utils::to_string($msg);
+        ob_start();
         ?>
         <div class="e-add-notiice <?php echo $level . ' notice-' . $level; ?> notice<?php echo $dismissible ? ' is-dismissible' : ''; ?>">
             <i class="eadd-logo-e-addons"></i>
@@ -20,6 +24,21 @@ trait Wordpress {
             </p>
         </div>
         <?php
+        $notice = ob_get_clean();
+        if (self::$admin_notices_fired) {
+            echo $notice;
+        } else {
+            self::$notices[] = $notice;
+            //add_action('admin_notices', '\EAddonsForElementor\Core\Utils::e_admin_notices');
+        }
+        
+    }
+    
+    public static function e_admin_notices() {
+        foreach(self::$notices as $notice) {
+            echo $notice;
+        }
+        self::$admin_notices_fired = true;
     }
 
     public static function e_admin_banner_notice($msg = '', $unique_id = '') {

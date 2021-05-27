@@ -32,6 +32,92 @@ class Dashboard {
                 add_filter('plugin_action_links_' . $addon['plugin'], [$this, 'e_plugin_action_links_license'], 10 , 2);
             }
         }
+        
+        add_filter('admin_init', [$this, 'e_plugin_dash_actions']);
+        
+        
+    }
+    
+    public function e_plugin_dash_actions() {
+        if (!empty($_GET['page']) && $_GET['page'] == 'e_addons' && !empty($_REQUEST['action'])) {
+            $e_addons = \EAddonsForElementor\Plugin::instance();
+            $all_addons = Utils::get_addons(true);
+            $action = sanitize_key($_REQUEST['action']);
+            
+            if (in_array($action, array('add', 'update'))) {
+                $addon_url = esc_url_raw($_POST['url']);
+                if (!empty($_POST['addon'])) {
+                    $addon_name = sanitize_key($_POST['addon']);
+                } else {
+                    list($dwn, $addon_name) = explode('addon=', $addon_url);
+                }
+
+                $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
+                $e_addons_path = $wp_plugin_dir . DIRECTORY_SEPARATOR . $addon_name;
+                $version_manager = \EAddonsForElementor\Plugin::instance()->version_manager;
+                $version_manager->addon_backup($addon_name);
+                $version_manager->download_plugin($addon_url, $e_addons_path);
+                $license = get_option('e_addons_' . $addon_name . '_license_key');
+                if ($license) {
+                    $all_addons[$addon_name]['TextDomain'] = $addon_name;
+                    $edd = new EAddonsForElementor\Modules\Update\Edd\Edd($all_addons[$addon_name]);
+                    $activation = $edd->activate_license($license);
+                }
+                $e_addons->clear_addons();
+            }
+
+            if (in_array($action, array('vendors'))) {
+                if (!empty($_GET['plugin'])) {
+                    $addon = sanitize_key($_REQUEST['plugin']);
+                    $e_addons->update_vendors($addon);
+                }
+            }
+
+            if (in_array($action, array('license_remove'))) {
+                //var_dump($all_addons); die();
+                foreach ($all_addons as $text_domain => $addon) {
+                    $edd = new \EAddonsForElementor\Modules\Update\Edd\Edd($addon);
+                    // deactivate & clear license key
+                    $edd->deactivate_license();
+                    delete_option('e_addons_' . $text_domain . '_license_key');
+                }
+                $msg = __('All licenses have been removed!');
+                Utils::e_admin_notice($msg, 'success');
+                $e_addons->clear_addons();
+            }
+            
+            if (in_array($action, array('license_update'))) {
+                $e_addons_plugins = $e_addons->get_addons(true);
+                $not_installed = array_diff_key($all_addons, $e_addons_plugins);
+                if (!empty($_REQUEST['all-access-pass'])) {
+                    $all_access_pass = $_REQUEST['all-access-pass'];
+                    $all_access_pass = sanitize_text_field($all_access_pass);
+                    //$this->activate_license($license);
+                    foreach ($not_installed as $text_domain => $addon) {
+                        if (floatval($addon['price'])) {
+                            update_option('e_addons_' . $text_domain . '_license_key', $all_access_pass);
+                        }
+                    }
+                }
+                foreach ($not_installed as $text_domain => $addon) {
+                    if (floatval($addon['price'])) {
+                        if (!empty($_REQUEST[$text_domain])) {
+                            $license = $_REQUEST[$text_domain];
+                            $license = sanitize_text_field($license);
+                            update_option('e_addons_' . $text_domain . '_license_key', $license);
+                        }
+                    }
+                }
+                //$e_addons->clear_addons();
+                wp_redirect(admin_url('?page=e_addons'));
+            }
+
+            /* if (Utils::is_plugin_active('e-addons-manager')) {
+              $manager = new \EAddonsForElementor\Modules\License\Globals\Activation();
+              $manager->execute_action($action);
+              } */
+            do_action('e_addons/dash/action', $action);
+        }
     }
     
     public function e_plugin_action_links_license($actions, $plugin_file) {
@@ -44,9 +130,8 @@ class Dashboard {
         foreach ($addons as $akey => $addon) {
             if (did_action('elementor/loaded')) {
                 if (!\EAddonsForElementor\Plugin::instance()->is_addon_valid($addon)) {
-                    \EAddonsForElementor\Core\Utils::e_admin_notice(
-                            '<b>' . $addon['Name'] . __(' license is not active', 'e_addons') . '</b>' . '<br>' . __('Your copy seems to be not activated, please <a href="' . admin_url() . 'admin.php?page=e_addons">activate</a> or <a href="https://e-addons.com/plugins/' . $addon['TextDomain'] . '" target="blank">buy a new license code</a>.', 'e_addons'),
-                            'error');
+                    $msg = '<b>' . $addon['Name'] . __(' license is not active', 'e_addons') . '</b>' . '<br>' . 'Your copy seems to be not activated, please <a href="' . admin_url() . 'admin.php?page=e_addons">activate</a> or <a href="https://e-addons.com/plugins/' . $addon['TextDomain'] . '" target="blank">buy a new license code</a>.';
+                    Utils::e_admin_notice($msg, 'error');
                 }
             }
         }

@@ -156,7 +156,7 @@
 }
 
 /* style per label choices e other source (ex map) */
-.elementor-choices .elementor-choices-label{
+.elementor-control-customfields_type .elementor-choices .elementor-choices-label{
     background-color: #FFFFFF;
 }
 .elementor-control-customfields_type .elementor-choices input:checked + .elementor-choices-label {

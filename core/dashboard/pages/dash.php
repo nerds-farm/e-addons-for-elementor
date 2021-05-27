@@ -13,57 +13,6 @@ if (!current_user_can('manage_options')) {
 
 $e_addons = \EAddonsForElementor\Plugin::instance();
 $all_addons = Utils::get_addons(true);
-
-if (!empty($_REQUEST['action'])) {
-    $action = sanitize_key($_REQUEST['action']);
-    if (in_array($action, array('add', 'update'))) {
-        $addon_url = esc_url_raw($_POST['url']);
-        if (!empty($_POST['addon'])) {
-            $addon_name = sanitize_key($_POST['addon']);
-        } else {
-            list($dwn, $addon_name) = explode('addon=', $addon_url);
-        }
-        
-        $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
-        $e_addons_path = $wp_plugin_dir . DIRECTORY_SEPARATOR . $addon_name;
-        $version_manager = \EAddonsForElementor\Plugin::instance()->version_manager;
-        $version_manager->addon_backup($addon_name);
-        $version_manager->download_plugin($addon_url, $e_addons_path);
-        $license = get_option('e_addons_' . $addon_name . '_license_key');
-        if ($license) {
-            $all_addons[$addon_name]['TextDomain'] = $addon_name;
-            $edd = new EAddonsForElementor\Modules\Update\Edd\Edd($all_addons[$addon_name]);
-            $activation = $edd->activate_license($license);
-        }
-        $e_addons->clear_addons();
-    }
-
-    if (in_array($action, array('vendors'))) {
-        if (!empty($_GET['plugin'])) {
-            $addon = sanitize_key($_REQUEST['plugin']);
-            $e_addons->update_vendors($addon);
-        }
-    }
-
-    if (in_array($action, array('license_remove'))) {
-        //var_dump($all_addons); die();
-        foreach ($all_addons as $text_domain => $addon) {
-            $edd = new EAddonsForElementor\Modules\Update\Edd\Edd($addon);
-            // deactivate & clear license key
-            $edd->deactivate_license();
-            delete_option('e_addons_' . $text_domain . '_license_key');
-        }
-        $msg = __('All licenses have been removed!');
-        Utils::e_admin_notice($msg, 'success');
-        $e_addons->clear_addons();
-    }
-
-    /* if (Utils::is_plugin_active('e-addons-manager')) {
-      $manager = new \EAddonsForElementor\Modules\License\Globals\Activation();
-      $manager->execute_action($action);
-      } */
-    do_action('e_addons/dash/action', $action);
-}
 ?>
 <div class="wrap">
 
@@ -75,14 +24,14 @@ if (!empty($_REQUEST['action'])) {
     $has_license = false;
     $e_addons_plugins = $e_addons->get_addons(true);
     $message = '';
-    if (!empty($e_addons_plugins)) {
+    /*if (!empty($e_addons_plugins)) {
         foreach ($e_addons_plugins as $e_plugin) {
             if ($e_plugin['new_version']) {
                 $text = 'New update available for <b>' . $e_plugin['Name'] . '</b>! <a class="button my_notice_eaddons_update" href="#my_e_addons__' . $e_plugin['TextDomain'] . '"><span class="dashicons dashicons-update"></span> UPDATE NOW!</a>';
                 Utils::e_admin_notice($text, 'warning');
             }
         }
-    }
+    }*/
     if (count($e_addons_plugins) == 1) {
         $all_addons['e-addons-for-elementor']['thumb'] = E_ADDONS_URL . 'assets/img/splash.png';
     }
@@ -223,35 +172,7 @@ if (!empty($_REQUEST['action'])) {
     </form>
 
 
-    <?php
-    $not_installed = array_diff_key($all_addons, $e_addons_plugins);
-    //var_dump($not_installed);
-    //$all_access_pass = '';
-    if (!empty($_REQUEST['action'])) {
-        $action = sanitize_key($_REQUEST['action']);
-        if (in_array($action, array('license_update'))) {
-            if (!empty($_REQUEST['all-access-pass'])) {
-                $all_access_pass = $_REQUEST['all-access-pass'];
-                $all_access_pass = sanitize_text_field($all_access_pass);
-                //$this->activate_license($license);
-                foreach ($not_installed as $text_domain => $addon) {
-                    if (floatval($addon['price'])) {
-                        update_option('e_addons_' . $text_domain . '_license_key', $all_access_pass);
-                    }
-                }
-            }
-            foreach ($not_installed as $text_domain => $addon) {
-                if (floatval($addon['price'])) {
-                    if (!empty($_REQUEST[$text_domain])) {
-                        $license = $_REQUEST[$text_domain];
-                        $license = sanitize_text_field($license);
-                        update_option('e_addons_' . $text_domain . '_license_key', $license);
-                    }
-                }
-            }
-        }
-        wp_redirect(admin_url('?page=e_addons'));
-    }
-    do_action('e_addons/dash/more', $not_installed);
-    ?>
+    <?php 
+    $not_installed = array_diff_key($all_addons, $e_addons_plugins);    
+    do_action('e_addons/dash/more', $not_installed); ?>
 </div>

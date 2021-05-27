@@ -11,6 +11,7 @@ class Helper {
 
     static public function get_plugin_path($file) {
         $wp_plugin_dir = str_replace('/', DIRECTORY_SEPARATOR, WP_PLUGIN_DIR);
+        $wp_plugin_dir = str_replace('//', '/', $wp_plugin_dir);
         // from __FILE__
         $tmp = explode($wp_plugin_dir . DIRECTORY_SEPARATOR, $file, 2);
         if (count($tmp) == 2) {
@@ -36,7 +37,9 @@ class Helper {
         $filename = self::camel_to_slug($filename);
         $filename = str_replace(DIRECTORY_SEPARATOR . '-', DIRECTORY_SEPARATOR, $filename);
         $filename = str_replace('_', '', $filename) . '.php';
-        return $wp_plugin_dir . DIRECTORY_SEPARATOR . $filename;
+        $filename = $wp_plugin_dir . DIRECTORY_SEPARATOR . $filename;
+        $filename = str_replace('//', '/', $filename);
+        return $filename;
     }
 
     public static function path_to_class($path) {
