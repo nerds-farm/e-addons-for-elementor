@@ -244,7 +244,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 /* ... (da vedere poi con gli altri come reagisce) */
 /*Skin Grid*/
-.e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper{
+.e-add-posts-container.e-add-skin-grid .e-add-wrapper-grid{
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -276,7 +276,9 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
  */
 
-
+.e-add-posts-container.e-add-skin-grid .e-add-item-grid > .e-add-post-block > .elementor{
+	width: 100%;
+}
 /*---------- Flex --------*/
 .e-add-posts-container.e-add-skin-grid-flex .e-add-post-item{
 

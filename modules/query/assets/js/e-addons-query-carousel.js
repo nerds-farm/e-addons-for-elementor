@@ -37,6 +37,8 @@ jQuery(window).on('elementor/frontend/init', () => {
             this.skinPrefix = EADD_skinPrefix;
             this.isCarouselEnabled = false;
             this.elementSettings = this.getElementSettings();
+            this.scope = this.elements.$scope;
+            this.postId = this.elements.$scope.find('.e-add-carousel-controls').attr('data-post-id');
 
             let scope = this.elements.$scope,
                 id_scope = this.elements.$id_scope,
@@ -206,14 +208,14 @@ jQuery(window).on('elementor/frontend/init', () => {
             // ----------------------------
     
             navigation: {
-                nextEl: '.next-' + id_scope, //'.swiper-button-next',
-                prevEl: '.prev-' + id_scope, //'.swiper-button-prev',
+                nextEl: '.next-' + id_scope + '-' + this.postId, //'.swiper-button-next',
+                prevEl: '.prev-' + id_scope + '-' + this.postId, //'.swiper-button-prev',
                 //hideOnClick: false,
                 //disabledClass: 'swiper-button-disabled', //   CSS class name added to navigation button when it becomes disabled
                 //hiddenClass: 'swiper-button-hidden', //   CSS class name added to navigation button when it becomes hidden
             },
             pagination: {
-                el: '.pagination-' + id_scope,
+                el: '.pagination-' + id_scope + '-' + this.postId,
                 clickable: true,
                 //hideOnClick: true,
                 type: String(elementSettings[this.skinPrefix+'pagination_type']) || 'bullets', //"bullets", "fraction", "progressbar" or "custom"

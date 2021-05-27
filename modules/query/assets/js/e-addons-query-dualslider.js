@@ -44,6 +44,7 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
 
         this.isThumbsCarouselEnabled = false;
         this.adapteHeight();
+        this.postId = this.elements.$scope.find('.e-add-dualslider-controls').attr('data-post-id');
         
         let scope = this.elements.$scope,
             id_scope = this.elements.$id_scope,
@@ -144,8 +145,8 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
             watchSlidesProgress: true,
             
             navigation: {
-                nextEl: '.next-' + id_scope, //'.swiper-button-next',
-                prevEl: '.prev-' + id_scope, //'.swiper-button-prev',
+                nextEl: '.next-' + id_scope + '-' + this.postId, //'.swiper-button-next',
+                prevEl: '.prev-' + id_scope + '-' + this.postId, //'.swiper-button-prev',
                 //hideOnClick: false,
                 //disabledClass: 'swiper-button-disabled', //   CSS class name added to navigation button when it becomes disabled
                 //hiddenClass: 'swiper-button-hidden', //   CSS class name added to navigation button when it becomes hidden
