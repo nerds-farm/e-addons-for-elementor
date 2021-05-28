@@ -182,18 +182,21 @@ class Dashboard {
     }
 
     public function e_addons_elementor(Settings $settings) {
-        $settings->add_section(Settings::TAB_INTEGRATIONS, 'google_maps', [
-            'label' => __('Google Maps', 'elementor-pro'),
-            'fields' => [
-                'google_maps_js_api_key' => [
-                    'label' => __('Maps JavaScript API Key', 'elementor-pro'),
-                    'field_args' => [
-                        'type' => 'text',
-                        'desc' => sprintf(__('To integrate custom Maps in page you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-pro'), 'https://developers.google.com/maps/documentation/javascript/get-api-key'),
+        //var_dump(ELEMENTOR_VERSION); die();
+        if (version_compare(ELEMENTOR_VERSION, '3.2.4', '<')) {             
+            $settings->add_section(Settings::TAB_INTEGRATIONS, 'google_maps', [
+                'label' => __('Google Maps', 'elementor-pro'),
+                'fields' => [
+                    'google_maps_js_api_key' => [
+                        'label' => __('Maps JavaScript API Key', 'elementor-pro'),
+                        'field_args' => [
+                            'type' => 'text',
+                            'desc' => sprintf(__('To integrate custom Maps in page you need an <a href="%s" target="_blank">API Key</a>.', 'elementor-pro'), 'https://developers.google.com/maps/documentation/javascript/get-api-key'),
+                        ],
                     ],
                 ],
-            ],
-        ]);
+            ]);
+        }
     }
 
     public function e_addons_menu() {
