@@ -244,7 +244,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 /* ... (da vedere poi con gli altri come reagisce) */
 /*Skin Grid*/
-.e-add-posts-container.e-add-skin-grid .e-add-posts-wrapper{
+.e-add-posts-container.e-add-skin-grid > .e-add-posts-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -255,7 +255,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 
 }
 
-.e-add-posts-container:not(.e-add-skin-table) .e-add-post-item{
+.e-add-posts-container:not(.e-add-skin-table) .e-add-post-item {
     display: flex;
     height: auto;
     /*word-break: break-word;*/
@@ -267,7 +267,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
     width: 100%;
 }
 .e-add-posts-container .e-add-post-item .e-add-item-area,
-.e-add-posts-container.e-add-skin-grid .e-add-post-item .e-add-post-block{
+.e-add-posts-container.e-add-skin-grid > .e-add-wrapper-grid > .e-add-item-grid > .e-add-post-block {
     display: flex;
     flex-wrap: wrap;
 }
@@ -277,7 +277,7 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
 }
 */
 
-.e-add-posts-container.e-add-skin-grid .e-add-item-grid > .e-add-post-block > .elementor{
+.e-add-posts-container.e-add-skin-grid > .e-add-wrapper-grid > .e-add-item-grid > .e-add-post-block > .elementor {
 	width: 100%;
 }
 /*---------- Flex --------*/

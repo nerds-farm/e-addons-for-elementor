@@ -1953,7 +1953,7 @@ class Carousel extends Base {
       } */
 
     protected function render_container_before() {
-        echo '<div class="e-add-carouser-container">';
+        echo '<div class="e-add-carousel-container">';
     }
 
     protected function render_container_after() {
@@ -1986,7 +1986,7 @@ class Carousel extends Base {
         }
         echo '</div>';
 
-        echo '</div>'; // END: e-add-carouser-container
+        echo '</div>'; // END: e-add-carousel-container
     }
 
     protected function render_posts_after() {
