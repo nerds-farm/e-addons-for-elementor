@@ -136,7 +136,7 @@ trait Items_Advanced {
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}}' => 'display: {{VALUE}}; vertical-align: middle;',
             ],
-            'conditions' => [
+            /*'conditions' => [
                 'relation' => 'or',
                 'terms' => [
                     [
@@ -179,7 +179,7 @@ trait Items_Advanced {
                         ]
                     ]
                 ]
-            ]
+            ]*/
                 ]
         );
           
@@ -226,7 +226,8 @@ trait Items_Advanced {
                     '{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}%;',
                 ],
                 'condition' => [
-                    'width' => ''
+                    'width' => '',
+                    'display_inline' => 'inline-block',
                 ]
             ]
         );

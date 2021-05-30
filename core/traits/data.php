@@ -50,7 +50,7 @@ trait Data {
         }
         if (!empty($pieces) && is_array($pieces)) {
             if ($listed) {
-                $string .= (is_string($listed)) ? '<'.$listed.'>' : '<ul>';
+                $string .= (is_string($listed)) ? '<' . $listed . '>' : '<ul>';
             }
             $i = 0;
             foreach ($pieces as $av) {
@@ -74,12 +74,12 @@ trait Data {
                 $i++;
             }
             if ($listed) {
-                $string .= (is_string($listed)) ? '</'.$listed.'>' : '</ul>';
+                $string .= (is_string($listed)) ? '</' . $listed . '>' : '</ul>';
             }
         }
         return $string;
     }
-    
+
     public static function adjust_data($value, $single = true) {
         if (!empty($value)) {
             if (is_array($value)) {
@@ -91,7 +91,7 @@ trait Data {
         }
         return '';
     }
-    
+
     public static function strip_tag($tag, $content = '') {
         $content = preg_replace('/<' . $tag . '[^>]*>/i', '', $content);
         $content = preg_replace('/<\/' . $tag . '>/i', '', $content);
@@ -100,7 +100,7 @@ trait Data {
 
     public static function array_search_key_multi($array = array(), $key = '') {
         if (is_array($array)) {
-            foreach($array as $akey => $avalue) {                
+            foreach ($array as $akey => $avalue) {
                 if ($akey == $key) {
                     return $avalue;
                 } else {
@@ -113,7 +113,7 @@ trait Data {
         }
         return false;
     }
-    
+
     public static function get_array_value($array = array(), $keys = array()) {
         if (!empty($keys)) {
             $key = array_shift($keys);
@@ -148,7 +148,7 @@ trait Data {
         }
         return $array;
     }
-    
+
     public static function get_object_method($obj, $method, $params = array()) {
         $value = false;
         $reflection = new \ReflectionMethod(get_class($obj), $method);
@@ -169,10 +169,10 @@ trait Data {
     }
 
     public static function to_string($data, $listed = false) {
-        if (is_object($data)) {            
+        if (is_object($data)) {
             switch (get_class($data)) {
                 case 'WP_Term':
-                    return $data->name;            
+                    return $data->name;
                 case 'WP_Post':
                     return $data->post_title;
                 case 'WP_User':
@@ -199,15 +199,143 @@ trait Data {
         }
         return $data;
     }
-    
+
     public static function empty($source, $key = false) {
         if (is_array($source)) {
             $source = array_filter($source);
-        }        
+        }
         if ($key) {
             return \Elementor\Utils::is_empty($source, $key);
         }
         return empty($source);
+    }
+
+    public static function get_field_category($key, $value = null) {
+
+        $categories = self::get_dynamic_tags_categories();
+        //var_dump($categories); die();
+        //"base" "text" "url" "image" "media" "post_meta" "gallery" "number" "color"
+        $category = 'base';
+        $type = false;
+        
+        // ACF
+        if (self::is_plugin_active('acf')) {
+            $field = \EAddonsForElementor\Core\Utils\Acf::get_acf_field($key);
+            if (!empty($field['type'])) {
+                $type = $field['type'];
+            } 
+        }
+        
+        // JET
+        if (self::is_plugin_active('jet')) {
+            $field = \EAddonsForElementor\Core\Utils\Jet::get_jet_field($key);
+            if (!empty($field['type'])) {
+                $type = $field['type'];
+            } 
+        }
+            
+        // PODS
+        if (self::is_plugin_active('pods')) {
+            $field = get_page_by_path($key, OBJECT, '_pods_field');
+            if ($field) {
+                $type = get_post_meta($field->ID, 'type', true);
+            }
+        }
+        
+        switch ($type) {
+            case "text": 
+            case "textarea":
+            case "email":
+            case "password":
+            case "wysiwyg":
+            case "message":
+            case "select":
+            case "radio":
+            case "checkbox":  
+            case 'html':      
+            case 'iconpicker':
+                $category = 'text'; 
+                break;
+            
+            case "number":
+            case "range": 
+                $category = 'number'; 
+                break;
+            
+            case "image":
+                $category = 'image'; 
+                break;
+                
+            case 'media':
+            case "file":
+            case "oembed":                 
+                $category = 'media'; 
+                break;
+            
+            case "url":
+            case "link":
+            case "page_link":
+                $category = 'url';                    
+                break;
+            
+            case "color_picker":
+            case 'colorpicker':
+                $category = 'color';                    
+                break;
+            
+            case "gallery":
+                $category = 'gallery';                    
+                break;
+            
+            case "checkbox":            
+            case "button_group": 
+            case "true_false": 
+            case 'switcher':
+                
+            case "post_object":
+            case "relationship":
+            case 'posts':
+            case "taxonomy":
+            case "user":
+                
+            case "google_map":
+                
+            case 'date':
+            case 'time':
+            case 'datetime-local':
+            case "date_picker":
+            case "date_time_picker":
+            case "time_picker":
+                            
+            case "accordion":
+            case "tab":
+            case "group":
+            case "repeater":
+            case "flexible_content": 
+            case "clone":
+            default:
+                //$category = 'text';
+        }
+
+        if (!$type && !empty($value)) {
+            
+            $category = 'text';
+            
+            if (is_numeric($value)) {
+                $category = 'number';
+            }
+            
+            if (substr($value,0,4) == 'http') {
+                $category = 'url';
+            }
+            
+            if (filter_var($value, FILTER_VALIDATE_EMAIL) !== false) {
+                $category = 'text';
+            }
+                        
+        }
+
+        return $category;
     }
 
 }

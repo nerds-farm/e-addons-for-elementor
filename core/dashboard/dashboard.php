@@ -196,6 +196,10 @@ class Dashboard {
                     ],
                 ],
             ]);
+        } else {
+            if (get_option('google_maps_api_key')) {
+                delete_option('google_maps_js_api_key');
+            }
         }
     }
 

@@ -49,6 +49,22 @@ class Acf {
         }
         return false;
     }
+    
+    public static function get_acf_field($key = '') {
+        if ($key) {
+            global $wpdb;
+            $sql = 'SELECT post_content FROM ' . $wpdb->prefix . "posts WHERE post_excerpt = '" . esc_sql($key) . "' AND post_type = 'acf-field'";
+            $acf_field = $wpdb->get_col($sql);
+            if (!empty($acf_field)) {
+                $acf_field = reset($acf_field);
+                $acf_field = maybe_unserialize($acf_field);
+                if ($acf_field && is_array($acf_field) && isset($acf_field['type'])) {
+                    return $acf_field;
+                }
+            }
+        }
+        return false;
+    }
 
     public static function get_acf_fields($types = array(), $filter = '') {
 
@@ -77,6 +93,18 @@ class Acf {
                                 $acf_list[$acf_field->post_excerpt] = $acf_field_parent->post_title . ' > ' . $acf_field->post_title . ' [' . $acf_field->post_excerpt . '] (' . $acf_field_type . ')'; //.$acf_field->post_content; //post_name,
                             }
                         }                        
+                    }
+                    if ($acf_field_type == 'repeater' && in_array('sub_field', $types)) {
+                        $acf_sub_fields = get_posts(array('post_parent' => $acf_field->ID, 'post_type' => 'acf-field', 'numberposts' => -1, 'post_status' => 'publish', 'orderby' => 'title', 'suppress_filters' => false));
+                        if (!empty($acf_sub_fields)) {
+                            foreach ($acf_sub_fields as $acf_sub_field) {
+                                $acf_field_settings = maybe_unserialize($acf_sub_field->post_content);
+                                if (!empty($acf_field_settings['type'])) {
+                                    $acf_sub_field_type = $acf_field_settings['type'];
+                                    $acf_list[$acf_sub_field->post_excerpt] = $acf_field->post_title . ' > ' . $acf_sub_field->post_title . ' [' . $acf_sub_field->post_excerpt . '] (' . $acf_sub_field_type . ')'; //.$acf_field->post_content; //post_name,
+                                }
+                            }
+                        }
                     }
                 }
             }

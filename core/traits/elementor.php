@@ -236,8 +236,10 @@ trait Elementor {
     }
 
     public static function get_dynamic_tags_categories() {
+        //new \Elementor\Modules\DynamicTags\Module();
         $reflection = new \ReflectionClass('\Elementor\Modules\DynamicTags\Module');
         $categories = $reflection->getConstants();
+        //var_dump(array_values($categories)); die();
         return array_values($categories);
     }
 

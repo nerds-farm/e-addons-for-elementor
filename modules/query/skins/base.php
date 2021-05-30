@@ -40,10 +40,12 @@ class Base extends Base_Skin {
     use Traits\Custommeta;
     use Traits\Label;
 
-    protected $current_permalink;
-    protected $current_id;
-    protected $current_data;
-    protected $counter = 0;
+    public $current_permalink;
+    public $current_id;
+    public $current_data;    
+    public $counter = 0;
+    public $index = 0;
+    
     protected $itemindex = 0;
     protected $depended_scripts = [];
     protected $depended_styles = [];
@@ -389,6 +391,9 @@ class Base extends Base_Skin {
         $querytype = $this->parent->get_querytype();
 
         if ($this->has_results($query, $querytype)) {
+            
+            global $e_widget_query;
+            $e_widget_query = $this;
 
             /** @p enquequo gli script e gli style... */
             $this->enqueue();
@@ -477,9 +482,11 @@ class Base extends Base_Skin {
                                 $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
                             }
                             $repeater_field_link = $this->parent->get_settings_for_display('repeater_field_link');
+                            global $wp_query;
+                            $wp_query->in_repeater_loop = true;
                             foreach ($repeater_rows as $repeater_row) {
 
-                                $repeater_values = [];
+                                $repeater_values = $repeater_row;
                                 //  ciclo 'list_items' e ne ricavo le chiavi
                                 if (!empty($list_items)) {
                                     foreach ($list_items as $key => $item) {
@@ -503,6 +510,7 @@ class Base extends Base_Skin {
                                 $this->current_data = $repeater_values;
                                 $this->render_element_item();
                             }
+                            $wp_query->in_repeater_loop = false;
                         }
                     }
 

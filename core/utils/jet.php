@@ -104,18 +104,18 @@ class Jet {
         return false;
     }
     
-    public static function add_jet_fields($meta_fields = array(), $jet_list = '', $slug = '') {   
+    public static function add_jet_fields($meta_fields = array(), $jet_list = '', $slug = '', $types = array()) {   
         if (!empty($meta_fields)) {
             foreach ($meta_fields as $meta_field) {
-                self::$jet_fields[$meta_field['name']] = $meta_field['title'];
+                self::$jet_fields[$meta_field['name']] = $meta_field;
                 if (empty($types) || in_array($meta_field['type'], $types)) {
                     $jet_list[$meta_field['name']] = $slug . ' > ' . $meta_field['title'] . ' [' . $meta_field['name'] . '] (' . $meta_field['type']. ')';
                 }
                 if ($meta_field['type'] == 'repeater') {
                     if (!empty($meta_field['repeater-fields'])) {
                         foreach ($meta_field['repeater-fields'] as $repeater_field) {
-                            self::$jet_fields[$repeater_field['name']] = $repeater_field['title'];
-                            if (empty($types) || in_array($repeater_field['type'], $types)) {
+                            self::$jet_fields[$repeater_field['name']] = $repeater_field;
+                            if (empty($types) || in_array($repeater_field['type'], $types) || in_array('sub_field', $types)) {
                                 $jet_list[$repeater_field['name']] = $slug . ' > ' . $meta_field['title'] . ' > ' . $repeater_field['title'] . ' [' . $repeater_field['name'] . '] (' . $repeater_field['type']. ')';
                             }
                         }
@@ -141,7 +141,7 @@ class Jet {
                 foreach($meta_fields_results as $meta_fields_result) {
                     $meta_fields = maybe_unserialize($meta_fields_result->meta_fields);
                     //var_dump($meta_fields_result); die();
-                    $jet_list = self::add_jet_fields($meta_fields, $jet_list, $meta_fields_result->slug);
+                    $jet_list = self::add_jet_fields($meta_fields, $jet_list, $meta_fields_result->slug, $types);
                 }
             }
         }
@@ -149,7 +149,7 @@ class Jet {
         if (!empty($jet_engine_meta_boxes)) {
             foreach($jet_engine_meta_boxes as $metabox) {
                 if (!empty($metabox['meta_fields'])) {                    
-                    $jet_list = self::add_jet_fields($metabox['meta_fields'], $jet_list, $metabox['args']['name']);
+                    $jet_list = self::add_jet_fields($metabox['meta_fields'], $jet_list, $metabox['args']['name'], $types);
                 }
             }
         }

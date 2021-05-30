@@ -279,6 +279,17 @@ class Template {
                 if (in_array($template_type, array('page', 'section', 'single', 'single-post', 'single-page', 'product', 'popup'))) {
                     $q_o = self::get_queried_object();
                     $element_class = 'e-' . $q_o['type'] . '-' . $q_o['id'];
+                    
+                    global $wp_query;
+                    if (!empty($wp_query->in_repeater_loop)) {
+                        global $e_widget_query;
+                        if (is_object($e_widget_query)) {
+                            if (!empty($e_widget_query->counter)) {
+                                $element_class .= ' e-repeater-row-'.$e_widget_query->counter;
+                            }
+                        }
+                    }
+                    
                     //if (Utils::is_preview(true) || strpos($content, $element_class) === false || wp_doing_ajax()) {
                     if (strpos($content, ' ' . $element_class) === false) {
                         $content = str_replace('class="elementor elementor-' . $tpl_id . ' ', 'class="elementor elementor-' . $tpl_id . ' ' . $element_class . ' ', $content);
@@ -337,6 +348,7 @@ class Template {
         }
         if (!empty($settings['__dynamic__'])) {
             $style = '';
+            global $wp_query, $e_widget_query;
             foreach (array_keys($settings['__dynamic__']) as $dynamic) {
                 $tmp = explode('_', $dynamic);
                 $device = end($tmp);
@@ -346,6 +358,16 @@ class Template {
                 }
                 foreach ($devices as $device => $device_value) {
                     $selector = '.elementor.e-' . $q_o['type'] . '-' . $q_o['id'];
+                    
+                    
+                    if (!empty($wp_query->in_repeater_loop)) {                        
+                        if (is_object($e_widget_query)) {
+                            if (!empty($e_widget_query->counter)) {
+                                $selector .= '.e-repeater-row-'.$e_widget_query->counter;
+                            }
+                        }
+                    }
+                    
                     if ($device != 'desktop') {
                         $selector = '[data-elementor-device-mode="' . $device . '"] ' . $selector;
                     }

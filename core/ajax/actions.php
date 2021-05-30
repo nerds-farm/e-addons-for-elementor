@@ -954,7 +954,10 @@ class Actions {
         $uid = (array) $params['id'];
         foreach ($uid as $aid) {
             $title = \EAddonsForElementor\Core\Utils\Jet::get_jet_field($aid);
-            if ($title) {
+            if (!empty($title)) {
+                if (is_array($title) && !empty($title['title'])) {
+                    $title = $title['title'];
+                }
                 $control_options[$aid] = $title;
             }
         }
