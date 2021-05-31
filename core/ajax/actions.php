@@ -515,7 +515,16 @@ class Actions {
                 }
                 if (!empty($params['post_parent'])) {
                     $query_params['post_parent'] = $params['post_parent'];
-                }   
+                }  
+                if (!empty($params['orderby'])) {
+                    $query_params['orderby'] = $params['orderby'];
+                }  
+                if (!empty($params['order'])) {
+                    $query_params['order'] = $params['order'];
+                }  
+                if (!empty($params['post_parent'])) {
+                    $query_params['post_parent'] = $params['post_parent'];
+                }  
                 if (!empty($params['tax_query'])) {
                     $terms = Utils::explode($params['tax_query']);
                     $term = Utils::get_term(reset($terms));

@@ -472,6 +472,9 @@ class Grid extends Base {
     }
 
     protected function render_element_item() {
+        
+        $this->index++;
+        
         $style_items = $this->parent->get_settings_for_display('style_items');
         $blog_template_id = $this->get_instance_value('blog_template_id');
         $grid_type = $this->get_instance_value('grid_type');

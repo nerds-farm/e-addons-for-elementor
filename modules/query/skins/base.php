@@ -42,10 +42,9 @@ class Base extends Base_Skin {
 
     public $current_permalink;
     public $current_id;
-    public $current_data;    
+    public $current_data;
     public $counter = 0;
     public $index = 0;
-    
     protected $itemindex = 0;
     protected $depended_scripts = [];
     protected $depended_styles = [];
@@ -56,8 +55,12 @@ class Base extends Base_Skin {
 
     public function _register_controls_actions() {
 
-        add_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout']);
-        add_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects']);
+        if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout'])) {
+            add_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout']);
+        }
+        if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects'])) {
+            add_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects']);
+        }
 
         add_action('elementor/preview/enqueue_scripts', [$this, 'preview_enqueue']);
     }
@@ -391,7 +394,7 @@ class Base extends Base_Skin {
         $querytype = $this->parent->get_querytype();
 
         if ($this->has_results($query, $querytype)) {
-            
+
             global $e_widget_query;
             $e_widget_query = $this;
 
@@ -400,6 +403,8 @@ class Base extends Base_Skin {
 
             $this->render_loop_start();
 
+            $this->index = $this->get_index_start();
+            
             switch ($querytype) {
                 case 'attachment':
                 case 'post':
@@ -467,12 +472,12 @@ class Base extends Base_Skin {
                     break;
                 case 'repeater':
                     //echo 'questo è REPEATER';
-                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');                    
+                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');
                     //var_dump($repeater_field);
                     //var_dump($id_target);
                     //var_dump($customfields_type);
                     if ($repeater_field) {
-                        $repeater_rows = $this->parent->get_repeater_rows();                        
+                        $repeater_rows = $this->parent->get_repeater_rows();
                         if (!empty($repeater_rows)) {
                             $list_items = $this->parent->get_settings_for_display('list_items');
                             $customfields_type = $this->parent->get_settings_for_display('customfields_type');
@@ -559,6 +564,9 @@ class Base extends Base_Skin {
     }
 
     protected function render_element_item() {
+
+        $this->index++;        
+
         $style_items = $this->parent->get_settings_for_display('style_items');
 
         $this->render_item_start();
@@ -923,9 +931,9 @@ class Base extends Base_Skin {
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
                 <?php
-    }
+            }
 
-    protected function render_item_end() {
+            protected function render_item_end() {
                 ?>
 
             </div>
@@ -1119,6 +1127,33 @@ class Base extends Base_Skin {
             }
         }
         return false;
+    }
+
+    public function get_index_start() {
+        $paged = Utils::get_current_page_num();
+        if ($paged > 1) {
+            if ($this->parent->get_settings_for_display('pagination_enable')) {
+                $offset = intval($this->parent->get_settings_for_display('posts_offset'));
+                switch ($querytype) {
+                    case 'attachment':
+                    case 'post':
+                        $no = $this->parent->get_settings_for_display('posts_per_page');
+                        break;
+                    case 'user':
+                        $no = $this->parent->get_settings_for_display('users_per_page');
+                        break;
+                    case 'term':
+                        $no = $this->parent->get_settings_for_display('terms_per_page');
+                        $no = $settings[''];
+                        break;
+                }
+                if (!$no || $no == -1 || $no == '-1') {
+                    $no = get_option('posts_per_page');
+                }
+                return $no * $paged + $offset;
+            }
+        }
+        return 0;
     }
 
 }

@@ -437,7 +437,9 @@ class Timeline extends Base {
       } */
 
     protected function render_element_item() {
-
+        
+        $this->index++;
+        
         // ID
         $p_id = $this->current_id;
         //

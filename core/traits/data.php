@@ -227,7 +227,7 @@ trait Data {
         }
         
         // JET
-        if (self::is_plugin_active('jet')) {
+        if (self::is_plugin_active('jet-engine')) {
             $field = \EAddonsForElementor\Core\Utils\Jet::get_jet_field($key);
             if (!empty($field['type'])) {
                 $type = $field['type'];

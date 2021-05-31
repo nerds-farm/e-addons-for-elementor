@@ -24,7 +24,6 @@ class E_Query extends Control_Select2 {
      */
     public function __construct() {
         parent::__construct();
-        $this->add_actions();
     }
 
     /**
@@ -84,38 +83,22 @@ class E_Query extends Control_Select2 {
     }
 
     /**
-     * Add Actions
-     * 
-     * Registeres actions to Elementor hooks
+     * Enqueue control scripts and styles.
      *
-     * @since  1.0.1
-     * @return void
-     */
-    public function add_actions() {
-        add_action('elementor/editor/after_enqueue_scripts', [$this, 'elementor_editor_after_enqueue_scripts']);
-    }
-
-    /**
-     * Enqueue editor assets
+     * Used to register and enqueue custom scripts and styles used by the control.
      *
-     * @since 1.0.1
-     *
+     * @since 1.5.0
      * @access public
      */
-    public function elementor_editor_after_enqueue_scripts() {
-        wp_enqueue_style('e-addons-editor-control-e-query');
-        wp_enqueue_script('e-addons-editor-control-e-query');
-    }
-
-    /**
-     * Enqueue control scripts and styles.
-     */
     public function enqueue() {
+        wp_enqueue_style('e-addons-editor-control-e-query'); //, E_ADDONS_URL.'assets/css/e-addons-editor-control-e-query.css');
+        wp_enqueue_script('e-addons-editor-control-e-query'); //, E_ADDONS_URL.'assets/js/e-addons-editor-control-e-query.js');
+        
         if ($this->get_settings('sortable')) {
             wp_enqueue_script('jquery-ui-sortable');
         }
     }
-
+    
     /**
      * @param string|array $value
      * @param array $config
