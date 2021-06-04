@@ -43,9 +43,9 @@ class Form_Fields extends \Elementor\Control_Select {
      * @access public
      */
     public function enqueue() {
-        wp_enqueue_style('e-addons-editor-control-form-fields');
+        wp_enqueue_style('e-addons-editor-control-form-fields', E_ADDONS_URL.'assets/css/e-addons-editor-control-form-fields.css');
         // Scripts
-        wp_enqueue_script('e-addons-editor-control-form-fields');
+        wp_enqueue_script('e-addons-editor-control-form-fields', E_ADDONS_URL.'assets/js/e-addons-editor-control-form-fields.js');
     }
     
     /**

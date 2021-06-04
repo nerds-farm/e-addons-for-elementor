@@ -43,9 +43,9 @@ class Transformations extends Control_Base_Units {
      */
     public function enqueue() {
         // Style
-        wp_enqueue_style('e-addons-editor-control-transformations'); //, E_ADDONS_URL.'assets/css/e-addons-editor-control-transformations.css');
+        wp_enqueue_style('e-addons-editor-control-transformations', E_ADDONS_URL.'assets/css/e-addons-editor-control-transformations.css');
         // Scripts
-        wp_enqueue_script('e-addons-editor-control-transformations'); //, E_ADDONS_URL.'assets/js/e-addons-editor-control-transformations.js');
+        wp_enqueue_script('e-addons-editor-control-transformations', E_ADDONS_URL.'assets/js/e-addons-editor-control-transformations.js');
     }
 
     /**

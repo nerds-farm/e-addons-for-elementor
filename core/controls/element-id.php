@@ -43,8 +43,8 @@ class Element_Id extends \Elementor\Base_Data_Control {
      * @access public
      */
     public function enqueue() {
-        wp_enqueue_script('e-addons-editor-control-element-id');
-        wp_enqueue_style('e-addons-editor-control-element-id');
+        wp_enqueue_script('e-addons-editor-control-element-id', E_ADDONS_URL.'assets/js/e-addons-editor-control-element-id.js');
+        wp_enqueue_style('e-addons-editor-control-element-id', E_ADDONS_URL.'assets/css/e-addons-editor-control-element-id.css');
     }
 
     /**

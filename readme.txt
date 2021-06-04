@@ -98,6 +98,13 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 
 == Changelog ==
 
+= 2.6 - 21-05-2021 =
+* Update: e-addons icon set
+* Update: Controls optimization
+* Fix: Google Maps API merged with native
+* Fix: Dashboard actions execution before print
+* Fix: minor fix
+
 = 2.5.5 - 21-05-2021 =
 * Update: e-addons icon set
 * Fix: minor fix

@@ -92,5 +92,25 @@ trait Label {
             if ($use_link) echo '</a>';
         }
     }
+    protected function render_item_index($settings) {
+        // Settings ------------------------------
+        
+        $use_link = $this->get_item_link($settings);
+        $blanklink  = $settings['blanklink_enable'];
+
+
+        if ($use_link){
+            $attribute_link = ' href="' . $use_link . '"';
+
+            $attribute_target = '';
+            if( !empty($blanklink))
+            $attribute_target = ' target="_blank"';
+
+            echo '<a' . $attribute_link . $attribute_target . '>';
+        }
+        echo $this->index;
+        if ($use_link) echo '</a>';
+
+    }
     
 }

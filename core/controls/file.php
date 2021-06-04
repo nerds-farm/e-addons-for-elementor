@@ -48,7 +48,7 @@ class File extends \Elementor\Base_Data_Control {
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
         // Scripts
-        wp_enqueue_script('e-addons-editor-control-file');
+        wp_enqueue_script('e-addons-editor-control-file', E_ADDONS_URL.'assets/js/e-addons-editor-control-file.js');
     }
 
     /**

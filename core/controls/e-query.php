@@ -91,8 +91,8 @@ class E_Query extends Control_Select2 {
      * @access public
      */
     public function enqueue() {
-        wp_enqueue_style('e-addons-editor-control-e-query'); //, E_ADDONS_URL.'assets/css/e-addons-editor-control-e-query.css');
-        wp_enqueue_script('e-addons-editor-control-e-query'); //, E_ADDONS_URL.'assets/js/e-addons-editor-control-e-query.js');
+        wp_enqueue_style('e-addons-editor-control-e-query', E_ADDONS_URL.'assets/css/e-addons-editor-control-e-query.css');
+        wp_enqueue_script('e-addons-editor-control-e-query', E_ADDONS_URL.'assets/js/e-addons-editor-control-e-query.js');
         
         if ($this->get_settings('sortable')) {
             wp_enqueue_script('jquery-ui-sortable');

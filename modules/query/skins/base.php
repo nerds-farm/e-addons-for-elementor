@@ -828,6 +828,8 @@ class Base extends Base_Skin {
                             break;
                         case 'item_label': $this->render_item_labelhtml($item);
                             break;
+                        case 'item_index': $this->render_item_index($item);
+                            break;
                         case 'item_template': $this->render_item_template($item);
                             break;
                         case 'item_image': //(common)
@@ -1131,9 +1133,10 @@ class Base extends Base_Skin {
 
     public function get_index_start() {
         $paged = Utils::get_current_page_num();
+        $offset = intval($this->parent->get_settings_for_display('posts_offset'));
         if ($paged > 1) {
-            if ($this->parent->get_settings_for_display('pagination_enable')) {
-                $offset = intval($this->parent->get_settings_for_display('posts_offset'));
+            if ($this->parent->get_settings_for_display('pagination_enable')) {   
+                $querytype = $this->parent->get_querytype();
                 switch ($querytype) {
                     case 'attachment':
                     case 'post':
@@ -1144,16 +1147,17 @@ class Base extends Base_Skin {
                         break;
                     case 'term':
                         $no = $this->parent->get_settings_for_display('terms_per_page');
-                        $no = $settings[''];
                         break;
                 }
                 if (!$no || $no == -1 || $no == '-1') {
                     $no = get_option('posts_per_page');
                 }
-                return $no * $paged + $offset;
+                $start = $no * ($paged-1) + $offset;
+                //var_dump($start);
+                return $start;
             }
         }
-        return 0;
+        return $offset;
     }
 
 }

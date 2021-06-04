@@ -45,9 +45,9 @@ class Ui_Selector extends Base_Data_Control {
      */
     public function enqueue() {        
         // Style
-        wp_enqueue_style('e-addons-editor-control-ui-selector'); //, E_ADDONS_URL.'assets/css/e-addons-editor-control-ui-selector.css');
+        wp_enqueue_style('e-addons-editor-control-ui-selector', E_ADDONS_URL.'assets/css/e-addons-editor-control-ui-selector.css');
         // Scripts
-        wp_enqueue_script('e-addons-editor-control-ui-selector'); //, E_ADDONS_URL.'assets/js/e-addons-editor-control-ui-selector.js');
+        wp_enqueue_script('e-addons-editor-control-ui-selector', E_ADDONS_URL.'assets/js/e-addons-editor-control-ui-selector.js');
     }
 
     /**
