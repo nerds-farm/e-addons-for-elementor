@@ -23,7 +23,9 @@ class Dashboard {
 
         if (empty($_GET['page']) || $_GET['page'] != 'e_addons_getting_started') {
             add_action('admin_notices', [$this, 'e_admin_notice__license']);
+            add_action('admin_notices', [$this, 'e_admin_notice__banner']);
         }
+        add_action('wp_ajax_e_addons_banner_dismiss_notification', array($this, 'e_addons_banner_dismiss_notification'));
         
         $addons = \EAddonsForElementor\Plugin::instance()->get_addons();
         foreach ($addons as $akey => $addon) {
@@ -34,8 +36,8 @@ class Dashboard {
         }
         
         add_filter('admin_init', [$this, 'e_plugin_dash_actions']);
-        
-        
+                
+                
     }
     
     public function e_plugin_dash_actions() {
@@ -136,6 +138,54 @@ class Dashboard {
             }
         }
     }
+    
+    public function e_admin_notice__banner() {
+        $addons = \EAddonsForElementor\Plugin::instance()->get_addons(true);
+        $has_pro = false;
+        foreach ($addons as $akey => $addon) {
+            if (empty($addon['Free'])) {
+                $has_pro = true;
+            }
+        }
+        $has_pro = false;        
+        if (!$has_pro) {
+            //delete_option('skip_banner_e_addons');
+            $last_skip_version = get_option('skip_banner_e_addons');    
+            if (!empty($addons["e-addons-for-elementor"]["Version"])) {
+                $last_version = $addons["e-addons-for-elementor"]["Version"];
+                if (!$last_skip_version || version_compare($last_skip_version, $last_version) < 0) {
+                    $msg = '<a href="https://e-addons.com/pricing/" target="_blank"><img src="'. E_ADDONS_URL.'assets/img/banner/gopro.jpg" style="max-width:calc(100% + 20px);margin:-10px;margin-bottom:-15px;"></a>';
+                    $msg .= '<a id="e-addons-banner-notice-dismiss" title="Remind me later" href="#" style="position:absolute;top:20px;right:20px;background-color:white;border-radius:50%;padding:5px 10px;color:black;text-decoration:none;">X</a>';
+                    $msg .= "<script>(function($) {
+                                'use strict';
+                                function dismissEAddonsBannerNotification() {
+                                    jQuery( '#e-addons-banner-notice-dismiss' ).on( 'click', function( event ) {
+                                        event.preventDefault();
+                                        jQuery.post( ajaxurl, {
+                                            action: 'e_addons_banner_dismiss_notification',
+                                            version: ".$last_version."
+                                        });
+                                        jQuery(this).closest('.notice').fadeOut();
+                                    });
+                                }
+                                jQuery(dismissEAddonsBannerNotification);
+                        })(jQuery);
+                    </script>";
+                    Utils::e_admin_notice($msg, 'warning', false, false);
+                }
+            }
+        }
+    }
+    public function e_addons_banner_dismiss_notification() {
+        $data = $_POST;
+        $time = time();
+        if (!empty($data['version'])) {
+            update_option('skip_banner_e_addons', $data['version']);
+        }
+        echo $time;
+        die();
+    }
+    
 
     public function e_plugin_action_links_settings($links) {
         $links['settings'] = '<a title="Configure settings" href="' . admin_url() . 'admin.php?page=e_addons_settings"><b>' . __('Settings', 'e_addons') . '</b></a>';
