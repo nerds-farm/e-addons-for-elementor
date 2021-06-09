@@ -307,3 +307,7 @@
 .eadd-section-reveal:before { content: '\e8e4'; } /* '' */
 
 .eadd-extension-bgimage-sizes:before { content: '\e8ea'; } /* '' */
+
+.eadd-el-form-pro-field-calendar:before { content: '\e8eb'; } /* '' */
+.eadd-dynamic-tag-repeater:before { content: '\e8ec'; } /* '' */
+.eadd-dynamic-tag-index:before { content: '\e8ed'; } /* '' */
