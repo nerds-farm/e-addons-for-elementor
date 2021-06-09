@@ -419,9 +419,8 @@ class Carousel extends Base {
                 'navigation_arrow_color', [
             'label' => __('Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
-            'default' => '',
             'selectors' => [
-                '{{WRAPPER}} .swiper-button-next path, {{WRAPPER}} .swiper-button-prev path, ' => 'fill: {{VALUE}};',
+                '{{WRAPPER}} .swiper-button-next path, {{WRAPPER}} .swiper-button-prev path' => 'fill: {{VALUE}};',
                 '{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev polyline' => 'stroke: {{VALUE}};',
             ],
             'condition' => [
@@ -429,16 +428,37 @@ class Carousel extends Base {
             ]
                 ]
         );
-
-
         $this->add_control(
                 'navigation_arrow_color_hover', [
             'label' => __('Hover color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
-            'default' => '',
             'selectors' => [
-                '{{WRAPPER}} .swiper-button-next:hover path, {{WRAPPER}} .swiper-button-prev:hover path, ' => 'fill: {{VALUE}};',
+                '{{WRAPPER}} .swiper-button-next:hover path, {{WRAPPER}} .swiper-button-prev:hover path' => 'fill: {{VALUE}};',
                 '{{WRAPPER}} .swiper-button-next:hover line, {{WRAPPER}} .swiper-button-prev:hover line, {{WRAPPER}} .swiper-button-next:hover polyline, {{WRAPPER}} .swiper-button-prev:hover polyline' => 'stroke: {{VALUE}};',
+            ],
+            'condition' => [
+                $this->get_control_id('useNavigation') => 'yes'
+            ],
+                ]
+        );
+        $this->add_control(
+                'navigation_arrow_bgcolor', [
+            'label' => __('Background Color', 'e-addons'),
+            'type' => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .swiper-button-next, {{WRAPPER}} .swiper-button-prev' => 'background-color: {{VALUE}};',
+            ],
+            'condition' => [
+                $this->get_control_id('useNavigation') => 'yes'
+            ]
+                ]
+        );
+        $this->add_control(
+                'navigation_arrow_bgcolor_hover', [
+            'label' => __('Hover Background Color', 'e-addons'),
+            'type' => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .swiper-button-next:hover, {{WRAPPER}} .swiper-button-prev:hover' => 'background-color: {{VALUE}};',
             ],
             'condition' => [
                 $this->get_control_id('useNavigation') => 'yes'
@@ -737,6 +757,35 @@ class Carousel extends Base {
                 ]
         );
         $this->parent->end_popover();
+        
+        
+        $this->add_control(
+                'navigation_padding', [
+            'label' => __('Padding', 'e-addons'),
+            'type' => Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%', 'em'],
+            'selectors' => [
+                '{{WRAPPER}} .swiper-button-next' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                '{{WRAPPER}} .swiper-button-prev' => 'padding: {{TOP}}{{UNIT}} {{LEFT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{RIGHT}}{{UNIT}};',
+            ],
+            'condition' => [
+                $this->get_control_id('useNavigation') => 'yes',
+            ]
+                ]
+        );
+        $this->add_control(
+                'navigation_radius', [
+            'label' => __('Border Radius', 'e-addons'),
+            'type' => Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%', 'em'],
+            'selectors' => [
+                '{{WRAPPER}} .swiper-button-prev, {{WRAPPER}} .swiper-button-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+            'condition' => [
+                $this->get_control_id('useNavigation') => 'yes',
+            ]
+                ]
+        );
 
         $this->add_control(
                 'useNavigation_animationHover', [

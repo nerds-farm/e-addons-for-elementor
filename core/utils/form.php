@@ -168,6 +168,9 @@ class Form {
                 if ($val == 'acf') {
                     $arr[$akey] = array('text' => end($pieces), 'value' => reset($pieces));
                 }
+                if ($val == 'flatpickr') {
+                    $arr[$akey] = array('from' => reset($pieces), 'to' => end($pieces));
+                }
             }
         }
         return $arr;

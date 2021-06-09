@@ -32,6 +32,7 @@ abstract class Base_Tag extends Tag {
             'author' => array('name' => 'author', 'title' => __('Author', 'e-addons-for-elementor')),
             'site' => array('name' => 'site', 'title' => __('Site', 'e-addons-for-elementor')),
             'form' => array('name' => 'form', 'title' => __('Form', 'e-addons-for-elementor')),
+            'archive' => array('name' => 'archive', 'title' => __('Archive', 'elementor')),
             'repeater' => array('name' => 'repeater', 'title' => __('Repeater', 'e-addons-for-elementor')),
             'woocommerce' => array('name' => 'woocommerce', 'title' => __('WooCommerce', 'e-addons-for-elementor')),
         );

@@ -311,7 +311,7 @@ trait Pagination {
         $showitems = ($range)/* - 1 */;
         //$showitems = ($range * 2)/* - 1*/;
 
-        $paged = max(1, get_query_var('page'), get_query_var('paged'));
+        $paged = Utils::get_current_page_num();
 
         if (empty($paged))
             $paged = 1;

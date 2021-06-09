@@ -1,7 +1,7 @@
 
 var eProAddon = '';
 function installProCookieCallback(json){
-    //console.log(json);
+    console.log(json);
     if (Object.keys(json).length === 0) {
         // user not logged in
         alert('Please login at e-addons.com with your profile for automatic installation');
@@ -70,8 +70,13 @@ jQuery(document).ready(function () {
             dataType: "jsonp",
             jsonp: "installProCookieCallback",
             error: function (data) {
-                //console.log("error");
+                console.log("error");
+                alert('To proceed with the quick installation for your bought PRO addons, please log in with your account on e-addons.com shop');
                 //window.location.href = jQuery(this).attr('href');
+                window.open("https://e-addons.com/your-account/");
+                eProAddon.find('.dashicons-update').addClass('dashicons-download').removeClass('spin').removeClass('dashicons-update');
+                eProAddon.find('.btn-txt').text('INSTALL PRO e-ADDON');
+                eProAddon.css('pointer-events', 'auto');
             },
             success: function (data) {
                 console.log(data);     

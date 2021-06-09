@@ -12,16 +12,18 @@ trait Wordpress {
     public static $admin_notices_fired = false;
     public static $notices = [];
 
-    public static function e_admin_notice($msg = '', $level = 'warning', $dismissible = true) {
+    public static function e_admin_notice($msg = '', $level = 'warning', $dismissible = true, $wrapper = true) {
         $msg = Utils::to_string($msg);
         ob_start();
         ?>
         <div class="e-add-notiice <?php echo $level . ' notice-' . $level; ?> notice<?php echo $dismissible ? ' is-dismissible' : ''; ?>">
+            <?php if ($wrapper) { ?>
             <i class="eadd-logo-e-addons"></i>
             <p>
                 <strong>e-addons:</strong> 
                 <?php _e($msg, 'e-addons-for-elementor'); ?>
             </p>
+            <?php } else { _e($msg, 'e-addons-for-elementor'); } ?>
         </div>
         <?php
         $notice = ob_get_clean();
@@ -292,6 +294,7 @@ trait Wordpress {
                 if ($extend) {
                     array_push($fields, 'parent', 'description', 'taxonomy', 'count');
                 }
+                break;
             case 'post':
             default:
                 $fields = array('ID', 'post_author', 'post_date', 'post_date_gmt', 'post_content', 'post_title', 'post_excerpt', 'post_status', 'comment_status', 'ping_status', 'post_password', 'post_name', 'to_ping', 'pinged', 'post_modified', 'post_modified_gmt', 'post_content_filtered', 'post_parent', 'guid', 'menu_order', 'post_type', 'post_mime_type', 'comment_count');

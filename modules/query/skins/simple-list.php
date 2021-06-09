@@ -230,6 +230,8 @@ class Simple_List extends Base {
     }
 
     protected function render_element_item() {
+        
+        $this->index++;
 
         $this->render_item_start();
 

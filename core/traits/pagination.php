@@ -45,6 +45,12 @@ trait Pagination {
 
             $url = get_preview_post_link($post, $query_args, $url);
         }
+        
+        if (!wp_doing_ajax() && !empty($_GET)) {
+            foreach($_GET as $gkey => $gvalue) {
+                $url = add_query_arg($gkey, $gvalue, $url);
+            }
+        }
 
         return $url;
     }

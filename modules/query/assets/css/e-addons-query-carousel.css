@@ -6,8 +6,8 @@
 .e-add-carousel-controls .swiper-button-next {
   position: absolute;
   top: 50%;
-  width: 85px;
-  height: 85px;
+  width: auto; /*85px;*/
+  height: auto; /*85px;*/
   margin-top: -43px;
   z-index: 9;
   cursor: pointer;

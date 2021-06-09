@@ -6,14 +6,14 @@
  * Plugin Name:       e-addons for Elementor
  * Plugin URI:        https://e-addons.com
  * Description:       The new must-have tool-set for web experts. Exploit Elementor limitless potential, with powerful widgets & extensions, and boost your workflow.
- * Version:           2.5.5
+ * Version:           2.6
  * Author:            Nerds Farm
  * Author URI:        https://nerds.farm
  * Text Domain:       e-addons-for-elementor
  * Domain Path:       /languages
  * License:           GPL-3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Elementor tested up to: 3.2.0
+ * Elementor tested up to: 3.3.0
  * Free:              true
  *
  * @package e-addons

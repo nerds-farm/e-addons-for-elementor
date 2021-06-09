@@ -143,6 +143,7 @@ h3.e_addons-title {
     display: flex;
     align-items: center;
     padding: 10px;
+    position: relative;
 }
 .notice.e-add-notiice p{
     margin: 0;
