@@ -168,9 +168,29 @@
 .elementor-control.elementor-control-source_post,
 .elementor-control.elementor-control-source_term,
 .elementor-control.elementor-control-source_user,
-.elementor-control.elementor-control-source_attachment{
+.elementor-control.elementor-control-source_attachment,
+.elementor-control-cards_custom_coordinates,
+.elementor-control-cards_save_coordinates,
+.elementor-control-cards_coordinates_object,
+.elementor-control-cards_randomize,
+.elementor-control-cards_stage_width,
+.elementor-control-cards_stage_height
+{
     background-color: #f5f5f5;
+}
+.elementor-control-cards_coordinates_object textarea,
+.elementor-control-cards_stage_width input,
+.elementor-control-cards_stage_height input{
+    background-color: #ffffff;
+}
+.elementor-control-cards_custom_coordinates .elementor-control-title{
+    display: flex;
+    align-items: center;
+    font-weight: 700;
 }
 .elementor-control-type-button .elementor-button{
     padding: 0 10px;
+}
+.elementor-button.e-add-warning{
+    background-color: rgb(255, 196, 0);
 }
