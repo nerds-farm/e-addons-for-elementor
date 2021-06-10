@@ -786,5 +786,7 @@ td.e-add-item.elementor-column.elementor-col-100 {
     display:none
 }
 
-
+.e-add-index{
+    display: block;
+}
 

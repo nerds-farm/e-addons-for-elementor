@@ -98,7 +98,7 @@ trait Label {
         $use_link = $this->get_item_link($settings);
         $blanklink  = $settings['blanklink_enable'];
 
-
+        
         if ($use_link){
             $attribute_link = ' href="' . $use_link . '"';
 
@@ -106,11 +106,17 @@ trait Label {
             if( !empty($blanklink))
             $attribute_target = ' target="_blank"';
 
-            echo '<a' . $attribute_link . $attribute_target . '>';
+            echo '<a' . $attribute_link . $attribute_target . ' class="e-add-index">';
+        }else{
+            echo '<div class="e-add-index">';
         }
         echo $this->index;
-        if ($use_link) echo '</a>';
-
+        if ($use_link){
+            echo '</a>';
+        }else{
+            echo '</div>';
+        }
+        
     }
     
 }
