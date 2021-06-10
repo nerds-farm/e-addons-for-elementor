@@ -697,7 +697,7 @@ trait Items_Style {
                     ]
                 ]
             ],
-            'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-button, {{WRAPPER}} {{CURRENT_ITEM}} .e-add-img',
+            'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} > *',
                 ]
         );
 
