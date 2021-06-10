@@ -147,15 +147,15 @@ class Dashboard {
                 $has_pro = true;
             }
         }
-        $has_pro = false;        
-        if (!$has_pro) {
-            //delete_option('skip_banner_e_addons');
+        //$has_pro = false;
+        //delete_option('skip_banner_e_addons');        
+        if (!$has_pro) {            
             $last_skip_version = get_option('skip_banner_e_addons');    
             if (!empty($addons["e-addons-for-elementor"]["Version"])) {
                 $last_version = $addons["e-addons-for-elementor"]["Version"];
                 if (!$last_skip_version || version_compare($last_skip_version, $last_version) < 0) {
-                    $msg = '<a href="https://e-addons.com/pricing/" target="_blank"><img src="'. E_ADDONS_URL.'assets/img/banner/gopro.jpg" style="max-width:calc(100% + 20px);margin:-10px;margin-bottom:-15px;"></a>';
-                    $msg .= '<a id="e-addons-banner-notice-dismiss" title="Remind me later" href="#" style="position:absolute;top:20px;right:20px;background-color:white;border-radius:50%;padding:5px 10px;color:black;text-decoration:none;">X</a>';
+                    $msg = '<a href="https://e-addons.com/go-pro/" target="_blank"><img src="'. E_ADDONS_URL.'assets/img/banner/go-pro.png" style="max-width:calc(100% + 20px);margin:-10px;margin-bottom:-15px;"></a>';
+                    $msg .= '<a id="e-addons-banner-notice-dismiss" title="Remind me later" href="#" style="position:absolute;top:20px;right:20px;background-color:white;border-radius:50%;padding:5px;color:black;text-decoration:none;"><span class="dashicons dashicons-no"></span></a>';
                     $msg .= "<script>(function($) {
                                 'use strict';
                                 function dismissEAddonsBannerNotification() {
@@ -163,14 +163,13 @@ class Dashboard {
                                         event.preventDefault();
                                         jQuery.post( ajaxurl, {
                                             action: 'e_addons_banner_dismiss_notification',
-                                            version: ".$last_version."
+                                            version: '".$last_version."',
                                         });
                                         jQuery(this).closest('.notice').fadeOut();
                                     });
                                 }
                                 jQuery(dismissEAddonsBannerNotification);
-                        })(jQuery);
-                    </script>";
+                        })(jQuery);</script>";
                     Utils::e_admin_notice($msg, 'warning', false, false);
                 }
             }
