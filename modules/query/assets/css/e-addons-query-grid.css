@@ -427,5 +427,5 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
     /* @poglie new */
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
