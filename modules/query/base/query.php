@@ -240,6 +240,19 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
+         // skin: maps
+         $this->add_control(
+            'skin_dis_maps',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'show_label' => false,
+                    'raw' => '<i class="eaddicon-skin eadd-acf-maplocator"></i>',
+                    'content_classes' => 'e-add-skin-dis',
+                    'condition' => [
+                        '_skin' => 'maps'
+                    ],
+                ]
+        );
 
         // skin: Dualslider
         $this->add_control(

@@ -90,7 +90,7 @@ jQuery(window).on('elementor/frontend/init', () => {
         }
 
         bindEvents() {
-            this.skinPrefix = this.$element.data('widget_type').split('.').pop() + '_';
+            this.skinPrefix = this.$element.attr('data-widget_type').split('.').pop() + '_';
             this.elementSettings = this.getElementSettings();
 
             let id_scope = this.elements.$id_scope,
@@ -280,6 +280,16 @@ jQuery(window).on('elementor/frontend/init', () => {
 
                 observe_eAddns_element(this.elements.$scope[0], eAddns_MutationObserverCallback);
             }
+        }
+
+        onElementChange(propertyName){
+			//console.log(this.skinPrefix+'columns_grid');
+			this.elementSettings = this.getElementSettings();			
+            
+            if ('_skin' === propertyName) {
+                this.skinPrefix = this.$element.data('widget_type').split('.').pop() + '_';
+				//alert(propertyName);
+			}
         }
     }
 

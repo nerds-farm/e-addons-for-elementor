@@ -39,9 +39,9 @@ class WidgetQueryDualSliderHandlerClass extends elementorModules.frontend.handle
     }
 
     bindEvents() {
-        this.skinPrefix = this.$element.data('widget_type').split('.').pop()+'_';
+        this.skinPrefix = this.$element.attr('data-widget_type').split('.').pop() + '_';
         this.elementSettings = this.getElementSettings();
-
+        
         this.isThumbsCarouselEnabled = false;
         this.adapteHeight();
         this.postId = this.elements.$scope.find('.e-add-dualslider-controls').attr('data-post-id');

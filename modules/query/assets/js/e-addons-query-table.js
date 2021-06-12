@@ -64,7 +64,7 @@ jQuery(window).on('elementor/frontend/init', () => {
         }
 
         bindEvents() {
-            this.skinPrefix = this.$element.data('widget_type').split('.').pop() + '_';
+            this.skinPrefix = this.$element.attr('data-widget_type').split('.').pop() + '_';
             this.elementSettings = this.getElementSettings();
 
             let scope = this.elements.$scope,
