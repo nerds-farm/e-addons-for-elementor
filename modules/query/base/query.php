@@ -34,8 +34,7 @@ class Query extends Base_Widget {
     use Traits\Label;
     use Traits\Items_Content;
     use Traits\Items_Style;
-    use Traits\Items_Advanced;
-    use Traits\Repeater;
+    use Traits\Items_Advanced;    
 
     //@ questa è una variabile globale che memorizza la query in corso
     protected $query = null;

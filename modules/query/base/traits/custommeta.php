@@ -219,44 +219,55 @@ trait Custommeta {
             $type_q = $this->get_querytype();
         }
         if($type_q != 'repeater'){
-            //Repeater Field Control
-            //$this->controls_repeaterfield_content($target);
-            //}else{
             //Key
-            $target->add_control(
-                'metafield_key', [
-                    'label' => __('META Field', 'e-addons'),
-                    'type' => 'e-query',
-                    'placeholder' => __('Search Meta key or Field Name', 'e-addons'),
-                    'label_block' => true,
-                    //$type_q
-                    //'query_type' => 'posts', 
-                    //'object_type' => 'elementor_library',
-                    //'query_type' => 'users',
-                    //'object_type' => 'role',
-                    'query_type' => 'metas', //'fields',
-                    'object_type' => $type_q,
-                    //'query_type' => 'fields',
-                    //'object_type' => 'term',
-                    //'query_type' => 'fields',
-                    //'object_type' => 'post',
-                    //--------
-                    //'query_type' => 'post',
-                    //'object_type' => 'meta',
-                    //'query_type' => 'terms',
-                    //'object_type' => 'tags',
-                    //'query_type' => 'taxonomies',
-                    //'query_type'    => 'metas',
-                    //'object_type'   => $type_mf,
-                    'default' => '',
-                    'dynamic' => [
-                        'active' => false,
-                    ],
-                    'condition' => [
-                        'item_type' => 'item_custommeta'
+            if (in_array($type_q, array('post', 'user', 'term', 'media'))) {
+                $target->add_control(
+                    'metafield_key', [
+                        'label' => __('META Field', 'e-addons'),
+                        'type' => 'e-query',
+                        'placeholder' => __('Search Meta key or Field Name', 'e-addons'),
+                        'label_block' => true,
+                        //$type_q
+                        //'query_type' => 'posts', 
+                        //'object_type' => 'elementor_library',
+                        //'query_type' => 'users',
+                        //'object_type' => 'role',
+                        'query_type' => 'metas', //'fields',
+                        'object_type' => $type_q,
+                        //'query_type' => 'fields',
+                        //'object_type' => 'term',
+                        //'query_type' => 'fields',
+                        //'object_type' => 'post',
+                        //--------
+                        //'query_type' => 'post',
+                        //'object_type' => 'meta',
+                        //'query_type' => 'terms',
+                        //'object_type' => 'tags',
+                        //'query_type' => 'taxonomies',
+                        //'query_type'    => 'metas',
+                        //'object_type'   => $type_mf,
+                        'default' => '',
+                        'dynamic' => [
+                            'active' => false,
+                        ],
+                        'condition' => [
+                            'item_type' => 'item_custommeta'
+                        ]
                     ]
-                ]
-            );
+                );
+            } else {
+                $target->add_control(
+                    'metafield_key', [
+                        'label' => __('META Field', 'e-addons'),
+                        'type' => Controls_Manager::TEXT,
+                        'placeholder' => __('Write Custom Field Key', 'e-addons'),
+                        'label_block' => true,
+                        'condition' => [
+                            'item_type' => 'item_custommeta'
+                        ]
+                    ]
+                );
+            }
         }
         
         //Type
