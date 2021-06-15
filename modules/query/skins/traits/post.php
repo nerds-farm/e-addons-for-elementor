@@ -9,7 +9,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
-
 use EAddonsForElementor\Core\Utils;
 
 /**
@@ -23,14 +22,14 @@ trait Post {
         // Settings ------------------------------
         $avatar_image_size = $settings['author_image_size'];
         $use_link = $this->get_item_link($settings);
-        $blanklink  = $settings['blanklink_enable'];
+        $blanklink = $settings['blanklink_enable'];
 
         $author_user_key = array();
-        if (count($settings['author_user_key']))
+        if (!empty($settings['author_user_key']))
             $author_user_key = $settings['author_user_key'];
         // ---------------------------------------
         if ($settings['author_image'])
-            array_push($author_user_key, 'avatar');
+            array_unshift($author_user_key, 'avatar');
         if ($settings['author_displayname'])
             array_push($author_user_key, 'display_name');
         if ($settings['author_bio'])
@@ -44,34 +43,35 @@ trait Post {
         $author['avatar'] = get_avatar_url($user_id, $avatar_args);
         $author['posts_url'] = get_author_posts_url($user_id);
 
-        //<a href="' . $author['posts_url'] . '">' . '
+        $author_link = '<a href="' . $author['posts_url'] . '">';
+        
         if (!empty($author_user_key)) {
             echo '<div class="e-add-post-author">';
-            ?>
-            <div class="e-add-author-image">
-            <?php
             foreach ($author_user_key as $akey => $author_value) {
-
                 if ($author_value == 'avatar') {
                     ?>
+                    <div class="e-add-author-image">
                         <div class="e-add-author-avatar">
+                            <?php echo (!empty($settings['author_link'])) ? $author_link : ''; ?>
                             <img class="e-add-img" src="<?php echo $author['avatar']; ?>" alt="<?php echo get_the_author_meta('display_name'); ?>" />
+                            <?php echo (!empty($settings['author_link'])) ? '</a>' : ''; ?>
                         </div>
+                    </div>
                     <?php
-                    }
+                } else {
+                    ?>
+                    <div class="e-add-author-text">
+                        <?php 
+                        echo '<div class="e-add-author-' . $author_value . '">';
+                        echo (!empty($settings['author_link'])) ? $author_link : '';
+                        echo Utils::to_string(get_the_author_meta($author_value));
+                        echo (!empty($settings['author_link'])) ? '</a>' : '';
+                        echo '</div>'; 
+                        ?>
+                    </div>
+                    <?php
                 }
-                ?>
-            </div>
-            <div class="e-add-author-text">
-                <?php
-                foreach ($author_user_key as $akey => $author_value) {
-                    if ($author_value != 'avatar') {
-                        echo '<div class="e-add-author-' . $author_value . '">' . get_the_author_meta($author_value) . '</div>';
-                    }
-                }
-                ?>
-            </div>
-            <?php
+            }
             echo '</div>';
         }
     }
@@ -89,7 +89,7 @@ trait Post {
         switch ($querytype) {
             case 'attachment':
                 $content = $this->current_data->post_content;
-                if($content){
+                if ($content) {
                     if ($textcontent_limit) {
                         echo substr(wp_strip_all_tags($content), 0, $textcontent_limit) . ' ...'; //
                     } else {
@@ -108,18 +108,18 @@ trait Post {
                         $post_excerpt = $this->limit_text($post_excerpt, $textcontent_limit);
                     }
                     echo $post_excerpt; //$this->limit_excerpt( $settings['textcontent_limit'] ); //
-        
+
                     /*
                       // Da valutare se fare così...
                       add_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
                       add_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
-        
+
                       ?>
-        
+
                       <?php the_excerpt(); ?>
-        
+
                       <?php
-        
+
                       remove_filter( 'excerpt_length', [ $this, 'filter_excerpt_length' ], 20 );
                       remove_filter( 'excerpt_more', [ $this, 'filter_excerpt_more' ], 20 );
                      */
@@ -149,12 +149,12 @@ trait Post {
                 $posttype = get_post_type_object($type)->labels->singular_name;
                 break;
         }
-        if ( !empty($posttype) ){
+        if (!empty($posttype)) {
             //@p label before
-            echo $this->render_label_before_item($settings,'Type: ');
+            echo $this->render_label_before_item($settings, 'Type: ');
             echo '<div class="e-add-post-ptype">';
-                echo $posttype;
-            echo '</div>';           
+            echo $posttype;
+            echo '</div>';
             echo $this->render_label_after_item($settings);
         }
     }
@@ -172,7 +172,6 @@ trait Post {
 
         $term_list = [];
 
-
         $taxonomy = get_post_taxonomies($this->current_id);
 
         echo '<div class="e-add-post-terms">';
@@ -180,7 +179,7 @@ trait Post {
         foreach ($taxonomy as $tax) {
 
             // @p se $taxonomy_filter è valorizzato filtro solo le taxonomy scelte
-            if ( !empty($taxonomy_filter) ) {
+            if (!empty($taxonomy_filter)) {
                 if (!in_array($tax, $taxonomy_filter)) {
                     continue;
                 }
@@ -190,21 +189,21 @@ trait Post {
 
                 $term_list = Utils::get_post_terms($this->current_id, $tax);
                 if ($term_list && is_array($term_list) && count($term_list) > 0) {
-                    
-                    //if($cont == 1){
-                        // @p La label
-                        echo $this->render_label_before_item($settings, get_taxonomy($tax)->labels->name.': ');
 
-                        if ($icon_enable) {
-                            // @p l'icona
-                            $icon = '';
-                            if (is_taxonomy_hierarchical($tax)) {
-                                $icon = '<i class="e-add-icon e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
-                            } else {
-                                $icon = '<i class="e-add-icon e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
-                            }
-                            echo $icon;
+                    //if($cont == 1){
+                    // @p La label
+                    echo $this->render_label_before_item($settings, get_taxonomy($tax)->labels->name . ': ');
+
+                    if ($icon_enable) {
+                        // @p l'icona
+                        $icon = '';
+                        if (is_taxonomy_hierarchical($tax)) {
+                            $icon = '<i class="e-add-icon e-add-query-icon far fa-folder-open" aria-hidden="true"></i> ';
+                        } else {
+                            $icon = '<i class="e-add-icon e-add-query-icon far fa-tags" aria-hidden="true"></i> ';
                         }
+                        echo $icon;
+                    }
                     //}
 
                     echo '<ul class="e-add-terms-list e-add-taxonomy-' . $tax . '">';
@@ -224,7 +223,7 @@ trait Post {
                                     continue;
                             }
                         }
-                        
+
                         //@p il link del termine
                         $term_url = trailingslashit(get_term_link($term));
 
@@ -235,7 +234,7 @@ trait Post {
                             if ($use_link != 'yes') {
                                 $term_url = $this->get_item_link($settings);
                             }
-                            $linkOpen = '<a class="e-add-link" href="' . $term_url . '"'.( !empty($settings['blanklink_enable']) ? ' target="_blank"' : '').'>';
+                            $linkOpen = '<a class="e-add-link" href="' . $term_url . '"' . (!empty($settings['blanklink_enable']) ? ' target="_blank"' : '') . '>';
                             $linkClose = '</a>';
                         }
                         //@p il divisore in caso di inline
@@ -251,7 +250,6 @@ trait Post {
                     } //end foreach terms
                     echo '</ul>';
                     echo $this->render_label_after_item($settings);
-                    
                 } //end if termslist
             } //end exclusion
         } //end foreach taxonomy	

@@ -80,26 +80,26 @@ trait Items_Content {
             } else if ($type == 'user') {
                 $defIm = 'avatar';
             }
-            
+
             $target->add_control(
-                'image_type', [
-                    'label' => __('Image type', 'e-addons'),
-                    'type' => Controls_Manager::SELECT,
-                    'options' => [
-                        'featuredimage' => __(ucfirst($defIm . ' image'), 'e-addons'),
-                        'customimage' => __('Custom meta image', 'e-addons'),
-                    ],
-                    'default' => $defIm . 'image',
-                    'conditions' => [
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'operator' => 'in',
-                                'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
-                            ]
+                    'image_type', [
+                'label' => __('Image type', 'e-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'featuredimage' => __(ucfirst($defIm . ' image'), 'e-addons'),
+                    'customimage' => __('Custom meta image', 'e-addons'),
+                ],
+                'default' => $defIm . 'image',
+                'conditions' => [
+                    'terms' => [
+                        [
+                            'name' => 'item_type',
+                            'operator' => 'in',
+                            'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
                         ]
                     ]
                 ]
+                    ]
             );
 
             $target->add_control(
@@ -150,16 +150,16 @@ trait Items_Content {
             );
         }
         $target->add_control(
-            'image_content_heading', [
-                'type' => Controls_Manager::RAW_HTML,
-                'show_label' => false,
-                'raw' => '<i class="fas fa-image"></i> <b>' . __('Image', 'e-addons') . '</b>',
-                'content_classes' => 'e-add-inner-heading',
-                'separator' => 'before',
-                'condition' => [
-                    'item_type' => 'item_imageoricon'
-                ]
+                'image_content_heading', [
+            'type' => Controls_Manager::RAW_HTML,
+            'show_label' => false,
+            'raw' => '<i class="fas fa-image"></i> <b>' . __('Image', 'e-addons') . '</b>',
+            'content_classes' => 'e-add-inner-heading',
+            'separator' => 'before',
+            'condition' => [
+                'item_type' => 'item_imageoricon'
             ]
+                ]
         );
         $target->add_group_control(
                 Group_Control_Image_Size::get_type(), [
@@ -195,7 +195,7 @@ trait Items_Content {
                     ]
             );
         }
-        
+
         $target->add_responsive_control(
                 'ratio_image', [
             'label' => __('Image Ratio', 'e-addons'),
@@ -289,7 +289,7 @@ trait Items_Content {
                 'height_bgimage', [
             'label' => __('Height', 'e-addons'),
             'type' => Controls_Manager::SLIDER,
-            'size_units' => ['px','%','vh'],
+            'size_units' => ['px', '%', 'vh'],
             'range' => [
                 'px' => [
                     'min' => 1,
@@ -390,6 +390,7 @@ trait Items_Content {
                 ]
         );
     }
+
     // ----------------------------------------------------------
     public function controls_items_icon_content($target) {
         //Icon color-size
@@ -405,7 +406,6 @@ trait Items_Content {
             ]
                 ]
         );
-        
 
         $target->add_control(
                 'color_item_iconorimage', [
@@ -417,7 +417,6 @@ trait Items_Content {
             'condition' => [
                 'item_type' => 'item_imageoricon'
             ]
-
                 ]
         );
         $target->add_responsive_control(
@@ -438,15 +437,14 @@ trait Items_Content {
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}}.e-add-item_imageoricon .e-add-query-icon' => 'font-size: {{SIZE}}{{UNIT}};',
                 '{{WRAPPER}} {{CURRENT_ITEM}}.e-add-item_imageoricon svg' => 'width: {{SIZE}}%;',
-
             ],
             'condition' => [
                 'item_type' => 'item_imageoricon'
             ]
                 ]
         );
-        
     }
+
     // +********************* Post: Title / Term: Title / User: User,Role,FirstName, LastName, DisplayName, NickName
     public function controls_items_title_content($target, $type = '') {
         if (!$type) {
@@ -712,13 +710,8 @@ trait Items_Content {
             'label' => __('Show Name', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'default' => 'yes',
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'value' => 'item_author',
-                    ]
-                ]
+            'condition' => [
+                'item_type' => 'item_author',
             ]
                 ]
         );
@@ -726,13 +719,8 @@ trait Items_Content {
                 'author_bio', [
             'label' => __('Show biography', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'value' => 'item_author',
-                    ]
-                ]
+            'condition' => [
+                'item_type' => 'item_author',
             ]
                 ]
         );
@@ -741,13 +729,8 @@ trait Items_Content {
             'label' => __('Show Avatar', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
             'default' => 'yes',
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'value' => 'item_author',
-                    ]
-                ]
+            'condition' => [
+                'item_type' => 'item_author',
             ]
                 ]
         );
@@ -785,15 +768,19 @@ trait Items_Content {
                     'separator' => 'after',
                     'query_type' => 'fields',
                     'object_type' => 'user',
-                    'default' => [],
-                    'conditions' => [
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'value' => 'item_author',
-                            ]
-                        ]
+                    'condition' => [
+                        'item_type' => 'item_author',
                     ]
+                ]
+        );
+
+        $target->add_control(
+                'author_link', [
+            'label' => __('Link to Author archive', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'condition' => [
+                'item_type' => 'item_author',
+            ]
                 ]
         );
     }

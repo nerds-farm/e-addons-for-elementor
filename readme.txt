@@ -3,8 +3,8 @@ Contributors: nerdsfarm, poglie, frapesce
 Donate link: https://e-addons.com/donate/
 Tags: elementor, addons, extension, dynamic, template, token, widget, module, design
 Requires at least: 5.0
-Tested up to: 5.7.2
-Elementor tested up to: 3.3.0
+Tested up to: 5.7.3
+Elementor tested up to: 3.4.0
 Stable tag: 2.6.1
 Requires PHP: 7.1
 License: GPLv3

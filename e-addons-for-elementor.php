@@ -13,7 +13,7 @@
  * Domain Path:       /languages
  * License:           GPL-3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Elementor tested up to: 3.3.0
+ * Elementor tested up to: 3.4.0
  * Free:              true
  *
  * @package e-addons
