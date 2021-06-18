@@ -22,13 +22,13 @@ trait Items_Advanced {
     public function controls_items_advanced($target) {
         //use_Link, Display(block,inline)
         $options = [
-            '' => __('None'),
-            'yes' => __('Current'),
-            'shortcode' => __('Shortcode'),
-            'custom' => __('Custom'),
+            '' => __('None', 'e-addons'),
+            'yes' => __('Current', 'e-addons'),
+            'shortcode' => __('Shortcode', 'e-addons'),
+            'custom' => __('Custom', 'e-addons'),
         ];
         if (Utils::is_plugin_active('elementor-pro') && Utils::is_plugin_active('e-addons-extended')) {
-            $options['popup'] = __('Open PopUp');
+            $options['popup'] = __('Open PopUp', 'e-addons');
         }
         $target->add_control(
                 'use_link', [

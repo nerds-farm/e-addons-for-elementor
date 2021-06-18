@@ -12,7 +12,7 @@ use EAddonsForElementor\Core\Utils\Query as Query_Utils;
 trait Custommeta {
 
     protected function get_value_custommeta($metakey,$i = 0) {
-
+ 
         if (!empty($metakey)) {
             $querytype = $this->parent->get_querytype();
 
