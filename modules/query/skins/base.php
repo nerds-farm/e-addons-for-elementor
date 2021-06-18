@@ -1026,20 +1026,28 @@ class Base extends Base_Skin {
         return $content;
     }
 
-    public function get_item_link($settings) {
+    public function get_item_link($settings, $obj_id = 0) {
+        
+        if (!empty($settings['gallery_link'])) {
+            // MEDIA
+            $settings['use_link'] = $settings['gallery_link'];
+        }
+        
         if (!empty($settings['use_link'])) {
             switch ($settings['use_link']) {
                 case 'custom':
                     if (!empty($settings['shortcode_link'])) {
+                        $type = $this->parent->get_querytype();
                         $raw_settings = $this->parent->get_settings('list_items');
                         foreach ($raw_settings as $raw_setting) {
-                            if ($raw_setting['_id'] == $settings['_id']) {
-                                $type = $this->parent->get_querytype();
+                            if ($raw_setting['_id'] == $settings['_id']) {                                
                                 //var_dump($this->current_data); die();                                
                                 $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
                                 return $link;
                             }
                         }
+                        $link = Utils::get_dynamic_data($settings['shortcode_link'], $this->current_data, $type);
+                        return $link;
                     }
                     break;
                 case 'shortcode':
@@ -1078,11 +1086,21 @@ class Base extends Base_Skin {
                         }
                     }
                     break;
-                case 'custom':
+                /*case 'custom':
                     if (!empty($settings['custom_link']['url'])) {
                         // TODO: generate dynamic url per each item
                         return $settings['custom_link']['url'];
                     }
+                    break;*/
+                case 'file':
+                    $media = get_post($obj_id);
+                    return $media->guid;                    
+                case 'attachment':
+                    //@p se il lightbox è attivo $page_permalink va in false
+                    $open_lightbox = $this->parent->get_settings_for_display('open_lightbox');
+                    $url = ($open_lightbox == 'no') ? get_attachment_link( $obj_id ) : wp_get_attachment_url( $obj_id );
+                    return $url;
+                case 'none':
                     break;
                 case 'yes':
                 default:

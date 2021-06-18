@@ -97,22 +97,12 @@ trait Common {
             // @p questa è l'mmagine via HTML
             switch ($querytype) {
                 case 'attachment':
-                    $use_link = !empty($settings['gallery_link']) && $settings['gallery_link'] != 'none' ? $settings['gallery_link'] : '';
-                    $page_permalink = false;
-                    //@p se il lightbox è attivo $page_permalink va in false
-                    $open_lightbox = $this->parent->get_settings_for_display('open_lightbox');
-                    if ($open_lightbox == 'no' || $use_link == 'attachment') {
-                        $page_permalink = true;
-                    }
+                    $use_link = !empty($settings['gallery_link']) ? $this->get_item_link($settings, $image_id) : '';
+                    $thumbnail_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
                     if ($use_link) {
-                        //se mi trovo in media questo mi serve per generare il lightbox
-                        add_filter('wp_get_attachment_link', [$this->parent, 'add_lightbox_data_to_image_link'], 10, 2);
-                        $thumbnail_html = wp_get_attachment_link($image_id, $setting_key, $page_permalink, true, false, $image_attr);
-                        remove_filter('wp_get_attachment_link', [$this->parent, 'add_lightbox_data_to_image_link']);
-                    } else {
-                        $thumbnail_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
+                        $thumbnail_html = '<a href="'.$use_link.'" class="e-media-link'.((!empty($settings['open_lightbox']) && $settings['open_lightbox'] != 'no') ? ' elementor-clickable' : '').'">'.$thumbnail_html.'</a>';
                     }
-
+                    echo $thumbnail_html;
                     break;
                 default:
                     //se mi trovo in post

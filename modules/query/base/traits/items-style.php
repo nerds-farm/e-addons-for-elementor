@@ -483,6 +483,45 @@ trait Items_Style {
             ]
                 ]
         );
+        
+        $target->add_responsive_control(
+                'items_author_flow', [
+            'label' => __('Flow', 'e-addons'),
+            'type' => Controls_Manager::CHOOSE,
+            'toggle' => true,
+            'options' => [
+                'row' => [
+                    'title' => __('Row', 'e-addons'),
+                    'icon' => 'eicon-h-align-left',
+                ],
+                'row-reverse' => [
+                    'title' => __('Row-Reverse', 'e-addons'),
+                    'icon' => 'eicon-h-align-right',
+                ],
+                'column' => [
+                    'title' => __('Column', 'e-addons'),
+                    'icon' => 'eicon-v-align-top',
+                ],
+                'column-reverse' => [
+                    'title' => __('Column-Reverse', 'e-addons'),
+                    'icon' => 'eicon-v-align-bottom',
+                ]
+            ],
+            'prefix_class' => 'flow-',
+            'default' => '',
+            'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-post-author' => 'flex-flow: {{VALUE}};',
+            ],
+            'conditions' => [
+                'terms' => [
+                    [
+                        'name' => 'item_type',
+                        'value' => 'item_author',
+                    ]
+                ]
+            ]
+                ]
+        );
         $target->add_responsive_control(
                 'positions_in_row', [
             'label' => __('Row Position', 'e-addons'),
@@ -517,44 +556,6 @@ trait Items_Style {
                         'name' => 'items_author_flow',
                         'operator' => 'in',
                         'value' => ['row', 'row-reverse'],
-                    ]
-                ]
-            ]
-                ]
-        );
-        $target->add_responsive_control(
-                'items_author_flow', [
-            'label' => __('Flow', 'e-addons'),
-            'type' => Controls_Manager::CHOOSE,
-            'toggle' => true,
-            'options' => [
-                'row' => [
-                    'title' => __('Row', 'e-addons'),
-                    'icon' => 'eicon-h-align-left',
-                ],
-                'row-reverse' => [
-                    'title' => __('Row-Reverse', 'e-addons'),
-                    'icon' => 'eicon-h-align-right',
-                ],
-                'column' => [
-                    'title' => __('Column', 'e-addons'),
-                    'icon' => 'eicon-v-align-top',
-                ],
-                'column-reverse' => [
-                    'title' => __('Column-Reverse', 'e-addons'),
-                    'icon' => 'eicon-v-align-bottom',
-                ]
-            ],
-            'prefix_class' => 'flow-',
-            'default' => '',
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-post-author' => 'flex-flow: {{VALUE}};',
-            ],
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'value' => 'item_author',
                     ]
                 ]
             ]

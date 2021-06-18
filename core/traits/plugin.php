@@ -11,17 +11,39 @@ trait Plugin {
 
     public static function is_plugin_active($plugin) {
         
-        if ($plugin == 'elementor-pro') {
-            return defined('ELEMENTOR_PRO__FILE__');
+        switch ($plugin) {
+            case 'elementor-pro':
+                return defined('ELEMENTOR_PRO__FILE__');
+        
+            case 'acf':
+                return class_exists( '\acf' ) && function_exists( 'acf_get_field_groups' );
+            case 'acf-pro':
+            case 'advanced-custom-fields-pro':
+                return defined('ACF_PRO');
+
+            case 'pods':
+                return function_exists( 'pods' );
+                
+            case 'toolset':
+                return function_exists( 'wpcf_admin_fields_get_groups' );
+                
+            case 'jet':
+            case 'jet-engine':
+                return class_exists( 'Jet_Engine' );
+                
+            case 'woocommerce':
+                return class_exists( 'woocommerce' );
+                
+            default:
+                if (isset(self::$plugins_active[$plugin])) {
+                    return self::$plugins_active[$plugin];
+                }
+                $active = self::is_plugin($plugin, 'must_use') || self::is_plugin($plugin, 'local') || self::is_plugin($plugin, 'network');
+                $active = apply_filters('e_addons/plugin/active', $active, $plugin);
+                self::$plugins_active[$plugin] = $active;
+                return $active;
         }
         
-        if (!empty(self::$plugins_active[$plugin]) && self::$plugins_active[$plugin]) {
-            return true;
-        }
-        $active = self::is_plugin($plugin, 'must_use') || self::is_plugin($plugin, 'local') || self::is_plugin($plugin, 'network');
-        $active = apply_filters('e_addons/plugin/active', $active, $plugin);
-        self::$plugins_active[$plugin] = $active;
-        return $active;
     }
 
     public static function is_plugin($plugin, $mode = 'local') {
