@@ -125,35 +125,12 @@ class Base extends Base_Skin {
                     'raw' => '<i class="fas fa-arrows-alt" aria-hidden="true"></i> ' . __('Flex Alignment', 'e-addons'),
                     'separator' => 'before',
                     'content_classes' => 'e-add-inner-heading',
-                /* 'condition' => [
-                  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-                  ], */
+                
                 ]
         );
+        
+        
         /*
-          $this->add_responsive_control(
-          'blocks_align_flex', [
-          'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-          'type' => Controls_Manager::SELECT,
-          'default' => '',
-          'options' => [
-          '' => 'Default',
-          'flex-start' => 'Left',
-          'center' => 'Center',
-          'flex-end' => 'Right',
-          'space-between' => 'Space Between',
-          'space-around' => 'Space Around',
-          //'stretch' => 'Stretch',
-          ],
-          'selectors' => [
-          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'align-items: {{VALUE}} !important;',
-          ],
-          //'condition' => [
-          //  $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-          //],
-          ]
-          ); */
-
         $this->add_control(
                 'blocks_align_flex', [
             'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
@@ -193,33 +170,14 @@ class Base extends Base_Skin {
             'selectors' => [
                 '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
             ],
+            'condition' => [
+                'style_items!' => 'template',
+                '_skin' => ['grid'],
+            ]
                 ]
-        );
+        );*/
 
-        /*
-          $this->add_responsive_control(
-          'blocks_align_justify', [
-          'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
-          'type' => Controls_Manager::SELECT,
-          'default' => '',
-          'options' => [
-          '' => 'Default',
-          'flex-start' => 'Top',
-          'center' => 'Middle',
-          'flex-end' => 'Bottom',
-          'space-between' => 'Space Between',
-          'space-around' => 'Space Around',
-          //'stretch' => 'Stretch',
-          ],
-          'selectors' => [
-          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}} !important;',
-          ],
-          //'separator' => 'after',
-          //     'condition' => [
-          //      $this->get_control_id('v_pos_postitems') => ['', 'stretch'],
-          //  ],
-          //]
-          ); */
+        
         $this->add_control(
                 'blocks_align_justify', [
             'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
@@ -925,10 +883,12 @@ class Base extends Base_Skin {
         $data_post_index = ' data-post-index="' . $this->counter . '"';
         //@p una classe personalizzata per lo skin
         $item_class = ' ' . $this->get_item_class();
+        //@p una serie di id-nome utili
+        $data_atttributes = $this->get_item_dataattributes();
         ?>
         <article <?php
         post_class(['e-add-post e-add-post-item e-add-post-item-' . $this->parent->get_id() . $item_class]);
-        echo $data_post_id . $data_post_index;
+        echo $data_post_id . $data_post_index . $data_atttributes;
         ?>>
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
@@ -1028,6 +988,9 @@ class Base extends Base_Skin {
 
     public function get_item_class() {
         return 'e-add-item-' . $this->get_id();
+    }
+    public function get_item_dataattributes() {
+        
     }
 
     public function get_image_class() {
