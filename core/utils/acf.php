@@ -53,14 +53,19 @@ class Acf {
     public static function get_acf_field($key = '') {
         if ($key) {
             global $wpdb;
-            $sql = 'SELECT post_content FROM ' . $wpdb->prefix . "posts WHERE post_excerpt = '" . esc_sql($key) . "' AND post_type = 'acf-field'";
-            $acf_field = $wpdb->get_col($sql);
-            if (!empty($acf_field)) {
-                $acf_field = reset($acf_field);
-                $acf_field = maybe_unserialize($acf_field);
-                if ($acf_field && is_array($acf_field) && isset($acf_field['type'])) {
-                    return $acf_field;
+            $sql = 'SELECT * FROM ' . $wpdb->prefix . "posts WHERE post_excerpt = '" . esc_sql($key) . "' AND post_type = 'acf-field'";
+            $acf_fields = (array)$wpdb->get_row($sql);
+            if (!empty($acf_fields)) {
+                if (!empty($acf_fields['post_content'])) {
+                    $acf_field = maybe_unserialize($acf_fields['post_content']);
+                    if ($acf_field && is_array($acf_field) && isset($acf_field['type'])) {
+                        foreach($acf_field as $acf_key => $acf_val) {
+                            $acf_fields[$acf_key] = $acf_val;
+                        }
+                    }
                 }
+                $acf_fields['key'] = $acf_fields['post_name'];
+                return $acf_fields;
             }
         }
         return false;
@@ -111,7 +116,7 @@ class Acf {
         }
         
         if ($filter) {
-            foreach($acf_list as $key => $acf_list) {
+            foreach($acf_list as $key => $acf_field) {
                 if (strpos($filter, $key) === false && strpos($filter, $acf_field) === false) {
                     unset($acf_list[$key]);
                 }
@@ -129,6 +134,53 @@ class Acf {
         if ($post) {
             self::$acf_fields[$key]['ID'] = $post->ID;
             return $post;
+        }
+        return false;
+    }
+    
+    public static function get_target($id_target, $customfields_type = 'post') {
+        switch ($customfields_type) {
+            case 'attachment':
+            case 'post':
+                $id_target = (string)$id_target;
+                break;
+            case 'term':
+                $id_target = 'term_' . $id_target;
+                break;
+            case 'user':
+                $id_target = 'user_' . $id_target;
+                break;
+            case 'option':
+                $id_target = 'option';
+                break;
+        }
+        return $id_target;
+    }
+    
+    public static function set_repeater($selector, $data, $obj_id, $type = 'post') {
+        $id_target = self::get_target($obj_id, $type);            
+        $repeater = get_field_object($selector, $id_target, false);
+        if (!$repeater) $repeater = self::get_acf_field($selector);        
+        if (!empty($repeater['type']) && $repeater['type'] == 'repeater') {
+            // https://www.advancedcustomfields.com/resources/delete_row/
+            $rows = get_metadata($type, $obj_id, $selector);
+            $rows = intval($rows);
+            for ($i=1; $i<=$rows; $i++) {
+                delete_row($selector, $i, $id_target);
+            }
+            // https://www.advancedcustomfields.com/resources/update_sub_field/
+            // Update "caption" within the first row of "repeater".                            
+            if (!empty($data)) {
+                foreach($data as $row => $sub_fields) {
+                    $row++; // start from 1 (not 0)
+                    foreach($sub_fields as $sub => $sub_field) {
+                        update_sub_field( array($selector, $row, $sub), $sub_field, $id_target );
+                    }
+                }
+                update_metadata($type, $obj_id, $selector, $row);
+                update_metadata($type, $obj_id, '_'.$selector, $repeater['key']);
+                return true;
+            }
         }
         return false;
     }

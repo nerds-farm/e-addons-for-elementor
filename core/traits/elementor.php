@@ -66,7 +66,7 @@ trait Elementor {
         }
         return $t_id;
     }
-    
+
     public static function get_widget_type_by_id($e_id, $p_id = null) {
         $p_id = self::get_element_post_id($e_id, $p_id);
         if (intval($p_id) > 0) {
@@ -80,7 +80,7 @@ trait Elementor {
         }
         return false;
     }
-    
+
     public static function get_element_type_by_id($e_id, $p_id = null) {
         $p_id = self::get_element_post_id($e_id, $p_id);
         if (intval($p_id) > 0) {
@@ -94,8 +94,8 @@ trait Elementor {
         }
         return false;
     }
-    
-    public static function get_element_post_id($e_id, $p_id = 0) {        
+
+    public static function get_element_post_id($e_id, $p_id = 0) {
         if (!$p_id && $e_id) {
             $p_id = self::get_template_by_element_id($e_id);
         }
@@ -104,14 +104,14 @@ trait Elementor {
         }
         if (!$p_id && !empty($_REQUEST['post'])) {
             $p_id = absint($_REQUEST['post']);
-        }        
-        if (!$p_id) {                                
+        }
+        if (!$p_id) {
             $p_id = get_the_ID();
         }
         return $p_id;
     }
 
-    public static function get_element_instance_by_id($e_id, $p_id = null) {        
+    public static function get_element_instance_by_id($e_id, $p_id = null) {
         $p_id = self::get_element_post_id($e_id, $p_id);
         if (intval($p_id) > 0) {
             $document = \Elementor\Plugin::$instance->documents->get($p_id);
@@ -161,10 +161,7 @@ trait Elementor {
     }
 
     public static function is_preview($editor_mode = false) {
-        return !empty($_GET['elementor-preview']) 
-        || (!empty($_GET['post']) && !empty($_GET['action']) && $_GET['action'] == 'elementor') 
-        || (wp_doing_ajax() && !empty($_POST['action']) && $_POST['action'] == 'elementor_ajax') 
-        || ($editor_mode && \Elementor\Plugin::$instance->editor->is_edit_mode());
+        return !empty($_GET['elementor-preview']) || (!empty($_GET['post']) && !empty($_GET['action']) && $_GET['action'] == 'elementor') || (wp_doing_ajax() && !empty($_POST['action']) && $_POST['action'] == 'elementor_ajax') || ($editor_mode && \Elementor\Plugin::$instance->editor->is_edit_mode());
     }
 
     public static function get_template_from_html($content = '') {
@@ -255,11 +252,11 @@ trait Elementor {
                 ]
         );
     }
-    
+
     public static function get_placeholder_image_src() {
         return \Elementor\Utils::get_placeholder_image_src();
     }
-    
+
     public static function get_current_template($post_id = false) {
         if (!$post_id) {
             $post_id = get_the_ID();
@@ -267,7 +264,7 @@ trait Elementor {
         if (\Elementor\Plugin::instance()->db->is_built_with_elementor($post_id)) {
             return $post_id;
         } else {
-            if (\EAddonsForElementor\Core\Utils::is_plugin_active('elementor-pro')) {                
+            if (\EAddonsForElementor\Core\Utils::is_plugin_active('elementor-pro')) {
                 $locations = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_locations_manager()->get_locations();
                 if (!empty($locations['single'])) {
                     $documents_for_location = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_conditions_manager()->get_documents_for_location('single');
@@ -276,7 +273,7 @@ trait Elementor {
                             return $document_id;
                         }
                     }
-                }                
+                }
                 $document = \Elementor\Plugin::instance()->documents->get($post_id);
                 if ($document) {
                     return $document->get_main_id();
@@ -285,78 +282,115 @@ trait Elementor {
         }
         return false;
     }
-    
+
     /**
-	 * Add render attributes.
-	 *
-	 * Used to add attributes to the current element wrapper HTML tag.
-	 *
-	 * @since 3.1.0
-	 * @access protected
-	 */
-	public static function add_render_attributes($element) {
-		$id = $element->get_id();
+     * Add render attributes.
+     *
+     * Used to add attributes to the current element wrapper HTML tag.
+     *
+     * @since 3.1.0
+     * @access protected
+     */
+    public static function add_render_attributes($element) {
+        $id = $element->get_id();
 
-		$settings = $element->get_settings_for_display();
-		$frontend_settings = $element->get_frontend_settings();
-		$controls = $element->get_controls();
+        $settings = $element->get_settings_for_display();
+        $frontend_settings = $element->get_frontend_settings();
+        $controls = $element->get_controls();
 
-		$element->add_render_attribute( '_wrapper', [
-			'class' => [
-				'elementor-element',
-				'elementor-element-' . $id,
-			],
-			'data-id' => $id,
-			'data-element_type' => $element->get_type(),
-		] );
+        $element->add_render_attribute('_wrapper', [
+            'class' => [
+                'elementor-element',
+                'elementor-element-' . $id,
+            ],
+            'data-id' => $id,
+            'data-element_type' => $element->get_type(),
+        ]);
 
-		$class_settings = [];
+        $class_settings = [];
 
-		foreach ( $settings as $setting_key => $setting ) {
-			if ( isset( $controls[ $setting_key ]['prefix_class'] ) ) {
-				$class_settings[ $setting_key ] = $setting;
-			}
-		}
+        foreach ($settings as $setting_key => $setting) {
+            if (isset($controls[$setting_key]['prefix_class'])) {
+                $class_settings[$setting_key] = $setting;
+            }
+        }
 
-		foreach ( $class_settings as $setting_key => $setting ) {
-			if ( empty( $setting ) && '0' !== $setting ) {
-				continue;
-			}
+        foreach ($class_settings as $setting_key => $setting) {
+            if (empty($setting) && '0' !== $setting) {
+                continue;
+            }
 
-			$element->add_render_attribute( '_wrapper', 'class', $controls[ $setting_key ]['prefix_class'] . $setting );
-		}
+            $element->add_render_attribute('_wrapper', 'class', $controls[$setting_key]['prefix_class'] . $setting);
+        }
 
-		$_animation = ! empty( $settings['_animation'] );
-		$animation = ! empty( $settings['animation'] );
-		$has_animation = $_animation && 'none' !== $settings['_animation'] || $animation && 'none' !== $settings['animation'];
+        $_animation = !empty($settings['_animation']);
+        $animation = !empty($settings['animation']);
+        $has_animation = $_animation && 'none' !== $settings['_animation'] || $animation && 'none' !== $settings['animation'];
 
-		if ( $has_animation ) {
-			$is_static_render_mode = Plugin::$instance->frontend->is_static_render_mode();
+        if ($has_animation) {
+            $is_static_render_mode = Plugin::$instance->frontend->is_static_render_mode();
 
-			if ( ! $is_static_render_mode ) {
-				// Hide the element until the animation begins
-				$element->add_render_attribute( '_wrapper', 'class', 'elementor-invisible' );
-			}
-		}
+            if (!$is_static_render_mode) {
+                // Hide the element until the animation begins
+                $element->add_render_attribute('_wrapper', 'class', 'elementor-invisible');
+            }
+        }
 
-		if ( ! empty( $settings['_element_id'] ) ) {
-			$element->add_render_attribute( '_wrapper', 'id', trim( $settings['_element_id'] ) );
-		}
+        if (!empty($settings['_element_id'])) {
+            $element->add_render_attribute('_wrapper', 'id', trim($settings['_element_id']));
+        }
 
-		if ( $frontend_settings ) {
-			$element->add_render_attribute( '_wrapper', 'data-settings', wp_json_encode( $frontend_settings ) );
-		}
+        if ($frontend_settings) {
+            $element->add_render_attribute('_wrapper', 'data-settings', wp_json_encode($frontend_settings));
+        }
 
-		/**
-		 * After element attribute rendered.
-		 *
-		 * Fires after the attributes of the element HTML tag are rendered.
-		 *
-		 * @since 2.3.0
-		 *
-		 * @param Element_Base $this The element.
-		 */
-		do_action( 'elementor/element/after_add_attributes', $element );
-	}
+        /**
+         * After element attribute rendered.
+         *
+         * Fires after the attributes of the element HTML tag are rendered.
+         *
+         * @since 2.3.0
+         *
+         * @param Element_Base $this The element.
+         */
+        do_action('elementor/element/after_add_attributes', $element);
+    }
+
+    /**
+     * Get image sizes.
+     *
+     * Retrieve available image sizes after filtering `include` and `exclude` arguments.
+     *
+     * @since 2.0.0
+     * @access private
+     *
+     * @return array Filtered image sizes.
+     */
+    public static function get_image_sizes() {
+        $wp_image_sizes = \Elementor\Group_Control_Image_Size::get_all_image_sizes();
+
+        /*
+          $args = $this->get_args();
+          if (!empty($args['include'])) {
+          $wp_image_sizes = array_intersect_key($wp_image_sizes, array_flip($args['include']));
+          } elseif (!empty($args['exclude'])) {
+          $wp_image_sizes = array_diff_key($wp_image_sizes, array_flip($args['exclude']));
+          }
+         */
+
+        $image_sizes = [];
+        $image_sizes[''] = _x('Default', 'Image Size Control', 'elementor');
+        $image_sizes['full'] = _x('Full', 'Image Size Control', 'elementor');
+        foreach ($wp_image_sizes as $size_key => $size_attributes) {
+            $control_title = ucwords(str_replace('_', ' ', $size_key));
+            if (is_array($size_attributes)) {
+                $control_title .= sprintf(' - %d x %d', $size_attributes['width'], $size_attributes['height']);
+            }
+            $image_sizes[$size_key] = $control_title;
+        }
+        $image_sizes['custom'] = _x('Custom', 'Image Size Control', 'elementor');
+
+        return $image_sizes;
+    }
 
 }

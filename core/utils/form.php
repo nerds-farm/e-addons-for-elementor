@@ -690,6 +690,17 @@ class Form {
                             $adata = Utils::explode($adata);
                         }
                     }
+                    
+                    if ($afield['field_type'] == 'repeater') {
+                        if (!empty($_POST['form_fields'][$akey])) {
+                            $raw = $_POST['form_fields'][$akey];
+                            if (Utils::is_plugin_active('advanced-custom-fields-pro')) {
+                                if (\EAddonsForElementor\Core\Utils\Acf::set_repeater($akey, $raw, $obj_id, $type)) {    
+                                    continue;
+                                }
+                            }
+                        }
+                    }
                 }
                 if ($type == 'option') {
                     $exist_opt = false;

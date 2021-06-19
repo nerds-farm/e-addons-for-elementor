@@ -74,33 +74,7 @@ class Actions {
             }
         }
     }
-
-    /* public static function modal_action() {
-
-      //echo \EAddonsForElementor\Core\Managers\Template::ajax_template();
-      //wp_die();
-
-      $post_id = Utils::get_id($_POST['post_href']);
-      $template_id = 0;
-      if (!empty($_POST['template_id']) && is_numeric($_POST['template_id'])) {
-      $template_id = intval($_POST['template_id']);
-      }
-
-      $title_seo = get_post_meta($post_id, '_yoast_wpseo_title', true); //get_post_meta($post_id, '_yoast_wpseo_metadesc', true);
-      $title = (!empty($title_seo)) ? $title_seo : get_the_title($post_id) . ' - ' . get_bloginfo('name');
-
-
-
-      $args = array('post_id' => $post_id, 'ajax' => true);
-      $template = \EAddonsForElementor\Core\Managers\Template::e_template($template_id, $args);
-      ?>
-      <div class="content-p">
-      <div class="title-p"><?php echo $title; ?></div>
-      </div>
-      <?php
-      wp_die();
-      } */
-
+    
     /**
      * Calls function to get value titles depending on ajax query type
      *
