@@ -26,7 +26,11 @@ function installProCookieCallback(json){
                     //console.log(data);
                     jQuery('#e_addons_form').html(jQuery(data).find('#e_addons_form').html());
                     eProAddon.closest('.my_e_addon').fadeOut();
-                    jQuery('#adminmenu .dashicons-warning.e-count ').fadeOut();
+                    let id = eProAddon.closest('.my_e_addon').attr('id');
+                    jQuery('#adminmenu .dashicons-warning.e-count').fadeOut();
+                    if (!jQuery('#'+id+'.my_e_addon_disabled').length) {
+                         location.reload(); 
+                    }
                 },
             });
         }
@@ -69,14 +73,17 @@ jQuery(document).ready(function () {
             url: 'https://e-addons.com/edd/cookie.php',
             dataType: "jsonp",
             jsonp: "installProCookieCallback",
-            error: function (data) {
-                console.log("error");
-                alert('To proceed with the quick installation for your bought PRO addons, please log in with your account on e-addons.com shop');
-                //window.location.href = jQuery(this).attr('href');
-                window.open("https://e-addons.com/your-account/");
-                eProAddon.find('.dashicons-update').addClass('dashicons-download').removeClass('spin').removeClass('dashicons-update');
-                eProAddon.find('.btn-txt').text('INSTALL PRO e-ADDON');
-                eProAddon.css('pointer-events', 'auto');
+            error: function (data) {   
+                if (data && data.status != 200) {
+                    console.log("error");
+                    console.log(data);
+                    alert('To proceed with the quick installation for your bought PRO addons, please log in with your account on e-addons.com shop');
+                    //window.location.href = jQuery(this).attr('href');
+                    window.open("https://e-addons.com/your-account/");
+                    eProAddon.find('.dashicons-update').addClass('dashicons-download').removeClass('spin').removeClass('dashicons-update');
+                    eProAddon.find('.btn-txt').text('INSTALL PRO e-ADDON');
+                    eProAddon.css('pointer-events', 'auto');
+                }
             },
             success: function (data) {
                 console.log(data);     
