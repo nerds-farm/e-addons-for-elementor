@@ -98,6 +98,13 @@ Absolutely not! But for an advanced use it's better to understand Wordpress logi
 
 == Changelog ==
 
+= 2.6.2 - 19-06-2021 =
+* Update: ACF utils
+* Fix: Code optimization
+* Fix: Template in Popup fix
+* Fix: Items style fix
+* Fix: PRO addons installation from Dashboard
+
 = 2.6.1 - 10-06-2021 =
 * Update: e-addons icon set
 * Fix: Dashboard install PRO

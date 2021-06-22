@@ -25,6 +25,21 @@ class Template {
         add_action('wp_ajax_nopriv_e_elementor_template', array($this, 'ajax_template'));
 
         add_action('elementor/editor/after_enqueue_scripts', [$this, 'enqueue_editor_assets']);
+        
+        if (wp_doing_ajax()) {
+            add_action( 'elementor/frontend/before_get_builder_content', [$this, 'restore_post'], 999, 2);
+            add_action( "elementor/css-file/dynamic/enqueue", [$this, 'restore_post'], 999 );
+        }
+    }
+    
+    
+    public function restore_post($document, $is_excerpt = null ) {
+        //restore post object
+        $queried_object = get_queried_object();
+        if ($queried_object && is_object($queried_object) && get_class($queried_object) == 'WP_Post') {
+            global $post;
+            $post = $queried_object;
+        }        
     }
 
     /**
@@ -41,7 +56,6 @@ class Template {
     public static function get_builder_content($post_id, $with_css = false) {
         $content = '';
         $post_id = apply_filters('wpml_object_id', $post_id, 'elementor_library', true);
-        $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);
         $is_elementor = get_post_meta($post_id, '_elementor_edit_mode', true);
         if ($is_elementor) {
             //var_dump($post_id);
