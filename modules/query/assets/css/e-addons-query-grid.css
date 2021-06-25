@@ -359,14 +359,14 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
     width: 100% !important;
 }
 
-/*Overlay*/
+/*Overlay
 .e-add-posts-layout-overlay .e-add-post-item .e-add-post-block{
     flex-direction: column;
-}
+}*/
 .e-add-posts-layout-overlay .e-add-image-area{
 
 }
-.e-add-posts-layout-overlay .e-add-content-area{
+.e-add-posts-layout-overlay .e-add-posts-container .e-add-content-area{
     position: relative;
 
     width: 80%;

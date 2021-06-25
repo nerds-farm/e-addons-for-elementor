@@ -135,7 +135,8 @@
 .elementor-control-avviso_automatic_mode .eadd-automatic-info{
     margin: 5px 0 0;
     padding: 5px 0 0;
-    border-top: 1px solid #ccc;
+    width: 100%;
+    border-top: 1px dashed rgba(100,100,100,0.3);
 }
 .elementor-control-avviso_automatic_mode .eadd-automatic-info ul{
     padding-left: 14px;
