@@ -20,6 +20,7 @@
 .e-add-item_avatar,
 .e-add-item_imageoricon{
     display: flex;
+    width: 100%;
 }
 /*--------------------------------------*/
 .e-add-align-left .e-add-item_image,
