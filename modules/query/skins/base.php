@@ -55,7 +55,7 @@ class Base extends Base_Skin {
     }
 
     public function _register_controls_actions() {
-
+        parent::_register_controls_actions();
         if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout'])) {
             add_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout']);
         }
@@ -128,53 +128,115 @@ class Base extends Base_Skin {
                     'content_classes' => 'e-add-inner-heading',
                 ]
         );
-
+        // xxxxxx
         /*
-          $this->add_control(
+        $this->add_responsive_control(
+            'blocks_align_flex', [
+                'label' => __('Horizontal Flex align', 'e-addons'),
+                'type' => Controls_Manager::CHOOSE,
+                'toggle' => true,
+                'options' => [
+                    'flex-start' => [
+                        'title' => __('Left', 'e-addons'),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'e-addons'),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'e-addons'),
+                        'icon' => 'eicon-h-align-right',
+                    ]
+                ],
+                // 'condition' => [
+                //     'style_items!' => 'template',
+                //     '_skin' => 'grid',
+                // ],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'style_items',
+                            'operator' => '!=',
+                            'value' => 'template',
+                        ],
+                        [
+                            'name' => '_skin',
+                            'operator' => 'in',
+                            'value' => ['grid','carousel','dualslider'],
+                        ]
+                    ]
+                ],
+                'default' => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
+                ],
+                
+            ]
+        );*/
+        
+        $this->add_control(
           'blocks_align_flex', [
-          'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-          'type' => 'ui_selector',
-          'toggle' => true,
-          'type_selector' => 'image',
-          'label_block' => true,
-          'columns_grid' => 5,
-          'options' => [
-          '' => [
-          'title' => __('Left', 'e-addons'),
-          'return_val' => 'val',
-          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_left.svg',
-          ],
-          'center' => [
-          'title' => __('Middle', 'e-addons'),
-          'return_val' => 'val',
-          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_middle.svg',
-          ],
-          'flex-end' => [
-          'title' => __('Right', 'e-addons'),
-          'return_val' => 'val',
-          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_right.svg',
-          ],
-          'space-between' => [
-          'title' => __('Space Between', 'e-addons'),
-          'return_val' => 'val',
-          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-between.svg',
-          ],
-          'space-around' => [
-          'title' => __('Space Around', 'e-addons'),
-          'return_val' => 'val',
-          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-around.svg',
-          ],
-          ],
-          'default' => '',
-          'selectors' => [
-          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
-          ],
-          'condition' => [
-          'style_items!' => 'template',
-          '_skin' => ['grid'],
-          ]
-          ]
-          ); */
+                'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+                'type' => 'ui_selector',
+                'toggle' => true,
+                'type_selector' => 'image',
+                'label_block' => false,
+                'columns_grid' => 3,
+                'options' => [
+                    '' => [
+                        'title' => __('Left', 'e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_left.svg',
+                    ],
+                    'center' => [
+                        'title' => __('Middle', 'e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_middle.svg',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_right.svg',
+                    ],
+                    /*'space-between' => [
+                        'title' => __('Space Between', 'e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-between.svg',
+                    ],
+                    'space-around' => [
+                        'title' => __('Space Around', 'e-addons'),
+                        'return_val' => 'val',
+                        'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-around.svg',
+                    ],*/
+                ],
+                'default' => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
+                ],
+                /*'condition' => [
+                    'style_items!' => 'template',
+                    '_skin' => 'grid',
+                ]*/
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'style_items',
+                            'operator' => '!=',
+                            'value' => 'template',
+                        ],
+                        [
+                            'name' => '_skin',
+                            'operator' => 'in',
+                            'value' => ['grid','carousel','dualslider'],
+                        ]
+                    ]
+                ],
+               
+            ]
+        );
 
 
         $this->add_control(
