@@ -247,12 +247,15 @@
 .eadd-infinite-pagination:before { content: '\e8ad'; } /* '' */
 .eadd-numeric-pagination:before { content: '\e8ae'; } /* '' */
 
-.eadd-query-custom-db:before { content: '\e8b3'; } /* '' */
 .eadd-query-media:before { content: '\e8b4'; } /* '' */
 .eadd-query-users:before { content: '\e8b5'; } /* '' */
 .eadd-query-items:before { content: '\e8b6'; } /* '' */
 .eadd-query-posts:before { content: '\e8b7'; } /* '' */
 .eadd-query-terms:before { content: '\e8b8'; } /* '' */
+.eadd-query-custom-db:before { content: '\e8b3'; } /* '' */
+.eadd-query-csv:before { content: '\e8ee'; } /* '' */
+.eadd-query-restapi:before { content: '\e8f0'; } /* '' */
+.eadd-query-xml:before { content: '\e8f1'; } /* '' */
 
 .eadd-el-form-pro-filters-action:before { content: '\e8b9'; } /* '' */
 .eadd-el-form-pro-filters-archiveinfo:before { content: '\e8d5'; } /* '' */
