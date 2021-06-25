@@ -92,17 +92,17 @@ trait Common {
                 $image_id = $settings['use_fallback_img']['id'];
             }
         }
-
+        
         if ($image_id) {
             // @p questa è l'mmagine via HTML
             switch ($querytype) {
                 case 'attachment':
-                    $use_link = !empty($settings['gallery_link']) ? $this->get_item_link($settings, $image_id) : '';
+                    $use_link = !empty($settings['gallery_link']) ? $this->get_item_link($settings, $image_id) : '';                    
                     $thumbnail_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
                     if ($use_link) {
                         $thumbnail_html = '<a href="'.$use_link.'" class="e-media-link'.((!empty($settings['open_lightbox']) && $settings['open_lightbox'] != 'no') ? ' elementor-clickable' : '').'">'.$thumbnail_html.'</a>';
                     }
-                    echo $thumbnail_html;
+                    //echo $thumbnail_html;
                     break;
                 default:
                     //se mi trovo in post
@@ -115,8 +115,7 @@ trait Common {
         } else {
             return;
         }
-
-
+        
         $html_tag = 'div';
 
         $attribute_link = '';
