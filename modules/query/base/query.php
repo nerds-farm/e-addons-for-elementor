@@ -34,17 +34,33 @@ class Query extends Base_Widget {
     use Traits\Label;
     use Traits\Items_Content;
     use Traits\Items_Style;
-    use Traits\Items_Advanced;    
+    use Traits\Items_Advanced;
 
     //@ questa è una variabile globale che memorizza la query in corso
     protected $query = null;
-    //@ questa è una variabile globale che memorizza se la query è: 1-post, 2-user, 3-term, 4-repeater_list 5-items 
+    //@ questa è una variabile globale che memorizza se la query è: 1-post, 2-user, 3-term, 4-repeater_list 5-items
     protected $querytype = null;
     //@ questo serve a rimuovere lo skin default perché non voglio fare nessun render direttamente nel widget
     protected $_has_template_content = false;
 
     public function __construct($data = [], $args = null) {
         parent::__construct($data, $args);
+
+        if (!has_action('e_addons/query/' . $this->get_querytype())) { // TODO: check why istantiate multiple times
+            add_action('e_addons/query/' . $this->get_querytype(), [$this, 'loop'], 10, 2);
+        }
+        if (!has_filter('e_addons/query/should_render/' . $this->get_querytype())) { // TODO: check why istantiate multiple times
+            add_filter('e_addons/query/should_render/' . $this->get_querytype(), [$this, 'should_render'], 10, 3);
+        }
+        if (!has_filter('e_addons/query/page_limit/' . $this->get_querytype())) { // TODO: check why istantiate multiple times
+            add_filter('e_addons/query/page_limit/' . $this->get_querytype(), [$this, 'pagination__page_limit'], 10, 4);
+        }
+        if (!has_filter('e_addons/query/per_page/' . $this->get_querytype())) { // TODO: check why istantiate multiple times
+            add_filter('e_addons/query/per_page/' . $this->get_querytype(), [$this, 'pagination__per_page'], 10, 4);
+        }
+        if (!has_filter('e_addons/query/page_length/' . $this->get_querytype())) { // TODO: check why istantiate multiple times
+            add_filter('e_addons/query/page_length/' . $this->get_querytype(), [$this, 'pagination__page_length'], 10, 4);
+        }
     }
 
     public function get_name() {
@@ -174,7 +190,7 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
-        
+
         // skin: simple list
         $this->add_control(
                 'skin_dis_simplelist',
@@ -188,9 +204,9 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
-         // skin: horizontal scroll
-         $this->add_control(
-            'skin_dis_horizontalscroll',
+        // skin: horizontal scroll
+        $this->add_control(
+                'skin_dis_horizontalscroll',
                 [
                     'type' => Controls_Manager::RAW_HTML,
                     'show_label' => false,
@@ -203,7 +219,7 @@ class Query extends Base_Widget {
         );
         // skin: cards
         $this->add_control(
-            'skin_dis_cards',
+                'skin_dis_cards',
                 [
                     'type' => Controls_Manager::RAW_HTML,
                     'show_label' => false,
@@ -216,7 +232,7 @@ class Query extends Base_Widget {
         );
         // skin: circular
         $this->add_control(
-            'skin_dis_circular',
+                'skin_dis_circular',
                 [
                     'type' => Controls_Manager::RAW_HTML,
                     'show_label' => false,
@@ -229,7 +245,7 @@ class Query extends Base_Widget {
         );
         // skin: piling
         $this->add_control(
-            'skin_dis_piling',
+                'skin_dis_piling',
                 [
                     'type' => Controls_Manager::RAW_HTML,
                     'show_label' => false,
@@ -240,9 +256,9 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
-         // skin: maps
-         $this->add_control(
-            'skin_dis_maps',
+        // skin: maps
+        $this->add_control(
+                'skin_dis_maps',
                 [
                     'type' => Controls_Manager::RAW_HTML,
                     'show_label' => false,
@@ -346,21 +362,6 @@ class Query extends Base_Widget {
         //@p qui infilo i controllo relativamente a query-repeater..
         $this->repeater_query_controls();
 
-        $this->add_control(
-                'heading_pagination',
-                [
-                    'type' => Controls_Manager::RAW_HTML,
-                    'show_label' => false,
-                    'raw' => '<i class="fas fa-pager"></i> &nbsp;' . __('PAGINATION:', 'e-addons'),
-                    'content_classes' => 'e-add-icon-heading',
-                    'condition' => [
-                        //@p il massimo è che la paginazione funzioni con tutti gli skins...
-                        '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'gridtofullscreen3d'],
-                        'infiniteScroll_enable' => '',
-                        'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
-                    ],
-                ]
-        );
         //@p questo metodo produce i 2 switcher per abilitare la paginazione 8in caso di items_list è vuoto)
         $this->paginations_enable_controls();
 
@@ -798,7 +799,7 @@ class Query extends Base_Widget {
                 ]
         );
         $this->end_popover();
-        // +********************* Content Zone: BoxShadow 
+        // +********************* Content Zone: BoxShadow
         $this->add_group_control(
                 Group_Control_Box_Shadow::get_type(), [
             'name' => 'contentzone_box_shadow',
@@ -824,7 +825,7 @@ class Query extends Base_Widget {
             ],
                 ]
         );
-        // +********************* Style: Elementor TEMPLATE 
+        // +********************* Style: Elementor TEMPLATE
         $this->add_control(
                 'template_id',
                 [
@@ -945,6 +946,28 @@ class Query extends Base_Widget {
         }
     }
 
+    // -------------- Loop method ---------
+    public function loop($skin, $query) {
+
+    }
+
+    public function should_render($render, $skin, $query) {
+        return $render;
+    }
+
+    public function pagination__page_limit($page_limit, $skin, $query, $settings) {
+        return $page_limit;
+    }
+    public function pagination__per_page($per_page, $skin, $query, $settings) {
+        $per_page = empty($settings[$this->get_querytype().'s_per_page']) ? $per_page : intval($settings[$this->get_querytype().'s_per_page']);
+        return $per_page;
+    }
+    public function pagination__page_length($page_length, $skin, $query, $settings) {
+        return $page_length;
+    }
+    
+    
+
     // -------------- Override Laghtbox (assurdo ... ma inevitabile .. da valutare) ---------
     public function add_lightbox_data_attributes($element, $id = null, $lightbox_setting_key = null, $group_id = null, $overwrite = false) {
         $kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit();
@@ -987,17 +1010,19 @@ class Query extends Base_Widget {
     }
 
     // -------------- Methods ---------
-    // @p questo metodo viene usato da items_list per igniettare gli elementi ripetitore 
+    // @p questo metodo viene usato da items_list per igniettare gli elementi ripetitore
     public function items_query_controls() {
-        
+
     }
-    // @p questo metodo viene usato da repeater per igniettare gli elementi ripetitore 
+
+    // @p questo metodo viene usato da repeater per igniettare gli elementi ripetitore
     public function repeater_query_controls() {
-        
+
     }
+
     // il metodo (che viene ereditato) e che esegue le query su: POSTS - USERS - TERMS
     public function query_the_elements() {
-        
+
     }
 
     protected function render_svg_mask($mask_shape_type) {
@@ -1010,18 +1035,6 @@ class Query extends Base_Widget {
         if ($this->get_settings('image_masking')['url']) {
             $image_masking_url = $this->get_settings('image_masking')['url'];
         }
-    }
-
-    protected function limit_content($limit) {
-        
-    }
-
-    protected function limit_excerpt($limit) {
-        
-    }
-
-    public function get_terms_query($settings = null, $id_page = null) {
-        
     }
 
 }

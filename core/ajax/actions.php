@@ -407,10 +407,38 @@ class Actions {
                         'text' => $text,
                     ];
             }*/
+            $tmp = array();
             foreach ($results as $result) {
+                if ($result->meta_value) {
+                    if (substr($result->meta_value, 0, 2) == 'a:') {
+                        $values = maybe_unserialize($result->meta_value);
+                        //var_dump($ametas);
+                        if (!empty($values) && is_array($values)) {
+                            foreach($values as $value) {
+                                if (!isset($tmp[$value])) {
+                                    $tmp[$value] = $value;
+                                }            
+                            }                            
+                        } else {
+                            if ($result->meta_value != "a:0:{}") {
+                                if (!isset($tmp[$result->meta_value])) {
+                                    $tmp[$result->meta_value] = $result->meta_value;
+                                }
+                            }
+                        }                    
+                    } else {
+                        if (!isset($tmp[$result->meta_value])) {
+                            $tmp[$result->meta_value] = $result->meta_value;
+                        }
+                    }
+                }
+            }
+            $results = $tmp;
+            
+            foreach ($results as $key => $result) {
                     $control_options[] = [
-                        'id' => $result->meta_value,
-                        'text' => $result->meta_value,
+                        'id' => $key,
+                        'text' => $result,
                     ];
             }
         }

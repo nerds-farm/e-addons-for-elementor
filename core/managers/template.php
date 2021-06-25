@@ -266,6 +266,14 @@ class Template {
                 $user = $initial_user;
                 $current_user = $initial_user;
             }
+            
+            if (wp_doing_ajax()) {
+                // fix for forms like Gravity
+                $referer  = wp_get_referer();
+                $tpl_html = str_replace('action="/wp-admin/admin-ajax.php"', 'action=""', $tpl_html);
+                $tpl_html = str_replace("action='/wp-admin/admin-ajax.php'", "action=''", $tpl_html);
+            }
+            
             //$wp_query->queried_object = $initial_queried_object;
             //$wp_query->queried_object_id = $initial_queried_object_id;
             $wp_query = $initial_wp_query;

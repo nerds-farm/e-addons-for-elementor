@@ -136,6 +136,7 @@ class Form {
                         if (!is_object($fvalue)) {
                             $setting = str_replace('[field id=' . $fkey . ']', $fvalue, $setting);
                             $setting = str_replace("[field id='" . $fkey . "']", $fvalue, $setting);
+                            $setting = str_replace('[field id=”' . $fkey . '”]', $fvalue, $setting);
                             $setting = str_replace('[field id="' . $fkey . '"]', $fvalue, $setting);
                         }
                     }

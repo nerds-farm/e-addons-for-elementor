@@ -229,7 +229,7 @@ class Simple_List extends Base {
         $this->end_controls_section();
     }
 
-    protected function render_element_item() {
+    public function render_element_item() {
         
         $this->index++;
 

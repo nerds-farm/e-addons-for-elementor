@@ -21,7 +21,7 @@ class Dualslider extends Carousel {
 
     public function _register_controls_actions() {
         parent::_register_controls_actions();
-        add_action('elementor/element/' . $this->parent->get_name() . '/section_e_query/after_section_end', [$this, 'register_additional_dualslider_controls'], 20);                
+        add_action('elementor/element/' . $this->parent->get_name() . '/section_e_query/after_section_end', [$this, 'register_additional_dualslider_controls'], 20);
     }
 
     public function get_script_depends() {
@@ -30,7 +30,7 @@ class Dualslider extends Carousel {
             wp_register_script(
                     'swiper',
                     //$frontend->get_js_assets_url( 'swiper', 'assets/lib/swiper/' ),
-                    ELEMENTOR_ASSETS_URL .'lib/swiper/swiper.min.js',
+                    ELEMENTOR_ASSETS_URL . 'lib/swiper/swiper.min.js',
                     [],
                     '5.3.6',
                     true
@@ -372,7 +372,7 @@ class Dualslider extends Carousel {
                 ]
         );
         // Image background of Overlay
-        
+
         $this->add_group_control(
                 Group_Control_Background::get_type(), [
             'name' => 'dualslider_imageactive_background',
@@ -384,8 +384,6 @@ class Dualslider extends Carousel {
 
         $this->end_controls_tab();
         $this->end_controls_tabs();
-
-
 
         // ------------ Title
         $this->add_control(
@@ -445,10 +443,8 @@ class Dualslider extends Carousel {
             ]
                 ]
         );
-        
-        
-        
-        // 
+
+        //
         // ------------ Image
         $this->add_control(
                 'dualslider_heading_image',
@@ -476,20 +472,20 @@ class Dualslider extends Carousel {
             } else if ($type == 'user') {
                 $defIm = 'avatar';
             }
-            
+
             $this->add_control(
-                'image_type', [
-                    'label' => __('Image type', 'e-addons'),
-                    'type' => Controls_Manager::SELECT,
-                    'options' => [
-                        'featuredimage' => __(ucfirst($defIm . ' image'), 'e-addons'),
-                        'customimage' => __('Custom meta image', 'e-addons'),
-                    ],
-                    'default' => $defIm . 'image',
-                    'condition' => [
-                        $this->get_control_id('use_image') => 'yes',
-                    ]
+                    'image_type', [
+                'label' => __('Image type', 'e-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'featuredimage' => __(ucfirst($defIm . ' image'), 'e-addons'),
+                    'customimage' => __('Custom meta image', 'e-addons'),
+                ],
+                'default' => $defIm . 'image',
+                'condition' => [
+                    $this->get_control_id('use_image') => 'yes',
                 ]
+                    ]
             );
 
             $this->add_control(
@@ -536,13 +532,13 @@ class Dualslider extends Carousel {
                 ]
         );
         $this->add_control(
-            'use_bgimage', [
-        'label' => __('Background Mode', 'e-addons'),
-        'type' => Controls_Manager::SWITCHER,
-        'separator' => 'before',
-        'default' => 'yes',
-        'render_type' => 'template',
-            ]
+                'use_bgimage', [
+            'label' => __('Background Mode', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'separator' => 'before',
+            'default' => 'yes',
+            'render_type' => 'template',
+                ]
         );
         // height
         $this->add_responsive_control(
@@ -587,35 +583,35 @@ class Dualslider extends Carousel {
                 ]
         );
         $this->add_group_control(
-            Group_Control_Border::get_type(), [
-                'name' => 'dualslider_image_border',
-                'selector' => '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image',
-                'condition' => [
-                    $this->get_control_id('use_image') => 'yes',
-                ]
+                Group_Control_Border::get_type(), [
+            'name' => 'dualslider_image_border',
+            'selector' => '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image',
+            'condition' => [
+                $this->get_control_id('use_image') => 'yes',
             ]
+                ]
         );
         $this->add_control(
-            'dualslider_image_border_radius', [
-                'label' => __('Border Radius', 'e-addons'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'condition' => [
-                    $this->get_control_id('use_image') => 'yes',
-                ]
+                'dualslider_image_border_radius', [
+            'label' => __('Border Radius', 'e-addons'),
+            'type' => Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%', 'em'],
+            'selectors' => [
+                '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+            'condition' => [
+                $this->get_control_id('use_image') => 'yes',
             ]
+                ]
         );
         $this->add_group_control(
-            Group_Control_Box_Shadow::get_type(), [
-                'name' => 'dualslider_image_boxshadow',
-                'selector' => '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image',
-                'condition' => [
-                    $this->get_control_id('use_image') => 'yes',
-                ]
+                Group_Control_Box_Shadow::get_type(), [
+            'name' => 'dualslider_image_boxshadow',
+            'selector' => '{{WRAPPER}} .e-add-dualslider-thumbnails .e-add-thumbnail-image',
+            'condition' => [
+                $this->get_control_id('use_image') => 'yes',
             ]
+                ]
         );
         // space
         // filters
@@ -650,62 +646,57 @@ class Dualslider extends Carousel {
         $query = $this->parent->get_query();
         $querytype = $this->parent->get_querytype();
         //var_dump($query);
-        
         //@p MMMMM se esistono sia immagine che titolo uso una classe: xxxxx per getire gli allineamenti flex
         $multip = '';
         if ($this->get_instance_value('use_title') && $this->get_instance_value('use_image')) {
             $multip = ' e-add-dualslider-multi';
         }
-        //@p controllo se ci sono 
+        //@p controllo se ci sono
         echo '<div class="e-add-dualslider-thumbnails">';
-        
-        
-        
-        
-        echo '	<div class="swiper-container e-add-dualslider-gallery-thumbs">'; //@p this is the target 
-        echo '		<div class="swiper-wrapper e-add-dualslider-wrapper' . $multip . '">';
-        
 
-        /*switch ($querytype) {
-            case 'attachment':
-            case 'post':
-            case 'term':
-            case 'items':
-            case 'repeater':
-                $this->render_item_image($settings, $i = 0);
-                break;
-            case 'users':
-                $this->render_item_avatar($settings);
-                break;
-            }
-        }*/
-        
-        if ($this->has_results($query, $querytype)) {
+        echo '	<div class="swiper-container e-add-dualslider-gallery-thumbs">'; //@p this is the target
+        echo '		<div class="swiper-wrapper e-add-dualslider-wrapper' . $multip . '">';
+
+        /* switch ($querytype) {
+          case 'attachment':
+          case 'post':
+          case 'term':
+          case 'items':
+          case 'repeater':
+          $this->render_item_image($settings, $i = 0);
+          break;
+          case 'users':
+          $this->render_item_avatar($settings);
+          break;
+          }
+          } */
+
+        if (apply_filters('e_addons/query/should_render/' . $querytype, true, $this, $query)) {
 
             switch ($querytype) {
                 case 'attachment':
                 case 'post':
 
-                /** @p qui identifico se mi trovo in un loop, altrimenti uso la wp_query */
-                if ($query->in_the_loop) {
-                    $this->current_permalink = get_permalink();
-                    $this->current_id = get_the_ID();
-                    //
-                    $this->render_thumbnail();
-                } else {
-                    while ($query->have_posts()) {
-                        $query->the_post();
-
+                    /** @p qui identifico se mi trovo in un loop, altrimenti uso la wp_query */
+                    if ($query->in_the_loop) {
                         $this->current_permalink = get_permalink();
                         $this->current_id = get_the_ID();
-                        $this->current_data = get_post(get_the_ID());
                         //
                         $this->render_thumbnail();
-                    }
-                }
-                wp_reset_postdata();
+                    } else {
+                        while ($query->have_posts()) {
+                            $query->the_post();
 
-                break;
+                            $this->current_permalink = get_permalink();
+                            $this->current_id = get_the_ID();
+                            $this->current_data = get_post(get_the_ID());
+                            //
+                            $this->render_thumbnail();
+                        }
+                    }
+                    wp_reset_postdata();
+
+                    break;
                 case 'user':
                     foreach ($query->get_results() as $user) {
                         $this->current_permalink = get_author_posts_url($user->ID);
@@ -717,7 +708,7 @@ class Dualslider extends Carousel {
                     }
                     break;
                 case 'term':
-                
+
                     break;
                 case 'repeater':
 
@@ -726,11 +717,10 @@ class Dualslider extends Carousel {
 
                     break;
             }
-
         }
 
-        
-        
+
+
 
 
 
@@ -738,7 +728,6 @@ class Dualslider extends Carousel {
 
         echo '</div>'; // @p END: swiper-container
         echo '</div>'; // @p END: swiper-wrapper
-        
         // @p le freccine di navigazione
         echo '<div class="e-add-dualslider-controls  e-add-dualslider-controls-' . $this->get_instance_value('dualslider_style') . '" data-post-id="' . $this->current_id . '">';
         $this->render_thumb_navigation();
@@ -767,27 +756,28 @@ class Dualslider extends Carousel {
 
         echo '<div class="swiper-slide e-add-dualslider-item no-transitio">';
         echo '<div class="e-add-dualslider-wrap">';
-        if ($this->get_instance_value('use_image')){
-            if($is_user){
+        if ($this->get_instance_value('use_image')) {
+            if ($is_user) {
                 $this->render_thumb_avatar();
-            }else{
+            } else {
                 $this->render_thumb_image();
             }
-        }    
-        if ($this->get_instance_value('use_title')){
-            if($is_user){
-                $this->render_thumb_usermeta();  
-            }else{
-                 $this->render_thumb_title();
+        }
+        if ($this->get_instance_value('use_title')) {
+            if ($is_user) {
+                $this->render_thumb_usermeta();
+            } else {
+                $this->render_thumb_title();
             }
-        }  
-        
-        
-       
+        }
+
+
+
 
         echo '</div>';
         echo '</div>';
     }
+
     protected function render_thumb_usermeta() {
         $user_info = $this->current_data;
         // Settings ------------------------------
@@ -804,13 +794,14 @@ class Dualslider extends Carousel {
         <?php
 
     }
+
     protected function render_thumb_title() {
         // Settings ------------------------------
         $html_tag = 'h3'; //['html_tag'];
         // ---------------------------------------
 
         echo sprintf('<%1$s class="e-add-thumbnail-title">', $html_tag);
-?>
+        ?>
         <?php get_the_title() ? the_title() : the_ID(); ?>
         <?php
 
@@ -819,12 +810,13 @@ class Dualslider extends Carousel {
         <?php
 
     }
-    protected function render_thumb_avatar(){
+
+    protected function render_thumb_avatar() {
         $user_info = $this->current_data;
         $avatarsize = $this->get_instance_value('thumbnailimage_size_size');
         $querytype = $this->parent->get_querytype();
         $use_bgimage = $this->get_instance_value('use_bgimage');
-        
+
         if (!empty($this->get_instance_value('image_custom_metafield'))) {
             $meta_value = get_metadata($querytype, $this->current_id, $this->get_instance_value('image_custom_metafield'), true);
             //
@@ -833,33 +825,31 @@ class Dualslider extends Carousel {
             $avatar_html = wp_get_attachment_image($meta_value, $avatarsize, false);
         }
 
-        if(empty($avatar_url)){
+        if (empty($avatar_url)) {
             $avatar_url = get_avatar_url($user_info->user_email, $avatarsize);
         }
-        if(empty($avatar_html)){
+        if (empty($avatar_html)) {
             // @p questa è l'mmagine avatar HTML
             $avatar_html = get_avatar($user_info->user_email, $avatarsize);
         }
 
         echo '<div class="e-add-thumbnail-image">';
 
-
-
         if ($use_bgimage) {
             echo '<figure class="e-add-img e-add-bgimage" style="background: url(' . $avatar_url . ') no-repeat center; background-size: cover; display: block;"></figure>';
         } else {
             echo '<figure class="e-add-img">' . $avatar_html . '</figure>';
         }
-        
+
         echo '</div>';
-        
     }
+
     protected function render_thumb_image() {
-        
+
         $setting_key = $this->get_instance_value('thumbnailimage_size_size');
         $querytype = $this->parent->get_querytype();
         $use_bgimage = $this->get_instance_value('use_bgimage');
-        
+
         $image_id = false;
         if (!empty($this->get_instance_value('image_custom_metafield'))) {
             $meta_value = get_metadata($querytype, $this->current_id, $this->get_instance_value('image_custom_metafield'), true);
@@ -884,7 +874,7 @@ class Dualslider extends Carousel {
                     $image_id = $this->current_data['sl_image']['id'];
                     break;
                 case 'repeater':
-                    //se mi trovo in repeater ...... 
+                    //se mi trovo in repeater ......
                     if (!empty($this->current_data['item_image_' . $i])) {
                         $image_id = $this->current_data['item_image_' . $i];
                     }
@@ -892,7 +882,7 @@ class Dualslider extends Carousel {
             }
         }
 
-        
+
 
 
 

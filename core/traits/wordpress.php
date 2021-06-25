@@ -273,10 +273,12 @@ trait Wordpress {
                 if (substr($ameta, 0, 8) == '_oembed_') {
                     continue;
                 }
-                if (!isset($metas[$ameta])) {
-                    $metas[$ameta] = $ameta;
-                }
+                //var_dump($ameta);
+                
             }
+            if (!isset($metas[$ameta])) {
+                $metas[$ameta] = $ameta;
+            }   
         }
         return $metas;
     }

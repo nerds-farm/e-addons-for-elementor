@@ -48,6 +48,7 @@ class Base extends Base_Skin {
     protected $itemindex = 0;
     protected $depended_scripts = [];
     protected $depended_styles = [];
+    public $parent;
 
     public function show_in_settings() {
         return false;
@@ -125,59 +126,57 @@ class Base extends Base_Skin {
                     'raw' => '<i class="fas fa-arrows-alt" aria-hidden="true"></i> ' . __('Flex Alignment', 'e-addons'),
                     'separator' => 'before',
                     'content_classes' => 'e-add-inner-heading',
-                
                 ]
         );
-        
-        
-        /*
-        $this->add_control(
-                'blocks_align_flex', [
-            'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
-            'type' => 'ui_selector',
-            'toggle' => true,
-            'type_selector' => 'image',
-            'label_block' => true,
-            'columns_grid' => 5,
-            'options' => [
-                '' => [
-                    'title' => __('Left', 'e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_left.svg',
-                ],
-                'center' => [
-                    'title' => __('Middle', 'e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_middle.svg',
-                ],
-                'flex-end' => [
-                    'title' => __('Right', 'e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_right.svg',
-                ],
-                'space-between' => [
-                    'title' => __('Space Between', 'e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-between.svg',
-                ],
-                'space-around' => [
-                    'title' => __('Space Around', 'e-addons'),
-                    'return_val' => 'val',
-                    'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-around.svg',
-                ],
-            ],
-            'default' => '',
-            'selectors' => [
-                '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
-            ],
-            'condition' => [
-                'style_items!' => 'template',
-                '_skin' => ['grid'],
-            ]
-                ]
-        );*/
 
-        
+        /*
+          $this->add_control(
+          'blocks_align_flex', [
+          'label' => __('Horizontal Flex align', 'e-addons'), //__('Flex Items Align', 'e-addons'),
+          'type' => 'ui_selector',
+          'toggle' => true,
+          'type_selector' => 'image',
+          'label_block' => true,
+          'columns_grid' => 5,
+          'options' => [
+          '' => [
+          'title' => __('Left', 'e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_left.svg',
+          ],
+          'center' => [
+          'title' => __('Middle', 'e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_middle.svg',
+          ],
+          'flex-end' => [
+          'title' => __('Right', 'e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_right.svg',
+          ],
+          'space-between' => [
+          'title' => __('Space Between', 'e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-between.svg',
+          ],
+          'space-around' => [
+          'title' => __('Space Around', 'e-addons'),
+          'return_val' => 'val',
+          'image' => E_ADDONS_URL . 'modules/query/assets/img/grid_alignments/block_space-around.svg',
+          ],
+          ],
+          'default' => '',
+          'selectors' => [
+          '{{WRAPPER}} .e-add-post-block, {{WRAPPER}} .e-add-item-area' => 'justify-content: {{VALUE}};',
+          ],
+          'condition' => [
+          'style_items!' => 'template',
+          '_skin' => ['grid'],
+          ]
+          ]
+          ); */
+
+
         $this->add_control(
                 'blocks_align_justify', [
             'label' => __('Vertical Flex align', 'e-addons'), //__('Flex Justify Content', 'e-addons'),
@@ -302,40 +301,6 @@ class Base extends Base_Skin {
         //
     }
 
-    public function has_results($query, $querytype) {
-        switch ($querytype) {
-            case 'attachment':
-            case 'post':
-                if (!$query->found_posts) {
-                    return false;
-                }
-                break;
-            case 'user':
-                if (empty($query->get_results())) {
-                    return false;
-                }
-                break;
-            case 'term':
-                if (empty($query) || empty($query->get_terms()) || is_wp_error($query->get_terms())) {
-                    return false;
-                }
-                break;
-            case 'repeater':
-                if ($this->parent->is_empty_repeater()) {
-                    return false;
-                }
-                break;
-            case 'items':
-                // il ripetitore di contenuti statici
-                $sl_items = $this->parent->get_settings_for_display('repeater_staticlist');
-                if (empty($sl_items)) {
-                    return false;
-                }
-                break;
-        }
-        return true;
-    }
-
     public function render() {
 
         if (!$this->parent) {
@@ -351,7 +316,7 @@ class Base extends Base_Skin {
         $query = $this->parent->get_query();
         $querytype = $this->parent->get_querytype();
 
-        if ($this->has_results($query, $querytype)) {
+        if (apply_filters('e_addons/query/should_render/' . $querytype, true, $this, $query)) {
 
             global $e_widget_query;
             $e_widget_query = $this;
@@ -362,138 +327,9 @@ class Base extends Base_Skin {
             $this->render_loop_start();
 
             $this->index = $this->get_index_start();
-            
-            switch ($querytype) {
-                case 'attachment':
-                case 'post':
 
-                    /** @p qui identifico se mi trovo in un loop, altrimenti uso la wp_query */
-                    if ($query->in_the_loop) {
-                        $this->current_permalink = get_permalink();
-                        $this->current_id = get_the_ID();
-                        $this->current_data = get_post(get_the_ID());
-                        //
-                        $this->render_element_item();
-                    } else {
-                        $i = 0;
-                        $j = 0;
-                        $offset = $this->parent->get_settings_for_display('posts_offset');
-                        $limit = $this->parent->get_settings_for_display('posts_limit');
-                        while ($query->have_posts()) {
-                            $i++;
-                            $query->the_post();
-                            $continue = false;
-                            if ($limit) {
-                                if ($offset) {
-                                    if ($i <= $offset) {
-                                        $continue = true;
-                                    }
-                                }
-                                if (!$continue) {
-                                    $j++;
-                                }
-                                if ($j > $limit) {
-                                    $continue = true;
-                                }
-                            }
-                            if (!$continue) {
-                                $this->current_permalink = get_permalink();
-                                $this->current_id = get_the_ID();
-                                $this->current_data = get_post(get_the_ID());
-                                //
-                                $this->render_element_item();
-                            }
-                        }
-                    }
-                    wp_reset_postdata();
-                    break;
-                case 'user':
-                    foreach ($query->get_results() as $user) {
-                        $this->current_permalink = get_author_posts_url($user->ID);
-                        $this->current_id = $user->ID;
-                        $this->current_data = $user;
-                        //
-                        $this->render_element_item();
-                    }
-                    break;
-                case 'term':
-                    foreach ($query->get_terms() as $term) {
-                        if ($term && !is_wp_error($term)) {
-                            $link = get_term_link($term->term_id, $term->taxonomy);
-                            $this->current_permalink = $link;
-                            $this->current_id = $term->term_id;
-                            $this->current_data = $term;
-                            //
-                            $this->render_element_item();
-                        }
-                    }
-                    break;
-                case 'repeater':
-                    //echo 'questo è REPEATER';
-                    $repeater_field = $this->parent->get_settings_for_display('repeater_field');
-                    //var_dump($repeater_field);
-                    //var_dump($id_target);
-                    //var_dump($customfields_type);
-                    if ($repeater_field) {
-                        $repeater_rows = $this->parent->get_repeater_rows();
-                        if (!empty($repeater_rows)) {
-                            $list_items = $this->parent->get_settings_for_display('list_items');
-                            $customfields_type = $this->parent->get_settings_for_display('customfields_type');
-                            $data_source = $this->parent->get_settings_for_display('data_source');
-                            $id_target = $customfields_type == 'user' ? get_current_user_id() : get_queried_object_id();
-                            if (empty($data_source) && !empty($this->parent->get_settings_for_display('source_' . $customfields_type))) {
-                                $id_target = $this->parent->get_settings_for_display('source_' . $customfields_type);
-                            }
-                            $repeater_field_link = $this->parent->get_settings_for_display('repeater_field_link');
-                            global $wp_query;
-                            $wp_query->in_repeater_loop = true;
-                            foreach ($repeater_rows as $repeater_row) {
-
-                                $repeater_values = $repeater_row;
-                                //  ciclo 'list_items' e ne ricavo le chiavi
-                                if (!empty($list_items)) {
-                                    foreach ($list_items as $key => $item) {
-                                        if (!empty($item['metafield_key'])) {
-                                            $data_row = !empty($repeater_row[$item['metafield_key']]) ? $repeater_row[$item['metafield_key']] : false;
-                                            $repeater_values[$item['item_type'] . '_' . $key] = $data_row;
-                                            //var_dump($key);
-                                        }
-                                    }
-                                }
-
-                                $repeater_field_link_url = get_permalink();
-                                if ($repeater_field_link) {
-                                    if (!empty($repeater_row[$repeater_field_link])) {
-                                        $repeater_field_link_url = $repeater_row[$repeater_field_link];
-                                    }
-                                }
-
-                                $this->current_permalink = $repeater_field_link_url;
-                                $this->current_id = $id_target;
-                                $this->current_data = $repeater_values;
-                                $this->render_element_item();
-                            }
-                            $wp_query->in_repeater_loop = false;
-                        }
-                    }
-
-                    // ---------------------------------------
-                    break;
-                case 'items':
-                    // il ripetitore di contenuti statici
-                    $sl_items = $this->parent->get_settings_for_display('repeater_staticlist');
-                    foreach ($sl_items as $item) {
-                        //echo $item['sl_title'];
-                        $this->current_permalink = $item['sl_link']['url'];
-                        $this->current_id = '';
-                        $this->current_data = $item;
-
-                        //echo $this->current_data['sl_image']['id'];
-                        //
-                        $this->render_element_item();
-                    }
-                    break;
-            }
+            //var_dump('e_addons/query/'.$querytype);
+            do_action('e_addons/query/' . $querytype, $this, $query);
 
             $this->render_loop_end();
 
@@ -521,9 +357,9 @@ class Base extends Base_Skin {
         }
     }
 
-    protected function render_element_item() {
+    public function render_element_item() {
 
-        $this->index++;        
+        $this->index++;
 
         $style_items = $this->parent->get_settings_for_display('style_items');
 
@@ -594,13 +430,13 @@ class Base extends Base_Skin {
 
         //@p questo interviene per animare al rollhover il blocco di contenuto
         $hover_animation = $this->get_instance_value('hover_content_animation');
-        $animation_class = !empty($hover_animation) && $style_items != 'float' && $_skin != 'gridtofullscreen3d' ? ' elementor-animation-' . $hover_animation : '';
+        $animation_class = !empty($hover_animation) && $style_items != 'float' ? ' elementor-animation-' . $hover_animation : '';
 
         //@p questo interviene per fare gli effetti di animazione al rollhover in caso di layout-FLOAT
         $hover_effects = $this->get_instance_value('hover_text_effect');
-        $hoverEffects_class = !empty($hover_effects) && $style_items == 'float' && $_skin != 'gridtofullscreen3d' ? ' e-add-hover-effect-' . $hover_effects . ' e-add-hover-effect-content e-add-close' : '';
+        $hoverEffects_class = !empty($hover_effects) && $style_items == 'float' ? ' e-add-hover-effect-' . $hover_effects . ' e-add-hover-effect-content e-add-close' : '';
 
-        $hoverEffects_start = !empty($hover_effects) && $style_items == 'float' && $_skin != 'gridtofullscreen3d' ? '<div class="e-add-hover-effect-' . $hover_effects . ' e-add-hover-effect-content e-add-close">' : '';
+        $hoverEffects_start = !empty($hover_effects) && $style_items == 'float' ? '<div class="e-add-hover-effect-' . $hover_effects . ' e-add-hover-effect-content e-add-close">' : '';
         $hoverEffects_end = !empty($hover_effects) && $style_items == 'float' ? '</div>' : '';
 
         //@p NOTA:  [x timeline] una piccola considerazione a timeline....
@@ -617,7 +453,6 @@ class Base extends Base_Skin {
         } else {
             // Layout-default
             //echo 'sono layout-default';
-
             if ($_skin == 'timeline') {
                 $this->render_items_content(false); //@p il false non produce l'immagine
             } else {
@@ -707,7 +542,7 @@ class Base extends Base_Skin {
                     $this->render_repeateritem_start($item);
                     //----------------------------------
                     //
-
+                    //var_dump($item['item_type']);
                     switch ($item['item_type']) {
                         // commmon
                         case 'item_title': $this->render_item_title($item, $key);
@@ -779,7 +614,7 @@ class Base extends Base_Skin {
                             }
                             break;
                         //----------------------------------
-                        // posts/user/terms 
+                        // posts/user/terms
                         case 'item_custommeta': $this->render_item_custommeta($item, $key);
                             break;
                         case 'item_readmore': $this->render_item_readmore($item);
@@ -812,35 +647,6 @@ class Base extends Base_Skin {
 
     // REPEATER-ITEM start
     protected function render_repeateritem_start($item, $tag = 'div') {
-        /* echo 'eadditem_' . $id . '_' . $item_type;
-          $this->parent->add_render_attribute('eadditem_' . $id . '_' . $item_type, [
-          'class' => [
-          'e-add-item',
-          'e-add-' . $item_type,
-          'elementor-repeater-item-' . $id
-          ],
-          'data-item-id' => [
-          $id
-          ]
-          ]
-          ); */
-        /*
-          $width = '100';
-          if (!empty($item['width'])) {
-          $width = intval($item['width']);
-          }
-          $width = ' elementor-column elementor-col-'.$width;
-          if ( ! empty( $item['width_tablet'] ) ) {
-          $width .= ' elementor-md-' . $item['width_tablet'];
-          }
-          if ( ! empty( $item['width_mobile'] ) ) {
-          $width .= ' elementor-sm-' . $item['width_mobile'];
-          }
-
-          if (!empty($item['display_inline']) && $item['display_inline'] == 'inline-block') {
-          $width = '';
-          }
-         */
 
         $classItem = 'class="e-add-item e-add-' . $item['item_type'] . ' elementor-repeater-item-' . $item['_id'] . '"';
         $dataIdItem = ' data-item-id="' . $item['_id'] . '"';
@@ -892,11 +698,11 @@ class Base extends Base_Skin {
         ?>>
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
-                <?php
-            }
+            <?php
+        }
 
-            protected function render_item_end() {
-                ?>
+        protected function render_item_end() {
+            ?>
 
             </div>
         </article>
@@ -935,210 +741,193 @@ class Base extends Base_Skin {
         ?>
         <?php $this->render_container_before(); ?>
         <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container'); ?>>
-            <?php $this->render_posts_before(); ?>
+        <?php $this->render_posts_before(); ?>
             <div <?php echo $this->parent->get_render_attribute_string('eaddposts_container_wrap'); ?>>
+            <?php
+            $this->render_postsWrapper_before();
+        }
+
+        protected function render_loop_end() {
+            $this->render_postsWrapper_after();
+            ?>
+            </div>
                 <?php
-                $this->render_postsWrapper_before();
+                $this->render_posts_after();
+                ?>
+        </div>
+            <?php $this->render_container_after(); ?>
+            <?php
+        }
+
+        protected function render_container_before() {
+
+        }
+
+        protected function render_container_after() {
+
+        }
+
+        protected function render_posts_before() {
+
+        }
+
+        protected function render_posts_after() {
+
+        }
+
+        protected function render_postsWrapper_before() {
+
+        }
+
+        protected function render_postsWrapper_after() {
+
+        }
+
+        // Classes ----------
+        public function get_container_class() {
+            return 'e-add-skin-' . $this->get_id();
+        }
+
+        public function get_wrapper_class() {
+            return 'e-add-wrapper-' . $this->get_id();
+        }
+
+        public function get_item_class() {
+            return 'e-add-item-' . $this->get_id();
+        }
+
+        public function get_item_dataattributes() {
+
+        }
+
+        public function get_image_class() {
+
+        }
+
+        public function get_scrollreveal_class() {
+            return '';
+        }
+
+        // Utility ----------
+        public function filter_excerpt_length() {
+            return $this->get_instance_value('textcontent_limit');
+        }
+
+        public function filter_excerpt_more($more) {
+            return '';
+        }
+
+        protected function limit_content($limit = 100) {
+            $post = get_post();
+            $content = $post->post_content; //do_shortcode($post['post_content']); //$content_post->post_content; //
+            $content = $this->limit_text($content, $limit);
+            return $content;
+        }
+
+        public function limit_text($content, $limit = 100, $extra = '...') {
+            $content = wp_strip_all_tags($content);
+            if (strlen($content) > $limit) {
+                $content = substr($content, 0, $limit) . $extra; //
+                // TODO preserve words
+            }
+            return $content;
+        }
+
+        public function get_item_link($settings, $obj_id = 0) {
+
+            if (!empty($settings['gallery_link'])) {
+                // MEDIA
+                $settings['use_link'] = $settings['gallery_link'];
             }
 
-            protected function render_loop_end() {
-                $this->render_postsWrapper_after();
-                ?>
-            </div>
-            <?php
-            $this->render_posts_after();
-            ?>
-        </div>
-        <?php $this->render_container_after(); ?>
-        <?php
-    }
-
-    protected function render_container_before() {
-        
-    }
-
-    protected function render_container_after() {
-        
-    }
-
-    protected function render_posts_before() {
-        
-    }
-
-    protected function render_posts_after() {
-        
-    }
-
-    protected function render_postsWrapper_before() {
-        
-    }
-
-    protected function render_postsWrapper_after() {
-        
-    }
-
-    // Classes ----------
-    public function get_container_class() {
-        return 'e-add-skin-' . $this->get_id();
-    }
-
-    public function get_wrapper_class() {
-        return 'e-add-wrapper-' . $this->get_id();
-    }
-
-    public function get_item_class() {
-        return 'e-add-item-' . $this->get_id();
-    }
-    public function get_item_dataattributes() {
-        
-    }
-
-    public function get_image_class() {
-        
-    }
-
-    public function get_scrollreveal_class() {
-        return '';
-    }
-
-    // Utility ----------
-    public function filter_excerpt_length() {
-        return $this->get_instance_value('textcontent_limit');
-    }
-
-    public function filter_excerpt_more($more) {
-        return '';
-    }
-
-    protected function limit_content($limit = 100) {
-        $post = get_post();
-        $content = $post->post_content; //do_shortcode($post['post_content']); //$content_post->post_content; //
-        $content = $this->limit_text($content, $limit);
-        return $content;
-    }
-
-    public function limit_text($content, $limit = 100, $extra = '...') {
-        $content = wp_strip_all_tags($content);
-        if (strlen($content) > $limit) {
-            $content = substr($content, 0, $limit) . $extra; //
-            // TODO preserve words
-        }
-        return $content;
-    }
-
-    public function get_item_link($settings, $obj_id = 0) {
-        
-        if (!empty($settings['gallery_link'])) {
-            // MEDIA
-            $settings['use_link'] = $settings['gallery_link'];
-        }
-        
-        if (!empty($settings['use_link'])) {
-            switch ($settings['use_link']) {
-                case 'custom':
-                    if (!empty($settings['shortcode_link'])) {
-                        $type = $this->parent->get_querytype();
-                        $raw_settings = $this->parent->get_settings('list_items');
-                        foreach ($raw_settings as $raw_setting) {
-                            if ($raw_setting['_id'] == $settings['_id']) {                                
-                                //var_dump($this->current_data); die();                                
-                                $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
-                                return $link;
-                            }
-                        }
-                        $link = Utils::get_dynamic_data($settings['shortcode_link'], $this->current_data, $type);
-                        return $link;
-                    }
-                    break;
-                case 'shortcode':
-                    if (!empty($settings['shortcode_link'])) {
-                        ob_start();
-                        do_shortcode($settings['shortcode_link']);
-                        $link = ob_get_clean();
-                        return $link;
-                    }
-                    break;
-                case 'popup':
-                    if (!empty($settings['popup_link'])) {
-                        $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules('theme-builder');
-                        if (Utils::is_plugin_active('elementor-pro')) {
-                            if (!$theme_builder) {
-                                $class_name = '\ElementorPro\Modules\ThemeBuilder\Module';
-                                /** @var Module_Base $class_name */
-                                if ($class_name::is_active()) {
-                                    $theme_builder = $class_name::instance();
+            if (!empty($settings['use_link'])) {
+                switch ($settings['use_link']) {
+                    case 'custom':
+                        if (!empty($settings['shortcode_link'])) {
+                            $type = $this->parent->get_querytype();
+                            $raw_settings = $this->parent->get_settings('list_items');
+                            foreach ($raw_settings as $raw_setting) {
+                                if ($raw_setting['_id'] == $settings['_id']) {
+                                    //var_dump($this->current_data); die();
+                                    $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
+                                    return $link;
                                 }
                             }
+                            $link = Utils::get_dynamic_data($settings['shortcode_link'], $this->current_data, $type);
+                            return $link;
                         }
-                        if ($theme_builder) {
-                            $popup_id = $settings['popup_link'];
-                            $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash('popup:open', [
-                                'id' => $popup_id,
-                                'toggle' => true,
-                            ]);
-                            $link_action_url = str_replace(':', '%3A', $link_action_url);
-                            $link_action_url = str_replace('=', '%3D', $link_action_url);
-                            $link_action_url = str_replace('%3D%3D', '%3D', $link_action_url);
-                            $link_action_url = str_replace('&', '%26', $link_action_url);
-                            //
-                            $theme_builder->get_locations_manager()->add_doc_to_location('popup', $popup_id);
-                            return $link_action_url;
+                        break;
+                    case 'shortcode':
+                        if (!empty($settings['shortcode_link'])) {
+                            ob_start();
+                            do_shortcode($settings['shortcode_link']);
+                            $link = ob_get_clean();
+                            return $link;
                         }
-                    }
-                    break;
-                /*case 'custom':
-                    if (!empty($settings['custom_link']['url'])) {
-                        // TODO: generate dynamic url per each item
-                        return $settings['custom_link']['url'];
-                    }
-                    break;*/
-                case 'file':
-                    $media = get_post($obj_id);
-                    return $media->guid;                    
-                case 'attachment':
-                    //@p se il lightbox è attivo $page_permalink va in false
-                    $open_lightbox = $this->parent->get_settings_for_display('open_lightbox');
-                    $url = ($open_lightbox == 'no') ? get_attachment_link( $obj_id ) : wp_get_attachment_url( $obj_id );
-                    return $url;
-                case 'none':
-                    break;
-                case 'yes':
-                default:
-                    if (!is_wp_error($this->current_permalink)) {
-                        return $this->current_permalink;
-                    }
-            }
-        }
-        return false;
-    }
-
-    public function get_index_start() {
-        $paged = Utils::get_current_page_num();
-        $offset = intval($this->parent->get_settings_for_display('posts_offset'));
-        if ($paged > 1) {
-            if ($this->parent->get_settings_for_display('pagination_enable')) {   
-                $querytype = $this->parent->get_querytype();
-                switch ($querytype) {
+                        break;
+                    case 'popup':
+                        if (!empty($settings['popup_link'])) {
+                            $theme_builder = \Elementor\Plugin::instance()->modules_manager->get_modules('theme-builder');
+                            if (Utils::is_plugin_active('elementor-pro')) {
+                                if (!$theme_builder) {
+                                    $class_name = '\ElementorPro\Modules\ThemeBuilder\Module';
+                                    /** @var Module_Base $class_name */
+                                    if ($class_name::is_active()) {
+                                        $theme_builder = $class_name::instance();
+                                    }
+                                }
+                            }
+                            if ($theme_builder) {
+                                $popup_id = $settings['popup_link'];
+                                $link_action_url = \Elementor\Plugin::instance()->frontend->create_action_hash('popup:open', [
+                                    'id' => $popup_id,
+                                    'toggle' => true,
+                                ]);
+                                $link_action_url = str_replace(':', '%3A', $link_action_url);
+                                $link_action_url = str_replace('=', '%3D', $link_action_url);
+                                $link_action_url = str_replace('%3D%3D', '%3D', $link_action_url);
+                                $link_action_url = str_replace('&', '%26', $link_action_url);
+                                //
+                                $theme_builder->get_locations_manager()->add_doc_to_location('popup', $popup_id);
+                                return $link_action_url;
+                            }
+                        }
+                        break;
+                    case 'file':
+                        $media = get_post($obj_id);
+                        return $media->guid;
                     case 'attachment':
-                    case 'post':
-                        $no = $this->parent->get_settings_for_display('posts_per_page');
+                        //@p se il lightbox è attivo $page_permalink va in false
+                        $open_lightbox = $this->parent->get_settings_for_display('open_lightbox');
+                        $url = ($open_lightbox == 'no') ? get_attachment_link($obj_id) : wp_get_attachment_url($obj_id);
+                        return $url;
+                    case 'none':
                         break;
-                    case 'user':
-                        $no = $this->parent->get_settings_for_display('users_per_page');
-                        break;
-                    case 'term':
-                        $no = $this->parent->get_settings_for_display('terms_per_page');
-                        break;
+                    case 'yes':
+                    default:
+                        if (!is_wp_error($this->current_permalink)) {
+                            return $this->current_permalink;
+                        }
                 }
-                if (!$no || $no == -1 || $no == '-1') {
-                    $no = get_option('posts_per_page');
-                }
-                $start = $no * ($paged-1) + $offset;
-                //var_dump($start);
-                return $start;
             }
+            return false;
         }
-        return $offset;
-    }
 
-}
+        public function get_index_start() {
+            $paged = Utils::get_current_page_num();
+            $settings = $this->parent->get_settings_for_display();
+            $offset = empty($settings['posts_offset']) ? 0 : intval($settings['posts_offset']);
+            if ($paged > 1) {
+                if ($settings['pagination_enable']) {
+                    $query = $this->parent->get_query();
+                    $querytype = $this->parent->get_querytype();
+                    $no = apply_filters('e_addons/query/per_page/'.$querytype, get_option('posts_per_page'), $this, $query, $settings);
+                    $start = $no * ($paged - 1) + $offset;
+                    //var_dump($start);
+                    return $start;
+                }
+            }
+            return $offset;
+        }
+
+    }

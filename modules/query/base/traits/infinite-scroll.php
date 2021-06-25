@@ -144,31 +144,9 @@ trait Infinite_Scroll {
             $querytype = $this->get_querytype();
             $settings = $this->get_settings_for_display();
 
-            switch ($querytype) {
-                case 'post':
-                    $page_limit = $query->max_num_pages;
-                    //
-                    $page_length = $query->post_count;
-                    $per_page = $settings['posts_per_page'];
-                    break;
-                case 'user':
-                    $no = $settings['users_per_page'];
-                    $total_user = $query->total_users;
-                    $page_limit = ceil($total_user / $no);
-                    //
-                    $page_length = $query->total_users;
-                    $per_page = $settings['users_per_page'];
-                    break;
-                case 'term':
-                    //var_dump(count($query));
-                    /* $no = $settings['terms_per_page'];
-                      $total_term = $query->count; */
-                    $page_limit = count($query->get_terms()); //ceil($total_term/$no);
-                    //
-                    $page_length = count($query->get_terms());
-                    $per_page = $settings['terms_per_page'];
-                    break;
-            }
+            $page_limit = apply_filters('e_addons/query/page_limit/'.$querytype, 1, $this, $query, $settings);
+            $per_page = apply_filters('e_addons/query/per_page/'.$querytype, get_option('posts_per_page'), $this, $query, $settings);
+            $page_length = apply_filters('e_addons/query/page_length/'.$querytype, get_option('posts_per_page'), $this, $query, $settings);
 
             if (( $page_length >= $per_page && $per_page >= 0) ||
                     \Elementor\Plugin::$instance->editor->is_edit_mode()

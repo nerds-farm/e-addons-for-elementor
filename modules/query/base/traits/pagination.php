@@ -21,6 +21,23 @@ trait Pagination {
 
     public function paginations_enable_controls() {
         // +********************* Pagination ()
+        
+        $this->add_control(
+                'heading_pagination',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'show_label' => false,
+                    'raw' => '<i class="fas fa-pager"></i> &nbsp;' . __('PAGINATION:', 'e-addons'),
+                    'content_classes' => 'e-add-icon-heading',
+                    'condition' => [
+                        //@p il massimo è che la paginazione funzioni con tutti gli skins...
+                        '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid'],
+                        'infiniteScroll_enable' => '',
+                        'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
+                    ],
+                ]
+        );
+        
         $this->add_control(
                 'pagination_enable', [
             'label' => '<i class="eaddicon eicon-post-navigation" aria-hidden="true"></i> ' . __('Pagination', 'e-addons'),
@@ -29,7 +46,7 @@ trait Pagination {
                 //@p il massimo è che la paginazione funzioni con tutti gli skins...
                 '_skin' => ['', 'grid', 'carousel', 'filters', 'justifiedgrid', 'list', 'table'],
                 'infiniteScroll_enable' => '',
-                'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments']
+                'query_type' => ['automatic_mode', 'get_cpt', 'get_tax', 'get_users_and_roles', 'get_attachments', 'table', 'e_submissions']
             ],
                 ]
         );
@@ -256,30 +273,8 @@ trait Pagination {
             $query = $this->get_query();
             $querytype = $this->get_querytype();
 
-            switch ($querytype) {
-                case 'attachment':
-                case 'post':
-                    $page_limit = $query->max_num_pages;
-                    break;
-                case 'user':
-                    $no = $settings['users_per_page'];
-                    $total_user = $query->total_users;
-                    $page_limit = $no ? ceil($total_user / $no) : 1;
-                    break;
-                case 'term':
-                    $no = $settings['terms_per_page'];
-
-                    $args = $query->query_vars;
-                    if (!empty($args['number'])) {
-                        unset($args['number']);
-                        $term_query_totals = new \WP_Term_Query($args);
-                        $total_term = count($term_query_totals->get_terms());
-                    } else {
-                        $total_term = count($query->get_terms());
-                    }
-                    $page_limit = $no ? ceil($total_term / $no) : 1;
-                    break;
-            }
+            $page_limit = apply_filters('e_addons/query/page_limit/'.$querytype, 1, $this, $query, $settings);
+            
             $this->numeric_query_pagination($page_limit, $settings);
         }
 

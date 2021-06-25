@@ -4,6 +4,7 @@ namespace EAddonsForElementor\Modules\Query\Skins\Traits;
 
 use EAddonsForElementor\Core\Utils;
 use EAddonsForElementor\Core\Utils\Query as Query_Utils;
+
 /**
  * Description of Common
  *
@@ -11,27 +12,27 @@ use EAddonsForElementor\Core\Utils\Query as Query_Utils;
  */
 trait Custommeta {
 
-    protected function get_value_custommeta($metakey,$i = 0) {
- 
+    protected function get_value_custommeta($metakey, $i = 0) {
+
         if (!empty($metakey)) {
             $querytype = $this->parent->get_querytype();
 
             //@p solo in caso di repeater
-            if($querytype == 'repeater'){
-                $querytype = Query_Utils::is_type_of();
-                
+            if ($querytype == 'repeater') {
                 //in caso di repeater uso il dato registrato in: current_data
-                $meta_value = $this->current_data['item_custommeta_'.$i];
-                
+                $meta_value = $this->current_data['item_custommeta_' . $i];
                 return $meta_value;
             }
 
+            if (isset($this->current_data[$metakey])) {
+                return $this->current_data[$metakey];
+            }
             // ---------------------------------------------
 
             if ($querytype == 'attachment') {
                 $querytype = 'post';
             }
-            
+
             //@p prendo il valore del meta (forzatamente singolo)
             $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
 
@@ -41,7 +42,7 @@ trait Custommeta {
     }
 
     // questo vale per tutti Posts - Users - Terms
-    protected function render_item_custommeta($metaitem,$i = 0) {
+    protected function render_item_custommeta($metaitem, $i = 0) {
 
         //la chiave del custom_meta selezionata
         $metafield_key = $metaitem['metafield_key'];
@@ -60,9 +61,8 @@ trait Custommeta {
             $attribute_a_link = 'a_link_' . $this->counter . '_' . $_id;
             $attribute_custommeta_item = 'custommeta_item-' . $this->counter . '_' . $_id;
             //
-
             //@p il meta +++++++++++++++++++++++++++++++++++++++++++++
-            $meta_value = $this->get_value_custommeta($metafield_key,$i);
+            $meta_value = $this->get_value_custommeta($metafield_key, $i);
             // +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             if (empty($meta_value)) {
@@ -75,7 +75,7 @@ trait Custommeta {
                 return;
 
             $meta_html = '';
-            
+
             switch ($metafield_type) {
                 case 'date':
                     $metafield_date_format_source = $metaitem['metafield_date_format_source'];
@@ -133,21 +133,21 @@ trait Custommeta {
                     $metafield_button_size = $metaitem['metafield_button_size'];
                     $metafield_button_target = $metaitem['metafield_button_target'];
                     $metafield_button_nofollow = $metaitem['metafield_button_nofollow'];
-                    
+
                     $this->parent->add_render_attribute($attribute_a_link, 'href', $meta_value);
                     $this->parent->add_render_attribute($attribute_a_link, 'role', 'button');
 
-                    if(!empty($metafield_button_target))
-                    $this->parent->add_render_attribute($attribute_a_link, 'target', '_blank');
+                    if (!empty($metafield_button_target))
+                        $this->parent->add_render_attribute($attribute_a_link, 'target', '_blank');
 
-                    if(!empty($metafield_button_nofollow))
-                    $this->parent->add_render_attribute($attribute_a_link, 'rel', 'nofollow');
+                    if (!empty($metafield_button_nofollow))
+                        $this->parent->add_render_attribute($attribute_a_link, 'rel', 'nofollow');
 
                     if (!empty($metafield_button_size)) {
                         $this->parent->add_render_attribute($attribute_a_link, 'class', 'elementor-size-' . $metafield_button_size);
                     }
                     $this->parent->add_render_attribute($attribute_a_link, 'class', ['elementor-button-link', 'elementor-button', 'e-add-button']);
-                    
+
                     //l'icona
                     $show_icon = '';
                     if (!empty($metaitem['show_icon']["value"])) {
@@ -158,9 +158,9 @@ trait Custommeta {
 
                     break;
                 case 'oembed':
-                    //var_dump($meta_value);                    
-                    if (strpos($meta_value, 'https://') !== false){
-                        $meta_html = '<div class="e-add-oembed">'.wp_oembed_get($meta_value).'</div>';
+                    //var_dump($meta_value);
+                    if (strpos($meta_value, 'https://') !== false) {
+                        $meta_html = '<div class="e-add-oembed">' . wp_oembed_get($meta_value) . '</div>';
                     }
                     //<iframe width="560" height="315" src="https://www.youtube.com/embed/wb-mj2ug1iI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     //$meta_html = '<div class="e-add-oembed">' . $meta_value . '</div>';
@@ -170,11 +170,11 @@ trait Custommeta {
                     break;
                 case 'map':
                     //var_dump($meta_value);
-                    
+
                     $address = '';
                     if (is_array($meta_value)) {
-                        if( !empty($meta_value['address']) )
-                        $address = $meta_value['address'];
+                        if (!empty($meta_value['address']))
+                            $address = $meta_value['address'];
                     } else if (is_string($meta_value)) {
                         $address = $meta_value;
                     }
@@ -216,6 +216,9 @@ trait Custommeta {
 
                     if ($id_file) {
                         $url_file = wp_get_attachment_url($id_file);
+                        if (empty($metafield_label)) {
+                            $metafield_label = get_the_title($id_file);
+                        }
                     }
 
                     if ($url_file) {
@@ -302,7 +305,6 @@ trait Custommeta {
                     }
                     $meta_html .= '</ul>';
 
-
                     break;
                 case 'term':
                     //var_dump($meta_value);
@@ -363,7 +365,6 @@ trait Custommeta {
                     }
                     $meta_html .= '</ul>';
 
-
                     break;
                 case 'textarea':
                     $meta_html = nl2br($meta_value);
@@ -373,34 +374,34 @@ trait Custommeta {
                 case 'wysiwyg':
                     $meta_html = wpautop($meta_value);
                     break;
-                
+
                 case 'array':
                     $array_dump = $metaitem['array_dump'];
                     $array_indexes = $metaitem['array_index'];
-                    if(!empty($array_dump)){
+                    if (!empty($array_dump)) {
                         echo '<pre>';
                         var_dump($meta_value);
                         echo '</pre>';
                     }
                     $label_before = $this->render_label_before_item($metaitem);
                     $label_after = $this->render_label_after_item($metaitem);
-                    
+
                     $tmp = explode('.', $array_indexes);
                     $sub_data = Utils::get_array_value($meta_value, $tmp);
-                    
-                    $meta_html = $label_before.$sub_data.$label_after;
+
+                    $meta_html = $label_before . $sub_data . $label_after;
                     break;
-                    
-                case 'number':                    
+
+                case 'number':
                     if ($metaitem['number_round']) {
                         $mode = $metaitem['number_round_mode'] ? PHP_ROUND_HALF_DOWN : PHP_ROUND_HALF_UP;
                         $meta_value = round($meta_value, intval($metaitem['number_round_precision']), $mode);
                     }
                     if ($metaitem['number_format']) {
                         $meta_value = number_format($meta_value, intval($metaitem['number_format_decimals']), $metaitem['number_format_decimal_separator'], $metaitem['number_format_thousands_separator']);
-                    }                    
+                    }
                 case 'text':
-                default:                
+                default:
                     //$link_to = $metaitem['use_link'];
                     if (!empty($metaitem['link_to'])) {
                         $link_to = $metaitem['link_to'];
@@ -410,23 +411,23 @@ trait Custommeta {
                     if (!$html_tag_item) {
                         $html_tag_item = 'span';
                     }
-                    
+
                     //l'icona
                     $show_icon = $show_icon_class = '';
                     if (!empty($metaitem['show_icon']["value"])) {
                         $show_icon = $this->render_item_icon($metaitem, 'show_icon', 'icon', 'e-add-query-icon');
                         $show_icon_class = ' class="e-add-is_icon"';
                     }
-                    
-                    $meta_html = '<' . $html_tag_item . $show_icon_class . '>' 
+
+                    $meta_html = '<' . $html_tag_item . $show_icon_class . '>'
                             . $show_icon
-                            . $this->render_label_before_item($metaitem) 
+                            . $this->render_label_before_item($metaitem)
                             . Utils::to_string($meta_value)
-                            . $this->render_label_after_item($metaitem) 
+                            . $this->render_label_after_item($metaitem)
                             . '</' . $html_tag_item . '>';
 
                     break;
-                    //$meta_html = Utils::to_string($meta_value);
+                //$meta_html = Utils::to_string($meta_value);
             }
 
             switch ($link_to) {

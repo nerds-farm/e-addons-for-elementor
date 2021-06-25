@@ -436,7 +436,7 @@ class Timeline extends Base {
       //var_dump($this->parent->get_script_depends());
       } */
 
-    protected function render_element_item() {
+    public function render_element_item() {
         
         $this->index++;
         
