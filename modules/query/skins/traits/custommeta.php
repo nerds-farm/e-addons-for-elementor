@@ -24,7 +24,7 @@ trait Custommeta {
                 return $meta_value;
             }
 
-            if (isset($this->current_data[$metakey])) {
+            if (is_array($this->current_data) && isset($this->current_data[$metakey])) {
                 return $this->current_data[$metakey];
             }
             // ---------------------------------------------
@@ -82,7 +82,7 @@ trait Custommeta {
                     $metafield_date_format_display = $metaitem['metafield_date_format_display'];
 
                     if ($metafield_date_format_source) {
-                        if ($metafield_date_format_source == 'timestamp') {
+                        if ($metafield_date_format_source == 'timestamp' || $metafield_date_format_source == 'U' ) {
                             $timestamp = $meta_value;
                         } else {
                             $d = \DateTime::createFromFormat($metafield_date_format_source, $meta_value);

@@ -261,7 +261,8 @@ trait Wordpress {
             foreach ($results as $ares) {
                 $db_metas[$ares->meta_key] = $ares->meta_key;
             }
-            ksort($db_metas);
+            ksort($db_metas); 
+            //var_dump($db_metas); die();
             $manual_metas = $db_metas;
             foreach ($manual_metas as $ameta) {
                 if (substr($ameta, 0, 1) == '_') {
@@ -273,12 +274,11 @@ trait Wordpress {
                 if (substr($ameta, 0, 8) == '_oembed_') {
                     continue;
                 }
-                //var_dump($ameta);
-                
-            }
-            if (!isset($metas[$ameta])) {
-                $metas[$ameta] = $ameta;
-            }   
+                //var_dump($ameta);   
+                if (!isset($metas[$ameta])) {
+                    $metas[$ameta] = $ameta;
+                }  
+            }             
         }
         return $metas;
     }

@@ -403,6 +403,7 @@ class Base extends Base_Skin {
 
     protected function render_no_results() {
         $query_no_result = $this->parent->get_settings_for_display('query_no_result');
+        //var_dump($query_no_result);
         if ($query_no_result) {
             $query_no_result_txt = $this->parent->get_settings_for_display('query_no_result_txt');
             if (!empty($query_no_result_txt)) {

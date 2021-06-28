@@ -481,7 +481,7 @@ trait Custommeta {
             'label' => __('Date Format: SOURCE', 'e-addons'),
             'description' => '<a target="_blank" href="https://www.php.net/manual/en/function.date.php">' . __('Use standard PHP format character') . '</a>',
             'type' => Controls_Manager::TEXT,
-            'default' => get_option('date_format'),
+            //'default' => get_option('date_format'),
             'placeholder' => __('YmdHis, d/m/Y, m-d-y', 'e-addons'),
             'condition' => [
                 'metafield_type' => 'date',

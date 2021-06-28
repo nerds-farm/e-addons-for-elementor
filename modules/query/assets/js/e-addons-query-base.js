@@ -99,7 +99,7 @@ jQuery(window).on('elementor/frontend/init', () => {
 
 
 
-            //console.log(this.elements.$widgetType[0]);
+            //console.log(widgetType);
 
             if (widgetType == 'e-query-posts' ||
                     widgetType == 'e-query-users' ||
@@ -126,9 +126,10 @@ jQuery(window).on('elementor/frontend/init', () => {
                     if (!image) {
                         return;
                     }
-
+                    
                     var imageParentRatio = $imageParent.outerHeight() / $imageParent.outerWidth(),
                             imageRatio = image.naturalHeight / image.naturalWidth;
+                            
                     $imageParent.toggleClass('e-add-fit-img', imageRatio < imageParentRatio);
                 };
                 // 2 -

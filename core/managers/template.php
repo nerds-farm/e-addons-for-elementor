@@ -345,6 +345,10 @@ class Template {
     }
 
     public static function render_element_style($element) {
+        if (is_array($element)) {
+            //var_dump($element);
+            $element = reset($element);
+        }
         $settings = $element->get_settings_for_display();
         $element_id = $element->get_id();
         $element_controls = $element->get_controls();
