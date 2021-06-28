@@ -429,7 +429,7 @@ trait Custommeta {
                     break;
                 //$meta_html = Utils::to_string($meta_value);
             }
-
+            
             switch ($link_to) {
                 case 'post':
                     if (!is_wp_error($this->current_permalink)) {
@@ -447,18 +447,20 @@ trait Custommeta {
 
 
             //@p il link del metafield
-            $linkOpen = '';
-            $linkClose = '';
-            if ($link_to || $metafield_type == 'button' || $metafield_type == 'file') {
-                $this->parent->add_render_attribute($attribute_a_link, 'class', ['e-add-link']);
-                //
-                $linkOpen = '<a ' . $this->parent->get_render_attribute_string($attribute_a_link) . '>';
-                $linkClose = '</a>';
-            }
             if (!empty($meta_html)) {
-                //
-                echo $linkOpen . $meta_html . $linkClose;
-            }
+                if ($link_to || $metafield_type == 'button' || $metafield_type == 'file') {
+                    // add link
+                    $this->parent->add_render_attribute($attribute_a_link, 'class', ['e-add-link']);
+                    $meta_html = '<a ' . $this->parent->get_render_attribute_string($attribute_a_link) . '>'.$meta_html.'</a>';
+                } else if (substr($meta_html,0,1) != '<') {
+                    // add a wrapper layer if not present
+                    $meta_html = '<div class="e-add-meta-'.$metafield_type.'">'.$meta_html.'</div>';
+                }
+
+                echo $meta_html;
+            }            
+            
+            
         }
     }
 

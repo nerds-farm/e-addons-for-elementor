@@ -980,6 +980,7 @@ class Base extends Base_Skin {
             $paged = Utils::get_current_page_num();
             $settings = $this->parent->get_settings_for_display();
             $offset = empty($settings['posts_offset']) ? 0 : intval($settings['posts_offset']);
+            $offset = empty($settings['offset']) ? $offset : intval($settings['offset']);
             if ($paged > 1) {
                 if ($settings['pagination_enable']) {
                     $query = $this->parent->get_query();

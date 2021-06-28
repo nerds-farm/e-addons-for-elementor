@@ -8,7 +8,7 @@ use EAddonsForElementor\Core\Utils;
  * @author francesco
  */
 trait Wordpress {
-    
+
     public static $admin_notices_fired = false;
     public static $notices = [];
 
@@ -18,12 +18,14 @@ trait Wordpress {
         ?>
         <div class="e-add-notiice <?php echo $level . ' notice-' . $level; ?> notice<?php echo $dismissible ? ' is-dismissible' : ''; ?>">
             <?php if ($wrapper) { ?>
-            <i class="eadd-logo-e-addons"></i>
-            <p>
-                <strong>e-addons:</strong> 
-                <?php _e($msg, 'e-addons-for-elementor'); ?>
-            </p>
-            <?php } else { _e($msg, 'e-addons-for-elementor'); } ?>
+                <i class="eadd-logo-e-addons"></i>
+                <p>
+                    <strong>e-addons:</strong>
+                    <?php _e($msg, 'e-addons-for-elementor'); ?>
+                </p>
+            <?php } else {
+                _e($msg, 'e-addons-for-elementor');
+            } ?>
         </div>
         <?php
         $notice = ob_get_clean();
@@ -33,11 +35,10 @@ trait Wordpress {
             self::$notices[] = $notice;
             //add_action('admin_notices', '\EAddonsForElementor\Core\Utils::e_admin_notices');
         }
-        
     }
-    
+
     public static function e_admin_notices() {
-        foreach(self::$notices as $notice) {
+        foreach (self::$notices as $notice) {
             echo $notice;
         }
         self::$admin_notices_fired = true;
@@ -50,7 +51,7 @@ trait Wordpress {
         if ($maybe_show && $msg) {
             ?>
             <div class="e-add-notiice notice-success notice is-dismissible" id="<?php echo $notice_id; ?>">
-                <?php echo ($msg); ?>
+            <?php echo ($msg); ?>
                 <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
             </div>
             <script>
@@ -172,7 +173,7 @@ trait Wordpress {
     public static function get_field($obj, $field, $single = true) {
         return self::get_wp_object_field($obj, $field, $single);
     }
-    
+
     public static function get_wp_object_field($obj, $field, $single = true) {
         $value = $type = null;
 
@@ -242,7 +243,7 @@ trait Wordpress {
             }
         }
 
-        // FROM DB        
+        // FROM DB
         $table = $wpdb->prefix . $obj . 'meta';
         if ($obj == 'user') {
             if (defined('CUSTOM_USER_META_TABLE')) {
@@ -261,7 +262,7 @@ trait Wordpress {
             foreach ($results as $ares) {
                 $db_metas[$ares->meta_key] = $ares->meta_key;
             }
-            ksort($db_metas); 
+            ksort($db_metas);
             //var_dump($db_metas); die();
             $manual_metas = $db_metas;
             foreach ($manual_metas as $ameta) {
@@ -274,11 +275,11 @@ trait Wordpress {
                 if (substr($ameta, 0, 8) == '_oembed_') {
                     continue;
                 }
-                //var_dump($ameta);   
+                //var_dump($ameta);
                 if (!isset($metas[$ameta])) {
                     $metas[$ameta] = $ameta;
-                }  
-            }             
+                }
+            }
         }
         return $metas;
     }
