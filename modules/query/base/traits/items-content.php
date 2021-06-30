@@ -298,6 +298,7 @@ trait Items_Content {
                 ],
             ],
             'selectors' => [
+                '{{WRAPPER}} {{CURRENT_ITEM}}, {{WRAPPER}} .e-add-image-area' => 'height: 100%',
                 '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-post-image.e-add-post-bgimage' => 'height: {{SIZE}}{{UNIT}};'
             ],
             'conditions' => [

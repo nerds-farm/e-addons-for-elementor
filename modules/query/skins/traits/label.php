@@ -88,10 +88,16 @@ trait Label {
                 if( !empty($blanklink))
                 $attribute_target = ' target="_blank"';
 
-                echo '<a' . $attribute_link . $attribute_target . '>';
+                echo '<a class="e-add-labelstatic"' . $attribute_link . $attribute_target . '>';
+            }else{
+                echo '<span class="e-add-labelstatic">';
             }
             echo $html_label;
-            if ($use_link) echo '</a>';
+            if ($use_link){
+                 echo '</a>';
+            }else{
+                echo '</span>';
+            }
         }
     }
     protected function render_item_index($settings) {

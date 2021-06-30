@@ -316,118 +316,291 @@ trait Items_Style {
 
         // ------- COLORS - HOVER
         $target->add_control(
-                'hover_color_item', [
-            'label' => __('Hover Text Color', 'e-addons'),
-            'type' => Controls_Manager::COLOR,
-            'separator' => 'before',
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} a:hover' => 'color: {{VALUE}};',
-            ],
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'operator' => '!in',
-                        'value' => ['item_image', 'item_imageoricon', 'item_avatar', 'item_author',
-                            'item_posttype',
-                            'item_date',
-                            'item_registered',
-                            //'item_readmore',
-                            'item_termstaxonomy',
-                            'item_content',
-                            'item_excerpt',
-                            'item_description',
-                            'item_taxonomy',
-                            'item_custommeta',
-                            'item_caption',
-                            'item_alternativetext',
-                            'item_imagemeta',
-                            'item_mimetype',
-                            'item_counts'
+            'colors_hover_heading',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="far fa-hand-pointer"></i> <b>' . __('Hover Colors', 'e-addons') . '</b>',
+                'content_classes' => 'e-add-inner-heading',
+                'separator' => 'before',
+                'conditions' => [
+                    'relation' => 'or',
+                    'terms' => [
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_readmore'],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
                         ],
-                    ],
-                    [
-                        'relation' => 'or',
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'operator' => 'in',
-                                'value' => ['item_readmore'],
-                            ],
-                            [
-                                'name' => 'use_link',
-                                'operator' => '!=',
-                                'value' => ''
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_custommeta'],
+                                ],
+                                [
+                                    'name' => 'link_to',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_author'],
+                                ],
+                                [
+                                    'name' => 'author_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => '!in',
+                                    'value' => [
+                                        'item_image',
+                                        'item_imageoricon',
+                                        'item_avatar',
+                                        'item_posttype',
+                                        'item_date',
+                                        'item_registered',
+                                        'item_author',
+                                        'item_readmore',
+                                        //'item_termstaxonomy',
+                                        'item_content',
+                                        'item_excerpt',
+                                        'item_description',
+                                        'item_taxonomy',
+                                        'item_custommeta',
+                                        'item_caption',
+                                        'item_alternativetext',
+                                        'item_imagemeta',
+                                        'item_mimetype',
+                                        'item_counts'
+                                    ],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
                             ]
                         ]
-                    ],
-                    [
-                        'name' => 'use_link',
-                        'operator' => '!=',
-                        'value' => ''
+                        
                     ]
                 ]
             ]
+    );
+        $target->add_control(
+                'hover_color_item', [
+                'label' => __('Hover Text Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}} a:hover' => 'color: {{VALUE}};',
+                ],
+                'conditions' => [
+                    'relation' => 'or',
+                    'terms' => [
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_readmore'],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_custommeta'],
+                                ],
+                                [
+                                    'name' => 'link_to',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_author'],
+                                ],
+                                [
+                                    'name' => 'author_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => '!in',
+                                    'value' => [
+                                        'item_image',
+                                        'item_imageoricon',
+                                        'item_avatar',
+                                        'item_posttype',
+                                        'item_date',
+                                        'item_registered',
+                                        'item_author',
+                                        'item_readmore',
+                                        //'item_termstaxonomy',
+                                        'item_content',
+                                        'item_excerpt',
+                                        'item_description',
+                                        'item_taxonomy',
+                                        'item_custommeta',
+                                        'item_caption',
+                                        'item_alternativetext',
+                                        'item_imagemeta',
+                                        'item_mimetype',
+                                        'item_counts'
+                                    ],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ]
+                        
+                    ]
                 ]
+            ]
         );
         $target->add_control(
-                'hover_bgcolor_item', [
-            'label' => __('Hover Background Color', 'e-addons'),
-            'type' => Controls_Manager::COLOR,
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *:hover' => 'background-color: {{VALUE}};',
-                '{{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button:hover' => 'background-color: {{VALUE}};',
-            ],
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'operator' => '!in',
-                        'value' => [
-                            'item_image',
-                            'item_imageoricon',
-                            'item_avatar',
-                            'item_author',
-                            'item_posttype',
-                            'item_date',
-                            'item_registered',
-                            //'item_readmore',
-                            'item_termstaxonomy',
-                            'item_content',
-                            'item_excerpt',
-                            'item_description',
-                            'item_taxonomy',
-                            'item_custommeta',
-                            'item_caption',
-                            'item_alternativetext',
-                            'item_imagemeta',
-                            'item_mimetype',
-                            'item_counts'
+            'hover_bgcolor_item', [
+                'label' => __('Hover Background Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}:not(.e-add-item_readmore) > *:hover' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} {{CURRENT_ITEM}} a.e-add-button:hover' => 'background-color: {{VALUE}};',
+                ],
+                'conditions' => [
+                    'relation' => 'or',
+                    'terms' => [
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_readmore'],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
                         ],
-                    ],
-                    [
-                        'relation' => 'or',
-                        'terms' => [
-                            [
-                                'name' => 'item_type',
-                                'operator' => 'in',
-                                'value' => ['item_readmore'],
-                            ],
-                            [
-                                'name' => 'use_link',
-                                'operator' => '!=',
-                                'value' => ''
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_author'],
+                                ],
+                                [
+                                    'name' => 'author_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => 'in',
+                                    'value' => ['item_custommeta'],
+                                ],
+                                [
+                                    'name' => 'link_to',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'relation' => 'and',
+                            'terms' => [
+                                [
+                                    'name' => 'item_type',
+                                    'operator' => '!in',
+                                    'value' => [
+                                        'item_image',
+                                        'item_imageoricon',
+                                        'item_avatar',
+                                        'item_posttype',
+                                        'item_date',
+                                        'item_registered',
+                                        'item_author',
+                                        'item_readmore',
+                                        //'item_termstaxonomy',
+                                        'item_content',
+                                        'item_excerpt',
+                                        'item_description',
+                                        'item_taxonomy',
+                                        'item_custommeta',
+                                        'item_caption',
+                                        'item_alternativetext',
+                                        'item_imagemeta',
+                                        'item_mimetype',
+                                        'item_counts'
+                                    ],
+                                ],
+                                [
+                                    'name' => 'use_link',
+                                    'operator' => '!=',
+                                    'value' => ''
+                                ]
                             ]
                         ]
-                    ],
-                    [
-                        'name' => 'use_link',
-                        'operator' => '!=',
-                        'value' => ''
+                        
                     ]
                 ]
             ]
-                ]
         );
     }
 
@@ -978,7 +1151,7 @@ trait Items_Style {
             'label' => __('Icon Color', 'e-addons'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'color: {{VALUE}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon, {{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'color: {{VALUE}};',
             ],
             'conditions' => [
                 'terms' => [
@@ -1006,7 +1179,7 @@ trait Items_Style {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon, {{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'font-size: {{SIZE}}{{UNIT}};',
             ],
             'conditions' => [
                 'terms' => [
@@ -1034,7 +1207,7 @@ trait Items_Style {
                 ],
             ],
             'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-icon, {{WRAPPER}} {{CURRENT_ITEM}} .e-add-query-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
             ],
             'conditions' => [
                 'terms' => [

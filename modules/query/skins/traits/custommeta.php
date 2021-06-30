@@ -437,11 +437,13 @@ trait Custommeta {
                     }
                     break;
                 case 'custom':
-                    $href_link = $metaitem['link']['url'];
+                    //var_dump($metaitem['link']);
+                    $href_link = $metaitem['link']; //['url'];
                     break;
                 default:
             }
             if ($link_to) {
+                //$this->parent->add_link_attributes( $attribute_a_link, $href_link );
                 $this->parent->add_render_attribute($attribute_a_link, 'href', $href_link);
             }
 
