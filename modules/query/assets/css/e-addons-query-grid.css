@@ -373,7 +373,9 @@ e-add-posts-container e-add-posts e-add-skin-grid e-add-skin-grid-
     width: 80%;
 
     margin-top: -20%;
-    margin-left: 10%;
+    
+    /* margin-left: 10%; */
+    justify-content: center; /* @p... magari è meglio */
 
     background-color: #ffffff;
 
