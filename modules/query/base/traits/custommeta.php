@@ -721,7 +721,7 @@ trait Custommeta {
                 'item_type' => 'item_custommeta'
             ],
             'dynamic' => [
-                'active' => true
+                'active' => false
             ],
             'default' => [
                 'url' => '',

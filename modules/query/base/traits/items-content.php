@@ -197,33 +197,36 @@ trait Items_Content {
         }
 
         $target->add_responsive_control(
-                'ratio_image', [
-            'label' => __('Image Ratio', 'e-addons'),
-            'type' => Controls_Manager::SLIDER,
-            'range' => [
-                'px' => [
-                    'min' => 0.1,
-                    'max' => 2,
-                    'step' => 0.1
-                ],
-            ],
-            'selectors' => [
-                '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-img' => 'padding-bottom: calc( {{SIZE}} * 100% );', '{{WRAPPER}}:after' => 'content: "{{SIZE}}";',
-            ],
-            'conditions' => [
-                'terms' => [
-                    [
-                        'name' => 'item_type',
-                        'operator' => 'in',
-                        'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
+            'ratio_image', [
+                'label' => __('Image Ratio', 'e-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0.1,
+                        'max' => 2,
+                        'step' => 0.1
                     ],
-                    [
-                        'name' => 'use_bgimage',
-                        'value' => '',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .e-add-img' => 'padding-bottom: calc( {{SIZE}} * 100% );', '{{WRAPPER}}:after' => 'content: "{{SIZE}}";',
+                ],
+                'conditions' => [
+                    'terms' => [
+                        [
+                            'name' => 'item_type',
+                            'operator' => 'in',
+                            'value' => ['item_image', 'item_imageoricon', 'item_avatar'],
+                        ],
+                        [
+                            'name' => 'use_bgimage',
+                            'value' => '',
+                        ]
                     ]
+                ],
+                'dynamic' => [
+                    'active' => false
                 ]
             ]
-                ]
         );
         $target->add_responsive_control(
                 'width_image', [
@@ -245,6 +248,9 @@ trait Items_Content {
                     'min' => 1,
                     'max' => 800,
                     'step' => 1
+                ],
+                'dynamic' => [
+                    'active' => false
                 ],
             ],
             'selectors' => [

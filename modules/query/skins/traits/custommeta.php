@@ -133,8 +133,36 @@ trait Custommeta {
                     $metafield_button_size = $metaitem['metafield_button_size'];
                     $metafield_button_target = $metaitem['metafield_button_target'];
                     $metafield_button_nofollow = $metaitem['metafield_button_nofollow'];
+                    
+                    $id_file = '';
+                    if (is_string($meta_value)) {
+                        if (is_numeric($meta_value)) {
+                            //echo 'numeric';
+                            $id_file = $meta_value;
+                            //$meta_value = $meta_value; //è una stringa id
+                        } else {
+                            //echo 'string';
+                            $url_file = $meta_value;
+                            //$meta_value = $meta_value; //è una stringa url
+                        }
+                    } else if (is_numeric($meta_value)) {
+                        //echo 'num';
+                        $id_file = $meta_value;
+                        //$meta_value = $meta_value; //è una stringa id
+                    } else if (is_array($meta_value)) {
+                        //echo 'array';
+                        if (!empty($meta_value['ID'])) {
+                            $id_file = $meta_value['ID'];
+                        }
+                        if (!empty($meta_value['url'])) {
+                            $url_file = $meta_value['url'];
+                        }
+                    }
+                    if ($id_file) {
+                        $url_file = get_permalink($id_file);
+                    }
 
-                    $this->parent->add_render_attribute($attribute_a_link, 'href', $meta_value);
+                    $this->parent->add_render_attribute($attribute_a_link, 'href', $url_file);
                     $this->parent->add_render_attribute($attribute_a_link, 'role', 'button');
 
                     if (!empty($metafield_button_target))

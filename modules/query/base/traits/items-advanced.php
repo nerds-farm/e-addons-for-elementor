@@ -56,7 +56,7 @@ trait Items_Advanced {
                             'item_alternativetext',
                             'item_imagemeta',
                             'item_mimetype',
-                            'item_counts'
+                            'item_counts',
                         ],
                     ]
                 ]

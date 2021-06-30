@@ -14,20 +14,31 @@ trait Media {
 
     protected function render_item_caption($settings) {
         //var_dump($this->current_data);
-        //echo wp_get_attachment_caption( get_the_ID() );    
-        if ($this->current_data->post_excerpt)
+        //echo wp_get_attachment_caption( get_the_ID() ); 
+        if ($this->current_data->post_excerpt){
+            echo $this->render_label_before_item($settings,'Caption: '); 
             echo '<' . $settings['html_tag'] . '>' . $this->current_data->post_excerpt . '</' . $settings['html_tag'] . '>';
+            echo $this->render_label_after_item($settings);
+        }
     }
 
     protected function render_item_mimetype($settings) {
-        if ($this->current_data->post_mime_type)
+        
+        if ($this->current_data->post_mime_type){
+            echo $this->render_label_before_item($settings,'Mime Type: ');
             echo '<' . $settings['html_tag'] . '>' . $this->current_data->post_mime_type . '</' . $settings['html_tag'] . '>';
+            echo $this->render_label_after_item($settings);
+        }
+        
     }
 
     protected function render_item_alternativetext($settings) {
         $alt = get_post_meta(get_the_ID(), '_wp_attachment_image_alt', TRUE);
-        if ($alt)
+        if ($alt){
+            echo $this->render_label_before_item($settings,'Alt: ');
             echo '<' . $settings['html_tag'] . '>' . $alt . '</' . $settings['html_tag'] . '>';
+            echo $this->render_label_after_item($settings);
+        }
     }
 
     protected function render_item_imagemeta($settings) {
@@ -38,7 +49,8 @@ trait Media {
         $sizeim = $settings['imagemedia_sizes'];
         $metas = $settings['imagemedia_metas'];
 
-        if (!empty($metas))
+        if (!empty($metas)){
+            echo $this->render_label_before_item($settings,'Image meta: ');
             foreach ($metas as $m) {
                 echo '<div class="e-add-imagemeta e-add-imagemeta-' . $m . '">';
                 if ($m == 'dimension') {
@@ -76,14 +88,18 @@ trait Media {
                  */
                 echo '</div>';
             }
-
+            echo $this->render_label_after_item($settings);
+        }
 
         //https://developer.wordpress.org/reference/functions/wp_get_attachment_metadata/
     }
 
     protected function render_item_uploadedto($settings) {
-        if ($this->current_data->post_parent)
+        if ($this->current_data->post_parent){
+            echo $this->render_label_before_item($settings,'Uploaded to: ');
             echo '<' . $settings['html_tag'] . '>' . get_the_title($this->current_data->post_parent) . '</' . $settings['html_tag'] . '>';
+            echo $this->render_label_after_item($settings);
+        }
     }
 
 }

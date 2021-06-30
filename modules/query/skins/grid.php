@@ -125,7 +125,7 @@ class Grid extends Base {
                 '1.25' => '4/5',
             ],
             'selectors' => [
-                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid-blog .e-add-item-grid:nth-child(1)' => 'width: calc(100% / {{VALUE}}); flex-basis: calc( 100% / {{VALUE}} );',
+                '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid-blog> .e-add-wrapper-grid > .e-add-item-grid:nth-child(1)' => 'width: calc(100% / {{VALUE}}); flex-basis: calc( 100% / {{VALUE}} );',
             ],
             'condition' => [
                 $this->get_control_id('grid_type') => ['blog']
@@ -135,19 +135,13 @@ class Grid extends Base {
         $this->add_responsive_control(
                 'columns_grid', [
             'label' => __('Columns', 'e-addons'),
-            'type' => Controls_Manager::SELECT,
-            'default' => '5',
+            'type' => Controls_Manager::NUMBER,
+            'default' => '4',
             'tablet_default' => '3',
             'mobile_default' => '1',
-            'options' => [
-                '1' => '1',
-                '2' => '2',
-                '3' => '3',
-                '4' => '4',
-                '5' => '5',
-                '6' => '6',
-                '7' => '7'
-            ],
+            'min' => 1,
+            'max' => 12,
+            'step' => 1,
             'prefix_class' => 'e-add-col%s-',
             //'frontend_available' => true,
             'selectors' => [
@@ -444,6 +438,9 @@ class Grid extends Base {
                         '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid > .e-add-wrapper-grid > .e-add-item-grid' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
                         '{{WRAPPER}} .e-add-posts-container.e-add-skin-grid > .e-add-wrapper-grid' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
                     ],
+                    'dynamic' => [
+                        'active' => false
+                    ]
                 ]
         );
 
@@ -465,6 +462,9 @@ class Grid extends Base {
                         //'{{WRAPPER}} .e-add-post-item' => 'row-gap: {{SIZE}}{{UNIT}}',
                         '{{WRAPPER}} .e-add-post-item' => 'padding-bottom: {{SIZE}}{{UNIT}};',
                     ],
+                    'dynamic' => [
+                        'active' => false
+                    ]
                 ]
         );
 

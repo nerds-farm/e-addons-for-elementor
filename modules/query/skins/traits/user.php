@@ -114,7 +114,7 @@ trait User {
 
             // in caso di website
             if ($usertype == 'website')
-                $attribute_link = 'href="' . $user_info->user_url ;
+                $attribute_link = 'href="' . $user_info->user_url. '"';
 
             $attribute_target = '';
             if( !empty($blanklink))

@@ -202,6 +202,9 @@ trait Items_Style {
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}}' => 'margin-bottom: {{SIZE}}{{UNIT}};'
             ],
+            'dynamic' => [
+                'active' => false
+            ],
                 ]
         );
         $target->add_control(
@@ -211,6 +214,9 @@ trait Items_Style {
             'min' => 0,
             'selectors' => [
                 '{{WRAPPER}} {{CURRENT_ITEM}}' => 'position: relative; z-index: {{VALUE}};'
+            ],
+            'dynamic' => [
+                'active' => false
             ],
                 ]
         );
