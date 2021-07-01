@@ -30,8 +30,9 @@ trait Term {
             echo sprintf('<%1$s class="e-add-term-count">', $html_tag);
             echo $this->render_label_before_item($settings,'Posts: ');
             echo $term_info->count;
-            echo sprintf('</%s>', $html_tag);
             echo $this->render_label_after_item($settings);
+            echo sprintf('</%s>', $html_tag);
+            
         }
     }
 
@@ -48,7 +49,8 @@ trait Term {
                 $tax = get_taxonomy($term_info->taxonomy)->labels->singular_name;
                 break;
         }
-        echo $tax;
+        if($tax)
+        echo '<span class="e-add-taxonomy">'.$tax.'</span>';
     }
 
     protected function render_item_description($settings) {
@@ -57,12 +59,16 @@ trait Term {
         $description_content = $term_info->description;
         $description_content = Utils::get_dynamic_data($description_content);
 
-        if ($description_content)
+        if ($description_content){
+            echo '<span class="e-add-termdescription">';
+            
             if ($textcontent_limit) {
                 echo substr(wp_strip_all_tags($description_content), 0, $textcontent_limit) . ' ...';
             } else {
                 echo $description_content;
             }
+            echo '</span>';
+        }
     }
 
 }
