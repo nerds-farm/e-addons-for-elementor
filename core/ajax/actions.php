@@ -24,7 +24,7 @@ class Actions {
       'values', // post, user, term, comment
       'uploads', // dir, file
       'metas', // post, user, term, comment, attachment
-      'posts', // type, meta, post_type__name, public, private, 'abc,efg,!xyz'
+      'posts', // type, meta, post_type__name, public, private, 'abc,efg,!xyz', popup
       'term_posts',
       'terms', // taxonomy, post_type
       'taxonomies',
@@ -540,6 +540,11 @@ class Actions {
                         );
                     }
                 }
+                if (is_array($object_type) && in_array('popup', $object_type)) {
+                    $query_params['post_type'] = 'elementor_library';
+                    $query_params['meta_key'] = '_elementor_template_type';
+                    $query_params['meta_value'] = 'popup';
+                }
                 if (!wp_doing_ajax()) { //$object_type != 'any') {
                     $query_params['post_status'] = 'publish';
                 }
@@ -561,9 +566,9 @@ class Actions {
                     if (empty($params['object_type']) || $object_type == self::ANY) {
                         $post_title = '[' . $post->ID . '] ' . $post_title . ' (' . $post->post_type . ')';
                     }
-                    if (!empty($params['object_type']) && $object_type == 'elementor_library') {
+                    if (!empty($params['object_type']) && (is_array($object_type) && in_array('elementor_library', $object_type))) {
                         $etype = get_post_meta($post->ID, '_elementor_template_type', true);
-                        $post_title = '[' . $post->ID . '] ' . $post_title . ' (' . $post->post_type . ' > ' . $etype . ')';
+                        $post_title = '[' . $post->ID . '] ' . $post_title . ' (' . $etype . ')';
                     }
                     
                     if (in_array($post->post_type, $post_type_excluded)) {

@@ -878,15 +878,6 @@ class Query extends Base_Widget {
                 ]
         );
 
-        /* $options = [
-          '' => __('None'),
-          'yes' => __('Current'),
-          'shortcode' => __('Shortcode'),
-          'custom' => __('Custom'),
-          ];
-          if (Utils::is_plugin_active('elementor-pro') && Utils::is_plugin_active('e-addons-extended')) {
-          $options['popup'] = __('Open PopUp');
-          } */
         $this->add_control(
                 'templatemode_linkable', [
             'label' => __('Linkable', 'e-addons'),
