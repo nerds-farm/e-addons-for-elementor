@@ -75,7 +75,11 @@ trait Label {
 
                     break;
             }
-            $html_label = Utils::get_dynamic_data($html_label, $this->current_data, $this->parent->get_querytype());
+            $args = [
+                $this->parent->get_querytype() => $this->current_data,
+                'block' => $this->current_data,
+            ];
+            $html_label = Utils::get_dynamic_data($html_label, $args);
             
             $use_link = $this->get_item_link($settings);
             $blanklink  = $settings['blanklink_enable'];

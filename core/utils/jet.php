@@ -166,6 +166,27 @@ class Jet {
         
         return $jet_list;
     }
+    
+    public static function set_repeater($selector, $data, $obj_id, $type = 'post') {
+        $repeater = self::get_jet_field($selector);        
+        if (!empty($repeater['type']) && $repeater['type'] == 'repeater') {
+            $rows = get_metadata($type, $obj_id, $selector, true);
+            if (count($rows_old) > count($data)) {
+                $rows = array_slice($rows, 0, count($data), true);
+            }            
+            if (!empty($data)) {
+                foreach($data as $row => $sub_fields) {
+                    $row = 'item-'.$row; // start from 1 (not 0)                    
+                    foreach($sub_fields as $sub => $sub_field) {
+                        $rows[$row][$sub] = $sub_field;
+                    }
+                }
+                //var_dump($rows); die();
+                update_metadata($type, $obj_id, $selector, $rows);
+                return true;
+            }
+        }
+        return false;
+    }
 
-    /*     * ********************************************************************** */
 }
