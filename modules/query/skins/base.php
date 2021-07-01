@@ -64,8 +64,8 @@ class Base extends Base_Skin {
         }
 
         add_action('elementor/preview/enqueue_scripts', [$this, 'preview_enqueue']);
-    }
-
+    }  
+    
     public function register_controls_layout(Widget_Base $widget) {
         //$this->parent = $widget;
         // BLOCKS generic style
@@ -381,6 +381,8 @@ class Base extends Base_Skin {
         if (apply_filters('e_addons/query/should_render/' . $querytype, true, $this, $query)) {
 
             global $e_widget_query;
+            $previuos = $e_widget_query;
+            
             $e_widget_query = $this;
 
             /** @p enquequo gli script e gli style... */
@@ -396,6 +398,10 @@ class Base extends Base_Skin {
             $this->render_loop_end();
 
             $this->parent->render_pagination();
+            
+            if ($previuos) {
+                $e_widget_query = $previuos;
+            }
         } else {
             $this->render_no_results();
         }
@@ -902,21 +908,35 @@ class Base extends Base_Skin {
                 // MEDIA
                 $settings['use_link'] = $settings['gallery_link'];
             }
+            if (!empty($settings['link_to'])) {
+                // CUSTOM META
+                $settings['use_link'] = $settings['link_to'];
+            }
 
-            if (!empty($settings['use_link'])) {
+            if (!empty($settings['use_link'])) {                
                 switch ($settings['use_link']) {
                     case 'custom':
-                        if (!empty($settings['shortcode_link'])) {
-                            $type = $this->parent->get_querytype();
+                        $link = false;
+                        if (!empty($settings['link']['url'])) {
+                            $link = $settings['link']['url'];
+                            
+                        }
+                        if (!empty($settings['shortcode_link'])) {                            
                             $raw_settings = $this->parent->get_settings('list_items');
                             foreach ($raw_settings as $raw_setting) {
                                 if ($raw_setting['_id'] == $settings['_id']) {
                                     //var_dump($this->current_data); die();
-                                    $link = Utils::get_dynamic_data($raw_setting['shortcode_link'], $this->current_data, $type);
-                                    return $link;
+                                    $link = $raw_setting['shortcode_link'];
                                 }
-                            }
-                            $link = Utils::get_dynamic_data($settings['shortcode_link'], $this->current_data, $type);
+                            }                            
+                        }
+                        if ($link) {
+                            $type = $this->parent->get_querytype();
+                            $args = [
+                                $type => $this->current_data,
+                                'block' => $this->current_data,
+                            ];
+                            $link = Utils::get_dynamic_data($link, $args);
                             return $link;
                         }
                         break;
@@ -957,6 +977,9 @@ class Base extends Base_Skin {
                         }
                         break;
                     case 'file':
+                        if ($this->current_permalink == $this->current_data) {
+                            return $this->current_permalink;
+                        }
                         $media = get_post($obj_id);
                         return $media->guid;
                     case 'attachment':

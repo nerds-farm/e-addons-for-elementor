@@ -23,6 +23,7 @@ trait Common {
 
         $querytype = $this->parent->get_querytype();
         $image_id = false;
+        $thumbnail_html = '';
         //considero se l'immagine è un metavalue invece della featured image
         
         if (!empty($settings['image_custom_metafield'])) {
@@ -86,22 +87,27 @@ trait Common {
             'class' => $this->get_image_class()
         ];
 
-        if (!$image_id) {
+        //var_dump($this->current_data);
+        if (is_string($this->current_data) && filter_var($this->current_data, FILTER_VALIDATE_URL)) {
+            $thumbnail_html = '<img class="'. $this->get_image_class().'" src="'.$this->current_data.'">';            
+        }
+        
+        if (!$image_id && !$thumbnail_html) {
             //var_dump($settings['use_fallback_img']);
             if (!empty($settings['use_fallback_img']['id'])) {
                 $image_id = $settings['use_fallback_img']['id'];
             }
         }
         
-        if ($image_id) {
+        if ($image_id && !$thumbnail_html) {
             // @p questa è l'mmagine via HTML
             switch ($querytype) {
                 case 'attachment':
-                    $use_link = !empty($settings['gallery_link']) ? $this->get_item_link($settings, $image_id) : '';                    
+                    //$use_link = !empty($settings['gallery_link']) ? $this->get_item_link($settings, $image_id) : '';                    
                     $thumbnail_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
-                    if ($use_link) {
+                    /*if ($use_link) {
                         $thumbnail_html = '<a href="'.$use_link.'" class="e-media-link'.((!empty($settings['open_lightbox']) && $settings['open_lightbox'] != 'no') ? ' elementor-clickable' : '').'">'.$thumbnail_html.'</a>';
-                    }
+                    }*/
                     //echo $thumbnail_html;
                     break;
                 default:
@@ -112,15 +118,15 @@ trait Common {
 
             // @p [lo lascio come appunto storico.] sarò scemo io ma dopo 3 ore che provo questo in tutti i modi, non funziona, ipotizzo perché il size è un control nel repeater quindi nidificato.
             //$thumbnail_html = Group_Control_Image_Size::get_attachment_image_html( $settings, $setting_key );
-        } else {
+        }/* else {
             return;
-        }
+        }*/
         
         $html_tag = 'div';
 
         $attribute_link = '';
         $attribute_target = '';
-        if ($use_link && $querytype != 'attachment') {
+        if ($use_link) {
             $html_tag = 'a';
             $attribute_link = ' href="' . $use_link . '"';
 

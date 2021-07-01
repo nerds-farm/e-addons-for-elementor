@@ -99,6 +99,13 @@ class Base_Skin extends \Elementor\Skin_Base {
     public function render() {
 
     }
+    
+    public function register_controls(\Elementor\Widget_Base $widget) {
+        
+    }
+    public function register_style_sections(\Elementor\Widget_Base $widget) {
+        
+    }
 
     /* ELEMENTOR PRO © - PORTFOLIO - Protected function */
 

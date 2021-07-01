@@ -678,22 +678,32 @@ class Dualslider extends Carousel {
                 case 'post':
 
                     /** @p qui identifico se mi trovo in un loop, altrimenti uso la wp_query */
-                    if ($query->in_the_loop) {
+                    /*if ($query->in_the_loop) {
                         $this->current_permalink = get_permalink();
                         $this->current_id = get_the_ID();
                         //
                         $this->render_thumbnail();
-                    } else {
-                        while ($query->have_posts()) {
-                            $query->the_post();
-
-                            $this->current_permalink = get_permalink();
-                            $this->current_id = get_the_ID();
-                            $this->current_data = get_post(get_the_ID());
-                            //
-                            $this->render_thumbnail();
+                    } else {*/
+                        if ($query->have_posts()) {
+                            while ($query->have_posts()) {
+                                $query->the_post();
+                                $this->current_permalink = get_permalink();
+                                $this->current_id = get_the_ID();
+                                $this->current_data = get_post(get_the_ID());
+                                $this->render_thumbnail();
+                            }
+                        } else {
+                            //var_dump($query);
+                            if (!empty($query->query['urls'])) {
+                                foreach ($query->query['urls'] as $key => $img_url) {                        
+                                    $this->current_permalink = $img_url;
+                                    $this->current_id = $key;
+                                    $this->current_data = $img_url;
+                                    $this->render_thumbnail();
+                                }
+                            }
                         }
-                    }
+                    //}
                     wp_reset_postdata();
 
                     break;
@@ -882,30 +892,33 @@ class Dualslider extends Carousel {
             }
         }
 
-
-
-
-
-
-
+        $image_html = '';
+        
         if ($image_id) {
             $image_attr = [
                 'class' => $this->get_image_class()
             ];
 
             $image_url = wp_get_attachment_image_src($image_id, $setting_key, true);
+            $image_url = reset($image_url);
             $image_html = wp_get_attachment_image($image_id, $setting_key, true, $image_attr);
-
+        }
+ 
+        if (is_string($this->current_data) && filter_var($this->current_data, FILTER_VALIDATE_URL) && $this->current_permalink == $this->current_data) {
+            $image_url = $this->current_permalink;        
+            $image_html = '<img class="'. $this->get_image_class().'" src="'.$this->current_data.'">';            
+        }
+        
+        if ($image_html) {
             echo '<div class="e-add-thumbnail-image">';
-
             if ($use_bgimage) {
-                echo '<figure class="e-add-img e-add-bgimage" style="background: url(' . $image_url[0] . ') no-repeat center; background-size: cover; display: block;"></figure>';
+                echo '<figure class="e-add-img e-add-bgimage" style="background: url(' . $image_url. ') no-repeat center; background-size: cover; display: block;"></figure>';
             } else {
                 echo '<figure class="e-add-img">' . $image_html . '</figure>';
             }
-
             echo '</div>';
         }
+
     }
 
     // Classes ----------

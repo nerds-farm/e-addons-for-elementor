@@ -24,15 +24,21 @@ trait Custommeta {
                 return $meta_value;
             }
 
-            if (is_array($this->current_data) && isset($this->current_data[$metakey])) {
-                return $this->current_data[$metakey];
-            }
             // ---------------------------------------------
-
+            $tmp = explode('.', $metakey);            
+            $metakey = array_shift($tmp);
+            if (is_array($this->current_data) && isset($this->current_data[$metakey])) {
+                $meta_value = $this->current_data[$metakey];
+                if (is_array($this->current_data[$metakey]) && !empty($tmp)) {
+                    $meta_value = Utils::get_array_value($this->current_data[$metakey], $tmp);
+                }
+                return $meta_value;
+            }
+            
+            // ---------------------------------------------
             if ($querytype == 'attachment') {
                 $querytype = 'post';
             }
-
             //@p prendo il valore del meta (forzatamente singolo)
             $meta_value = get_metadata($querytype, $this->current_id, $metakey, true);
 
@@ -66,13 +72,18 @@ trait Custommeta {
             // +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             if (empty($meta_value)) {
-                if (!empty($settings['use_fallback'])) {
-                    $meta_value = $settings['use_fallback'];
+                if (!empty($metaitem['use_fallback'])) {
+                    $meta_value = $metaitem['use_fallback'];
                 }
-            }
+                if (!empty($metaitem['use_fallback_img'])) {
+                    $meta_value = $metaitem['use_fallback_img'];
+                }
+            }           
 
-            if (empty($meta_value))
+            if (empty($meta_value)) {
+                //var_dump($meta_value);
                 return;
+            }
 
             $meta_html = '';
 
@@ -98,32 +109,25 @@ trait Custommeta {
                     $meta_html = date_i18n($metafield_date_format_display, $timestamp);
                     break;
                 case 'image':
-                    //$link_to = $metaitem['use_link'];
-                    $link_to = $metaitem['link_to'];
-
                     $image_size_key = $metaitem['metafield_image_size_size'];
                     $image_attr = [
                         'class' => 'e-add-img',
-                    ];
-                    if (is_string($meta_value)) {
-                        //echo 'string';
-                        if (is_numeric($meta_value)) {
-                            //echo 'N '.$image_size_key.' '.$meta_value;
-                            $image_html = wp_get_attachment_image($meta_value, $image_size_key, false, $image_attr);
-                            //$imageSrc = wp_get_attachment_image_src( $meta_value , 'full' );
-                            //$imageSrcUrl = $imageSrc;
-                        } else {
-                            $image_html = '<img src="' . $meta_value . '" />';
-                        }
-                    } else if (is_numeric($meta_value)) {
+                    ];                    
+                    if (is_numeric($meta_value)) {
                         //echo 'num';
                         $image_html = wp_get_attachment_image($meta_value, $image_size_key, false, $image_attr);
+                    } else if (is_string($meta_value) && filter_var($meta_value, FILTER_VALIDATE_URL)) {
+                        //echo 'string';
+                        $image_html = '<img class="e-add-img" src="' . $meta_value . '" />';                        
                     } else if (is_array($meta_value)) {
                         //echo 'array';
-                        // TO DO ... da valutare come gestire il caso di un'array...
-
-                        $imageSrc = wp_get_attachment_image_src($meta_value ['ID'], $thumbnail_size);
-                        $imageSrcUrl = $imageSrc[0];
+                        if (!empty($meta_value['ID'])) {
+                            $imageSrc = wp_get_attachment_image_src($meta_value['ID'], $thumbnail_size);                           
+                            $image_html = $imageSrc[0];
+                        }
+                        if (!empty($meta_value['url'])) {
+                            $image_html = '<img class="e-add-img" src="' . $meta_value['url'] . '" />';
+                        }
                     }
                     $meta_html = $image_html;
                     break;
@@ -429,12 +433,7 @@ trait Custommeta {
                         $meta_value = number_format($meta_value, intval($metaitem['number_format_decimals']), $metaitem['number_format_decimal_separator'], $metaitem['number_format_thousands_separator']);
                     }
                 case 'text':
-                default:
-                    //$link_to = $metaitem['use_link'];
-                    if (!empty($metaitem['link_to'])) {
-                        $link_to = $metaitem['link_to'];
-                    }
-
+                default: 
                     $html_tag_item = $metaitem['html_tag_item'];
                     if (!$html_tag_item) {
                         $html_tag_item = 'span';
@@ -458,27 +457,16 @@ trait Custommeta {
                 //$meta_html = Utils::to_string($meta_value);
             }
             
-            switch ($link_to) {
-                case 'post':
-                    if (!is_wp_error($this->current_permalink)) {
-                        $href_link = $this->current_permalink;
-                    }
-                    break;
-                case 'custom':
-                    //var_dump($metaitem['link']);
-                    $href_link = $metaitem['link']; //['url'];
-                    break;
-                default:
-            }
-            if ($link_to) {
-                //$this->parent->add_link_attributes( $attribute_a_link, $href_link );
+            $href_link = '';
+            if (!empty($metaitem['link_to'])) {
+                $href_link = $this->get_item_link($metaitem);             
                 $this->parent->add_render_attribute($attribute_a_link, 'href', $href_link);
             }
 
 
             //@p il link del metafield
             if (!empty($meta_html)) {
-                if ($link_to || $metafield_type == 'button' || $metafield_type == 'file') {
+                if ($href_link || $metafield_type == 'button' || $metafield_type == 'file') {
                     // add link
                     $this->parent->add_render_attribute($attribute_a_link, 'class', ['e-add-link']);
                     $meta_html = '<a ' . $this->parent->get_render_attribute_string($attribute_a_link) . '>'.$meta_html.'</a>';

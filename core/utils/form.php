@@ -700,6 +700,11 @@ class Form {
                                     continue;
                                 }
                             }
+                            if (Utils::is_plugin_active('jet-engine')) {
+                                if (\EAddonsForElementor\Core\Utils\Jet::set_repeater($akey, $raw, $obj_id, $type)) {    
+                                    continue;
+                                }
+                            }
                         }
                     }
                 }
