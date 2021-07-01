@@ -437,7 +437,7 @@ trait Items_Content {
             'range' => [
                 'px' => [
                     'min' => 10,
-                    'max' => 100,
+                    'max' => 200,
                     'step' => 1
                 ],
             ],

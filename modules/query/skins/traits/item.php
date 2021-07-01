@@ -18,13 +18,20 @@ use Elementor\Group_Control_Background;
 trait Item {
     
     protected function render_item_subtitle($settings) {
-        if(!empty($this->current_data['sl_subtitle']))
-        echo $this->current_data['sl_subtitle'];
+        if(!empty($this->current_data['sl_subtitle'])){
+            echo '<span class="e-add-subtitleitem">';
+            echo $this->current_data['sl_subtitle'];
+            echo '</span>';
+        }
     }
 
     protected function render_item_descriptiontext($settings) {
-        if(!empty($this->current_data['sl_descriptiontext']))
-        echo $this->current_data['sl_descriptiontext'];
+        if(!empty($this->current_data['sl_descriptiontext'])){
+            echo '<span class="e-add-descriptiontext">';
+            echo $this->current_data['sl_descriptiontext'];
+            echo '</span>';
+        }
+        
     }
 
     protected function render_item_imageoricon($settings) {

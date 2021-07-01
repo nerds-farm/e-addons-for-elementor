@@ -57,6 +57,8 @@ trait Items_Advanced {
                             'item_imagemeta',
                             'item_mimetype',
                             'item_counts',
+                            'item_descriptiontext',
+                            'item_subtitle'
                         ],
                     ]
                 ]
@@ -84,7 +86,9 @@ trait Items_Advanced {
                     'item_alternativetext',
                     'item_imagemeta',
                     'item_mimetype',
-                    'item_counts'
+                    'item_counts',
+                    'item_descriptiontext',
+                    'item_subtitle'
                 ],
                 'use_link' => ['yes', 'shortcode'],
             ]
