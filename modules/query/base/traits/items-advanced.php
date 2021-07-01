@@ -111,7 +111,7 @@ trait Items_Advanced {
                 'placeholder' => __('Select PopUp', 'e-addons'),
                 'label_block' => true,
                 'query_type' => 'posts',
-                'object_type' => 'elementor_library',
+                'object_type' => 'popup',
                 'condition' => [
                     'use_link' => 'popup',
                 ]
