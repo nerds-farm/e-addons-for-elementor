@@ -1,14 +1,20 @@
 .e-add-carousel-container{
   position: relative;
 }
-/* NAVIGATION: PREV-NEXT */
+/* NAVIGATION: PREV-NEXT 
+.e-add-carousel-controls .e-add-container-navigation{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10000;
+}*/
 .e-add-carousel-controls .swiper-button-prev,
 .e-add-carousel-controls .swiper-button-next {
   position: absolute;
   top: 50%;
   width: auto; /*85px;*/
   height: auto; /*85px;*/
-  margin-top: -43px;
+  /* margin-top: -43px; */
   z-index: 9;
   cursor: pointer;
   background-size: 85px 85px;
@@ -23,6 +29,8 @@
   cursor: auto;
   pointer-events: none;
 }
+
+
 .e-add-carousel-controls .swiper-button-prev svg line,
 .e-add-carousel-controls .swiper-button-prev svg polyline,
 .e-add-carousel-controls .swiper-button-next svg line,
@@ -40,6 +48,8 @@
 
 .e-add-carousel-controls .swiper-button-prev svg,
 .e-add-carousel-controls .swiper-button-next svg{
+  position: relative;
+	z-index: 10;
   overflow: visible;
 
   -webkit-transform: scale(1);
@@ -53,12 +63,19 @@
   -o-transition: transform .6s cubic-bezier(.46,.03,.14,.93);
   -ms-transition: transform .6s cubic-bezier(.46,.03,.14,.93);
 }
+
 .e-add-carousel-controls .swiper-button-prev.swiper-button-disabled svg,
 .e-add-carousel-controls .swiper-button-next.swiper-button-disabled svg{
   -webkit-transform: scale(0.1);
   -ms-transform: scale(0.1);
   -o-transform: scale(0.1);
   transform: scale(0.1);
+}
+.e-add-carousel-controls .swiper-button-next line{
+	transform-origin: 100% 0;
+}
+.e-add-carousel-controls .swiper-button-prev line{
+	transform-origin: 0 0;
 }
 
 .e-add-carousel-controls .swiper-button-next:focus, 
@@ -91,6 +108,41 @@
 .e-add-carousel-controls .swiper-container-rtl .swiper-button-prev:after {
  content: none;
 }
+
+/* ---------------- arrows CIRCLE ---------------- */
+.e-add-carousel-controls .e-add-container-navigation .arrow-wrap{
+  display: inline-block;
+	position: relative;
+}
+.e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle .arrow-wrap:before{
+	content: '';
+	border-radius: 300px;
+	display: block;
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	transition: background-color 0.4s ease;
+}
+.e-add-carousel-controls .e-add-container-navigation .swiper-button-prev.e-add-navigation-circle .arrow-wrap:before{
+	left: 0;
+	right: auto;
+}
+.e-add-carousel-controls .e-add-container-navigation .swiper-button-next.e-add-navigation-circle .arrow-wrap:before{
+	left: auto;
+	right: 0;
+	transform: rotate(180deg);
+}
+
+
+
+
+
+
+
+
 
 /* PAGINATION [ Base ] */
 .e-add-carousel-controls .e-add-container-pagination > .swiper-pagination-bullets .swiper-pagination-bullet {

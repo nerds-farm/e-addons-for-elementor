@@ -160,10 +160,11 @@ jQuery(window).on('elementor/frontend/init', () => {
 
                 slidesPerColumnFill: String(elementSettings[this.skinPrefix + 'slidesPerColumnFill']) || 'row', //Could be 'column' or 'row'. Defines how slides should fill rows, by column or by row
 
-                centerInsufficientSlides: true,
+                centerInsufficientSlides: Boolean(elementSettings[this.skinPrefix + 'centerInsufficientSlides']), //(++)
 
-                //watchOverflow: Boolean( elementSettings[this.skinPrefix+'watchOverflow'] ),
-                centeredSlides: Boolean(elementSettings[this.skinPrefix + 'centeredSlides']),
+                watchOverflow: Boolean( elementSettings[this.skinPrefix+'watchOverflow'] ), //(++)
+                centeredSlides: Boolean(elementSettings[this.skinPrefix + 'centeredSlides']),//(++)
+                
                 centeredSlidesBounds: Boolean(elementSettings[this.skinPrefix + 'centeredSlidesBounds']),
                 //
                 grabCursor: Boolean(elementSettings[this.skinPrefix + 'grabCursor']), //true,
@@ -266,7 +267,7 @@ jQuery(window).on('elementor/frontend/init', () => {
                     // clickableClass:  'swiper-pagination-clickable', //   CSS class name set to pagination when it is clickable
                 },
                 // watchSlidesProgress:  Boolean( elementSettings[this.skinPrefix+'watchSlidesProgress ), //false, // Enable this feature to calculate each slides progress
-                // watchSlidesVisibility:  Boolean( elementSettings[this.skinPrefix+'watchSlidesVisibility ), // false, // watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class
+                watchSlidesVisibility:  Boolean( elementSettings[this.skinPrefix+'watchSlidesVisibility'] ), // false, // watchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class //(++)
                 scrollbar: {
                     el: '.swiper-scrollbar', //    null    String with CSS selector or HTML element of the container with scrollbar.
                     hide: Boolean(elementSettings[this.skinPrefix + 'scrollbar_hide']), // boolean  true    Hide scrollbar automatically after user interaction

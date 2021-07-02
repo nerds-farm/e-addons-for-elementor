@@ -393,17 +393,459 @@ class Carousel extends Base {
             'frontend_available' => true,
                 ]
         );
-        $this->add_control(
-                'arrows_heading', [
-            'label' => __('Arrows', 'e-addons'),
-            'type' => Controls_Manager::HEADING,
-            'separator' => 'before',
-            'condition' => [
-                $this->get_control_id('useNavigation') => 'yes'
-            ]
-                ]
-        );
         // --------- Navigations Arrow Options
+        $this->add_control(
+            'arrrows_heading', [
+                'label' => __('Arrows', 'e-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+        ]
+        );
+        $this->add_responsive_control(
+            'horiz_navigation_shift', [
+                'label' => __('Horizontal Shift', 'e-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => '',
+                    'unit' => 'px'
+                ],
+                'range' => [
+                    'px' => [
+                        'max' => 120,
+                        'min' => -120,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-button-prev' => 'left: {{SIZE}}%;',
+                    '{{WRAPPER}} .swiper-button-next' => 'right: {{SIZE}}%;',
+                ],
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+            ]
+        );
+        $this->add_responsive_control(
+            'vert_navigation_shift', [
+                'label' => __('Vertical Shift', 'e-addons'),
+                'type' => Controls_Manager::SLIDER,
+
+                'default' => [
+                    'size' => '',
+                    'unit' => 'px'
+                ],
+                'range' => [
+                    'px' => [
+                        'max' => 120,
+                        'min' => -120,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-button-prev, {{WRAPPER}} .swiper-button-next' => 'top: {{SIZE}}{{UNIT}};',
+                    //'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation' => 'top: calc( 50% - {{SIZE}}%);',
+                ],
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+            ]
+        );
+
+        // ------- ++++++ @p questo è da veedere +++++++++ START
+        $this->add_responsive_control(
+            'navigation_space', [
+                'label' => __('Horizontal Space', 'e-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => '',
+                ],
+                'size_units' => '%',
+                'range' => [
+                    '%' => [
+                        'max' => 100,
+                        'min' => 20,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation' => 'width: {{SIZE}}%;'
+                ],
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes',
+                ]
+            ]
+        );
+        $this->add_responsive_control(
+            'h_navigation_position', [
+                'label' => __('Horizontal position', 'e-addons'),
+                'type' => Controls_Manager::CHOOSE,
+                'toggle' => false,
+                'options' => [
+                    'left: 0%;' => [
+                        'title' => __('Left', 'e-addons'),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'transform: translateX(-50%); left: 50%;' => [
+                        'title' => __('Center', 'e-addons'),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'left: auto; right: 0;' => [
+                        'title' => __('Right', 'e-addons'),
+                        'icon' => 'eicon-h-align-right',
+                    ],
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation' => '{{VALUE}}'
+                ],
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes',
+                    $this->get_control_id('navigation_space[size]!') => ['',0],
+                ]
+            ]
+        );
+        $this->add_responsive_control(
+            'v_navigation_position', [
+                'label' => __('Vertical position', 'e-addons'),
+                'type' => Controls_Manager::CHOOSE,
+                'toggle' => false,
+                'options' => [
+                    '0' => [
+                        'title' => __('Top', 'e-addons'),
+                        'icon' => 'eicon-v-align-top',
+                    ],
+                    '50' => [
+                        'title' => __('Middle', 'e-addons'),
+                        'icon' => 'eicon-v-align-middle',
+                    ],
+                    '100' => [
+                        'title' => __('Down', 'e-addons'),
+                        'icon' => 'eicon-v-align-bottom',
+                    ]
+                ],
+                'default' => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation' => 'top: {{VALUE}}%;'
+                ],
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes',
+                ]
+            ]
+        );
+        // ------- ++++++ @p questo è da veedere +++++++++ END
+    
+		// popover
+		$this->add_control(
+			'arrows_style_popover', [
+				'label' => __('Arrows Style', 'e-addons'),
+				'type' => \Elementor\Controls_Manager::POPOVER_TOGGLE,
+				'label_off' => __('Default', 'e-addons'),
+				'label_on' => __('Custom', 'e-addons'),
+				'return_value' => 'yes',
+				'render_type' => 'ui',
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+                ]
+			]
+		);
+		$this->parent->start_popover();
+		// --------- Navigations Arrow Options
+		$this->add_control(
+			'heading_navigation_arrow_color', [
+				'type' => Controls_Manager::RAW_HTML,
+				'show_label' => false,
+				'raw' => '<i class="fas fa-tint"></i> <b>' . __('Color', 'e-addons') . '</b>',
+				'content_classes' => 'e-add-inner-heading',
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_control(
+			'navigation_arrow_color', [
+				'label' => __('Color', 'e-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+                    '{{WRAPPER}} .swiper-button-next path, {{WRAPPER}} .swiper-button-prev path' => 'fill: {{VALUE}};',
+                    '{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev polyline' => 'stroke: {{VALUE}};',
+                ],
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+
+
+		$this->add_control(
+			'navigation_arrow_color_hover', [
+				'label' => __('Hover color', 'e-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+                    '{{WRAPPER}} .swiper-button-next:hover path, {{WRAPPER}} .swiper-button-prev:hover path' => 'fill: {{VALUE}};',
+                    '{{WRAPPER}} .swiper-button-next:hover line, {{WRAPPER}} .swiper-button-prev:hover line, {{WRAPPER}} .swiper-button-next:hover polyline, {{WRAPPER}} .swiper-button-prev:hover polyline' => 'stroke: {{VALUE}};',
+                ],
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		// -------------------- STYLE
+		$this->add_control(
+			'heading_navigation_transform', [
+				'type' => Controls_Manager::RAW_HTML,
+				'show_label' => false,
+				'separator_before' => true,
+				'raw' => '<i class="fas fa-vector-square"></i> <b>' . __('Transform', 'e-addons') . '</b>',
+				'content_classes' => 'e-add-inner-heading',
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		
+	
+		$this->add_responsive_control(
+			'navigation_stroke_1', [
+				'label' => __('Arrows Weight', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => '',
+				],
+				'tablet_default' => [
+					'size' => '',
+				],
+				'mobile_default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'max' => 30,
+						'min' => 0,
+						'step' => 1.0000,
+					],
+				],
+				'selectors' => [
+                    '{{WRAPPER}} .swiper-button-prev polyline, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next line' => 'stroke-width: {{SIZE}};',
+                ],
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_responsive_control(
+			'navigation_stroke_2', [
+				'label' => __('Line Weight', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'max' => 30,
+						'min' => 0,
+						'step' => 1.0000,
+					],
+				],
+				'selectors' => [
+                    '{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line' => 'stroke-width: {{SIZE}};',
+                ],
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+
+		
+		$this->add_responsive_control(
+			'navigation_size', [
+				'label' => __('Arrows Size', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'max' => 2,
+						'min' => 0.10,
+						'step' => 0.1,
+					],
+				],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-button-next, {{WRAPPER}} .swiper-button-prev' => 'transform: scale({{SIZE}}) rotate(0deg);',
+                ],/*
+				'selectors' => [
+					'{{WRAPPER}} .e-add-cards-navigation svg' => 'transform: scale({{SIZE}}) rotate(90deg);',
+					'{{WRAPPER}} .e-add-cards-navigation svg' => 'transform: scale({{SIZE}}) rotate(0deg);',
+				],*/
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		///////////
+		$this->add_responsive_control(
+			'navigation_size_line', [
+				'label' => __('Line Size', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'max' => 2,
+						'min' => 0,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line' => 'transform: scaleX({{SIZE}});',
+				],
+				'condition' => [
+					$this->get_control_id('arrows_style_popover') => 'yes',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->parent->end_popover();
+		// -------------------- CIRCLE
+		
+		
+		$this->add_control(
+			'use_navigation_circle', [
+				'label' => __('Circle Style', 'e-addons'),
+				'type' => \Elementor\Controls_Manager::POPOVER_TOGGLE,
+				'label_off' => __('Default', 'e-addons'),
+				'label_on' => __('Custom', 'e-addons'),
+				'return_value' => 'yes',
+				'render_type' => 'ui',
+                'condition' => [
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->parent->start_popover();
+		$this->add_control(
+			'navigation_circle_color', [
+				'label' => __('Color', 'e-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .arrow-wrap:before' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_control(
+			'navigation_circle_color_hover', [
+				'label' => __('Hover color', 'e-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .arrow-wrap:hover:before' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_responsive_control(
+			'navigation_circle_size', [
+				'label' => __('Circle Size', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'max' => 2,
+						'min' => 0.1,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle .arrow-wrap:before' => 'transform: scale({{SIZE}});',
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle.swiper-button-next .arrow-wrap::before' => 'transform: scale({{SIZE}}) rotate(180deg);',
+				],
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'horiz_navigation_circle_shift', [
+				'label' => __('Circle Shift', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => 'px',
+				'default' => [
+					'size' => '',
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'max' => 50,
+						'min' => -50,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle.swiper-button-prev .arrow-wrap:before' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle.swiper-button-next .arrow-wrap:before' => 'right: {{SIZE}}{{UNIT}};',
+					
+				],
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Border::get_type(), [
+				'name' => 'navigation_circle_border',
+				'label' => __('Border', 'e-addons'),
+				'selector' => '{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle .arrow-wrap:before',
+				
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_control(
+			'navigation_circle_border_radius', [
+				'label' => __('Border Radius', 'e-addons'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%'],
+				'selectors' => [
+					'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle .arrow-wrap:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(), [
+				'name' => 'navigation_circle_shadow',
+				'selector' => '{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation .e-add-navigation-circle .arrow-wrap:before',
+				'condition' => [
+					$this->get_control_id('use_navigation_circle!') => '',
+                    $this->get_control_id('useNavigation') => 'yes'
+				]
+			]
+		);
+		$this->parent->end_popover();
+        /*
         $this->add_control(
             'heading_navigation_arrow_color', [
                 'type' => Controls_Manager::RAW_HTML,
@@ -785,7 +1227,7 @@ class Carousel extends Base {
                 $this->get_control_id('useNavigation') => 'yes',
             ]
                 ]
-        );
+        );*/
 
         $this->add_control(
                 'useNavigation_animationHover', [
@@ -1878,6 +2320,22 @@ class Carousel extends Base {
             'separator' => 'before'
                 ]
         );
+        $this->add_control(
+            'show_hidden_slides', [
+                'label' => '<i class="far fa-eye"></i> '.__('Show hidden slides', 'e-addons'),
+                'description' => __('Set to true to enable continuous loop mode', 'e-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'separator' => 'before',
+                'default' => '',
+                'selectors' => [
+                    'body' => 'overflow: hidden', 
+                    '{{WRAPPER}} .e-add-posts-container.swiper-container.e-add-skin-carousel.swiper-container-initialized.swiper-container-horizontal' => 'overflow: visible;'
+                ],
+                'condition' => [
+                    $this->get_control_id('direction_slider') => 'horizontal',
+                ]
+            ]
+        );
         // --------------- centerSlides ------
         $this->add_control(
                 'centeredSlides', [
@@ -1903,6 +2361,18 @@ class Carousel extends Base {
             ]
                 ]
         );
+        $this->add_control(
+            'centerInsufficientSlides', [
+                'label' => '<i class="fas fa-align-center"></i> '.__('center Insufficient Slides', 'e-addons'),
+                'description' => __('When enabled it center slides if the amount of slides less than slidesPerView. Not intended to be used loop mode and slidesPerColumn.', 'e-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'frontend_available' => true,
+                'condition' => [
+                    $this->get_control_id('effects!') => ['cube', 'flip'],
+                ]
+            ]
+        );
+
         // --------------- autoHeight ------
         $this->add_control(
                 'autoHeight', [
@@ -1934,35 +2404,24 @@ class Carousel extends Base {
         );
         // --------------- Wheel ------
         $this->add_control(
-                'mousewheelControl', [
-            'label' => '<i class="fas fa-mouse"></i> '.__('Mousewheel Control', 'e-addons'),
-            'description' => __('Enables navigation through slides using mouse wheel', 'e-addons'),
-            'type' => Controls_Manager::SWITCHER,
-            'frontend_available' => true,
-                ]
+            'mousewheelControl', [
+                'label' => '<i class="fas fa-mouse"></i> '.__('Mousewheel Control', 'e-addons'),
+                'description' => __('Enables navigation through slides using mouse wheel', 'e-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'frontend_available' => true,
+            ]
         );
-        /* $this->add_control(
+        $this->add_control(
           'watchOverflow', [
-          'label' => __('Watch Overflow', 'e-addons'),
+          'label' => '<i class="far fa-meh-rolling-eyes"></i> '.__('Watch Overflow', 'e-addons'),
           'description' => __('When enabled Swiper will be disabled and hide navigation buttons on case there are not enough slides for sliding.', 'e-addons'),
           'type' => Controls_Manager::SWITCHER,
           'frontend_available' => true,
           'separator' => 'before',
 
           ]
-          ); */
-        /* $this->add_control(
-          'watchSlidesVisibility', [
-          'label' => __('Watch Slides Visibility', 'e-addons'),
-          'description' => __('WatchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class.', 'e-addons'),
-          'type' => Controls_Manager::SWITCHER,
-          'frontend_available' => true,
-          'separator' => 'before',
-          //'condition' => [
-          //    'watchSlidesProgress' => 'yes',
-          //]
-          ]
-          ); */
+        );
+         
         $this->add_control(
                 'reverseDirection', [
             'label' => '<i class="fas fa-map-signs"></i> '.__('Reverse Direction RTL', 'e-addons'),
@@ -1972,6 +2431,20 @@ class Carousel extends Base {
             'separator' => 'before'
                 ]
         );
+        
+        $this->add_control(
+        'watchSlidesVisibility', [
+            'label' => __('Watch Slides Visibility', 'e-addons'),
+            'description' => __('WatchSlidesProgress should be enabled. Enable this option and slides that are in viewport will have additional visible class.', 'e-addons'),
+            'type' => Controls_Manager::SWITCHER,
+            'frontend_available' => true,
+            'separator' => 'before',
+            //'condition' => [
+            //    'watchSlidesProgress' => 'yes',
+            //]
+            ]
+        );
+
         /* $this->add_control(
           'nested', [
           'label' => __('Nidificato', 'e-addons'),
@@ -2019,18 +2492,18 @@ class Carousel extends Base {
         if ($this->get_instance_value('useNavigation')) {
             // Add Arrows
             echo '<div class="e-add-container-navigation swiper-container-' . $this->get_instance_value('direction_slider') . '">';
-            echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '-' . $this->current_id . '"><svg x="-10px" y="-10px"
-            width="85.039px" height="85.039px" viewBox="378.426 255.12 85.039 85.039" xml:space="preserve">
-            <line fill="none" stroke="#000000" stroke-width="1.3845" stroke-dasharray="0,0" stroke-miterlimit="10" x1="382.456" y1="298.077" x2="458.375" y2="298.077"/>
-            <polyline fill="none" stroke="#000000" stroke-width="1.3845" stroke-dasharray="0,0" stroke-miterlimit="10" points="416.287,331.909 382.456,298.077 
-            416.287,264.245 "/>
-            </svg></div>';
-            echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '-' . $this->current_id . '"><svg xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="85.039px" height="85.039px" viewBox="378.426 255.12 85.039 85.039" xml:space="preserve">
-            <line fill="none" stroke="#000000" stroke-width="1.3845" stroke-miterlimit="10" x1="458.375" y1="298.077" x2="382.456" y2="298.077"/>
-            <polyline fill="none" stroke="#000000" stroke-width="1.3845" stroke-miterlimit="10" points="424.543,264.245 458.375,298.077 
-            424.543,331.909 "/>
-            </svg></div>';
+            echo '<div class="swiper-button-prev prev-' . $this->parent->get_id() . '-' . $this->current_id . ' e-add-navigation-circle"><div class="arrow-wrap e-add-cards-touch-button">
+            <svg x="0px" y="0px" width="80px" height="80px" xml:space="preserve">
+            <polyline fill="none" stroke="#ff0000" stroke-width="1" stroke-dasharray="0,0" points="40,80 0,40 40,0 "/>
+            <line fill="none" stroke="#ff0000" stroke-width="1" stroke-dasharray="0,0" x1="0" y1="40" x2="80" y2="40"/>
+            </svg>
+            </div></div>';
+            echo '<div class="swiper-button-next next-' . $this->parent->get_id() . '-' . $this->current_id . ' e-add-navigation-circle"><div class="arrow-wrap e-add-cards-touch-button">
+            <svg x="0px" y="0px" width="80px" height="80px" xml:space="preserve">
+                <polyline fill="none" stroke="#ff0000" stroke-width="1" points="40,80 80,40 40,0"/>
+                <line fill="none" stroke="#ff0000" stroke-width="1" stroke-dasharray="0,0" x1="80" y1="40" x2="0" y2="40"/>
+            </svg>
+            </div></div>';
             echo '</div>';
         }
         echo '</div>';
