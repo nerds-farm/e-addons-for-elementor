@@ -1,0 +1,10 @@
+.e-add-list-vertical .e-add-simplelist-container{
+    display: block;
+}
+.e-add-list-horizontal .e-add-simplelist-container{
+    padding: 0;
+}
+.e-add-list-horizontal .e-add-simplelist-container li{
+    display: inline flow-root list-item;
+    margin-left: 30px;
+}
