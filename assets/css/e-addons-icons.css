@@ -116,6 +116,8 @@
 .eadd-queryviews-piling:before { content: '\e8e5'; } /* '' */
 .eadd-queryviews-circular:before { content: '\e8e6'; } /* '' */
 .eadd-queryviews-cards:before { content: '\e8e7'; } /* '' */
+.eadd-queryviews-accordion:before { content: '\e8ef'; } /* '' */
+
 
 .eadd-remote-rest-api:before { content: '\e847'; } /* '' */
 .eadd-remote-iframe:before { content: '\e848'; } /* '' */

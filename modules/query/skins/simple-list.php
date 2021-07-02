@@ -468,6 +468,9 @@ class Simple_List extends Base {
 				'selectors' => [
 					'{{WRAPPER}} .e-add-simplelist-container li::marker' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
+                'condition' => [
+                    $this->get_control_id('type!') => ['','image'],
+                ],
 				//'frontend_available' => true,
 			]
 		);
