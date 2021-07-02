@@ -209,10 +209,10 @@ class Simple_List extends Base {
                         'icon' => 'fas fa-image',
                     ],
 
-                    '' => [
-                        'title' => __('None', 'e-addons'),
-                        'icon' => 'fas fa-ban',
-                    ],
+                    // '' => [
+                    //     'title' => __('None', 'e-addons'),
+                    //     'icon' => 'fas fa-ban',
+                    // ],
                 ],
                 'default' => 'ul',
                 'prefix_class' => 'e-add-list-type-',

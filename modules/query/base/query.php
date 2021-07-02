@@ -269,6 +269,19 @@ class Query extends Base_Widget {
                     ],
                 ]
         );
+        // skin: accordion
+        $this->add_control(
+            'skin_dis_accordion',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'show_label' => false,
+                'raw' => '<i class="eaddicon-skin eadd-queryviews-accordion"></i>',
+                'content_classes' => 'e-add-skin-dis',
+                'condition' => [
+                    '_skin' => 'accordion'
+                ],
+            ]
+    );
 
         // skin: Dualslider
         $this->add_control(
