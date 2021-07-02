@@ -8,3 +8,10 @@
     display: inline flow-root list-item;
     margin-left: 30px;
 }
+/* .e-add-simplelist-container li::marker{
+    width: 10px;
+    background-size: 10px;
+} */
+.e-add-list-type-image .e-add-simplelist-container{
+    padding-left: 0;
+}

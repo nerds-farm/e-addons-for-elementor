@@ -50,10 +50,7 @@ class Simple_List extends Base {
         //var_dump($this->get_id());
         //var_dump($this->parent->get_settings('_skin')); //->get_current_skin()->get_id();
 
-        if (!$type) {
-            $type = $this->parent->get_querytype();
-        }
-
+        
         $this->start_controls_section(
             'section_list', [
                 'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
@@ -141,8 +138,8 @@ class Simple_List extends Base {
         );
         //dot size
         $this->add_responsive_control(
-			'list_dot_size', [
-				'label' => __('Dot Size', 'e-addons'),
+			'list_space', [
+				'label' => __('Space', 'e-addons'),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'default' => [
@@ -150,13 +147,14 @@ class Simple_List extends Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 2,
+						'min' => 0,
 						'max' => 80,
 						'step' => 1
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-add-simplelist-container li::marker' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.e-add-list-horizontal .e-add-simplelist-container > *' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}.e-add-list-vertical .e-add-simplelist-container > *:not(last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				//'frontend_available' => true,
 			]
@@ -206,12 +204,18 @@ class Simple_List extends Base {
                         'title' => __('Ordered', 'e-addons'),
                         'icon' => 'fas fa-list-ol',
                     ],
+                    'image' => [
+                        'title' => __('Image', 'e-addons'),
+                        'icon' => 'fas fa-image',
+                    ],
+
                     '' => [
                         'title' => __('None', 'e-addons'),
                         'icon' => 'fas fa-ban',
                     ],
                 ],
                 'default' => 'ul',
+                'prefix_class' => 'e-add-list-type-',
                 'condition' => [
                     $this->get_control_id('list_type') => '',
                 ],
@@ -219,6 +223,25 @@ class Simple_List extends Base {
         );
         
         //default --------------------
+        /*
+        $this->add_control(
+        'style_type_poosition',
+            [
+                'label' => __('Position', 'e-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inside' => __('Inside', 'e-addons'),
+                    'outside' => __('Outside', 'e-addons'),
+                ],
+                'selectors' => [                       
+                    '{{WRAPPER}} li' => 'list-style-position: {{VALUE}}',
+                ],                    
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                ],
+            ]
+        );
+        */
         $this->add_control(
             'style_type_ul',
             [
@@ -278,14 +301,33 @@ class Simple_List extends Base {
                 ],
             ]
         );
+        $this->add_control(
+			'style_type_image', [
+				'label' => '<i class="fas fa-file-image"></i> ' . __('Image', 'e-addons'),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => '',
+				],
+				'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'image',
+                ],
+                'selectors' => [                       
+                    '{{WRAPPER}}  .e-add-simplelist-container li' => 'list-style: none; background-image: url({{URL}}); background-repeat: no-repeat; background-position: left top; background-size: 30px; padding-left: 40px;'
+                ],
+			]
+		);
+
+
+
 
         //icon --------------------
         
 
         //image --------------------
-        if (!$type) {
-            $type = $this->get_querytype();
-        }
+        /*
+        $type = $this->parent->get_querytype();
+    
 
         //@p se mi trovo in post scelgo tra Featured o Custom image 
         //@p se mi trovo in user scelgo tra Avatar o Custom image
@@ -393,7 +435,7 @@ class Simple_List extends Base {
                     ]
                 ]
             );
-        }
+        }*/
         $this->end_controls_section();
     }
 
@@ -401,13 +443,34 @@ class Simple_List extends Base {
         parent::register_style_controls();
 
         $this->start_controls_section(
-            'section_style_table',
+            'section_style_list',
             [
                 'label' => '<i class="eaddicon eadd-skin-list"></i> ' . __('List', 'e-addons'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
-        
+        //dot size
+        $this->add_responsive_control(
+			'list_dot_size', [
+				'label' => __('Dot Size', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'min' => 2,
+						'max' => 80,
+						'step' => 1
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-add-simplelist-container li::marker' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				//'frontend_available' => true,
+			]
+		);
         $this->add_control(
             'list_wrapper', [
                 'label' => __('List Wrapper', 'e-addons'),
@@ -528,7 +591,9 @@ class Simple_List extends Base {
         if($tag == ''){
             $tag = 'div';
         }
-        
+        if($tag == 'image'){
+            $tag = 'ul';
+        }
         echo '<'.$tag.' ' . $this->parent->get_render_attribute_string('eaddposts_container') . '>';
     }
 
@@ -536,6 +601,9 @@ class Simple_List extends Base {
         $tag = $this->get_instance_value('type');
         if($tag == ''){
             $tag = 'div';
+        }
+        if($tag == 'image'){
+            $tag = 'ul';
         }
         echo '</'.$tag.'>';
     }
