@@ -62,8 +62,6 @@ jQuery(document).ready(function () {
         return false;
     });
     
-    
-    
     jQuery(document).on('click', '.my_e_addon_install.e_addon_pro', function () {
         eProAddon = jQuery(this);
         jQuery(this).find('.dashicons-download').addClass('dashicons-update').addClass('spin').removeClass('dashicons-download');
@@ -77,12 +75,15 @@ jQuery(document).ready(function () {
                 if (data && data.status != 200) {
                     console.log("error");
                     console.log(data);
-                    alert('To proceed with the quick installation for your bought PRO addons, please log in with your account on e-addons.com shop');
+                    //alert('To proceed with the quick installation for your bought PRO addons, please log in with your account on e-addons.com shop');
                     //window.location.href = jQuery(this).attr('href');
-                    window.open("https://e-addons.com/your-account/");
+                    /*window.open("https://e-addons.com/your-account/");
                     eProAddon.find('.dashicons-update').addClass('dashicons-download').removeClass('spin').removeClass('dashicons-update');
                     eProAddon.find('.btn-txt').text('INSTALL PRO e-ADDON');
-                    eProAddon.css('pointer-events', 'auto');
+                    eProAddon.css('pointer-events', 'auto');*/
+                    let href = eProAddon.attr('href');
+                    var eaddons_com = window.open(href);
+                    window.location.href = './plugin-install.php';
                 }
             },
             success: function (data) {

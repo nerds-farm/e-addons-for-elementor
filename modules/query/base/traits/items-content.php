@@ -553,19 +553,19 @@ trait Items_Content {
         );
         $target->add_control(
                 'only_parent_terms', [
-            'label' => __('Show only', 'e-addons'),
+            'label' => __('Hierarchical view', 'e-addons'),
             'type' => Controls_Manager::CHOOSE,
             'options' => [
                 'both' => [
-                    'title' => __('Both', 'e-addons'),
+                    'title' => __('All', 'e-addons'),
                     'icon' => 'fa fa-sitemap',
                 ],
                 'yes' => [
-                    'title' => __('Parents', 'e-addons'),
+                    'title' => __('First level (Root)', 'e-addons'),
                     'icon' => 'fa fa-female',
                 ],
                 'children' => [
-                    'title' => __('Children', 'e-addons'),
+                    'title' => __('Last level (Leaf)', 'e-addons'),
                     'icon' => 'fa fa-child',
                 ]
             ],

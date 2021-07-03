@@ -171,9 +171,13 @@ class Jet {
         $repeater = self::get_jet_field($selector);        
         if (!empty($repeater['type']) && $repeater['type'] == 'repeater') {
             $rows = get_metadata($type, $obj_id, $selector, true);
-            if (count($rows_old) > count($data)) {
-                $rows = array_slice($rows, 0, count($data), true);
-            }            
+            if (empty($rows)) {
+                $rows = array();
+            } else {
+                if (count($rows) > count($data)) {
+                    $rows = array_slice($rows, 0, count($data), true);
+                }            
+            }
             if (!empty($data)) {
                 foreach($data as $row => $sub_fields) {
                     $row = 'item-'.$row; // start from 1 (not 0)                    
