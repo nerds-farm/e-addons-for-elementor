@@ -538,6 +538,9 @@ class Dualslider extends Carousel {
             'separator' => 'before',
             'default' => 'yes',
             'render_type' => 'template',
+            'condition' => [
+                $this->get_control_id('use_image') => 'yes',
+            ],
                 ]
         );
         // height

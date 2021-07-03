@@ -420,8 +420,8 @@ class Carousel extends Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-button-prev' => 'left: {{SIZE}}%;',
-                    '{{WRAPPER}} .swiper-button-next' => 'right: {{SIZE}}%;',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-prev' => 'left: {{SIZE}}%;',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next' => 'right: {{SIZE}}%;',
                 ],
                 'condition' => [
                     $this->get_control_id('useNavigation') => 'yes'
@@ -445,7 +445,7 @@ class Carousel extends Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-button-prev, {{WRAPPER}} .swiper-button-next' => 'top: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-prev, {{WRAPPER}} .e-add-carousel-controls .swiper-button-next' => 'top: {{SIZE}}{{UNIT}};',
                     //'{{WRAPPER}} .e-add-carousel-controls .e-add-container-navigation' => 'top: calc( 50% - {{SIZE}}%);',
                 ],
                 'condition' => [
@@ -571,8 +571,8 @@ class Carousel extends Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-                    '{{WRAPPER}} .swiper-button-next path, {{WRAPPER}} .swiper-button-prev path' => 'fill: {{VALUE}};',
-                    '{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev polyline' => 'stroke: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next path, {{WRAPPER}} .swiper-button-prev path' => 'fill: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev polyline' => 'stroke: {{VALUE}};',
                 ],
 				'condition' => [
 					$this->get_control_id('arrows_style_popover') => 'yes',
@@ -588,8 +588,8 @@ class Carousel extends Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-                    '{{WRAPPER}} .swiper-button-next:hover path, {{WRAPPER}} .swiper-button-prev:hover path' => 'fill: {{VALUE}};',
-                    '{{WRAPPER}} .swiper-button-next:hover line, {{WRAPPER}} .swiper-button-prev:hover line, {{WRAPPER}} .swiper-button-next:hover polyline, {{WRAPPER}} .swiper-button-prev:hover polyline' => 'stroke: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next:hover path, {{WRAPPER}} .swiper-button-prev:hover path' => 'fill: {{VALUE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next:hover line, {{WRAPPER}} .swiper-button-prev:hover line, {{WRAPPER}} .swiper-button-next:hover polyline, {{WRAPPER}} .swiper-button-prev:hover polyline' => 'stroke: {{VALUE}};',
                 ],
 				'condition' => [
 					$this->get_control_id('arrows_style_popover') => 'yes',
@@ -634,7 +634,7 @@ class Carousel extends Base {
 					],
 				],
 				'selectors' => [
-                    '{{WRAPPER}} .swiper-button-prev polyline, {{WRAPPER}} .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next line' => 'stroke-width: {{SIZE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-prev polyline, {{WRAPPER}} .e-add-carousel-controls .swiper-button-next polyline, {{WRAPPER}} .swiper-button-prev line, {{WRAPPER}} .swiper-button-next line' => 'stroke-width: {{SIZE}};',
                 ],
 				'condition' => [
 					$this->get_control_id('arrows_style_popover') => 'yes',
@@ -657,7 +657,7 @@ class Carousel extends Base {
 					],
 				],
 				'selectors' => [
-                    '{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line' => 'stroke-width: {{SIZE}};',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next line, {{WRAPPER}} .e-add-carousel-controls .swiper-button-prev line' => 'stroke-width: {{SIZE}};',
                 ],
 				'condition' => [
 					$this->get_control_id('arrows_style_popover') => 'yes',
@@ -679,7 +679,7 @@ class Carousel extends Base {
 					],
 				],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-button-next, {{WRAPPER}} .swiper-button-prev' => 'transform: scale({{SIZE}}) rotate(0deg);',
+                    '{{WRAPPER}} .e-add-carousel-controls .swiper-button-next, {{WRAPPER}} .e-add-carousel-controls .swiper-button-prev' => 'transform: scale({{SIZE}}) rotate(0deg);',
                 ],/*
 				'selectors' => [
 					'{{WRAPPER}} .e-add-cards-navigation svg' => 'transform: scale({{SIZE}}) rotate(90deg);',
@@ -704,7 +704,7 @@ class Carousel extends Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .swiper-button-next line, {{WRAPPER}} .swiper-button-prev line' => 'transform: scaleX({{SIZE}});',
+					'{{WRAPPER}} .e-add-carousel-controls .swiper-button-next line, {{WRAPPER}} .e-add-carousel-controls .swiper-button-prev line' => 'transform: scaleX({{SIZE}});',
 				],
 				'condition' => [
 					$this->get_control_id('arrows_style_popover') => 'yes',
