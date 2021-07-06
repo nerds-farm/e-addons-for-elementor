@@ -449,6 +449,31 @@ class Simple_List extends Base {
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
+        $this->add_responsive_control(
+            'list_align',
+            [
+                'label' => __('Alignment', 'elementor'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'elementor'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'elementor'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'elementor'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .e-add-simplelist-container' => 'text-align: {{VALUE}};',
+                ]
+            ]
+        );
         //dot size
         $this->add_responsive_control(
 			'list_dot_size', [
