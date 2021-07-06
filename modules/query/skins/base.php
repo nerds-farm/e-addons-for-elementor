@@ -312,7 +312,7 @@ class Base extends Base_Skin {
             'type' => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', '%', 'em'],
             'selectors' => [
-                '{{WRAPPER}} .e-add-post-item .e-add-post-block' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                '{{WRAPPER}} .e-add-post-item .e-add-post-block' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden;',
             ],
                 ]
         );
@@ -765,15 +765,22 @@ class Base extends Base_Skin {
         post_class(['e-add-post e-add-post-item e-add-post-item-' . $this->parent->get_id() . $item_class]);
         echo $data_post_id . $data_post_index . $data_atttributes;
         ?>>
+            <?php 
+            //prima di block
+            $this->render_item_before();
+            ?>
             <div class="e-add-post-block e-add-post-block-<?php echo $this->counter . $overlayhover . $hoverEffects_class . $animation_class; ?>">
 
-            <?php
-        }
+        <?php
+    }
 
-        protected function render_item_end() {
+    protected function render_item_end() {
             ?>
-
             </div>
+            <?php 
+            //dopo di block
+            $this->render_item_after();
+            ?>
         </article>
         <?php
     }
@@ -827,30 +834,18 @@ class Base extends Base_Skin {
             <?php $this->render_container_after(); ?>
             <?php
         }
-
-        protected function render_container_before() {
-
-        }
-
-        protected function render_container_after() {
-
-        }
-
-        protected function render_posts_before() {
-
-        }
-
-        protected function render_posts_after() {
-
-        }
-
-        protected function render_postsWrapper_before() {
-
-        }
-
-        protected function render_postsWrapper_after() {
-
-        }
+        //container
+        protected function render_container_before() {}
+        protected function render_container_after() {}
+        //posts
+        protected function render_posts_before() {}
+        protected function render_posts_after() {}
+        //item
+        protected function render_item_before(){}
+        protected function render_item_after(){}
+        //postsWrapper
+        protected function render_postsWrapper_before() {}
+        protected function render_postsWrapper_after() {}
 
         // Classes ----------
         public function get_container_class() {
@@ -865,13 +860,9 @@ class Base extends Base_Skin {
             return 'e-add-item-' . $this->get_id();
         }
 
-        public function get_item_dataattributes() {
+        public function get_item_dataattributes() {}
 
-        }
-
-        public function get_image_class() {
-
-        }
+        public function get_image_class() {}
 
         public function get_scrollreveal_class() {
             return '';
