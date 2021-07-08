@@ -17,22 +17,21 @@ trait Data {
      * @return array <p>Returns an <code>array</code> of <code>string</code>s created by splitting the <code>string</code> parameter on boundaries formed by the <code>delimiter</code>.</p><p>If <code>delimiter</code> is an empty <code>string</code> (""), <b>explode()</b> will return <b><code>FALSE</code></b>. If <code>delimiter</code> contains a value that is not contained in <code>string</code> and a negative <code>limit</code> is used, then an empty <code>array</code> will be returned, otherwise an <code>array</code> containing <code>string</code> will be returned.</p>
      */
     public static function explode($string = '', $delimiter = ',', $limit = PHP_INT_MAX, $format = null) {
-        $tmp = array();
-        if (is_array($string)) {
-            return $string;
-        }
-        $strings = explode($delimiter, $string, $limit);
-        $strings = array_map('trim', $strings);
-        foreach ($strings as $value) {
-            if ($value != '') {
-                $tmp[] = $value;
+        if (is_string($string)) {
+            $tmp = array();
+            $string = explode($delimiter, $string, $limit);
+            $string = array_map('trim', $string);
+            foreach ($string as $value) {
+                if ($value != '') {
+                    $tmp[] = $value;
+                }
             }
+            $string = $tmp;
         }
-        $strings = $tmp;
-        if (!empty($strings) && $format) {
-            $strings = array_map($format, $strings);
+        if (!empty($string) && is_array($string) && $format) {
+            $string = array_map($format, $string);
         }
-        return $strings;
+        return $string;
     }
 
     /**

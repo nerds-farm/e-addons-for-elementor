@@ -45,11 +45,11 @@ trait Elementor {
             global $wpdb;
             $table = $wpdb->prefix . 'postmeta';
             $q = "SELECT post_id FROM " . $table . " WHERE meta_key LIKE '_elementor_data' AND meta_value LIKE '%\"id\":\"" . $e_id . "\",%'";
-            if ($p_id) {
+            if ($p_id && $p_id > 0) {
                 $q .= ' AND post_id = ' . $p_id;
             } else {
                 $q .= " AND post_id IN ( SELECT id FROM " . $wpdb->prefix . "posts WHERE post_status LIKE 'publish' )";
-            }
+            }            
             $results = $wpdb->get_results($q);
             if (!empty($results)) {
                 $result = reset($results);
@@ -105,7 +105,7 @@ trait Elementor {
         if (!$p_id && !empty($_REQUEST['post'])) {
             $p_id = absint($_REQUEST['post']);
         }
-        if (!$p_id) {
+        if (!$p_id || $p_id < 0) {
             $p_id = get_the_ID();
         }
         return $p_id;
@@ -113,15 +113,17 @@ trait Elementor {
 
     public static function get_element_instance_by_id($e_id, $p_id = null) {
         $p_id = self::get_element_post_id($e_id, $p_id);
+        //var_dump($p_id);
         if (intval($p_id) > 0) {
             $document = \Elementor\Plugin::$instance->documents->get($p_id);
-            if ($document) {
+            if ($document) {                
                 $e_raw = self::get_element_from_data($document->get_elements_data(), $e_id);
-                //var_dump($e_raw); die();
+                //var_dump($e_raw);
                 if ($e_raw) {
                     $element = \Elementor\Plugin::$instance->elements_manager->create_element_instance($e_raw);
                     return $element;
                 } else {
+                    //var_dump($e_id); var_dump($document->get_elements_data()); die();
                     $t_id = self::get_template_by_element_id($e_id);
                     if ($t_id && $t_id > 0 && $t_id != $p_id) {
                         return self::get_element_instance_by_id($e_id, $t_id);

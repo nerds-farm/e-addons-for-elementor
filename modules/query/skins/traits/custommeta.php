@@ -25,7 +25,7 @@ trait Custommeta {
             }
 
             // ---------------------------------------------
-            $tmp = explode('.', $metakey);            
+            $tmp = explode('.', $metakey);
             $metakey = array_shift($tmp);
             if (is_array($this->current_data) && isset($this->current_data[$metakey])) {
                 $meta_value = $this->current_data[$metakey];
@@ -34,7 +34,7 @@ trait Custommeta {
                 }
                 return $meta_value;
             }
-            
+
             // ---------------------------------------------
             if ($querytype == 'attachment') {
                 $querytype = 'post';
@@ -78,7 +78,7 @@ trait Custommeta {
                 if (!empty($metaitem['use_fallback_img'])) {
                     $meta_value = $metaitem['use_fallback_img'];
                 }
-            }           
+            }
 
             if (empty($meta_value)) {
                 //var_dump($meta_value);
@@ -109,21 +109,20 @@ trait Custommeta {
                     $meta_html = date_i18n($metafield_date_format_display, $timestamp);
                     break;
                 case 'image':
-                    $image_size_key = $metaitem['metafield_image_size_size'];
                     $image_attr = [
                         'class' => 'e-add-img',
-                    ];                    
+                    ];
+                    $image_html = '';
                     if (is_numeric($meta_value)) {
                         //echo 'num';
-                        $image_html = wp_get_attachment_image($meta_value, $image_size_key, false, $image_attr);
+                        $image_html = wp_get_attachment_image($meta_value, $metaitem['metafield_image_size_size'], false, $image_attr);
                     } else if (is_string($meta_value) && filter_var($meta_value, FILTER_VALIDATE_URL)) {
                         //echo 'string';
-                        $image_html = '<img class="e-add-img" src="' . $meta_value . '" />';                        
+                        $image_html = '<img class="e-add-img" src="' . $meta_value . '" />';
                     } else if (is_array($meta_value)) {
                         //echo 'array';
                         if (!empty($meta_value['ID'])) {
-                            $imageSrc = wp_get_attachment_image_src($meta_value['ID'], $thumbnail_size);                           
-                            $image_html = $imageSrc[0];
+                            $image_html = wp_get_attachment_image($meta_value['ID'], $metaitem['metafield_image_size_size'], false, $image_attr);
                         }
                         if (!empty($meta_value['url'])) {
                             $image_html = '<img class="e-add-img" src="' . $meta_value['url'] . '" />';
@@ -137,7 +136,7 @@ trait Custommeta {
                     $metafield_button_size = $metaitem['metafield_button_size'];
                     $metafield_button_target = $metaitem['metafield_button_target'];
                     $metafield_button_nofollow = $metaitem['metafield_button_nofollow'];
-                    
+
                     $id_file = '';
                     if (is_string($meta_value)) {
                         if (is_numeric($meta_value)) {
@@ -433,7 +432,7 @@ trait Custommeta {
                         $meta_value = number_format($meta_value, intval($metaitem['number_format_decimals']), $metaitem['number_format_decimal_separator'], $metaitem['number_format_thousands_separator']);
                     }
                 case 'text':
-                default: 
+                default:
                     $html_tag_item = $metaitem['html_tag_item'];
                     if (!$html_tag_item) {
                         $html_tag_item = 'span';
@@ -456,10 +455,10 @@ trait Custommeta {
                     break;
                 //$meta_html = Utils::to_string($meta_value);
             }
-            
+
             $href_link = '';
             if (!empty($metaitem['link_to'])) {
-                $href_link = $this->get_item_link($metaitem);             
+                $href_link = $this->get_item_link($metaitem);
                 $this->parent->add_render_attribute($attribute_a_link, 'href', $href_link);
             }
 
@@ -476,9 +475,9 @@ trait Custommeta {
                 }
 
                 echo $meta_html;
-            }            
-            
-            
+            }
+
+
         }
     }
 

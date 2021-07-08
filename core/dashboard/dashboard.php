@@ -62,7 +62,9 @@ class Dashboard {
                 $license = get_option('e_addons_' . $addon_name . '_license_key');
                 if ($license) {
                     $all_addons[$addon_name]['TextDomain'] = $addon_name;
-                    $edd = new EAddonsForElementor\Modules\Update\Edd\Edd($all_addons[$addon_name]);
+                    $all_addons[$addon_name]['Name'] = $addon_name;
+                    include_once(E_ADDONS_PATH.'modules/update/edd/edd.php');
+                    $edd = new \EAddonsForElementor\Modules\Update\Edd\Edd($all_addons[$addon_name]);
                     $activation = $edd->activate_license($license);
                 }
                 $e_addons->clear_addons();
