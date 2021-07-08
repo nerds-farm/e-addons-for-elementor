@@ -15,3 +15,35 @@
 .e-add-list-type-image .e-add-simplelist-container{
     padding-left: 0;
 }
+.e-add-list-type-icon li{
+    list-style-type: none;
+}
+.e-add-list-type-icon li{
+    list-style-type: none;
+    
+}
+.e-add-list-type-icon .e-add-simplelist-container{
+    padding: 0;
+}
+.e-add-list-type-icon li .e-add-item{
+    display: flex;
+    align-items: center;
+}
+.e-add-list-type-icon li .e-add-icon-list{
+    display: inline-block;
+    margin-right: 10px;
+}
+.e-add-list-type-icon li .e-add-item > *:not(.e-add-icon-list){
+    display: inline-block;
+}
+.e-add-list-type-icon.e-add-list-type-icon-square li{
+    padding: 8px 9px;
+    border-radius: 100px;
+}
+.e-add-list-type-icon.e-add-list-type-icon-circle li{
+    padding: 8px 9px;
+    border-radius: 100px;
+}
+.e-add-list-type-icon li .e-add-icon-list i{
+    line-height: 0.9;
+}

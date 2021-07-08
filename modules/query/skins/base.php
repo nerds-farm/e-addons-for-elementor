@@ -443,6 +443,7 @@ class Base extends Base_Skin {
         $this->render_item_end();
 
         $this->counter++;
+        
     }
 
     protected function render_template() {
@@ -721,10 +722,12 @@ class Base extends Base_Skin {
         $dataIdItem = ' data-item-id="' . $item['_id'] . '"';
 
         echo '<' . $tag . ' ' . $classItem . $dataIdItem /* $this->parent->get_render_attribute_string('eadditem_' . $id . '_' . $item_type) */ . '>';
+        $this->render_iteminner_before();
     }
 
     // REPEATE-ITEM end
     protected function render_repeateritem_end($tag = 'div') {
+        $this->render_iteminner_after();
         echo '</' . $tag . '>';
     }
 
@@ -843,6 +846,9 @@ class Base extends Base_Skin {
         //item
         protected function render_item_before(){}
         protected function render_item_after(){}
+        //item inner
+        protected function render_iteminner_before(){}
+        protected function render_iteminner_after(){}
         //postsWrapper
         protected function render_postsWrapper_before() {}
         protected function render_postsWrapper_after() {}

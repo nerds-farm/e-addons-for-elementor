@@ -6,9 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Css_Filter;
-use Elementor\Group_Control_Background;
+use Elementor\Icons_Manager;
 use EAddonsForElementor\Modules\Query\Skins\Base;
 
 use EAddonsForElementor\Core\Utils;
@@ -97,46 +95,7 @@ class Simple_List extends Base {
                 ]
             ]
         );
-        $this->add_responsive_control(
-			'list_column_gap', [
-				'label' => __('Column Gap', 'e-addons'),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'default' => [
-					'size' => '',
-				],
-				'range' => [
-					'px' => [
-						'min' => 15,
-						'max' => 80,
-						'step' => 1
-					],
-				],
-				'selectors' => [
-                    '{{WRAPPER}} .e-add-simplelist-container' => 'column-gap: {{SIZE}}{{UNIT}}',        
-                ],
-                'condition' => [
-                    $this->get_control_id('direction') => 'vertical',
-                    $this->get_control_id('columns_list!') => 1,
-                ]
-				//'frontend_available' => true,
-			]
-		);
-        
-        //select: none, default, icon, image
-        $this->add_responsive_control(
-            'list_type', [
-                'label' => '<i class="fas fa-circle"></i>&nbsp;' . __('List type', 'e-addons'),
-                'type' => Controls_Manager::HIDDEN, //SELECT,
-                'default' => '',
-                'options' => [
-                    '' => 'Default',
-                    'icon' => 'Icon',
-                    'image' => 'Image'
-                ]
-            ]
-        );
-        //dot size
+        //space
         $this->add_responsive_control(
 			'list_space', [
 				'label' => __('Space', 'e-addons'),
@@ -159,6 +118,71 @@ class Simple_List extends Base {
 				//'frontend_available' => true,
 			]
 		);
+        $this->add_responsive_control(
+			'list_column_gap', [
+				'label' => __('Column Gap', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 80,
+						'step' => 1
+					],
+				],
+				'selectors' => [
+                    '{{WRAPPER}} .e-add-simplelist-container' => 'column-gap: {{SIZE}}{{UNIT}}',        
+                ],
+                'condition' => [
+                    $this->get_control_id('direction') => 'vertical',
+                    $this->get_control_id('columns_list!') => 1,
+                ]
+				//'frontend_available' => true,
+			]
+		);
+        $this->add_responsive_control(
+			'list_row_gap', [
+				'label' => __('Row Gap', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 80,
+						'step' => 1
+					],
+				],
+				'selectors' => [
+                    '{{WRAPPER}}.e-add-list-horizontal .e-add-simplelist-container > *' => 'margin-bottom: {{SIZE}}{{UNIT}};',        
+                ],
+                'condition' => [
+                    $this->get_control_id('direction') => 'horizontal',
+                ]
+				//'frontend_available' => true,
+			]
+		);
+        
+        //select: none, default, icon, image
+        // DEPRECATO..
+        $this->add_responsive_control(
+            'list_type', [
+                'label' => '<i class="fas fa-circle"></i>&nbsp;' . __('List type', 'e-addons'),
+                'type' => Controls_Manager::HIDDEN, //SELECT,
+                'default' => '',
+                'options' => [
+                    '' => 'Default',
+                    'icon' => 'Icon',
+                    'image' => 'Image'
+                ]
+            ]
+        );
+        
         //style
         $this->add_control(
             'list_style', [
@@ -208,6 +232,10 @@ class Simple_List extends Base {
                         'title' => __('Image', 'e-addons'),
                         'icon' => 'fas fa-image',
                     ],
+                    'icon' => [
+                        'title' => __('Icon', 'e-addons'),
+                        'icon' => 'fas fa-icons',
+                    ],
 
                     // '' => [
                     //     'title' => __('None', 'e-addons'),
@@ -216,6 +244,7 @@ class Simple_List extends Base {
                 ],
                 'default' => 'ul',
                 'prefix_class' => 'e-add-list-type-',
+                'render_type' => 'template',
                 'condition' => [
                     $this->get_control_id('list_type') => '',
                 ],
@@ -301,6 +330,110 @@ class Simple_List extends Base {
                 ],
             ]
         );
+        $this->add_control(
+			'list_icon',
+			[
+				'label' => __( 'Icon', 'elementor' ),
+				'type' => Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-plus',
+					'library' => 'fa-solid',
+				],
+				'recommended' => [
+					'fa-solid' => [
+                        'plus',
+                        'square',
+                        'plus-square',
+                        'circle',
+						'chevron-right',
+						'angle-right',
+						'angle-double-right',
+						'caret-right',
+						'caret-square-right',
+                        'chevron-left',
+						'angle-left',
+						'angle-double-left',
+						'caret-left',
+						'caret-square-left',
+					],
+					'fa-regular' => [
+						'chevron-right',
+					],
+				],
+				'skin' => 'inline',
+				'label_block' => false,
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+			]
+		);
+        // position
+        /*$this->add_control(
+			'list_icon_align',
+			[
+				'label' => __( 'Alignment', 'elementor' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Start', 'elementor' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => __( 'End', 'elementor' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'default' => is_rtl() ? 'right' : 'left',
+				'toggle' => false,
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+			]
+		);*/
+        // size
+        $this->add_responsive_control(
+			'list_icon_size',
+			[
+				'label' => __( 'Icon Size', 'elementor' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+				'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        // space
+        $this->add_responsive_control(
+			'list_icon_space',
+			[
+				'label' => __( 'Icon Spacing', 'elementor' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+				'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
         $this->add_control(
 			'style_type_image', [
 				'label' => '<i class="fas fa-file-image"></i> ' . __('Image', 'e-addons'),
@@ -577,9 +710,93 @@ class Simple_List extends Base {
                 'selector' => '{{WRAPPER}} li',
             ]
         );
-        
-        
-
+        $this->add_control(
+            'list_icon_heading', [
+                'label' => __('Icon', 'e-addons'),
+                'type' => Controls_Manager::HEADING,                        
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'icon_color', [
+                'label' => __('Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} li' => 'color: {{VALUE}};'
+                ],
+                'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list i' => 'color: {{VALUE}};',
+				],
+            ]
+        );
+        $this->add_control(
+            'icon_bgcolor', [
+                'label' => __('Background Color', 'e-addons'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} li' => 'color: {{VALUE}};'
+                ],
+                'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list i' => 'background-color: {{VALUE}};',
+				],
+            ]
+        );
+        $this->add_responsive_control(
+			'icon_padding', [
+				'label' => __('Padding', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'min' => 2,
+						'max' => 80,
+						'step' => 1
+					],
+				],
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+				'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list i' => 'padding: {{SIZE}}{{UNIT}};',
+				],
+				//'frontend_available' => true,
+			]
+		);
+        $this->add_responsive_control(
+			'icon_radius', [
+				'label' => __('Radius', 'e-addons'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => '',
+				],
+				'range' => [
+					'px' => [
+						'min' => 2,
+						'max' => 80,
+						'step' => 1
+					],
+				],
+                'condition' => [
+                    $this->get_control_id('list_type') => '',
+                    $this->get_control_id('type') => 'icon',
+                ],
+				'selectors' => [
+					'{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list i' => 'border-radius: {{SIZE}}{{UNIT}};',
+				],
+				//'frontend_available' => true,
+			]
+		);
+        $this->add_group_control(
+            Group_Control_Border::get_type(), [
+                'name' => 'icon_border',
+                'selector' => '{{WRAPPER}}.e-add-list-type-icon li .e-add-icon-list i',
+            ]
+        );
         $this->end_controls_section();
     }
 
@@ -590,18 +807,26 @@ class Simple_List extends Base {
 
         $this->index++;
         $this->render_item_start();
+       
         $this->render_items();
         
         //echo '<div class="e-add-simplelist-style-"'.$listStyle.'>';
         //$this->render_item_title($settings);
         //echo '</div>';
-
+        
         $this->render_item_end();
 
         $this->counter++;
     }
 
-    
+    protected function render_iteminner_before(){
+         // l'icona prima del titolo
+         if($this->get_instance_value('list_icon') && $this->get_instance_value('type') == 'icon'){
+            echo '<span class="e-add-icon-list">';
+            Icons_Manager::render_icon( $this->get_instance_value('list_icon') );
+            echo '</span>';
+        }
+    }
 
     protected function render_loop_start() {
         $this->parent->add_render_attribute('eaddposts_container', [
@@ -619,7 +844,7 @@ class Simple_List extends Base {
         if($tag == ''){
             $tag = 'div';
         }
-        if($tag == 'image'){
+        if($tag == 'image' || $tag == 'icon'){
             $tag = 'ul';
         }
         echo '<'.$tag.' ' . $this->parent->get_render_attribute_string('eaddposts_container') . '>';
@@ -630,7 +855,7 @@ class Simple_List extends Base {
         if($tag == ''){
             $tag = 'div';
         }
-        if($tag == 'image'){
+        if($tag == 'image' || $tag == 'icon'){
             $tag = 'ul';
         }
         echo '</'.$tag.'>';
@@ -651,6 +876,7 @@ class Simple_List extends Base {
             $taglist = 'li';
         }
         echo '<'.$taglist.' class="e-add-item e-add-post-item-' . $this->parent->get_id() . ' e-add-item-' . $this->parent->get_id() . $item_class . '"' . $data_post_id . $data_post_index . '>';
+        
         
     }
 

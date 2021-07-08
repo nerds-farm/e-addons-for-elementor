@@ -102,9 +102,10 @@
 }
 .e-add-posts-container .e-add-post-image .e-add-img{
     overflow: hidden;
+    position: relative;
 }
 .e-add-post-item .e-add-post-image .e-add-img{
-    position: relative;
+   
 }
 .e-add-posts-container.e-add-is_ratio .e-add-post-image .e-add-img{
     top: 0;
