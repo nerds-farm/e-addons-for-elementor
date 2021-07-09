@@ -222,21 +222,23 @@ jQuery(window).on('elementor/frontend/init', () => {
                     dynamicBullets: Boolean(elementSettings[this.skinPrefix + 'dynamicBullets']),
                     //dynamicMainBullets: 1,
 
-                    renderBullet: function (index, className) {
+                    renderBullet: (index, className) => {
                         var indexLabel = !Boolean(elementSettings[this.skinPrefix + 'dynamicBullets']) && Boolean(elementSettings[this.skinPrefix + 'bullets_numbers']) ? '<span class="swiper-pagination-bullet-title">' + (index + 1) + '</span>' : '';
 
                         return '<span class="' + className + '">' + indexLabel + '</span>';
                         //return '<span class="' + className + '">' + (index + 1) + '</span>';
                     },
-                    renderFraction: function (currentClass, totalClass) {
+                    renderFraction: (currentClass, totalClass) => {
+                        alert(this.skinPrefix + 'fraction_separator');
+                        let fractionSeparator = elementSettings[this.skinPrefix + 'fraction_separator'] || '/';
                         return '<span class="' + currentClass + '"></span>' +
-                                '<span class="separator">' + String(elementSettings[this.skinPrefix + 'fraction_separator']) + '</span>' +
+                                '<span class="separator">' + fractionSeparator + '</span>' +
                                 '<span class="' + totalClass + '"></span>';
                     },
-                    renderProgressbar: function (progressbarFillClass) {
+                    renderProgressbar: (progressbarFillClass) => {
                         return '<span class="' + progressbarFillClass + '"></span>';
                     },
-                    renderCustom: function (swiper, current, total) {
+                    renderCustom: (swiper, current, total) => {
                         //return current + ' of ' + total;
                         /*<ul class="e-add-scrollify-pagination nav--xusni">
                          <li><a href="#87dc4a5" class="nav__item" aria-label="1"><span class="nav__item-title">01</span></a></li>

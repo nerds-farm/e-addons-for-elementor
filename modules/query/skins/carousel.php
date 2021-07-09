@@ -1429,7 +1429,7 @@ class Carousel extends Base {
             'label' => __('dynamicBullets', 'e-addons'),
             'description' => __('Useful when you use bullets pagination with a lot of slides. So it will keep only few bullets visible at the same time.', 'e-addons'),
             'type' => Controls_Manager::SWITCHER,
-            'default' => 'yes',
+            'default' => '',
             'frontend_available' => true,
             'condition' => [
                 $this->get_control_id('usePagination') => 'yes',
@@ -1610,6 +1610,7 @@ class Carousel extends Base {
                 'condition' => [
                     $this->get_control_id('usePagination') => 'yes',
                     $this->get_control_id('pagination_type') => 'bullets',
+                    $this->get_control_id('border_bullet_border!') => '',
                 ]
             ]
         );
@@ -1641,6 +1642,7 @@ class Carousel extends Base {
             'condition' => [
                 $this->get_control_id('usePagination') => 'yes',
                 $this->get_control_id('pagination_type') => 'bullets',
+                
             ]
                 ]
         );
@@ -1699,6 +1701,7 @@ class Carousel extends Base {
             'condition' => [
                 $this->get_control_id('usePagination') => 'yes',
                 $this->get_control_id('pagination_type') => 'bullets',
+                $this->get_control_id('dynamicBullets') => '',
                 $this->get_control_id('pagination_transform_popover') => 'yes'
             ]
                 ]
