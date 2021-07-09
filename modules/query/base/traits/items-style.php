@@ -40,6 +40,10 @@ trait Items_Style {
                             'title' => __('Right', 'elementor'),
                             'icon' => 'eicon-text-align-right',
                         ],
+                        'justify' => [
+                            'title' => __('Justify', 'elementor'),
+                            'icon' => 'eicon-text-align-justify',
+                        ],
                     ],
                     'default' => '',
                     'selectors' => [

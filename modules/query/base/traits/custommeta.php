@@ -9,6 +9,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Background;
+use EAddonsForElementor\Core\Utils;
 use EAddonsForElementor\Core\Utils\Query as Query_Utils;
 
 /**
