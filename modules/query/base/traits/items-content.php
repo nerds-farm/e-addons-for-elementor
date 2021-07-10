@@ -204,7 +204,7 @@ trait Items_Content {
                     'px' => [
                         'min' => 0.1,
                         'max' => 2,
-                        'step' => 0.1
+                        'step' => 0.01
                     ],
                 ],
                 'selectors' => [
