@@ -211,7 +211,7 @@ trait Items_Advanced {
                     ],
                     'condition' => [
                         'display_inline!' => 'inline-block',
-                        '_skin!' => 'list'
+                        //'_skin!' => 'list'
                     ],
                     'default' => 100,
                     'selectors' => [
@@ -422,10 +422,10 @@ trait Items_Advanced {
         );
         $target->add_control(
                 'use_fallback', [
-            'label' => __('Fallback', 'e-addons'),
+            'label' => '<i class="fas fa-exclamation-triangle"></i> '.__('Fallback', 'e-addons'),
             'type' => Controls_Manager::TEXT,
             'description' => __('Alternative Text for empty values', 'e-addons'),
-            'separator' => 'after',
+            'separator' => 'before',
             'conditions' => [
                 'relation' => 'and',
                 'terms' => [
@@ -444,9 +444,10 @@ trait Items_Advanced {
         );
         $target->add_control(
                 'use_fallback_img', [
-            'label' => __('Fallback', 'e-addons'),
+            'label' => '<i class="fas fa-exclamation-triangle"></i> '.__('Fallback', 'e-addons'),
             'type' => Controls_Manager::MEDIA,
             'description' => __('Alternative Image for empty values', 'e-addons'),
+            'separator' => 'before',
             'conditions' => [
                 'relation' => 'or',
                 'terms' => [
@@ -477,5 +478,4 @@ trait Items_Advanced {
                 ]
         );
     }
-
 }
