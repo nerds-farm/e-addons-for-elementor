@@ -39,6 +39,15 @@ class Base extends Base_Skin {
     use Traits\Common;
     use Traits\Custommeta;
     use Traits\Label;
+    
+    public static $widgets = [
+        'e-query-posts',
+        'e-query-media',
+        'e-query-users',
+        'e-query-terms',
+        'e-query-itemslist',
+        'e-query-repeater',
+    ];
 
     public $current_permalink;
     public $current_id;
@@ -56,15 +65,24 @@ class Base extends Base_Skin {
 
     public function _register_controls_actions() {
         parent::_register_controls_actions();
-        if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout'])) {
-            add_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout']);
-        }
-        if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects'])) {
-            add_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects']);
+        
+        if ($this->parent) {
+            if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout'])) {
+                add_action('elementor/element/' . $this->parent->get_name() . '/section_items/after_section_end', [$this, 'register_controls_layout']);
+            }
+            if (!has_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects'])) {
+                add_action('elementor/element/' . $this->parent->get_name() . '/section_items/before_section_start', [$this, 'register_controls_hovereffects']);
+            }
+
+            add_action('elementor/element/' . $this->parent->get_name() . '/section_e_query/after_section_end', [$this, 'register_additional_controls'], 20);
         }
 
         add_action('elementor/preview/enqueue_scripts', [$this, 'preview_enqueue']);
-    }  
+    }
+    
+    public function register_additional_controls() {
+        //$querytype = $this->parent->get_querytype();
+    }
     
     public function register_controls_layout(Widget_Base $widget) {
         //$this->parent = $widget;
@@ -855,15 +873,15 @@ class Base extends Base_Skin {
 
         // Classes ----------
         public function get_container_class() {
-            return 'e-add-skin-' . $this->get_id();
+            return 'e-add-proto-container e-add-skin-' . $this->get_id() . ' e-add-skin-' . parent::get_id();
         }
 
         public function get_wrapper_class() {
-            return 'e-add-wrapper-' . $this->get_id();
+            return 'e-add-proto-wrapper e-add-wrapper-' . $this->get_id() . ' e-add-wrapper-' . parent::get_id();
         }
 
         public function get_item_class() {
-            return 'e-add-item-' . $this->get_id();
+            return 'e-add-proto-item e-add-item-' . $this->get_id() . ' e-add-item-' . parent::get_id();
         }
 
         public function get_item_dataattributes() {}

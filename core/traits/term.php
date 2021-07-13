@@ -91,6 +91,16 @@ trait Term {
 
     public static function get_term($term_id = false, $taxonomy = 'category') {
         $term = false;
+        
+        $queried_object = get_queried_object();
+        if (!$term_id && $queried_object && is_object($queried_object) && get_class($queried_object) == 'WP_Term') {
+            //$term_id = get_queried_object_id();
+            /*if ($taxonomy && $taxonomy != $queried_object->taxonomy) {
+                return false;
+            }*/
+            return $queried_object;
+        }
+        
         if (is_object($term_id)) {
             if (get_class($term_id) == 'WP_Term') {
                 return $term_id;
@@ -98,6 +108,7 @@ trait Term {
                 return false;
             }
         }
+        
         if (is_numeric($term_id)) {
             $term_id = intval($term_id);
             $term = get_term($term_id);
@@ -108,6 +119,7 @@ trait Term {
                 $term = get_term_by('name', $term_id, $taxonomy);
             }
         }
+        
         if (!$term_id && get_the_ID()) {
             $post_type = get_post_type();                
             if ($post_type && $post_type != 'post') {
@@ -124,6 +136,7 @@ trait Term {
                 return $term;
             }
         }
+        
         return $term;
     }
     

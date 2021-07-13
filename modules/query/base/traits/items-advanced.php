@@ -211,7 +211,7 @@ trait Items_Advanced {
                     ],
                     'condition' => [
                         'display_inline!' => 'inline-block',
-                        '_skin!' => 'list'
+                        //'_skin!' => 'list'
                     ],
                     'default' => 100,
                     'selectors' => [
