@@ -59,7 +59,7 @@
     display: block;
     overflow: hidden;
     opacity: 0.9;
-    background-color: rgba(240, 240, 240, 0.2);
+    background-color: rgba(240, 240, 240, 0.5);
     opacity: 0.4;
 }
 .elementor-uiselector-item .elementor-uiselector-bgimage{
