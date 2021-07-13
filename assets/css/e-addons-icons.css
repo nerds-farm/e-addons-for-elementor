@@ -299,6 +299,9 @@
 
 .eadd-slider-section:before { content: '\e8da'; } /* '' */
 .eadd-tabs-section:before { content: '\e8db'; } /* '' */
+.eadd-section-effects:before { content: '\e8f2'; } /* '' */
+.eadd-accordion-section:before { content: '\e8f3'; } /* '' */
+
 .eadd-dynamic-tag-media:before { content: '\e8dc'; } /* '' */
 .eadd-el-form-pro-field-media:before { content: '\e8dd'; } /* '' */
 .eadd-el-form-pro-select-optgroup:before { content: '\e8de'; } /* '' */

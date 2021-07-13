@@ -158,7 +158,8 @@
 
 /* style per label choices e other source (ex map) */
 .elementor-control-customfields_type .elementor-choices .elementor-choices-label{
-    background-color: #FFFFFF;
+    background-color: rgba(0,0,0,0.3);
+    color: #fff;
 }
 .elementor-control-customfields_type .elementor-choices input:checked + .elementor-choices-label {
     background-color: #5bc0de;
@@ -177,12 +178,13 @@
 .elementor-control-cards_stage_width,
 .elementor-control-cards_stage_height
 {
-    background-color: #f5f5f5;
+    background-color: rgba(240,240,240,0.2);
 }
 .elementor-control-cards_coordinates_object textarea,
 .elementor-control-cards_stage_width input,
 .elementor-control-cards_stage_height input{
-    background-color: #ffffff;
+    background-color: rgba(0,0,0,0.3);
+    color: #fff;
 }
 .elementor-control-cards_custom_coordinates .elementor-control-title{
     display: flex;
