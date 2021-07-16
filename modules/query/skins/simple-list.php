@@ -32,6 +32,10 @@ class Simple_List extends Base {
     public function get_id() {
         return 'list';
     }
+    
+    public function get_pid() {
+        return 13051;
+    }
 
     public function get_title() {
         return __('List', 'e-addons');

@@ -31,6 +31,10 @@ class Timeline extends Base {
     public function get_id() {
         return 'timeline';
     }
+    
+    public function get_pid() {
+        return 266;
+    }
 
     public function get_title() {
         return __('Timeline', 'e-addons');

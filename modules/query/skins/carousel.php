@@ -41,6 +41,10 @@ class Carousel extends Base {
     public function get_id() {
         return 'carousel';
     }
+    
+    public function get_pid() {
+        return 264;
+    }
 
     public function get_title() {
         return __('Carousel', 'e-addons');

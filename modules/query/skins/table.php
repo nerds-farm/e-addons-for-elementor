@@ -41,6 +41,10 @@ class Table extends Base {
     public function get_id() {
         return 'table';
     }
+    
+    public function get_pid() {
+        return 13045;
+    }
 
     public function get_title() {
         return __('Table', 'e-addons');

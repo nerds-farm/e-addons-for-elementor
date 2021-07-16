@@ -35,6 +35,10 @@ class Grid extends Base {
     public function get_id() {
         return 'grid';
     }
+    
+    public function get_pid() {
+        return 262;
+    }
 
     public function get_title() {
         return __('Grid', 'e-addons');

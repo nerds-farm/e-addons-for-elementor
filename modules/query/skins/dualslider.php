@@ -46,6 +46,10 @@ class Dualslider extends Carousel {
     public function get_id() {
         return 'dualslider';
     }
+    
+    public function get_pid() {
+        return 265;
+    }
 
     public function get_title() {
         return __('Dual Slider', 'e-addons');
