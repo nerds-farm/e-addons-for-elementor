@@ -117,7 +117,7 @@
 .eadd-queryviews-circular:before { content: '\e8e6'; } /* '' */
 .eadd-queryviews-cards:before { content: '\e8e7'; } /* '' */
 .eadd-queryviews-accordion:before { content: '\e8ef'; } /* '' */
-
+.eadd-queryviews-rapidimages:before { content: '\e8f4'; } /* '' */
 
 .eadd-remote-rest-api:before { content: '\e847'; } /* '' */
 .eadd-remote-iframe:before { content: '\e848'; } /* '' */
@@ -246,6 +246,8 @@
 .eadd-dynamic-tag-options-site-field:before { content: '\e88b'; } /* '' */
 .eadd-dynamic-tag-options-site-image:before { content: '\e8ab'; } /* '' */
 .eadd-dynamic-tag-options:before { content: '\e8ac'; } /* '' */
+.eadd-dynamic-tag-rowcustomfield:before { content: '\e8f6'; } /* '' */
+
 .eadd-infinite-pagination:before { content: '\e8ad'; } /* '' */
 .eadd-numeric-pagination:before { content: '\e8ae'; } /* '' */
 
@@ -258,6 +260,8 @@
 .eadd-query-csv:before { content: '\e8ee'; } /* '' */
 .eadd-query-restapi:before { content: '\e8f0'; } /* '' */
 .eadd-query-xml:before { content: '\e8f1'; } /* '' */
+.eadd-query-datalisting:before { content: '\e8f5'; } /* '' */
+
 
 .eadd-el-form-pro-filters-action:before { content: '\e8b9'; } /* '' */
 .eadd-el-form-pro-filters-archiveinfo:before { content: '\e8d5'; } /* '' */

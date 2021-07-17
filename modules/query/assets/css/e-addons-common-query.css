@@ -15,7 +15,12 @@
     -o-transition: color 0.4s;
     transition: color 0.4s;
 }
-
+/*--------------------------------------*/
+/*font-awesome*/
+.fa, .fab, .fad, .fal, .far, .fas{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
 /*--------------------------------------*/
 /* questp è per resettare i margini che di solito hanno gli H e il p, dati dai temi */
 .e-add-item > *{
@@ -183,6 +188,8 @@
 ul.e-add-terms-list{
     padding: 0;
     margin: 0;
+    /* allinea l'ul all'icona*/
+    display: inline-block;
 }
 li.e-add-term-item{
     display: inline;
