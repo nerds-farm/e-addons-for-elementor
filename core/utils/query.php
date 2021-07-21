@@ -419,28 +419,28 @@ class Query {
     }
     public static function get_gsap_ease() {
         $tf_p = [
-            'easeNone' => __('None', 'e-addons'),
-            'easeIn' => __('In', 'e-addons'),
-            'easeOut' => __('Out', 'e-addons'),
-            'easeInOut' => __('InOut', 'e-addons'),
+            'none' => __('None', 'e-addons'),
+            'in' => __('In', 'e-addons'),
+            'out' => __('Out', 'e-addons'),
+            'inOut' => __('InOut', 'e-addons'),
         ];
         return $tf_p;
     }
 
     public static function get_gsap_timingFunctions() {
         $tf_p = [
-            'Power0' => __('Linear', 'e-addons'),
-            'Power1' => __('Power1', 'e-addons'),
-            'Power2' => __('Power2', 'e-addons'),
-            'Power3' => __('Power3', 'e-addons'),
-            'Power4' => __('Power4', 'e-addons'),
-            'SlowMo' => __(' SlowMo', 'e-addons'),
-            'Back' => __('Back', 'e-addons'),
-            'Elastic' => __('Elastic', 'e-addons'),
-            'Bounce' => __('Bounce', 'e-addons'),
-            'Circ' => __('Circ', 'e-addons'),
-            'Expo' => __('Expo', 'e-addons'),
-            'Sine' => __('Sine', 'e-addons'),
+            'power0' => __('Linear', 'e-addons'),
+            'power1' => __('Power1', 'e-addons'),
+            'power2' => __('Power2', 'e-addons'),
+            'power3' => __('Power3', 'e-addons'),
+            'power4' => __('Power4', 'e-addons'),
+            //'slow' => __(' SlowMo', 'e-addons'),
+            //'back' => __('Back', 'e-addons'),
+            //'elastic' => __('Elastic', 'e-addons'),
+            //'bounce' => __('Bounce', 'e-addons'),
+            'circ' => __('Circ', 'e-addons'),
+            'expo' => __('Expo', 'e-addons'),
+            'sine' => __('Sine', 'e-addons'),
         ];
         return $tf_p;
     }
