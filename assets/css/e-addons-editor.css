@@ -18,7 +18,6 @@
     position: absolute;
     top: 9px;
     right: 0px;
-    z-index: 1;
 
 }
 .elementor-panel .elementor-element:hover .icon i[class*="eadd-"]:after {
